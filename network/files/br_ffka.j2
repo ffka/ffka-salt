@@ -1,0 +1,22 @@
+{% set br_ffka_ipv4 = salt['pillar.get']('network:br_ffka:ipv4') -%}
+{% set br_ffka_ipv6 = salt['pillar.get']('network:br_ffka:ipv6') -%}
+
+auto br_ffka
+iface br0 inet static
+        address {{ address(br_ffka_ipv4) }}
+        netmask 255.255.128.0
+        bridge_ports none
+        up ip route add 10.214.0.0/17 dev br0 table freifunk
+        up ip rule add to 10.214.0.0/16 table freifunk
+        up ip rule add from 10.214.0.0/16 table freifunk
+        up ip rule add to 185.66.194.8/29 table freifunk
+        up ip rule add from 185.66.194.8/29 table freifunk
+
+iface br0 inet6 static
+        address {{ address(br_ffka_ipv4) }}
+        netmask 64
+        post-up ip -6 route add 2a03:2260:a::/48 dev br0 table freifunk
+        post-up ip -6 route add 2a03:2260:a:b::/64 dev br0 table freifunk
+        post-up ip -6 rule add to 2a03:2260:a::/48 table freifunk
+        post-up ip -6 rule add from 2a03:2260:a::/48 table freifunk
+        post-up ip -6 addr add fe80::1/64 dev br0 preferred_lft 0
