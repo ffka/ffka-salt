@@ -1,4 +1,4 @@
-br_ffwp network interface:
+br_ffka network interface:
   file.managed:
     - name: /etc/network/interfaces.d/br_ffka.cfg
     - makedirs: true
