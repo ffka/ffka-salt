@@ -5,4 +5,4 @@ base:
   'albufer*':
     - kernel
     - kernel.sysctl
-
+    - network.ip_rt_tables_freifunk
