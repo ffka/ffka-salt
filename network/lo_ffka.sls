@@ -1,4 +1,4 @@
-gre_ffrl network interface:
+lo_ffka network interface:
   file.managed:
     - name: /etc/network/interfaces.d/lo_ffka.cfg
     - makedirs: true
