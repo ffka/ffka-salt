@@ -6,7 +6,7 @@ install bird:
 place bgp {{bird}}.conf:
   file.managed:
     - name: /etc/bird/{{bird}}.conf
-    - source: salt://bgp/files/{{bird}}.conf.j2
+    - source: salt://routing/files/{{bird}}.conf.j2
     - template: jinja
     - context:
         network: {{ pillar['network'] }}
