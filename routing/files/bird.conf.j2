@@ -131,7 +131,7 @@ template bgp uplink {
 };
 
 
-{% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
+{% for gre in salt['pillar.get']('network:gre_ffrl:tunnel') %}
 
 protocol bgp ffrl_{{gre.name}} from uplink {
         source address {{ gre.local }};
