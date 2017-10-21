@@ -57,8 +57,7 @@ filter hostroute {
 protocol direct {
         interface "tun-*";
         interface "lo";
-	interface "br0";
-	interface "nat64";
+	interface "br_ffka";
         }
 
 
@@ -72,21 +71,19 @@ protocol ospf IGP {
 	
 
 	area 0.0.0.0 {
-		interface "tun-alb-2";
-		interface "tun-alb-1";
-         interface "br0"{
+{% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
+		interface "tun-{{gre.name}}";
+{% endfor %}
+         interface "br_ffka"{
 			stub yes;
 		};
-         interface "tun-int-ent";
- 
 		interface "lo" {
-			stub yes;
 		};
 	};
 }
 
 template bgp internal {
-        local as 65081;
+        local as {{ffka.ffka_as}};
 #?	direct;
 #	next hop self;
         import filter {
@@ -101,7 +98,7 @@ template bgp internal {
 
 
 protocol bgp alb1 from internal {
-        #source address 185.66.194.9;
+        source address 185.66.194.0;
         neighbor 185.66.194.9 as 65081;
 };
 
@@ -122,7 +119,7 @@ protocol bgp int_ent from internal {
 
 
 template bgp uplink {
-        local as 65081;
+        local as {{ffka.ffka_as}};
         import where is_default();
 #	export where proto = "static_bgp";
         export where is_self_public_uplink();
@@ -134,7 +131,6 @@ template bgp uplink {
 
 
 {% for gre in salt['pillar.get']('network:gre_ffrl:tunnel') %}
-
 protocol bgp ffrl_{{gre.name}} from uplink {
         source address {{ gre.local }};
         neighbor {{ gre.remote }} as 201701;
