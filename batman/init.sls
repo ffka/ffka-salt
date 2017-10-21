@@ -1,6 +1,7 @@
 install batctl:
   pkg.installed:
-    - pkgs: batctl
+    - pkgs:
+      - batctl
 
 include:
   - network.batman
