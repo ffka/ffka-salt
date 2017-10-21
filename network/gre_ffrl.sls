@@ -4,6 +4,6 @@ gre_ffrl network interface:
     - makedirs: true
     - user: root
     - group: root
-    - mode: 660
+    - mode: 644
     - source: salt://network/files/gre_ffrl.j2
     - template: jinja
