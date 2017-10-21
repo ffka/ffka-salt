@@ -5,13 +5,13 @@ iface tun-{{ gre.name }} inet tunnel
   mode gre
   netmask 255.255.255.255
   address {{ gre.local }}
-  dstaddr 100.64.0.238
-  local 213.239.204.86
-  endpoint 185.66.194.0
+  dstaddr {{ gre.remote }}
+  local {{ grains['fqdn_ipv4']}}
+  endpoint {{ gre.gre_target }}
   ttl 64
   mtu 1476
 
 iface tun-{{ gre.name }} inet6 static
-  address 2a03:2260:0:7e::2/64
+  address {{ gre.v6-network }}
 
 {% endfor %}
