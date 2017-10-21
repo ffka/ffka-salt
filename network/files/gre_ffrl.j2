@@ -1,17 +1,17 @@
 {% for gre in pillar ['network']['gre_ffrl']['tunnel'] %}
 
-auto tun-{{gre.name}}
-iface tun-{{gre.name}} inet tunnel
+auto tun-{{gre['name']}}
+iface tun-{{gre['name']}} inet tunnel
   mode gre
   netmask 255.255.255.255
-  address {{ gre.local }} 
+  address {{ gre['local']}} 
   dstaddr 100.64.0.238
   local 213.239.204.86
   endpoint 185.66.194.0
   ttl 64
   mtu 1476
 
-iface tun-{{gre.name}} inet6 static
+iface tun-{{gre['name']}} inet6 static
   address 2a03:2260:0:7e::2/64
 
 {% endfor %}
