@@ -6,7 +6,7 @@ iface tun-{{ gre.name }} inet tunnel
   netmask 255.255.255.255
   address {{ gre.local }}
   dstaddr {{ gre.remote }}
-  local {{ grains['fqdn_ip4']}}
+  local {{ grains.fqdn_ip4[0]}}
   endpoint {{ gre.gre_target }}
   ttl 64
   mtu 1476
