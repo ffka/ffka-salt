@@ -1,0 +1,140 @@
+router id 185.66.194.8;
+
+# The Kernel protocol is not a real routing protocol. Instead of communicating
+# with other routers in the network, it performs synchronization of BIRD's
+# routing tables with the OS kernel.
+#protocol kernel {
+#	scan time 60;
+#	import all;
+#	export all;   # Actually insert routes into the kernel routing table
+#
+#}
+
+# The Device protocol is not a real routing protocol. It doesn't generate any
+# routes and it only serves as a module for getting information about network
+# interfaces from the kernel. 
+protocol device {
+	scan time 60;
+}
+
+
+protocol kernel {
+       kernel table 16;         # Kernel table to synchronize with (default: main)
+#       learn;                  # Learn all alien routes from the kernel
+#       persist;                # Don't remove routes on bird shutdown
+        scan time 60;           # Scan kernel routing table every 20 seconds
+#       import none;            # Default is import all
+    export filter {
+        krt_prefsrc = 185.66.194.8;
+        accept;
+    };
+}
+
+function is_default() {
+        return (net ~ [0.0.0.0/0]);
+};
+function is_self_net()       { return net ~ [ 10.214.0.0/16+  ]; }
+function is_self_public_uplink() { 
+	if net ~ [ 185.66.194.8/29 ] then accept;
+	if net ~ [ 185.66.194.8/29{29,32} ] then {
+		if source = RTS_STATIC then accept;
+		if source = RTS_DEVICE then accept;
+		if source = RTS_STATIC_DEVICE then accept;
+	}
+	reject;
+ }
+
+filter hostroute {
+        if net ~ 185.66.194.8/29 then accept;
+        reject;
+};
+
+#protocol static static_nat64 {
+#        route 192.168.64.0/18 via "nat64";
+#};
+
+
+protocol direct {
+        interface "tun-*";
+        interface "lo";
+	interface "br0";
+	interface "nat64";
+        }
+
+
+protocol static static_bgp {
+	route 185.66.194.8/29 unreachable;
+};
+
+protocol ospf IGP {
+	import all;
+	export where is_self_net();
+	
+
+	area 0.0.0.0 {
+		interface "tun-alb-2";
+		interface "tun-alb-1";
+         interface "br0"{
+			stub yes;
+		};
+         interface "tun-int-ent";
+ 
+		interface "lo" {
+			stub yes;
+		};
+	};
+}
+
+template bgp internal {
+        local as 65081;
+#?	direct;
+#	next hop self;
+        import filter {
+                preference = 99;
+                accept;
+        };
+        export where source = RTS_BGP;
+#        gateway direct;
+        next hop self;
+};
+
+protocol bgp alb1 from internal {
+        #source address 185.66.194.9;
+        neighbor 185.66.194.9 as 65081;
+};
+
+protocol bgp alb2 from internal {
+        source address 185.66.194.8;
+        neighbor 185.66.194.10 as 65081;
+};
+
+protocol bgp alb3 from internal {
+        #source address 185.66.194.8;
+        neighbor 185.66.194.11 as 65081;
+};
+
+protocol bgp int_ent from internal {
+        source address 185.66.194.8;
+        neighbor 185.66.194.14 as 65081;
+};
+
+
+template bgp uplink {
+        local as 65081;
+        import where is_default();
+#	export where proto = "static_bgp";
+        export where is_self_public_uplink();
+        next hop self;
+#	password "idkfa";
+        default bgp_local_pref 200;
+        gateway direct;
+};
+
+
+{% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
+
+protocol bgp ffrl_{{gre.name}} from uplink {
+        source address { gre.local }};
+        neighbor { gre.remote }} as 201701;
+};
+{% endfor %}
