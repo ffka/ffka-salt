@@ -11,3 +11,4 @@ base:
     - network.gre_ffka
     - network.gre_ffrl
     - network.lo_ffka
+    - routing
