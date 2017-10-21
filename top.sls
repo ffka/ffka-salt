@@ -12,3 +12,4 @@ base:
     - network.gre_ffrl
     - network.lo_ffka
     - routing
+    - batman
