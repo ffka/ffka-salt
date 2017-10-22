@@ -13,20 +13,20 @@ protocol device {
 }
 
 function is_default() {
-  return net ~ [ ::/0                ];
-  return net ~ [ 2000::/3+           ];
+  return net ~ [ ::/0 ];
 }
 
 function is_global() {
+  return net ~ [ 2000::/3+ ];
 }
 
 function is_self_public() {
-  return net ~ [ 2a03:2260:a::/48+ ];
+  return net ~ [ {{ ffka.v6_ffrl }}+ ];
 }
 
 function is_self_public_uplink() {
-  if net ~ [ 2a03:2260:a::/48 ] then accept;
-  if net ~ [ 2a03:2260:a::/48{48,64} ] then {
+  if net ~ [ {{ ffka.v6_ffrl }} ] then accept;
+  if net ~ [ {{ ffka.v6_ffrl }}{48,64} ] then {
     if source = RTS_STATIC then accept;
     if source = RTS_DEVICE then accept;
     if source = RTS_STATIC_DEVICE then accept;
@@ -35,17 +35,17 @@ function is_self_public_uplink() {
 }
 
 function is_self() {
-  return net ~ [ 2a03:2260:a::1/128 ];
+  return net ~ [ {{ network.lo_ffka.ipv6.ip }}/128 ];
 }
 
 function is_ffka_lo() {
-  return net ~ [ 2a03:2260:a::/48{128,128} ];
+  return net ~ [ {{ ffka.v6_ffrl }}{128,128} ];
 }
 
 protocol direct {
   interface "tun-*";
   interface "lo";
-  interface "br0";
+  interface "br_ffka";
 }
 
 #protocol static static_nat64 {
@@ -54,8 +54,8 @@ protocol direct {
 
 
 protocol static static_bgp {
-  route 2a03:2260:a::/48 unreachable;
-  route 2a03:2260:a:64::/64 unreachable;
+  route {{ ffka.v6_ffrl }} unreachable;
+  # route 2a03:2260:a:64::/64 unreachable;
 };
 
 protocol ospf IGP {
@@ -64,49 +64,31 @@ protocol ospf IGP {
 
 
   area 0.0.0.0 {
-    interface "tun-alb-1";
-    interface "tun-alb-2";
-    interface "tun-int-ent";
-    interface "br0" { stub yes; };
+    {%- for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
+    interface "tun-{{gre.name}}";
+    {%- endfor %}
+    interface "br_ffka" { stub yes; };
     interface "lo";
   };
 }
 
 template bgp internal {
-  local as 65081;
+  local as {{ ffka.ffka_as }};
   import all;
   export all;
   next hop self;
   default bgp_local_pref 200;
 };
 
-protocol bgp alb2 from internal {
-  source address 2a03:2260:a::1;
-  neighbor 2a03:2260:a::3 as 65081;
+{% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
+protocol bgp ffka_{{ gre.name }} from internal {
+  source address {{ network.lo_ffka.ipv6.ip }};
+  neighbor {{ gre.ffrl_ipv6 }} as {{ ffka.ffka_as }};
 };
-
-protocol bgp alb3 from internal {
-  source address 2a03:2260:a::1;
-  neighbor 2a03:2260:a::4 as 65081;
-};
-
-protocol bgp int_ent from internal {
-  source address 2a03:2260:a::1;
-  neighbor 2a03:2260:a::7 as 65081;
-};
-
-protocol bgp alb7 from internal {
-  source address 2a03:2260:a::1;
-  neighbor 2a03:2260:a::8 as 65081;
-};
-
-protocol bgp alb1 from internal {
-  source address 2a03:2260:a::1;
-  neighbor 2a03:2260:a::2 as 65081;
-};
+{% endfor %}
 
 template bgp uplink {
-  local as 65081;
+  local as {{ ffka.ffka_as }};
   import where is_default();
   #   export where proto = "static_bgp";
   export where is_self_public_uplink();
@@ -116,21 +98,8 @@ template bgp uplink {
   default bgp_local_pref 1000;
 };
 
-protocol bgp ffrl_fra_a from uplink {
-        neighbor 2a03:2260:0:7e::1 as 201701;
+{% for gre in salt['pillar.get']('network:gre_ffrl:tunnel') %}
+protocol bgp ffrl_{{gre.name}} from uplink {
+	neighbor {{ gre.v6_remote }} as 201701;
 };
-protocol bgp ffrl_fra_b from uplink {
-        neighbor 2a03:2260:0:7f::1 as 201701;
-};
-protocol bgp ffrl_dus_a from uplink {
-        neighbor  2a03:2260:0:206::1 as 201701;
-};
-protocol bgp ffrl_dus_b from uplink {
-        neighbor 2a03:2260:0:80::1 as 201701;
-};
-protocol bgp ffrl_ber_a from uplink {
-        neighbor 2a03:2260:0:205::1 as 201701;
-};
-protocol bgp ffrl_ber_b from uplink {
-        neighbor 2a03:2260:0:207::1 as 201701;
-};
+{% endfor %}
