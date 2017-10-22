@@ -16,3 +16,4 @@ base:
     - ntp
     - ferm
     - mesh_vpn
+    - radvd
