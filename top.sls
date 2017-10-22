@@ -17,3 +17,4 @@ base:
     - ferm
     - mesh_vpn
     - radvd
+    - dhcp
