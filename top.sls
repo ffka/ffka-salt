@@ -15,3 +15,4 @@ base:
     - batman
     - ntp
     - ferm
+    - mesh-vpn
