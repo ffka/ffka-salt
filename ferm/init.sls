@@ -1,3 +1,7 @@
+install ebtables:
+  pkg.installed:
+    - name: ebtables
+
 install ferm:
   pkg.installed:
     - name: ferm
