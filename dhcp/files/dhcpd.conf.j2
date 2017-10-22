@@ -1,0 +1,33 @@
+key dhcpkey {
+        algorithm HMAC-MD5.SIG-ALG.REG.INT;
+        secret "{{dhcp.dhcpkey_secret}}";
+        };
+
+  ddns-update-style interim;
+  ddns-domainname "{{ ffka.search_domain }};
+  ignore client-updates;
+  update-static-leases off;
+
+zone {{ ffka.search_domain }}. {                        #Forward-Zone
+        primary6 2001:1608:10:278::3070:e76a;              #Der DNS-Server, der aktualisiert wird
+        key dhcpkey;
+}
+
+# option definitions common to all supported networks...
+option domain-name "{{ ffka.search_domain }}";
+
+default-lease-time 1800;
+max-lease-time 3600;
+
+authoritative;
+
+log-facility local7;
+
+subnet 10.214.0.0 netmask {{ network.br_ffka.ipv4.subnet}} {
+    range {{ dhcp.range.from }} {{ dhcp.range.to}}
+
+    option routers {{ network.br_ffka.ipv4.ip}};
+    option interface-mtu 1378;
+    option domain-name-servers {{ network.lo_ffka.ipv4.ip}},{{dhcp.dns_secondary}};
+
+}
