@@ -18,7 +18,7 @@ DHCPD config file:
 
 /etc/default/isc-dhcp-server:
   file.managed:
-    - source: salt://dhcp_server/files/isc-dhcp-server_default.j2
+    - source: salt://dhcp/files/isc-dhcp-server_default.j2
     - template: jinja
 
 
