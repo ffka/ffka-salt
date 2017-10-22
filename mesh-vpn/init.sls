@@ -18,6 +18,7 @@ Fastd template instance {{ interfaces.name }}:
       bind: "{{ interfaces.bind }}"
       mac: "{{ interfaces.mac }}"
 
+Fastd secret instance {{ interfaces.name }}:
   file.managed:
     - name: /etc/fastd/{{ interfaces.name }}/secret.conf
     - makedirs: true
