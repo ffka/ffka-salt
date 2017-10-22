@@ -11,7 +11,7 @@ method "salsa2012+gmac";
 mtu 1406;
 include "secret.conf";
 secure handshakes yes;
-log to syslog as "fastd-ffka" level debug;
+log to syslog as "fastd-ffka-{{name}}" level debug;
 hide mac addresses yes;
 hide ip addresses yes;
 peer limit 100;
