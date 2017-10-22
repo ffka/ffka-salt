@@ -1,120 +1,119 @@
 router id {{ network.lo_ffka.ipv4.ip }};
 
 protocol kernel {
-#       learn;                  # Learn all alien routes from the kernel
-#       persist;                # Don't remove routes on bird shutdown
-        scan time 10;           # Scan kernel routing table every 20 seconds
-#       import none;            # Default is import all
-    export all;             # Default is export none
-       kernel table 16;         # Kernel table to synchronize with (default: main)
+  scan time 10;
+  # import none;
+  export all;
+  kernel table 16;
 }
 
 # This pseudo-protocol watches all interface up/down events.
 protocol device {
-        scan time 10;           # Scan interfaces every 10 seconds
+  scan time 10;           # Scan interfaces every 10 seconds
 }
 
-function is_default()     { return net ~ [ ::/0                ]; }
-function is_global()      { return net ~ [ 2000::/3+           ]; }
-function is_self_public() { return net ~ [ 2a03:2260:a::/48+ ]; }
+function is_default() {
+  return net ~ [ ::/0                ];
+  return net ~ [ 2000::/3+           ];
+}
+
+function is_global() {
+}
+
+function is_self_public() {
+  return net ~ [ 2a03:2260:a::/48+ ];
+}
+
 function is_self_public_uplink() {
-    if net ~ [ 2a03:2260:a::/48 ] then accept;
-    if net ~ [ 2a03:2260:a::/48{48,64} ] then {
-        if source = RTS_STATIC then accept;
-        if source = RTS_DEVICE then accept;
-        if source = RTS_STATIC_DEVICE then accept;
-    }
-    reject;
- }
-function is_self() { return net ~ [ 2a03:2260:a::1/128 ]; }
-function is_ffka_lo() { return net ~ [ 2a03:2260:a::/48{128,128} ]; }
+  if net ~ [ 2a03:2260:a::/48 ] then accept;
+  if net ~ [ 2a03:2260:a::/48{48,64} ] then {
+    if source = RTS_STATIC then accept;
+    if source = RTS_DEVICE then accept;
+    if source = RTS_STATIC_DEVICE then accept;
+  }
+  reject;
+}
 
+function is_self() {
+  return net ~ [ 2a03:2260:a::1/128 ];
+}
 
-
+function is_ffka_lo() {
+  return net ~ [ 2a03:2260:a::/48{128,128} ];
+}
 
 protocol direct {
-        interface "tun-*";
-        interface "lo";
-        interface "br0";
-        }
+  interface "tun-*";
+  interface "lo";
+  interface "br0";
+}
 
 #protocol static static_nat64 {
-#        route 2a03:2260:a:64:ff9b::/96 via "nat64";
-#
+# route 2a03:2260:a:64:ff9b::/96 via "nat64";
 #};
 
 
 protocol static static_bgp {
-    route 2a03:2260:a::/48 unreachable;
-     route 2a03:2260:a:64::/64 unreachable;
-
+  route 2a03:2260:a::/48 unreachable;
+  route 2a03:2260:a:64::/64 unreachable;
 };
 
-
-
 protocol ospf IGP {
-        import where is_ffka_lo();
-    export where is_self();
+  import where is_ffka_lo();
+  export where is_self();
 
 
-    area 0.0.0.0 {
+  area 0.0.0.0 {
     interface "tun-alb-1";
     interface "tun-alb-2";
     interface "tun-int-ent";
-    interface "br0" {
-            stub yes;
-        };
-
-    interface "lo" {
-        };
-    };
+    interface "br0" { stub yes; };
+    interface "lo";
+  };
 }
 
 template bgp internal {
-        local as 65081;
-#               direct;
-        import all;
-    export all;
-        next hop self;
-        default bgp_local_pref 200;
+  local as 65081;
+  import all;
+  export all;
+  next hop self;
+  default bgp_local_pref 200;
 };
 
-
 protocol bgp alb2 from internal {
-        source address 2a03:2260:a::1;
-        neighbor 2a03:2260:a::3 as 65081;
+  source address 2a03:2260:a::1;
+  neighbor 2a03:2260:a::3 as 65081;
 };
 
 protocol bgp alb3 from internal {
-        source address 2a03:2260:a::1;
-        neighbor 2a03:2260:a::4 as 65081;
+  source address 2a03:2260:a::1;
+  neighbor 2a03:2260:a::4 as 65081;
 };
 
 protocol bgp int_ent from internal {
-        source address 2a03:2260:a::1;
-        neighbor 2a03:2260:a::7 as 65081;
+  source address 2a03:2260:a::1;
+  neighbor 2a03:2260:a::7 as 65081;
 };
 
 protocol bgp alb7 from internal {
-        source address 2a03:2260:a::1;
-        neighbor 2a03:2260:a::8 as 65081;
+  source address 2a03:2260:a::1;
+  neighbor 2a03:2260:a::8 as 65081;
 };
 
 protocol bgp alb1 from internal {
-        source address 2a03:2260:a::1;
-        neighbor 2a03:2260:a::2 as 65081;
+  source address 2a03:2260:a::1;
+  neighbor 2a03:2260:a::2 as 65081;
 };
 
-
 template bgp uplink {
-        local as 65081;
-        import where is_default();
-#   export where proto = "static_bgp";
-        export where is_self_public_uplink();
-        next hop self;
-        gateway direct;
-#       password "idkfa";
-        default bgp_local_pref 1000;
+  local as 65081;
+  import where is_default();
+  #   export where proto = "static_bgp";
+  export where is_self_public_uplink();
+  next hop self;
+  gateway direct;
+  #       password "idkfa";
+  default bgp_local_pref 1000;
 };
 
 protocol bgp ffrl_fra_a from uplink {
