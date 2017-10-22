@@ -7,7 +7,7 @@ install fastd:
 
 Fastd template instance {{ interfaces.name }}:
   file.managed:
-    - name: /etc/fastd/{{ interfaces.name }}/fastd.conf
+    - name: '/etc/fastd/{{ interfaces.name }}/fastd.conf'
     - source: salt://mesh_vpn/files/fastd.j2
     - makedirs: true
     - user: root
