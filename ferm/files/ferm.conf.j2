@@ -10,6 +10,9 @@
 {% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
 tun-{{ gre.name }}
 {% endfor %}
+{% for gre in salt['pillar.get']('network:gre_ffrl:tunnel') %}
+tun-{{ gre.name }}
+{% endfor %}
 );
 @def $L2_TUNNEL_IF = (
 {% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
