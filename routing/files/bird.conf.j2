@@ -1,4 +1,4 @@
-router id {{ network.lo_ffka.pv4.ip }};
+router id {{ network.lo_ffka.ipv4.ip }};
 
 # The Kernel protocol is not a real routing protocol. Instead of communicating
 # with other routers in the network, it performs synchronization of BIRD's
@@ -25,7 +25,7 @@ protocol kernel {
         scan time 60;           # Scan kernel routing table every 20 seconds
 #       import none;            # Default is import all
     export filter {
-        krt_prefsrc = {{ network.lo_ffka.pv4.ip }};
+        krt_prefsrc = {{ network.lo_ffka.ipv4.ip }};
         accept;
     };
 }
@@ -99,7 +99,7 @@ template bgp internal {
 
 
 protocol bgp ffka_{{gre.name}} from internal {
-        source address {{ network.lo_ffka.pv4.ip }};
+        source address {{ network.lo_ffka.ipv4.ip }};
         neighbor {{gre.ffrl_ipv4}} as {{ffka.ffka_as}};
 };
 
