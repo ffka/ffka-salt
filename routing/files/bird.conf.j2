@@ -99,7 +99,7 @@ template bgp internal {
 
 
 protocol bgp ffka_{{gre.name}} from internal {
-        source address {{ network.lo_ffka:.pv4.ip }};
+        source address {{ network.lo_ffka.pv4.ip }};
         neighbor {{gre.ffrl_ipv4}} as {{ffka.ffka_as}};
 };
 
