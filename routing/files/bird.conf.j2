@@ -33,9 +33,9 @@ protocol kernel {
 function is_default() {
         return (net ~ [0.0.0.0/0]);
 };
-function is_self_net()       { return net ~ [ {{ salt['pillar.get']('ffka:v4_ffka') }}+  ]; }
+function is_self_net()       { return net ~ [ {{ salt['pillar.get']('ffka:v4_ffka') }}+ ]; }
 function is_self_public_uplink() {
-	if net ~ [ {{ salt['pillar.get']('ffka:v4_ffrl') }}] then accept;
+	if net ~ [ {{ salt['pillar.get']('ffka:v4_ffrl') }} ] then accept;
 	if net ~ [ {{ salt['pillar.get']('ffka:v4_ffrl') }}{29,32} ] then {
 		if source = RTS_STATIC then accept;
 		if source = RTS_DEVICE then accept;
