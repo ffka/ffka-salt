@@ -13,3 +13,4 @@ base:
     - network.lo_ffka
     - routing
     - batman
+    - ntp
