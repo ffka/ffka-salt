@@ -1,5 +1,5 @@
 {% set fqdn_ip = salt['grains.get']('fqdn_ip4') -%}
-{% set gretab_dev = salt['network.ifacestartswith']('213.239.204.86') -%}
+{% set gretab_dev = salt['network.ifacestartswith']( fqdn_ip ) -%}
 {% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
 {% if gre.mesh | to_bool %}
 auto ftun-{{ gre.name }}
