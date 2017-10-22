@@ -1,2 +1,1 @@
-Salt-Stack FFKA
-
+# Salt-Stack für Freifunk Karlsruhe
