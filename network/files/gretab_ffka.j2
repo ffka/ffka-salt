@@ -1,5 +1,5 @@
 {% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
-{% if  gre.mesh == true %}
+{% if gre.mesh | to_bool %}
 auto ftun-{{ gre.name }}
 iface ftun-{{ gre.name }} inet manual
     pre-up ip link add $IFACE type gretap local {{ grains.fqdn_ip4[0]}} remote {{ gre.remote }} ttl 64 dev eth0 key 111
