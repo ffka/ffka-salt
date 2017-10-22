@@ -14,3 +14,10 @@ radvd config file:
     - context:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
+
+
+service radvd:
+  service.running:
+    - name: radvd
+    - enable: True
+    - reload: True
