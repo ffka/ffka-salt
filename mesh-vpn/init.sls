@@ -3,7 +3,7 @@ install fastd:
     - name: fastd
 
 
-{% for interfaces in salt['pillar.get']['mesh_vpn']['fastd'] %}
+{% for interfaces in salt['pillar.get']['meash_vpn']['fastd'] %}
 
 Fastd template instance {{ interfaces.name }}:
   file.managed:
