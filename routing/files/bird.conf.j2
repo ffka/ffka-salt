@@ -1,4 +1,4 @@
-router id 185.66.194.8;
+router id {{ salt['pillar.get']('network:lo_ffka:ipv4:ip') }};
 
 # The Kernel protocol is not a real routing protocol. Instead of communicating
 # with other routers in the network, it performs synchronization of BIRD's
@@ -12,7 +12,7 @@ router id 185.66.194.8;
 
 # The Device protocol is not a real routing protocol. It doesn't generate any
 # routes and it only serves as a module for getting information about network
-# interfaces from the kernel. 
+# interfaces from the kernel.
 protocol device {
 	scan time 60;
 }
@@ -34,7 +34,7 @@ function is_default() {
         return (net ~ [0.0.0.0/0]);
 };
 function is_self_net()       { return net ~ [ 10.214.0.0/16+  ]; }
-function is_self_public_uplink() { 
+function is_self_public_uplink() {
 	if net ~ [ 185.66.194.8/29 ] then accept;
 	if net ~ [ 185.66.194.8/29{29,32} ] then {
 		if source = RTS_STATIC then accept;
@@ -68,7 +68,7 @@ protocol static static_bgp {
 protocol ospf IGP {
 	import all;
 	export where is_self_net();
-	
+
 
 	area 0.0.0.0 {
 {% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
