@@ -34,5 +34,5 @@ enable/run systemd {{ interfaces.name }}:
     - name: fastd@{{ interfaces.name }}
     - enable: true
     - watch:
-      - file: /etc/fastd/{{ instance.name }}/fastd.conf
+      - file: /etc/fastd/{{ interfaces.name }}/fastd.conf
 {% endfor %}
