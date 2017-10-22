@@ -1,0 +1,45 @@
+interface br_ffka
+{
+   IgnoreIfMissing on;
+   AdvSendAdvert on;
+   MinRtrAdvInterval 10;
+   MaxRtrAdvInterval 30;
+   AdvSourceLLAddress off;
+   AdvManagedFlag off;
+   AdvOtherConfigFlag off;
+   AdvReachableTime 0;
+   AdvRetransTimer 0;
+   AdvCurHopLimit 64;
+   AdvLinkMTU 1378;
+   #AdvDefaultLifetime 30;
+   AdvHomeAgentFlag off;
+   AdvDefaultPreference medium;
+   UnicastOnly on;
+
+   prefix 2a03:2260:a:b::/64
+   {
+       AdvValidLifetime 10800;
+       AdvPreferredLifetime 3600;
+       AdvOnLink on;
+       AdvAutonomous on;
+       #AdvRouterAddr on;
+   }; # End of prefix definition
+
+ route 2a03:2260:a::/48
+ {
+   AdvRoutePreference medium;
+   AdvRouteLifetime 3600;
+ }; # End of route definition
+
+   RDNSS 2a03:2260:a:b::1
+   {
+       AdvRDNSSLifetime 300;
+   }; # End of RDNSS definition
+
+
+   DNSSL clients.ffka.tech
+   {
+       AdvDNSSLLifetime 300;
+   }; # End of DNSSL definition
+
+}; # End of interface definition
