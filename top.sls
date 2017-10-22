@@ -14,3 +14,4 @@ base:
     - routing
     - batman
     - ntp
+    - ferm
