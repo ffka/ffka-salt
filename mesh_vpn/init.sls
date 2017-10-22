@@ -7,7 +7,7 @@ install fastd:
 
 /etc/fastd/{{ interfaces.name }}/fastd.conf:
   file.managed:
-#    - name: '/etc/fastd/{{ interfaces.name }}/fastd.conf'
+    - name: /etc/fastd/{{ interfaces.name }}/fastd.conf
     - source: salt://mesh_vpn/files/fastd.j2
     - makedirs: true
     - user: root
@@ -15,9 +15,9 @@ install fastd:
     - mode: 660
     - template: jinja
     - context:
-      name: "{{ interfaces.name }}"
-      bind: "{{ interfaces.bind }}"
-      mac: "{{ interfaces.mac }}"
+        name: "{{ interfaces.name }}"
+        bind: "{{ interfaces.bind }}"
+        mac: "{{ interfaces.mac }}"
 
 Fastd secret instance {{ interfaces.name }}:
   file.managed:
