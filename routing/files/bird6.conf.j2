@@ -1,9 +1,5 @@
-router id 185.66.194.8;
+router id {{ network.lo_ffka.ipv4.ip }};
 
-# This pseudo-protocol performs synchronization between BIRD's routing
-# tables and the kernel. If your kernel supports multiple routing tables
-# (as Linux 2.2.x does), you can run multiple instances of the kernel
-# protocol and synchronize different kernel tables with different BIRD tables.
 protocol kernel {
 #       learn;                  # Learn all alien routes from the kernel
 #       persist;                # Don't remove routes on bird shutdown
@@ -21,7 +17,7 @@ protocol device {
 function is_default()     { return net ~ [ ::/0                ]; }
 function is_global()      { return net ~ [ 2000::/3+           ]; }
 function is_self_public() { return net ~ [ 2a03:2260:a::/48+ ]; }
-function is_self_public_uplink() { 
+function is_self_public_uplink() {
     if net ~ [ 2a03:2260:a::/48 ] then accept;
     if net ~ [ 2a03:2260:a::/48{48,64} ] then {
         if source = RTS_STATIC then accept;
@@ -51,7 +47,7 @@ protocol direct {
 protocol static static_bgp {
     route 2a03:2260:a::/48 unreachable;
      route 2a03:2260:a:64::/64 unreachable;
-    
+
 };
 
 
@@ -59,7 +55,7 @@ protocol static static_bgp {
 protocol ospf IGP {
         import where is_ffka_lo();
     export where is_self();
-    
+
 
     area 0.0.0.0 {
     interface "tun-alb-1";
@@ -68,7 +64,7 @@ protocol ospf IGP {
     interface "br0" {
             stub yes;
         };
- 
+
     interface "lo" {
         };
     };

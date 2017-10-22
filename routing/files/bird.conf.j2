@@ -1,33 +1,17 @@
 router id {{ network.lo_ffka.ipv4.ip }};
 
-# The Kernel protocol is not a real routing protocol. Instead of communicating
-# with other routers in the network, it performs synchronization of BIRD's
-# routing tables with the OS kernel.
-#protocol kernel {
-#	scan time 60;
-#	import all;
-#	export all;   # Actually insert routes into the kernel routing table
-#
-#}
-
-# The Device protocol is not a real routing protocol. It doesn't generate any
-# routes and it only serves as a module for getting information about network
-# interfaces from the kernel.
 protocol device {
 	scan time 60;
 }
 
-
 protocol kernel {
-       kernel table 16;         # Kernel table to synchronize with (default: main)
-#       learn;                  # Learn all alien routes from the kernel
-#       persist;                # Don't remove routes on bird shutdown
-        scan time 60;           # Scan kernel routing table every 20 seconds
-#       import none;            # Default is import all
-    export filter {
-        krt_prefsrc = {{ network.lo_ffka.ipv4.ip }};
-        accept;
-    };
+  kernel table 16;
+  scan time 60;
+# import none;
+  export filter {
+  	krt_prefsrc = {{ network.lo_ffka.ipv4.ip }};
+  	accept;
+  };
 }
 
 function is_default() {
