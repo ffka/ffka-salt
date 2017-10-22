@@ -1,0 +1,10 @@
+{% set lo_ffka_ipv4_ip = salt['pillar.get']('network:lo_ffka:ipv4:ip') -%}
+{% set lo_ffka_ipv6_ip = salt['pillar.get']('network:lo_ffka:ipv6:ip') -%}
+
+
+iface lo inet static
+ address {{ lo_ffka_ipv4_ip }}
+ netmask 255.255.255.255
+iface lo inet6 static
+ address {{ lo_ffka_ipv6_ip }}
+ netmask 128

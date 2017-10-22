@@ -8,3 +8,10 @@ base:
     - network
     - network.ip_rt_tables_freifunk
     - network.br_ffka
+    - network.gre_ffka
+    - network.gre_ffrl
+    - network.lo_ffka
+    - routing
+    - batman
+    - ntp
+    - ferm
