@@ -2,9 +2,9 @@
 {% if  gre.mesh == 'True' %}
 auto ftun-{{ gre.name }}
 iface ftun-{{ gre.name }} inet manual
-    pre-up ip link add ftun-{{ gre.name }} type gretap local {{ grains.fqdn_ip4[0]}} remote {{ gre.remote }} ttl 64 dev eth0 key 111
-    post-up ip link set dev ftun-{{ gre.name }} up
-    post-up batctl -m bat0 if add ftun-{{ gre.name }}
-    post-down ip link del ftun-{{ gre.name }}
+    pre-up ip link add $IFACE type gretap local {{ grains.fqdn_ip4[0]}} remote {{ gre.remote }} ttl 64 dev eth0 key 111
+    post-up ip link set dev $IFACE up
+    post-up batctl -m bat0 if add $IFACE
+    post-down ip link del $IFACE
 {% endif %}
 {% endfor %}
