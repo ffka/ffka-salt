@@ -1,4 +1,8 @@
-bind {{bind}} interface "eth0";
+{% set fqdn_ip = salt['grains.get']('fqdn_ip4')[0] -%}
+{% set fastd_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
+
+
+bind {{bind}} interface "{{ fastd_dev }}";
 interface "mesh-ffka-{{name}}";
 user "nobody";
 mode tap;
