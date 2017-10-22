@@ -5,7 +5,7 @@ install fastd:
 
 {% for interfaces in salt['pillar.get']('mesh_vpn:fastd:interfaces') %}
 
-/etc/fastd/{{ interfaces.name }}/fastd.conf:
+Fastd config file {{ interfaces.name }}:
   file.managed:
     - name: /etc/fastd/{{ interfaces.name }}/fastd.conf
     - source: salt://mesh_vpn/files/fastd.j2
@@ -19,7 +19,7 @@ install fastd:
         bind: "{{ interfaces.bind }}"
         mac: "{{ interfaces.mac }}"
 
-Fastd secret instance {{ interfaces.name }}:
+Fastd secret {{ interfaces.name }}:
   file.managed:
     - name: /etc/fastd/{{ interfaces.name }}/secret.conf
     - source: salt://mesh_vpn/files/secret.conf
@@ -28,4 +28,11 @@ Fastd secret instance {{ interfaces.name }}:
     - group: root
     - mode: 660
     - template: jinja
+
+enable/run systemd {{ interfaces.name }}:
+  service.running:
+    - name: fastd@{{ interfaces.name }}
+    - enable: true
+    - watch:
+      - file: /etc/fastd/{{ instance.name }}/fastd.conf
 {% endfor %}
