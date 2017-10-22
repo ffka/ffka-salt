@@ -25,7 +25,7 @@ protocol kernel {
         scan time 60;           # Scan kernel routing table every 20 seconds
 #       import none;            # Default is import all
     export filter {
-        krt_prefsrc = 185.66.194.8;
+        krt_prefsrc = {{ salt['pillar.get']('network:lo_ffka:ipv4:ip') }};
         accept;
     };
 }
@@ -33,10 +33,10 @@ protocol kernel {
 function is_default() {
         return (net ~ [0.0.0.0/0]);
 };
-function is_self_net()       { return net ~ [ 10.214.0.0/16+  ]; }
+function is_self_net()       { return net ~ [ {{ salt['pillar.get']('ffka:v4_ffka') }}+  ]; }
 function is_self_public_uplink() {
-	if net ~ [ 185.66.194.8/29 ] then accept;
-	if net ~ [ 185.66.194.8/29{29,32} ] then {
+	if net ~ [ {{ salt['pillar.get']('ffka:v4_ffrl') }}] then accept;
+	if net ~ [ {{ salt['pillar.get']('ffka:v4_ffrl') }}{29,32} ] then {
 		if source = RTS_STATIC then accept;
 		if source = RTS_DEVICE then accept;
 		if source = RTS_STATIC_DEVICE then accept;
@@ -45,7 +45,7 @@ function is_self_public_uplink() {
  }
 
 filter hostroute {
-        if net ~ 185.66.194.8/29 then accept;
+        if net ~ {{ salt['pillar.get']('ffka:v4_ffrl') }} then accept;
         reject;
 };
 
@@ -62,7 +62,7 @@ protocol direct {
 
 
 protocol static static_bgp {
-	route 185.66.194.8/29 unreachable;
+	route {{ salt['pillar.get']('ffka:v4_ffrl') }} unreachable;
 };
 
 protocol ospf IGP {
