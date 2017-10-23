@@ -32,7 +32,7 @@ ext-respondd alias.json:
     - source: salt://respondd/files/alias.json.j2
     - template: jinja
 
-/etc/systemd/system/ferm.service:
+/etc/systemd/system/ext-respondd.service:
   file.managed:
     - source: salt://respondd/files/ext-respondd.service
     - user: root
@@ -43,4 +43,4 @@ ext-respondd service:
   service.running:
     - enable: True
     - require:
-      - file: /etc/systemd/system/ferm.service
+      - file: /etc/systemd/system/ext-respondd.service
