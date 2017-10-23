@@ -1,4 +1,4 @@
-{% for fqdn in salt['pillar.get']('fqdn') %}
+{% set fqdn = salt['pillar.get']('fqdn') %}
 {
   "nodeinfo": {
     "hostname": "{{ fqdn }}",
