@@ -21,6 +21,7 @@ base:
     - dns
     - respondd
   'api.frickelfunk.net':
+    - network.ip_rt_tables_freifunk
     - network.br_ffka
     - network.gre_ffka
     - batman
