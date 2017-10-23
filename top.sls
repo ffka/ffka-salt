@@ -20,3 +20,7 @@ base:
     - dhcp
     - dns
     - respondd
+  'api.frickelfunk.net':
+    - network.br_ffka
+    - network.gre_ffka
+    - batman
