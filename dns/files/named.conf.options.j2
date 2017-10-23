@@ -10,7 +10,7 @@ transfer-source-v6 {{ grains.fqdn_ip6[0] }};
 //      dns64 2a03:2260:a:64:ff9b::/96 {
 //              clients { {{ ffka.v6_ffrl }}; };
 //      };
- query-source-v6 address 2a03:2260:a::1 ;
+ query-source-v6 address {{ network.lo_ffka.ipv6.ip }} ;
 
 // freifunk
       listen-on {
