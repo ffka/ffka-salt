@@ -21,5 +21,6 @@ packages_base:
       - ltrace
       - debian-goodies
       - tcpdump
-      - dnsutils 
+      - dnsutils
       - mtr-tiny
+      - git
