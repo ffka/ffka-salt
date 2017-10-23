@@ -1,7 +1,7 @@
+{% for fqdn in salt['pillar.get']('fqdn') %}
 {
   "nodeinfo": {
-    "hostname": "albufer0.frickelfunk.net",
-    "node_id": "deadcafe1337",
+    "hostname": "{{ fqdn }}",
     "owner": {
       "contact": "info@karlsruhe.freifunk.net"
     },
@@ -9,9 +9,6 @@
       "site_code": "ffka",
       "role": "gateway"
     },
-    "vpn": true,
-    "pages": [
-      "https://karlsruhe.freifunk.net/"
-    ]
-  },
+    "vpn": true
+  }
 }
