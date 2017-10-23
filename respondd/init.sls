@@ -41,6 +41,7 @@ ext-respondd alias.json:
 
 ext-respondd service:
   service.running:
+    - name: ext-respondd
     - enable: True
     - require:
       - file: /lib/systemd/system/ext-respondd.service
