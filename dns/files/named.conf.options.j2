@@ -1,0 +1,27 @@
+directory "/var/cache/bind";
+
+dnssec-validation auto;
+
+auth-nxdomain no;    # conform to RFC1035
+listen-on-v6 { any; };
+allow-query { any; };
+transfer-source-v6 {{ grains.fqdn_ip6[0] }};
+//      dns64 2a03:2260:a:64:ff9b::/96 {
+//              clients { {{ ffka.v6_ffrl }}; };
+//      };
+ query-source-v6 address 2a03:2260:a::1 ;
+
+// freifunk
+      listen-on {
+       127.0.0.1;
+  {{ network.br_ffka.ipv4.ip }};
+  {{ grains.fqdn_ip4[0] }};
+  {{ network.lo_ffka.ipv4.ip }};
+      };
+      allow-transfer { "xferhosts" ; };
+      allow-recursion { "recursionhosts" ; };
+      allow-query-cache { "recursionhosts" ; };
+   query-source address {{ network.lo_ffka.ipv4.ip }};
+
+
+};
