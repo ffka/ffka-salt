@@ -4,7 +4,7 @@
 
 bind {{bind}} interface "{{ fastd_dev }}";
 interface "mesh-ffka-{{name}}";
-user "nobody";
+# user "nobody";
 mode tap;
 method "null+salsa2012+umac";
 method "null+salsa2012+gmac";
