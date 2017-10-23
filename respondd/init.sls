@@ -5,7 +5,6 @@ install Dependencies for ext-respondd:
       - ethtool
       - lsb-release
 
-
 get latest ext-respondd:
   git.latest:
     - name: https://github.com/ffka/ext-respondd
@@ -31,9 +30,12 @@ ext-respondd alias.json:
     - mode: 644
     - source: salt://respondd/files/alias.json.j2
     - template: jinja
+    - context:
+        ffka: {{ pillar['ffka'] }}
 
-/lib/systemd/system/ext-respondd.service:
+ext-respondd systemd service file:
   file.managed:
+    - name: /lib/systemd/system/ext-respondd.service
     - source: salt://respondd/files/ext-respondd.service
     - user: root
     - group: root
