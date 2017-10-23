@@ -10,6 +10,7 @@ get latest ext-respondd:
   git.latest:
     - name: https://github.com/ffka/ext-respondd
     - target: /opt/ext-respondd
+    - force_clone: True
 
 ext-respondd config.json:
   file.managed:
