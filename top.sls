@@ -18,3 +18,4 @@ base:
     - mesh_vpn
     - radvd
     - dhcp
+    - dns
