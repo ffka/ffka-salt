@@ -14,10 +14,10 @@ place bind9 named.conf:
 
 
 {% for subconfig in ['acl','default-zones','local','options','log'] %}
-place bind9 named.{{subconfig}}.conf:
+place bind9 named.conf.{{subconfig}}:
   file.managed:
-    - name: /etc/bind/named.{{subconfig}}.conf
-    - source: salt://dns/files/named.{{subconfig}}.conf.j2
+    - name: /etc/bind/named.conf.
+    - source: salt://dns/files/named.conf.{{subconfig}}.j2
     - template: jinja
     - context:
         network: {{ pillar['network'] }}
