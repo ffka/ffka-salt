@@ -13,7 +13,7 @@ place bind9 named.conf:
 
 
 {% for subconfig in ['', '.acl','.default-zones','.local','.options','.log'] %}
-place bind9 named.conf.{{subconfig}}:
+place bind9 named.conf{{subconfig}}:
   file.managed:
     - name: '/etc/bind/named.conf{{ subconfig }}'
     - source: 'salt://dns/files/named.conf{{ subconfig }}.j2'
@@ -22,3 +22,8 @@ place bind9 named.conf.{{subconfig}}:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
 {% endfor %}
+
+enable and start bind9 service:
+  service.running:
+    - name: bind9
+    - enable: True
