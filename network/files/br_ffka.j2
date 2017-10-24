@@ -15,7 +15,7 @@ iface br_ffka inet static
         up ip rule add from 10.214.0.0/16 table freifunk
         up ip rule add to 185.66.194.8/29 table freifunk
         up ip rule add from 185.66.194.8/29 table freifunk
-{% endfor %}
+{% endif %}
 iface br_ffka inet6 static
         address {{ br_ffka_ipv6_ip }}
         netmask 64
@@ -24,4 +24,4 @@ iface br_ffka inet6 static
         post-up ip -6 rule add to 2a03:2260:a::/48 table freifunk
         post-up ip -6 rule add from 2a03:2260:a::/48 table freifunk
         post-up ip -6 addr add fe80::1/64 dev br_ffka preferred_lft 0
-{% endfor %}
+{% endif %}
