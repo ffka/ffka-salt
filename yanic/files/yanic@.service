@@ -1,0 +1,15 @@
+[Unit]
+Description=Yanic - Yet another node info collector
+Documentation=https://github.com/FreifunkBremen/yanic
+After=network.target
+
+[Service]
+Type=simple
+User=yanic
+Group=yanic
+ExecStart=/var/lib/yanic/go/bin/yanic -config /etc/yanic/config-%I.toml
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
