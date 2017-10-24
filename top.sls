@@ -26,3 +26,4 @@ base:
     - network.br_ffka
     - network.gre_ffka
     - batman
+    - yanic
