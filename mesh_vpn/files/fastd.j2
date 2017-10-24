@@ -20,7 +20,7 @@ hide mac addresses yes;
 hide ip addresses yes;
 peer limit 100;
 
-status socket "/var/run/fastd.ffka-{{name}}.sock";
+status socket "/run/fastd.ffka-{{name}}.sock";
 
 #folgende Zeile sorgt dafuer das jeder Peer akzeptiet wird
 on verify "true";
