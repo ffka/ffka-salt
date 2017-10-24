@@ -70,7 +70,7 @@ yanic:
     - context:
         ffka: {{ pillar['ffka'] }}
 
-yanic@{{ ffka.site_code}}:
+yanic@{{ ffka.site_code }}:
   service.running:
     - enable: True
     - require:
@@ -79,4 +79,5 @@ yanic@{{ ffka.site_code}}:
       - file: /etc/yanic/config-{{ ffka.site_code }}.toml
     - watch:
       - file: /etc/systemd/system/yanic@.service
+      - file: /etc/yanic/config-{{ ffka.site_code }}.toml
       - cmd: yanic
