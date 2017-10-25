@@ -2,6 +2,8 @@ base:
   '*':
     - common.packages
     - common.datetime
+    - common.ffkaadmin
+    - common.sudo
   'albufer*':
     - kernel
     - kernel.sysctl
