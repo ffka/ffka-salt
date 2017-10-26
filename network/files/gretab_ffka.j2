@@ -9,6 +9,7 @@ iface ftun-{{ gre.name }} inet manual
     post-up ip link set dev $IFACE up
     post-up batctl -m bat0 if add $IFACE
     post-down ip link del $IFACE
+    mtu 1400
 {% endif %}
 {% endfor %}
 
@@ -19,4 +20,5 @@ iface ftun-{{ gre.name }} inet manual
     post-up ip link set dev $IFACE up
     post-up batctl -m bat0 if add $IFACE
     post-down ip link del $IFACE
+    mtu 1400
 {% endfor %}
