@@ -7,7 +7,7 @@ After=network.target
 Type=simple
 User=yanic
 Group=yanic
-ExecStart=/var/lib/yanic/go/bin/yanic -config /etc/yanic/config-%I.toml
+ExecStart=/var/lib/yanic/go/bin/yanic serve --config /etc/yanic/config-%I.toml
 Restart=always
 RestartSec=3
 
