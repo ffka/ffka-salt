@@ -9,7 +9,7 @@ iface tun-{{ gre.name }} inet tunnel
   local {{ grains.fqdn_ip4[0]}}
   endpoint {{ gre.gre_target }}
   ttl 64
-  mtu 1476
+  mtu 1400
 
 iface tun-{{ gre.name }} inet6 static
   address {{ gre.v6_network }}
