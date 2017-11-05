@@ -14,7 +14,7 @@
     - makedirs: True
     - template: jinja
 
-/home/ffkaadmin/.screenrc:
+/home/{{ ffka_user.name }}/.screenrc:
   file.managed:
     - source: salt://common/files/screenrc.root
 {% endfor %}
