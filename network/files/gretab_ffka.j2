@@ -22,3 +22,13 @@ iface ftun-{{ gre.name }} inet manual
     post-down ip link del $IFACE
     mtu 1400
 {% endfor %}
+
+{% for gre in salt['pillar.get']('network:gretab_ffka_specialv6:tunnel') %}
+auto ftun-{{ gre.name }}
+iface ftun-{{ gre.name }} inet manual
+    pre-up ip link add $IFACE type ip6gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretab_dev }} key 111
+    post-up ip link set dev $IFACE up
+    post-up batctl -m bat0 if add $IFACE
+    post-down ip link del $IFACE
+    mtu 1400
+{% endfor %}
