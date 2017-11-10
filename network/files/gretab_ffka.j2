@@ -23,6 +23,8 @@ iface ftun-{{ gre.name }} inet manual
     mtu 1400
 {% endfor %}
 
+
+{#
 {% for gre in salt['pillar.get']('network:gretab_ffka_specialv6:tunnel') %}
 auto ftun-{{ gre.name }}
 iface ftun-{{ gre.name }} inet manual
@@ -32,3 +34,4 @@ iface ftun-{{ gre.name }} inet manual
     post-down ip link del $IFACE
     mtu 1400
 {% endfor %}
+#}
