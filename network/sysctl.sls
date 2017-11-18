@@ -66,7 +66,7 @@ net.ipv4.conf.default.rp_filter:
     - value: 0
     - config: {{ sysctld }}/rp_filter.conf
 
-net.ipv4.conf.all.rp_filter
+net.ipv4.conf.all.rp_filter:
   sysctl.present:
     - value: 0
     - config: {{ sysctld }}/rp_filter.conf
