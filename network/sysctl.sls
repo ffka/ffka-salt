@@ -7,8 +7,15 @@ nf_conntrack:
 
 net.netfilter.nf_conntrack_max:
   sysctl.present:
-    - value: 256000
+    - value: 1048576
     - config: {{ sysctld }}/conntrack.conf
+
+net.netfilter.nf_conntrack_tcp_timeout_established:
+  sysctl.present:
+    - value: 21600
+    - config: {{ sysctld }}/conntrack.conf
+
+
 
 # arp/ndp
 net.ipv4.neigh.default.gc_thresh1:
@@ -28,7 +35,7 @@ net.ipv4.neigh.default.gc_thresh3:
 
 net.ipv6.neigh.default.gc_thresh1:
   sysctl.present:
-    - value: 2048 
+    - value: 2048
     - config: {{ sysctld }}/neigh.conf
 
 net.ipv6.neigh.default.gc_thresh2:
@@ -52,12 +59,39 @@ net.ipv6.conf.all.forwarding:
     - value: 1
     - config: {{ sysctld }}/forward.conf
 
+#RP_Filter
+
+net.ipv4.conf.default.rp_filter:
+  sysctl.present:
+    - value: 0
+    - config: {{ sysctld }}/rp_filter.conf
+
+net.ipv4.conf.all.rp_filter
+  sysctl.present:
+    - value: 0
+    - config: {{ sysctld }}/rp_filter.conf
+
 net.core.rmem_max:
   sysctl.present:
-    - value: 8388608
+    - value: 67108864
     - config: {{ sysctld }}/rmem_max.conf
 
 net.core.rmem_default:
   sysctl.present:
     - value: 8388608
     - config: {{ sysctld }}/rmem_default.conf
+
+net.core.wmem_max:
+  sysctl.present:
+    - value: 67108864
+    - config: {{ sysctld }}/wmem_max.conf
+
+net.core.netdev_max_backlog:
+  sysctl.present:
+    - value: 250000
+    - config: {{ sysctld }}/netdev_max_backlog.conf
+
+net.core.somaxconn:
+  sysctl.present:
+    - value: 4096
+    - config: {{ sysctld }}/netdev_max_backlog.conf
