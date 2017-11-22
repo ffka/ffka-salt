@@ -1,0 +1,98 @@
+{% set master_api_key = salt['pillar.get']('netdata:stream:master_api_key') -%}
+{% set master_dns = salt['pillar.get']('netdata:stream:master_dns') -%}
+{% set netdata_stream_master = salt['pillar.get']('netdata_stream_master') -%}
+
+
+{% if netdata_stream_master | to_bool %}
+
+[a395d19f-68cf-44c2-acae-b088c926c35c]
+    # Default settings for this API key
+
+    # You can disable the API key, by setting this to: no
+    # The default (for unknown API keys) is: no
+    enabled = yes
+
+    # A list of simple patterns matching the IPs of the servers that
+    # will be pushing metrics using this API key.
+    # The metrics are received via the API port, so the same IPs
+    # should also be matched at netdata.conf [web].allow connections from
+    allow from = *
+
+    # The default history in entries, for all hosts using this API key.
+    # You can also set it per host below.
+    # If you don't set it here, the history size of the central netdata
+    # will be used.
+    default history = 3600
+
+    # The default memory mode to be used for all hosts using this API key.
+    # You can also set it per host below.
+    # If you don't set it here, the memory mode of netdata.conf will be used.
+    # Valid modes:
+    #    save    save on exit, load on start
+    #    map     like swap (continuously syncing to disks)
+    #    ram     keep it in RAM, don't touch the disk
+    #    none    no database at all (use this on headless proxies)
+    default memory mode = ram
+
+    # Shall we enable health monitoring for the hosts using this API key?
+    # 3 possible values:
+    #    yes     enable alarms
+    #    no      do not enable alarms
+    #    auto    enable alarms, only when the sending netdata is connected
+    # You can also set it per host, below.
+    # The default is the same as to netdata.conf
+    health enabled by default = auto
+
+    # postpone alarms for a short period after the sender is connected
+    default postpone alarms on connect seconds = 60
+
+    # need to route metrics differently? set these.
+    # the defaults are the ones at the [stream] section
+    #default proxy enabled = yes | no
+    #default proxy destination = IP:PORT IP:PORT ...
+    #default proxy api key = API_KEY
+
+{% elif %}
+
+[stream]
+    # Enable this on slaves, to have them send metrics.
+    enabled = yes
+
+    # Where is the receiving netdata?
+    # A space separated list of:
+    #
+    #      [PROTOCOL:]HOST[%INTERFACE][:PORT]
+    #
+    # If many are given, the first available will get the metrics.
+    #
+    # PROTOCOL  = tcp, udp, or unix (only tcp and unix are supported by masters)
+    # HOST      = an IPv4, IPv6 IP, or a hostname, or a unix domain socket path.
+    #             IPv6 IPs should be given with brackets [ip:address]
+    # INTERFACE = the network interface to use (only for IPv6)
+    # PORT      = the port number or service name (/etc/services)
+    #
+    # This communication is not HTTP (it cannot be proxied by web proxies).
+    destination = monitor.frickelfunk.net
+
+    # The API_KEY to use (as the sender)
+    api key = a395d19f-68cf-44c2-acae-b088c926c35c
+
+    # The timeout to connect and send metrics
+    timeout seconds = 60
+
+    # If the destination line above does not specify a port, use this
+    default port = 19999
+
+    # The buffer to use for sending metrics.
+    # 1MB is good for 10-20 seconds of data, so increase this
+    # if you expect latencies.
+    buffer size bytes = 1048576
+
+    # If the connection fails, or it disconnects,
+    # retry after that many seconds.
+    reconnect delay seconds = 5
+
+    # Attempt to sync the clock the of the master with the clock of the
+    # slave for that many iterations, when starting.
+    initial clock resync iterations = 60
+{% endif %}

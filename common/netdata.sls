@@ -38,3 +38,9 @@ netdataupdate:
     - cwd: /root/netdatagit
     - name: ./netdata-updater.sh
     - onlyif: test -f ./netdata-updater.sh
+
+netdatastream:
+  file.managed:
+    - name: '/etc/netdata/stream.conf'
+    - source: 'salt://common/files/netdata/stream.conf.j2'
+    - template: jinja
