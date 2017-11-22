@@ -28,4 +28,4 @@ netdatainstall:
     - pkg: netdatarequisites
   cmd.run:
     - cwd: /root/netdatagit
-    - name: ./netdata-installer.sh
+    - name: ./netdata-installer.sh --dont-wait --auto-update
