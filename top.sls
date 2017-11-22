@@ -4,6 +4,7 @@ base:
     - common.datetime
     - common.ffkaadmin
     - common.sudo
+    - common.netdata
   'albufer*':
     - kernel
     - kernel.sysctl
