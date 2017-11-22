@@ -51,4 +51,4 @@ service netdata:
   service.running:
     - name: netdata
     - enable: True
-    - reload: True
+    - restart: True
