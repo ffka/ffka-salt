@@ -29,3 +29,12 @@ netdatainstall:
   cmd.run:
     - cwd: /root/netdatagit
     - name: ./netdata-installer.sh --dont-wait --auto-update
+    - unless: test -f ./netdata-updater.sh
+
+netdataupdate:
+  require:
+    - cmd: netdatainstall
+  cmd.run:
+    - cwd: /root/netdatagit
+    - name: ./netdata-updater.sh
+    - onlyif: test -f ./netdata-updater.sh
