@@ -46,3 +46,9 @@ netdatastream:
     - name: '/etc/netdata/stream.conf'
     - source: 'salt://common/files/netdata/stream.conf.j2'
     - template: jinja
+
+service netdata:
+  service.running:
+    - name: netdata
+    - enable: True
+    - reload: True
