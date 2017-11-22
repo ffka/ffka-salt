@@ -40,6 +40,8 @@ netdataupdate:
     - onlyif: test -f ./netdata-updater.sh
 
 netdatastream:
+  require:
+    - cmd: netdatainstall
   file.managed:
     - name: '/etc/netdata/stream.conf'
     - source: 'salt://common/files/netdata/stream.conf.j2'
