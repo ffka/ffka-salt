@@ -51,4 +51,10 @@ service netdata:
   service.running:
     - name: netdata
     - enable: True
-    - restart: True
+    - reload: True
+
+netdata_service_restart:
+  cmd.run:
+    - name: service netdata restart
+    - user: root
+    - group: root
