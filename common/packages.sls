@@ -24,3 +24,4 @@ packages_base:
       - dnsutils
       - mtr-tiny
       - git
+      - apt-transport-https
