@@ -1,3 +1,4 @@
+{% set fastd_nat_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
 #
 # Freifunk Karlsruhe
 # NAT and ebtables Rules
@@ -35,7 +36,7 @@ domain (ip ip6) table filter {
 domain ip table nat {
 
 	chain PREROUTING {
-		interface (enp3s0) {
+		interface ({{ fastd_nat_dev }}) {
 			proto udp {
 				mod u32 {
 					u32 '0xc&0x3=0x0' mod udp dport 10000 REDIRECT to-ports 10001;
