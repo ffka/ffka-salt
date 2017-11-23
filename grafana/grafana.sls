@@ -1,5 +1,7 @@
-include:
-  - apt.transport.https
+grafana_base:
+  pkg.installed:
+    - pkgs:
+     - apt-transport-https
 
 grafana:
   pkgrepo.managed:
