@@ -30,3 +30,5 @@ base:
     - network.gre_ffka
     - batman
     - yanic
+  'monitor.frickelfunk.net':
+    - grafana
