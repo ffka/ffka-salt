@@ -1,3 +1,4 @@
+{% set fqdn_ip = salt['grains.get']('fqdn_ip4')[0] -%}
 {% set fastd_nat_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
 #
 # Freifunk Karlsruhe
