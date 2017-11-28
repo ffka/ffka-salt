@@ -33,5 +33,6 @@ base:
     - mesh_vpn.client
     - batman
     - yanic
+    - meshviewer
   'monitor.frickelfunk.net':
     - grafana
