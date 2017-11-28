@@ -1,0 +1,8 @@
+{% set prometheus = salt['grains.filter_by']({
+    'default': {
+      'release': '2.0.0',
+      'release_hash': 'e12917b25b32980daee0e9cf879d9ec197e2893924bd1574604eb0f550034d46',
+      'alertmanager_release': '0.11.0',
+      'alertmanager_release_hash': '006fe10659bebe5a625eaf2fac46eb8cf5610b4cd9b6a25238f77c6173c05166'
+    }
+}, grain='os_family', merge=salt['pillar.get']('prometheus')) %}
