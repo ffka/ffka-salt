@@ -6,7 +6,7 @@ Documentation=https://prometheus.io/docs/introduction/overview/
 
 [Service]
 Restart=always
-User=prometheus
+User=root
 WorkingDirectory=/var/lib/prometheus
 EnvironmentFile=/etc/default/prometheus
 ExecStart=/opt/prometheus-{{ prometheus['release'] }}.linux-amd64/prometheus $ARGS

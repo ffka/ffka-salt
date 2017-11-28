@@ -26,7 +26,7 @@ scrape_configs:
 
     metrics_path: /api/v1/allmetrics
     params:
-      format: [ prometheus ]
+      format: [ prometheus_all_hosts ]
 
     static_configs:
       - targets: ['localhost:19999']
