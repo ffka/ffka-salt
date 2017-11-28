@@ -8,8 +8,8 @@ prometheus tarball:
     - source_hash: sha256={{ prometheus['release_hash'] }}
     - if_missing: /opt/prometheus-{{ prometheus['release'] }}.linux-amd64
     - name: /opt
-    - user: prometheus
-    - group: prometheus
+    - user: root
+    - group: root
     - watch_in:
       - service: prometheus.service
 
@@ -19,16 +19,16 @@ prometheus tarball:
 /etc/prometheus/prometheus.yml:
   file.managed:
     - source: salt://prometheus/files/prometheus.yml.j2
-    - user: prometheus
-    - group: prometheus
+    - user: root
+    - group: root
     - mode: 644
     - template: jinja
 
 /etc/default/prometheus:
   file.managed:
     - source: salt://prometheus/files/prometheus
-    - user: prometheus
-    - group: prometheus
+    - user: root
+    - group: root
     - mode: 644
 
 /etc/systemd/system/prometheus.service:
