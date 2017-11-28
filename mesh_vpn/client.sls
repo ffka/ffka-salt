@@ -7,10 +7,7 @@ Fastd config file client:
     - group: root
     - mode: 660
     - template: jinja
-    - context:
-        name: "{{ interfaces.name }}"
-        bind: "{{ interfaces.bind }}"
-        mac: "{{ interfaces.mac }}"
+
 
 Fastd secret client:
   file.managed:
