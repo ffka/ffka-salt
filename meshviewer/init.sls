@@ -93,7 +93,7 @@ meshviewer_gulp:
     - user: meshviewer
     - name: ./node_modules/.bin/gulp
 
-  create_srv_www:
+create_srv_www:
   file.directory:
     - user: www-data
     - group: www-data
