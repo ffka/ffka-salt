@@ -33,3 +33,11 @@ grafana-server:
     - mode: 644
     - require:
       - pkg: grafana
+
+prometheus_monitor_grafana:
+  grafana4_datasource.present:
+    - name: monitor.frickelfunk.net
+    - type: prometheus
+    - url: http://localhost
+    - access: proxy
+    - is_default: true
