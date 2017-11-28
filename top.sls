@@ -19,6 +19,7 @@ base:
     - ntp
     - ferm
     - mesh_vpn
+    - mesh_vpn.server
     - radvd
     - dhcp
     - dns
@@ -28,6 +29,8 @@ base:
     - network.ip_rt_tables_freifunk
     - network.br_ffka
     - network.gre_ffka
+    - mesh_vpn
+    - mesh_vpn.client
     - batman
     - yanic
   'monitor.frickelfunk.net':
