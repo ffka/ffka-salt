@@ -36,3 +36,4 @@ base:
     - meshviewer
   'monitor.frickelfunk.net':
     - grafana
+    - prometheus
