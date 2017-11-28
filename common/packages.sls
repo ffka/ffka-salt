@@ -25,3 +25,4 @@ packages_base:
       - mtr-tiny
       - git
       - apt-transport-https
+      - python-apt
