@@ -38,6 +38,6 @@ prometheus_monitor_grafana:
   grafana4_datasource.present:
     - name: monitor.frickelfunk.net
     - type: prometheus
-    - url: http://localhost
+    - url: http://localhost:9090
     - access: proxy
     - is_default: true
