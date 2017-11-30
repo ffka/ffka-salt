@@ -10,9 +10,6 @@ nodejs:
     - file: /etc/apt/sources.list.d/nodejs.list
     - require_in:
       - pkg: nodejs
-    - require:
-      - pkg: apt-transport-https
-      - pkg: python-apt
   pkg.latest:
     - pkgs:
       - nodejs
@@ -25,9 +22,6 @@ yarn:
     - file: /etc/apt/sources.list.d/yarn.list
     - require_in:
       - pkg: yarn
-    - require:
-      - pkg: apt-transport-https
-      - pkg: python-apt
   pkg.latest:
     - pkgs:
       - yarn
