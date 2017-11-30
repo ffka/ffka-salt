@@ -35,7 +35,6 @@ yarn:
     - force_fetch: True
     - force_reset: True
     - require:
-      - pkg: git
       - pkg: nodejs
       - user: meshviewer
 
