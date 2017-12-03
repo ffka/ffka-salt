@@ -59,7 +59,7 @@ protocol static static_bgp {
 };
 
 protocol static dhcp6_PD {
-  route {{ dhcp.ipv6_ra_range }} via "br_ffka";
+  route {{ dhcp.ipv6_pd_range }} via "br_ffka";
 };
 
 protocol ospf IGP {
