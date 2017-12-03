@@ -11,6 +11,7 @@ place bgp {{bird}}.conf:
     - context:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
+        dhcp: {{ pillar['dhcp'] }}
 
 
 

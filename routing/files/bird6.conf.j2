@@ -58,6 +58,10 @@ protocol static static_bgp {
   # route 2a03:2260:a:64::/64 unreachable;
 };
 
+protocol static dhcp6_PD {
+  route {{ dhcp.ipv6_ra_range }} via "br_ffka";
+};
+
 protocol ospf IGP {
   import where is_ffka_lo();
   export where is_self();
