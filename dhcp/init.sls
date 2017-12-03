@@ -2,19 +2,23 @@ install isc-dhcp-server:
   pkg.installed:
     - name: isc-dhcp-server
 
-DHCPD config file:
+
+{% for dhcpd in ['dhcpd','dhcpd6'] %}
+{{dhcpd}} config file:
   file.managed:
-    - name: /etc/dhcp/dhcpd.conf
+    - name: /etc/dhcp/{{dhcpd}}.conf
     - makedirs: true
     - user: root
     - group: root
     - mode: 644
-    - source: salt://dhcp/files/dhcpd.conf.j2
+    - source: salt://dhcp/files/{{dhcpd}}.conf.j2
     - template: jinja
     - context:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
         dhcp: {{ pillar['dhcp'] }}
+{% endfor %}
+
 
 /etc/default/isc-dhcp-server:
   file.managed:

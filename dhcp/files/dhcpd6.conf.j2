@@ -1,0 +1,7 @@
+default-lease-time 600;
+max-lease-time 7200;
+log-facility local7;
+subnet6 2a03:2260:a:b::/64 {
+        # Prefix range for delegation to sub-routers
+        prefix6 2a03:2260:a:1000:: 2a03:2260:a:1fff:: /64;
+}
