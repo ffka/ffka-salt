@@ -37,9 +37,9 @@ filter hostroute {
   reject;
 };
 
-#protocol static static_nat64 {
-#        route 192.168.64.0/18 via "nat64";
-#};
+protocol static static_nat64 {
+        route 192.168.64.0/18 via "nat64";
+};
 
 protocol direct {
   interface "tun-*";
