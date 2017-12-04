@@ -1,9 +1,9 @@
 tun-device nat64
 
-ipv4-addr 192.168.64.1
+ipv4-addr {{ v4_address }}
 
-prefix 2a03:2260:a:64:ff9b::/96
+prefix {{ v6_range }}
 
-dynamic-pool 192.168.64.0/19
+dynamic-pool {{ v4_pool }}
 
 data-dir /var/spool/tayga
