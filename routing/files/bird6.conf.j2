@@ -48,9 +48,9 @@ protocol direct {
   interface "br_ffka";
 }
 
-#protocol static static_nat64 {
-# route 2a03:2260:a:64:ff9b::/96 via "nat64";
-#};
+protocol static static_nat64 {
+ route 2a03:2260:a:64:ff9b::/96 via "nat64";
+};
 
 
 protocol static static_bgp {
