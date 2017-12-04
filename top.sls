@@ -24,6 +24,7 @@ base:
     - dhcp
     - dns
     - respondd
+    - nat64
   'api.frickelfunk.net':
     - network
     - network.ip_rt_tables_freifunk
