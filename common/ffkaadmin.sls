@@ -5,14 +5,13 @@
     - groups:
       - sudo
 
-/home/{{ ffka_user.name }}/.ssh/authorized_keys:
-  file.managed:
-    - source: salt://common/files/authorized_keys.tpl
+{% for ssh_key in ffka_user.authorized_keys %}
+sshkey {{ ssh_key.key }} for {{ ffka_user.name }}:
+  ssh_auth.present:
     - user: {{ ffka_user.name }}
-    - group: {{ ffka_user.name }}
-    - mode: 600
-    - makedirs: True
-    - template: jinja
+    - enc: {{ ssh_key.enc }}
+    - name: {{ ssh_key.key }}
+{% endfor %}
 
 /home/{{ ffka_user.name }}/.screenrc:
   file.managed:
