@@ -1,0 +1,15 @@
+echo "Setting up ip rules"
+# Delete IP rules if they exist
+ip rule del from all to 192.168.64.0/19 lookup freifunk
+ip rule del from 192.168.64.0/19 lookup freifunk
+
+# Add ip rule to reoute the NAT64'd traffic via the freifunk routing table
+ip rule add from all to 192.168.64.0/19 lookup freifunk
+ip rule add from 192.168.64.0/19 lookup freifunk
+
+echo "Setting up nat64 addresses"
+ip address replace 192.168.64.1/32 dev nat64
+ip address replace 2a03:2260:a:64::1/128 dev nat64
+
+echo "Setting interface up"
+ip link set up dev nat64
