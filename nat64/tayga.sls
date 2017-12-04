@@ -11,3 +11,8 @@ place tayga.conf:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
         dhcp: {{ pillar['dhcp'] }}
+
+
+tayga --mktun:
+  cmd.run:
+    - name: tayga --mktun
