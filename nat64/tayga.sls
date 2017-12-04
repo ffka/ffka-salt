@@ -16,3 +16,11 @@ place tayga.conf:
 tayga --mktun:
   cmd.run:
     - name: tayga --mktun
+
+service tayga:
+  service.running:
+    - name: tayga
+    - enable: true
+    - reload: true
+    - watch:
+      - file: place tayga.conf
