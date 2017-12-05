@@ -23,7 +23,7 @@ ftun-{{ gre.name }}
 );
 @def $BRIDGE_IF = br_ffka;
 
-@def $NAT64_NET = {{ salt['pillar.get']('network:nat64:v4_pool') %}};
+@def $NAT64_NET = {{ salt['pillar.get']('network:nat64:v4_pool') }};
 @def $NAT64_IF = (nat64);
 
 
