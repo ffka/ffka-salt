@@ -10,9 +10,6 @@ nginx.service:
       - pkg: nginx
     - enable: True
     - reload: True
-    - watch:
-      - file: /etc/nginx/sites-available/*
-      - file: /etc/nginx/sites-enabled/*
 
 include:
   - nginx.vhosts
