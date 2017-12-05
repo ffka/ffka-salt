@@ -38,3 +38,5 @@ base:
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
+  'websrv.frickelfunk.net'
+    - nginx
