@@ -17,7 +17,7 @@ certbot:
 
 # Setup automatic renewal using systemd timers (remove default cronjob)
 /etc/cron.d/certbot:
-  file.absent
+  file.absent:
     - require:
       - pkg: certbot
 
