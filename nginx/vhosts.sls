@@ -2,7 +2,7 @@
 
 /etc/nginx/sites-available/{{ name }}.conf:
   file.managed:
-    - source: 
+    - source: salt://nginx/files/sites/{{ name }}.conf.j2
     - user: root
     - group: root
     - mode: 644

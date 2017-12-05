@@ -1,0 +1,30 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name {{ hostnames }};
+    
+    # include "snippets/acme-challenge.conf";
+
+    access_log "{{ access_log }}";
+    error_log "{{ error_log }}";
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name {{ hostnames }};
+
+    #include "snippets/ssl.conf";
+    #include "snippets/acme-challenge.conf";
+
+    access_log "{{ access_log }}";
+    error_log "{{ error_log }}";
+
+    return 301 https://karlsruhe.freifunk.net/mitmachen/stuffnet/;
+}
