@@ -23,7 +23,7 @@ service tayga:
   service.running:
     - name: tayga
     - enable: true
-    - reload: true
+    - restart: true
     - watch:
       - file: place tayga.conf
 
