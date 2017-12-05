@@ -49,7 +49,7 @@ protocol direct {
 }
 
 protocol static static_nat64 {
- route 2a03:2260:a:64:ff9b::/96 via "nat64";
+ route {{ network.nat64.v6_range }} via "nat64";
 };
 
 
