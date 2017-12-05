@@ -3,7 +3,7 @@ install nginx:
     - pkgs:
       - nginx-extras
 
-control nginx service
+control nginx service:
   service.running:
     - name: nginx
     - enable: True
