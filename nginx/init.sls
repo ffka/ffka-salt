@@ -1,16 +1,18 @@
-install nginx:
+nginx:
   pkg.installed:
     - pkgs:
       - nginx-extras
 
-control nginx service:
+nginx.service:
   service.running:
     - name: nginx
     - require:
-      - pkg: install nginx
+      - pkg: nginx
     - enable: True
     - reload: True
     - watch:
       - file: /etc/nginx/sites-available/*
       - file: /etc/nginx/sites-enabled/*
-      - file: /etc/nginx/conf.d/*
+
+include:
+  - nginx.vhosts
