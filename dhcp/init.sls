@@ -17,6 +17,8 @@ install isc-dhcp-server:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
         dhcp: {{ pillar['dhcp'] }}
+    - watch_in:
+      - service: isc-dhcp-server
 {% endfor %}
 
 
@@ -24,6 +26,8 @@ install isc-dhcp-server:
   file.managed:
     - source: salt://dhcp/files/isc-dhcp-server_default.j2
     - template: jinja
+    - watch_in:
+      - service: isc-dhcp-server
 
 
 service isc-dhcp-server:
@@ -31,4 +35,5 @@ service isc-dhcp-server:
     - name: isc-dhcp-server
     - enable: true
     - require:
-      - file: /etc/dhcp/dhcpd.conf
+      - file: /etc/dhcp/dhcpd*.conf
+      - file: /etc/default/isc-dhcp-server
