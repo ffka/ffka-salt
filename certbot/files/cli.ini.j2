@@ -1,0 +1,10 @@
+# account
+agree-tos = True
+email = {{ pillar.certbot.email }}
+
+# certificates
+rsa-key-size = 4096
+
+# webroot challenge
+authenticator = webroot
+webroot-path = {{ pillar.certbot.webroot_path }}

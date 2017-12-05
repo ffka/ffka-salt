@@ -40,3 +40,4 @@ base:
     - prometheus
   'websrv.frickelfunk.net':
     - nginx
+    - certbot
