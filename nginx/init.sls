@@ -13,6 +13,7 @@ nginx.service:
     - watch:
       - file: /etc/nginx/sites-available
       - file: /etc/nginx/sites-enabled
+      - file: /etc/nginx/snippets
 
 /etc/nginx/sites-available:
   file.directory:
