@@ -41,7 +41,7 @@ nginx.service:
       - pkg: nginx
 
 /etc/nginx/sites-enabled/default:
-  file.absent
+  file.absent:
     - require:
       - pkg: nginx
 
