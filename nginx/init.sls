@@ -20,12 +20,16 @@ nginx.service:
     - user: root
     - group: root
     - mode: 755
+    - require:
+      - pkg: nginx
 
 /etc/nginx/sites-enabled/:
   file.directory:
     - user: root
     - group: root
     - mode: 755
+    - require:
+      - pkg: nginx
 
 /etc/nginx/snippets/:
   file.recurse:
@@ -33,6 +37,11 @@ nginx.service:
     - clean: True
     - file_mode: 0644
     - dir_mode: 0755
+    - require:
+      - pkg: nginx
+
+/etc/nginx/sites-enabled/default:
+  file.absent
     - require:
       - pkg: nginx
 
