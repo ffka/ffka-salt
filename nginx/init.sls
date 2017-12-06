@@ -11,23 +11,23 @@ nginx.service:
     - enable: True
     - reload: True
     - watch:
-      - file: /etc/nginx/sites-available
-      - file: /etc/nginx/sites-enabled
-      - file: /etc/nginx/snippets
+      - file: /etc/nginx/sites-available/*
+      - file: /etc/nginx/sites-enabled/*
+      - file: /etc/nginx/snippets/*
 
-/etc/nginx/sites-available:
+/etc/nginx/sites-available/:
   file.directory:
     - user: root
     - group: root
     - mode: 755
 
-/etc/nginx/sites-enabled:
+/etc/nginx/sites-enabled/:
   file.directory:
     - user: root
     - group: root
     - mode: 755
 
-/etc/nginx/snippets:
+/etc/nginx/snippets/:
   file.recurse:
     - source: salt://nginx/files/snippets
     - clean: True
