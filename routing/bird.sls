@@ -2,6 +2,14 @@ install bird:
   pkg.installed:
     - name: bird
 
+
+/etc/bird/bird.d:
+  file.directory:
+    - user: root
+    - group: root
+    - mode: 755
+    - makedirs: True
+
 {% for bird in ['bird','bird6'] %}
 place bgp {{bird}}.conf:
   file.managed:
