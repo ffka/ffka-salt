@@ -15,6 +15,13 @@ certbot:
     - require:
       - pkg: certbot
 
+# Perform initial setup for applicable domains
+{% for name, domainlist in pillar['certbot']['domainsets'].iteritems() %}
+certbot_certonly_initial_{{ name }}:
+  cmd.run:
+    - name: /usr/bin/certbot --text --non-interactive --expand certonly -d {{ domainlist|join(' -d ') }}
+{% endfor %}
+
 # Setup automatic renewal using systemd timers (remove default cronjob)
 /etc/cron.d/certbot:
   file.absent:
