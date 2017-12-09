@@ -4,7 +4,7 @@ server {
 
     server_name {{ hostnames }};
     
-    # include "snippets/acme-challenge.conf";
+    include "snippets/acme-challenge.conf";
 
     access_log "{{ access_log }}";
     error_log "{{ error_log }}";
@@ -20,7 +20,6 @@ server {
 
     server_name {{ hostnames }};
 
-    #include "snippets/ssl.conf";
     include "snippets/acme-challenge.conf";
 
     access_log "{{ access_log }}";
