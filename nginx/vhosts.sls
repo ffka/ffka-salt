@@ -12,6 +12,8 @@
       hostnames: '{{ vhost.hostnames|join(' ') }}'
       access_log: "/var/log/nginx/{{ name }}/access.log"
       error_log: "/var/log/nginx/{{ name }}/error.log"
+      name: {{ name }}
+      vhost: {{ vhost }}
     - require:
       - pkg: nginx
 

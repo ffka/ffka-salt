@@ -3,24 +3,25 @@ nginx:
     - pkgs:
       - nginx-extras
 
-nginx.service:
-  service.running:
-    - name: nginx
-    - require:
-      - pkg: nginx
-    - enable: True
-    - reload: True
-    - watch:
-      - file: /etc/nginx/sites-available/*
-      - file: /etc/nginx/sites-enabled/*
-      - file: /etc/nginx/snippets/*
-
 /etc/nginx/dhparams.pem:
   cmd.run:
     - name: openssl dhparam -out /etc/nginx/dhparams.pem 4096
     - onlyif: 'test ! -e /etc/nginx/dhparams.pem'
     - require:
       - pkg: nginx
+
+nginx.service:
+  service.running:
+    - name: nginx
+    - require:
+      - pkg: nginx
+      - cmd: /etc/nginx/dhparams.pem
+    - enable: True
+    - reload: True
+    - watch:
+      - file: /etc/nginx/sites-available/*
+      - file: /etc/nginx/sites-enabled/*
+      - file: /etc/nginx/snippets/*
 
 /etc/nginx/sites-available/:
   file.directory:
