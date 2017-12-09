@@ -107,3 +107,5 @@ protocol bgp ffrl_{{gre.name}} from uplink {
 	neighbor {{ gre.v6_remote }} as 201701;
 };
 {% endfor %}
+
+include "/etc/bird/bird.d/*";

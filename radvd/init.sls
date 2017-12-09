@@ -1,23 +1,13 @@
-install radvd:
-  pkg.installed:
-    - name: radvd
+purge-radvd:
+  pkg.purged:
+    - pkgs:
+      - radvd
 
-radvd config file:
+place radv.conf:
   file.managed:
-    - name: /etc/radvd.conf
-    - makedirs: true
-    - user: root
-    - group: root
-    - mode: 644
-    - source: salt://radvd/files/radvd.conf.j2
+    - name: /etc/bird/bird.d/radv.conf
+    - source: salt://radvd/files/radv.conf.j2
     - template: jinja
     - context:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
-
-
-service radvd:
-  service.running:
-    - name: radvd
-    - enable: True
-    - reload: True

@@ -4,13 +4,13 @@ interface br_ffka
   AdvSendAdvert on;
   MinRtrAdvInterval 10;
   MaxRtrAdvInterval 30;
-  AdvSourceLLAddress off;
+  AdvSourceLLAddress on;
   AdvManagedFlag off;
   AdvOtherConfigFlag on;
   AdvReachableTime 0;
   AdvRetransTimer 0;
   AdvCurHopLimit 64;
-  AdvLinkMTU 1378;
+  AdvLinkMTU 1400;
   #AdvDefaultLifetime 30;
   AdvHomeAgentFlag off;
   AdvDefaultPreference medium;
@@ -22,14 +22,9 @@ interface br_ffka
     AdvPreferredLifetime 3600;
     AdvOnLink on;
     AdvAutonomous on;
-    #AdvRouterAddr on;
+    AdvRouterAddr on;
   };
 
-  route {{ ffka.v6_ffrl }}
-  {
-    AdvRoutePreference medium;
-    AdvRouteLifetime 3600;
-  };
 
   RDNSS {{ network.br_ffka.ipv6.ip }}
   {

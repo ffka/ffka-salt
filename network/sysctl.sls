@@ -1,5 +1,11 @@
 {% set sysctld = "/etc/sysctl.d" %}
 
+
+net.ipv6.conf.br_ffka.accept_dad:
+  sysctl.present:
+    - value: 0
+    - config: {{ sysctld }}/br_ffka.conf
+
 # conntrack
 nf_conntrack:
   kmod.present:
@@ -12,7 +18,12 @@ net.netfilter.nf_conntrack_max:
 
 net.netfilter.nf_conntrack_tcp_timeout_established:
   sysctl.present:
-    - value: 21600
+    - value: 54000
+    - config: {{ sysctld }}/conntrack.conf
+
+net.netfilter.nf_conntrack_generic_timeout:
+  sysctl.present:
+    - value: 120
     - config: {{ sysctld }}/conntrack.conf
 
 
@@ -95,3 +106,8 @@ net.core.somaxconn:
   sysctl.present:
     - value: 4096
     - config: {{ sysctld }}/netdev_max_backlog.conf
+
+net.core.optmem_max:
+  sysctl.present:
+    - value: 2048000
+    - config: {{ sysctld }}/netdev_optmem_max.conf

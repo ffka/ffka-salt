@@ -1,0 +1,16 @@
+protocol radv {
+	interface "br_ffka" {
+		prefix {{ ffka.v6_ffrl_ffka }};
+	};
+
+	rdnss {
+                lifetime mult 10;
+                ns {{ network.br_ffka.ipv6.ip }};
+        };
+
+        dnssl {
+                lifetime 3600;
+                domain "clients.frickelfunk.net";
+	};
+#	trigger ::/0;
+}
