@@ -6,8 +6,8 @@ server {
     
     include "snippets/acme-challenge.conf";
 
-    access_log "/var/log/nginx/{{ name }}/access.log";
-    error_log "/var/log/nginx/{{ name }}/error.log";
+    access_log "/var/log/nginx/{{ hostname }}/access.log";
+    error_log "/var/log/nginx/{{ hostname }}/error.log";
 
     location / {
         return 301 https://$host$request_uri;
@@ -20,14 +20,14 @@ server {
 
     server_name {{ hostnames }};
 
-    ssl_certificate "/etc/letsencrypt/live/{{ name }}/fullchain.pem";
-    ssl_certificate_key "/etc/letsencrypt/live/{{ name }}/privkey.pem";
+    ssl_certificate "/etc/letsencrypt/live/{{ hostname }}/fullchain.pem";
+    ssl_certificate_key "/etc/letsencrypt/live/{{ hostname }}/privkey.pem";
 
     include "snippets/acme-challenge.conf";
     include "snippets/tls.conf";
 
-    access_log "/var/log/nginx/{{ name }}/access.log";
-    error_log "/var/log/nginx/{{ name }}/error.log";
+    access_log "/var/log/nginx/{{ hostname }}/access.log";
+    error_log "/var/log/nginx/{{ hostname }}/error.log";
 
     return 301 https://karlsruhe.freifunk.net/mitmachen/stuffnet/;
 }
