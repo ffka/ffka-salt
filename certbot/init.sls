@@ -15,11 +15,22 @@ certbot:
     - require:
       - pkg: certbot
 
+certbot_webroot:
+  file.directory:
+    - name: {{ pillar['certbot']['webroot_path'] }}
+    - user: root
+    - group: root
+    - mode: 755
+    - makedirs: True
+
 # Perform initial setup for applicable domains
 {% for name, domainlist in pillar['certbot']['domainsets'].iteritems() %}
 certbot_certonly_initial_{{ name }}:
   cmd.run:
     - name: /usr/bin/certbot --text --non-interactive --expand certonly -d {{ domainlist|join(' -d ') }}
+    - require:
+      - pkg: certbot
+      - file: certbot_webroot
 {% endfor %}
 
 # Setup automatic renewal using systemd timers (remove default cronjob)
