@@ -28,6 +28,7 @@ certbot_webroot:
 certbot_certonly_initial_{{ name }}:
   cmd.run:
     - name: /usr/bin/certbot --text --non-interactive --expand certonly -d {{ domainlist|join(' -d ') }}
+    - onlyif: 'test ! -e /etc/letsencrypt/live/{{ name }}/fullchain.pem'
     - require:
       - pkg: certbot
       - file: certbot_webroot
