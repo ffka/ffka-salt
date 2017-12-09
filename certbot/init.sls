@@ -81,3 +81,13 @@ certbot.timer:
       - file: /etc/systemd/system/certbot.service
       - file: /etc/systemd/system/certbot.timer
       - file: /etc/letsencrypt/cli.ini
+
+# Setup automatic reload of nginx on scheduled certbot run
+/etc/systemd/system/certbot.service.d/nginx.conf:
+  file.managed:
+    - source: salt://certbot/files/nginx.conf
+    - user: root
+    - group: root
+    - mode: 644
+    - require:
+      - file: /etc/systemd/system/certbot.service.d
