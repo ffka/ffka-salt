@@ -15,6 +15,13 @@ nginx.service:
       - file: /etc/nginx/sites-enabled/*
       - file: /etc/nginx/snippets/*
 
+/etc/nginx/dhparams.pem:
+  cmd.run:
+    - name: openssl dhparam -out /etc/nginx/dhparams.pem 4096
+    - onlyif: 'test ! -e /etc/nginx/dhparams.pem'
+    - require:
+      - pkg: nginx
+
 /etc/nginx/sites-available/:
   file.directory:
     - user: root
