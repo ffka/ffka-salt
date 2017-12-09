@@ -37,6 +37,7 @@ nginx.service:
     - clean: True
     - file_mode: 0644
     - dir_mode: 0755
+    - template: jinja
     - require:
       - pkg: nginx
 
