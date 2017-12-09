@@ -40,7 +40,7 @@ renew:
     - name: /usr/bin/certbot renew
     - require:
 {%- for name in pillar['certbot']['domainsets'].keys() %}
-      - cmd: certbot_certonly_initial_{{ name }}:
+      - cmd: certbot_certonly_initial_{{ name }}
 {% endfor %}
 
 # Setup automatic renewal using systemd timers (remove default cronjob)
