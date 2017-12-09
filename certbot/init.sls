@@ -39,7 +39,7 @@ renew:
   cmd.run:
     - name: /usr/bin/certbot renew
     - require:
-{% for name in pillar['certbot']['domainsets'].keys() %}
+{%- for name in pillar['certbot']['domainsets'].keys() %}
       - cmd: certbot_certonly_initial_{{ name }}:
 {% endfor %}
 
