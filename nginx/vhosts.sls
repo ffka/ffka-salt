@@ -1,6 +1,6 @@
 {% for name, vhost in pillar.get('nginx', {}).get('vhosts', {}).iteritems() %}
 
-{%- set domainset = pillar.get('domainsets:' + name) -%}
+{%- set domainset = pillar.get('domainsets:stuffnet.jetzt') -%}
 
 /etc/nginx/sites-available/{{ name }}.conf:
   file.managed:
