@@ -16,6 +16,8 @@ nginx.service:
     - require:
       - pkg: nginx
       - cmd: /etc/nginx/dhparams.pem
+      # Run renew, which will run initial cert setup, before reloading nginx
+      - cmd: renew
     - enable: True
     - reload: True
     - watch:
