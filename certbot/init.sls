@@ -24,8 +24,8 @@ certbot_webroot:
     - makedirs: True
 
 # Perform initial setup for applicable domains
-{% for name in pillar.get('certbot:domainsets', []) %}
-{%- set domainlist = pillar.get('domainsets:' ~ name) -%}
+{% for name in salt['pillar.get']('certbot:domainsets', []) %}
+{%- set domainlist = salt['pillar.get']('domainsets:' ~ name) -%}
 certbot_certonly_initial_{{ name }}:
   cmd.run:
     - name: /usr/bin/certbot --text --non-interactive --expand certonly -d {{ domainlist|join(' -d ') }}
