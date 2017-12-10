@@ -24,11 +24,12 @@ certbot_webroot:
     - makedirs: True
 
 # Perform initial setup for applicable domains
-{% for name, domainlist in pillar['certbot']['domainsets'].iteritems() %}
+{% for name in pillar.get('certbot:domainsets', []) %}
+{%- set domainlist = pillar.get('domainsets:' ~ name) -%}
 certbot_certonly_initial_{{ name }}:
   cmd.run:
     - name: /usr/bin/certbot --text --non-interactive --expand certonly -d {{ domainlist|join(' -d ') }}
-    - onlyif: 'test ! -e /etc/letsencrypt/live/{{ name }}/fullchain.pem'
+    - onlyif: 'test ! -e /etc/letsencrypt/live/{{ domainlist[0] }}/fullchain.pem'
     - require:
       - pkg: certbot
       - file: certbot_webroot
@@ -39,7 +40,7 @@ renew:
   cmd.run:
     - name: /usr/bin/certbot renew
     - require:
-{%- for name in pillar['certbot']['domainsets'].keys() %}
+{%- for name in pillar.get('certbot:domainsets', []) %}
       - cmd: certbot_certonly_initial_{{ name }}
 {% endfor %}
 
