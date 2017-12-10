@@ -1,6 +1,6 @@
 {% for name, vhost in pillar.get('nginx', {}).get('vhosts', {}).iteritems() %}
 
-{%- set domainset = pillar.get('domainsets:' ~ name) -%}
+{%- set domainset = pillar.get('domainsets:' + name) -%}
 
 /etc/nginx/sites-available/{{ name }}.conf:
   file.managed:
@@ -13,9 +13,7 @@
       site_name: '{{ name }}'
       hostnames: '{{ domainset|join(' ') }}'
       vhost: {{ vhost }}
-      {%- if domainset %}
       certificate_filename: {{ domainset[0] }}
-      {% endif %}
     - require:
       - pkg: nginx
 
