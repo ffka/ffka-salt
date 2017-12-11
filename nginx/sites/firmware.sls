@@ -3,7 +3,6 @@ gluon-firmware-wizard:
     - name: https://github.com/freifunk-darmstadt/gluon-firmware-wizard.git
     - target: /srv/www/firmware/htdocs
     - user: www-data
-    - group: www-data
     - require:
       - file: /srv/www/firmware/htdocs/
 
@@ -17,10 +16,19 @@ gluon-firmware-wizard/config.js:
     - require:
       - git: gluon-firmware-wizard
 
-{% for dir in ["/", "stable/", "beta/", "experimental/"] %}
-{{ "/srv/firmware/images" ~ dir }}:
+/srv/firmware/images/
   file.directory:
     - user: www-data
     - group: www-data
     - dir_mode: 755
+    - makedirs: True
+
+{% for dir in ["stable", "beta", "experimental"] %}
+{{ "/srv/firmware/images/" ~ dir ~ "/" }}:
+  file.directory:
+    - user: www-data
+    - group: www-data
+    - dir_mode: 755
+    - require:
+      - file: /srv/firmware/images/
 {% endfor %}
