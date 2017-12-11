@@ -9,7 +9,8 @@ gluon-firmware-wizard:
 gluon-firmware-wizard/config.js:
   file.managed:
     - name: /srv/www/firmware/htdocs/config.js
-    - source: salt://nginx/files/sites/firmware/config.js
+    - source: salt://nginx/files/sites/firmware/config.js.j2
+    - template: jinja
     - mode: 644
     - user: www-data
     - group: www-data
