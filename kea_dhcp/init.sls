@@ -13,7 +13,7 @@ kea-dhcp6-server:
 
 /etc/kea/kea-dhcp6.conf:
   file.managed:
-    - source: salt://kea-dhcp/files/kea-dhcp6.conf.j2
+    - source: salt://kea_dhcp/files/kea-dhcp6.conf.j2
     - user: root
     - group: root
     - mode: 644
