@@ -2,6 +2,8 @@ gluon-firmware-wizard:
   git.latest:
     - name: https://github.com/freifunk-darmstadt/gluon-firmware-wizard.git
     - target: /srv/www/firmware/htdocs
+    - user: www-data
+    - group: www-data
     - require:
       - file: /srv/www/firmware/htdocs/
 
@@ -10,5 +12,15 @@ gluon-firmware-wizard/config.js:
     - name: /srv/www/firmware/htdocs/config.js
     - source: salt://nginx/files/sites/firmware/config.js
     - mode: 644
+    - user: www-data
+    - group: www-data
     - require:
       - git: gluon-firmware-wizard
+
+{% for dir in ["/", "stable/", "beta/", "experimental/"] %}
+{{ "/srv/firmware/images" ~ dir }}:
+  file.directory:
+    - user: www-data
+    - group: www-data
+    - dir_mode: 755
+{% endfor %}

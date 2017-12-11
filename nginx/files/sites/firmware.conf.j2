@@ -29,7 +29,7 @@ server {
 
     location /images {
         try_files $uri $uri/ =404;
-        alias /home/firmware/images;
+        alias /srv/firmware/images;
         autoindex on;
     }
 
