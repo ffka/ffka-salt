@@ -39,7 +39,7 @@
 
 {% endfor %}
 
-{% for vhost in salt['pillar.get']('nginx:vhosts', []) | selectattr("custom_states", True) %}
+{% for vhost in salt['pillar.get']('nginx:vhosts', []) | selectattr("custom_states") %}
 {%- if loop.first -%}
 include:
 {% endif %}
