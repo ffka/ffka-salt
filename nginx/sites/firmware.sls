@@ -16,7 +16,7 @@ gluon-firmware-wizard/config.js:
     - require:
       - git: gluon-firmware-wizard
 
-/srv/firmware/images/
+/srv/firmware/images/:
   file.directory:
     - user: www-data
     - group: www-data
