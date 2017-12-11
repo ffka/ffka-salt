@@ -37,11 +37,6 @@
   file.directory:
     - user: www-data
 
-{%- if vhost.get('custom_states') %}
-include:
-  - {{  }}
-{% endif %}
-
 {% endfor %}
 
 {% for vhost in salt['pillar.get']('nginx:vhosts', []) | selectattr("custom_states", True) %}
