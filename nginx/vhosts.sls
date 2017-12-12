@@ -5,12 +5,6 @@
 
 {%- set create_user = vhost.get('user', False) -%}
 
-{{ name }}_dbg:
-  test.nop:
-    - create_user: {{ create_user }}
-    - vhost: {{ vhost }}
-    - foo: bar
-
 {% if create_user %}
 {% set owner = name %}
 
