@@ -5,7 +5,7 @@
 
 {%- set create_user = vhost.get('user', False) -%}
 
-always-passes-with-any-kwarg:
+{{ name }}_dbg:
   test.nop:
     - create_user: {{ create_user }}
     - vhost: {{ vhost }}
