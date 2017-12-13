@@ -47,7 +47,6 @@ netdatastream:
     - source: 'salt://common/files/netdata/stream.conf.j2'
     - template: jinja
 
-{% if salt['pillar.get']('netdata_stream_master', False) %}
 netdataconf:
   require:
     - cmd: netdatainstall
@@ -55,7 +54,6 @@ netdataconf:
     - name: '/etc/netdata/netdata.conf'
     - source: 'salt://common/files/netdata/netdata.conf.j2'
     - template: jinja
-{% endif %}
 
 service netdata:
   service.running:

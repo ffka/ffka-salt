@@ -1,4 +1,4 @@
-{% set netdata_stream_master = salt['pillar.get']('netdata_stream_master') -%}
+{% set netdata_stream_master = salt['pillar.get']('netdata_stream_master', False) -%}
 
 # netdata configuration
 #
@@ -61,6 +61,7 @@
 	allow connections from = localhost *
 	allow dashboard from = localhost {{ salt['pillar.get']('netdata:stream:master_ips', [])|join(' ') }}
 	{% else %}
+	# Allow central nginx to access dashboard
 	allow connections from = localhost {{ salt['pillar.get']('netdata:stream:master_ips', [])|join(' ') }}
 	{% endif %}
 	# allow badges from = *
@@ -96,7 +97,10 @@
 	# rotate log every lines = 2000
 
 [registry]
-	 enabled = yes
+{% if netdata_stream_master %}
+	enabled = yes
+	registry to announce = https://monitor.frickelfunk.net/netdata/monitor
+{% endif %}
 	# registry db directory = /var/lib/netdata/registry
 	# netdata unique id file = /var/lib/netdata/registry/netdata.public.unique.id
 	# registry db file = /var/lib/netdata/registry/registry.db
@@ -104,7 +108,6 @@
 	# registry save db every new entries = 1000000
 	# registry expire idle persons days = 365
 	# registry domain =
-	 registry to announce = https://monitor.frickelfunk.net/netdata/monitor
 	# registry hostname = monitor.frickelfunk.net
 	# verify browser cookies support = yes
 	# max URL length = 1024
