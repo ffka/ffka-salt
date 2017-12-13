@@ -1,5 +1,5 @@
 # Set the command-line arguments to pass to the server.
-ARGS="--config.file /etc/prometheus/prometheus.yml --web.external-url=https://monitor.frickelfunk.net/prometheus/ --storage.tsdb.path=/metrics/prom2 --storage.tsdb.retention=90d"
+ARGS="--config.file /etc/prometheus/prometheus.yml --web.external-url=https://monitor.frickelfunk.net/prometheus --storage.tsdb.path=/metrics/prom2 --storage.tsdb.retention=90d --web.route-prefix=/"
 
 # Prometheus supports the following options:
 
