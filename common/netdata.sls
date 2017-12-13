@@ -47,7 +47,7 @@ netdatastream:
     - source: 'salt://common/files/netdata/stream.conf.j2'
     - template: jinja
 
-{% if netdata_stream_master | to_bool %}
+{% if salt['pillar.get']('netdata_stream_master', False) %}
 netdataconf:
   require:
     - cmd: netdatainstall
