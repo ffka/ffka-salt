@@ -1,6 +1,6 @@
 Fastd config file client:
   file.managed:
-    - name: /etc/fastd/fastd.conf
+    - name: /etc/fastd/alb0/fastd.conf
     - source: salt://mesh_vpn/files/fastd_client.j2
     - makedirs: true
     - user: root
@@ -11,7 +11,7 @@ Fastd config file client:
 
 Fastd secret client:
   file.managed:
-    - name: /etc/fastd/secret.conf
+    - name: /etc/fastd/alb0/secret.conf
     - source: salt://mesh_vpn/files/secret.conf
     - makedirs: true
     - user: root
@@ -21,7 +21,7 @@ Fastd secret client:
 
 enable/run systemd fastd client:
   service.running:
-    - name: fastd
+    - name: fastd@alb0
     - enable: true
     - watch:
       - file: /etc/fastd/fastd.conf

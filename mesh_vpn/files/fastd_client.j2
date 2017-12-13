@@ -13,10 +13,7 @@ peer "mesh_vpn_alb0" {
   key "2e27c65ec462cdb8dc8eefba4527701b1141489da985363a50555b5cfd15d952";
   remote "albufer0.frickelfunk.net" port 10000;
 }
-peer "mesh_vpn_alb1" {
-  key "8969611a22cc5a3ae689fb7896af0fed1d27f47247be13f20a99cdbdbd4439a1";
-  remote "albufer1.frickelfunk.net" port 10000;
-}
+
 on up "
    ip link set dev $INTERFACE up
    ifup bat0
