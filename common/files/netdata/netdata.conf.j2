@@ -1,3 +1,5 @@
+{% set netdata_stream_master = salt['pillar.get']('netdata_stream_master') -%}
+
 # netdata configuration
 #
 # You can download the latest version of this file, using:
@@ -55,8 +57,12 @@
 	# disconnect idle clients after seconds = 60
 	# respect do not track policy = no
 	# x-frame-options response header =
-	# allow connections from = localhost *
-	# allow dashboard from = localhost *
+	{% if netdata_stream_master %}
+	allow connections from = localhost *
+	allow dashboard from = localhost
+	{% else %}
+	allow connections from = localhost {{ salt['pillar.get']('netdata:stream:master_ips', [])|join(' ') }}
+	{% endif %}
 	# allow badges from = *
 	# allow streaming from = *
 	# allow netdata.conf from = localhost fd* 10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*
