@@ -24,4 +24,4 @@ enable/run systemd fastd client:
     - name: fastd@alb0
     - enable: true
     - watch:
-      - file: /etc/fastd/fastd.conf
+      - file: /etc/fastd/alb0/fastd.conf
