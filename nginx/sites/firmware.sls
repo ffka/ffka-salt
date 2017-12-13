@@ -3,6 +3,7 @@ gluon-firmware-wizard:
     - name: https://github.com/freifunk-darmstadt/gluon-firmware-wizard.git
     - target: /srv/www/firmware/htdocs
     - user: www-data
+    - force_fetch: True
     - require:
       - file: /srv/www/firmware/htdocs/
 
@@ -15,6 +16,8 @@ gluon-firmware-wizard/config.js:
     - user: www-data
     - group: www-data
     - require:
+      - git: gluon-firmware-wizard
+    - watch:
       - git: gluon-firmware-wizard
 
 /srv/firmware/images/:
