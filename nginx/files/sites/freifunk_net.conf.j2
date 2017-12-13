@@ -27,6 +27,34 @@ server {
     access_log "/var/log/nginx/{{ site_name }}/access.log";
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
+		location /tiles {
+			resolver 8.8.8.8 ipv6=off;
+			proxy_pass http://korona.geog.uni-heidelberg.de/tiles;
+			proxy_http_version	1.1;
+			proxy_set_header    Connection "";
+			proxy_set_header    Accept-Encoding "";
+			proxy_set_header    User-Agent "Mozilla/5.0 (compatible; OSMTileCache/1.0; +mailto:info@karlsruhe.freifunk.net; +https://karlsruhe.freifunk.net/karte)";
+
+			proxy_temp_path     /var/www/tilecache/temp;
+			proxy_cache         tilecache;
+			proxy_store         off;
+			proxy_cache_key     $uri$is_args$args;
+			proxy_ignore_headers Expires Cache-Control;
+			proxy_cache_valid   200 301 302 7d;
+			proxy_cache_valid   404 1m;
+			proxy_cache_valid   any 1m;
+			proxy_next_upstream   error timeout invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
+			proxy_cache_use_stale error timeout updating invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
+
+			proxy_hide_header   Via;
+			proxy_hide_header   X-Cache;
+			proxy_hide_header   X-Cache-Lookup;
+
+			expires 7d;
+
+			access_log /var/log/nginx/tiles_access.log combined;
+		}
+
     try_files $uri $uri/ =404;
 	root /srv/www/{{ site_name }}/htdocs/;
 }
