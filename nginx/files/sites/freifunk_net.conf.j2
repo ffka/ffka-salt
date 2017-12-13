@@ -1,3 +1,11 @@
+proxy_cache_path /var/www/tilecache/osm
+	levels=1:2 inactive=7d
+	keys_zone=tilecache:64m
+	max_size=1000M;
+
+proxy_cache_path /var/cache/nginx/1min levels=1:2 keys_zone=cache_1min:1m max_size=1g inactive=10m;
+proxy_cache_path /var/cache/nginx/60min levels=1:2 keys_zone=cache_60min:60m max_size=10g inactive=3600m;
+
 server {
 	listen 80;
 	listen [::]:80;
@@ -26,14 +34,6 @@ server {
 
     access_log "/var/log/nginx/{{ site_name }}/access.log";
     error_log "/var/log/nginx/{{ site_name }}/error.log";
-
-		proxy_cache_path /var/www/tilecache/osm
-		  levels=1:2 inactive=7d
-		  keys_zone=tilecache:64m
-		  max_size=1000M;
-
-		proxy_cache_path /var/cache/nginx/1min levels=1:2 keys_zone=cache_1min:1m max_size=1g inactive=10m;
-		proxy_cache_path /var/cache/nginx/60min levels=1:2 keys_zone=cache_60min:60m max_size=10g inactive=3600m;
 
 		location /tiles {
 			resolver 8.8.8.8 ipv6=off;
