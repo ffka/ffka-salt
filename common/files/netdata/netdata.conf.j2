@@ -59,7 +59,7 @@
 	# x-frame-options response header =
 	{% if netdata_stream_master %}
 	allow connections from = localhost *
-	allow dashboard from = localhost
+	allow dashboard from = localhost {{ salt['pillar.get']('netdata:stream:master_ips', [])|join(' ') }}
 	{% else %}
 	allow connections from = localhost {{ salt['pillar.get']('netdata:stream:master_ips', [])|join(' ') }}
 	{% endif %}
