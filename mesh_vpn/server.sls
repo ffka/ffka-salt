@@ -36,6 +36,7 @@ enable/run systemd {{ interfaces.name }}:
   git.latest:
     - name: https://github.com/ffka/fastdbl.git
     - target: /etc/fastd/fastdbl
+    - rev: just-bl
     - branch: just-bl
     - force_fetch: True
     - force_reset: True
