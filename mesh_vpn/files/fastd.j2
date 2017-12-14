@@ -23,12 +23,12 @@ peer limit 100;
 status socket "/run/fastd.ffka-{{name}}.sock";
 
 #folgende Zeile sorgt dafuer das jeder Peer akzeptiet wird
-on verify "true";
+#on verify "true";
 
 # blacklisting, everybody else will be accepted
-#on verify "
-#  /etc/fastd/fastdbl/fastd-blacklist.sh $PEER_KEY
-#";
+on verify "
+  /etc/fastd/fastdbl/fastd-blacklist.sh $PEER_KEY
+";
 
 
 #include peers from "peers";
