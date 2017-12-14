@@ -31,3 +31,11 @@ enable/run systemd {{ interfaces.name }}:
     - watch:
       - file: /etc/fastd/{{ interfaces.name }}/fastd.conf
 {% endfor %}
+
+/etc/fastd/fastdbl:
+  git.latest:
+    - name: https://github.com/ffka/fastdbl.git
+    - branch: just-bl
+    - target: /etc/fastd/fastdbl
+    - force_fetch: True
+    - force_reset: True
