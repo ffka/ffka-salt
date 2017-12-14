@@ -27,7 +27,7 @@ subnet 10.214.0.0 netmask {{ network.br_ffka.ipv4.netmask }} {
     range {{ dhcp.range.from }} {{ dhcp.range.to }};
 
     option routers {{ network.br_ffka.ipv4.ip }};
-    option interface-mtu 1400;
+    option interface-mtu 1372;
     option domain-name-servers {{ network.lo_ffka.ipv4.ip }},{{ dhcp.dns_secondary }};
 
 }
