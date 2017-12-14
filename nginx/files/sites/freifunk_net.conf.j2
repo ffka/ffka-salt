@@ -35,6 +35,10 @@ server {
     access_log "/var/log/nginx/{{ site_name }}/access.log";
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
+		location /map/ {
+			return 302 $scheme://map.karlsruhe.freifunk.net/;
+		}
+
 		location /tiles {
 			resolver 8.8.8.8 ipv6=off;
 			proxy_pass http://korona.geog.uni-heidelberg.de/tiles;
