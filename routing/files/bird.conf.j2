@@ -101,5 +101,8 @@ template bgp uplink {
 protocol bgp ffrl_{{gre.name}} from uplink {
 	source address {{ gre.local }};
 	neighbor {{ gre.remote }} as 201701;
+	{% if gre.password | to_bool %}
+	       password "idkfa";
+	{% endif %}
 };
 {% endfor %}
