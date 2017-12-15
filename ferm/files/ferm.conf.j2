@@ -27,13 +27,13 @@ ftun-{{ gre.name }}
 @def $NAT64_IF = (nat64);
 
 
-#domain (ip ip6) table filter {
-#	chain (INPUT OUTPUT FORWARD) {
-#		policy ACCEPT;
-#	}
-#
-#	chain FORWARD proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1340;
-#}
+domain (ip) table filter {
+	chain (INPUT OUTPUT FORWARD) {
+		policy ACCEPT;
+	}
+
+	chain FORWARD proto tcp tcp-flags (SYN RST) SYN TCPMSS clamp-mss-to-pmtu;
+}
 
 domain ip table nat {
 
