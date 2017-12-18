@@ -6,7 +6,7 @@ gitlab-runner-repo-deps:
       - apt-transport-https
       - software-properties-common
 
-gitlab-runner:
+gitlab-runner-repo:
   pkgrepo.managed:
     - humanname: Gitlab Runner
     - name: deb https://packages.gitlab.com/runner/gitlab-runner/{{ salt['grains.get']('os')|lower }}/ {{ salt['grains.get']('oscodename') }} main
@@ -16,9 +16,13 @@ gitlab-runner:
     - key_url: https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey
     - require:
       - pkg: gitlab-runner-repo-deps
+
+gitlab-runner:
   pkg.installed:
     - require:
-      - pkgrepo: gitlab-runner
+      - pkgrepo: gitlab-runner-repo
+
+gitlab-runner.service:
   service.running:
     - enable: True
     - require:
@@ -33,4 +37,4 @@ gitlab_runner_registration:
         gitlab-runner register --non-interactive --run-untagged --tag-list {{ proj['tag_list'] }} --url {{ pillar['gitlab_url'] }} --executor docker --docker-image dind --registration-token {{ proj['token'] }} --name {{ proj['name'] }} --docker-privileged
 {% endfor %}
     - require:
-      - service: gitlab-runner
+      - service: gitlab-runner.service
