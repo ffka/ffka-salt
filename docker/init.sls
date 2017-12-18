@@ -1,4 +1,4 @@
-add_docker_repo:
+docker-repo:
   pkgrepo.managed:
     - humanname: Docker CE
     - name: deb [arch=amd64] https://download.docker.com/linux/{{ salt['grains.get']('os')|lower }} {{ salt['grains.get']('oscodename') }} stable
@@ -7,16 +7,13 @@ add_docker_repo:
     - gpgcheck: 1
     - key_url: https://download.docker.com/linux/ubuntu/gpg
 
-install_docker_ce:
+docker-ce:
   pkg.installed:
-    - pkgs:
-      - docker-ce
     - require:
-      - pkgrepo: add_docker_repo
+      - pkgrepo: docker-repo
 
-docker_ce_service:
+docker.service:
   service.running:
-    - name: docker
     - enable: True
     - require:
-      - pkg: install_docker_ce
+      - pkg: docker-ce

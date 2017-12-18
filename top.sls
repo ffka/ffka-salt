@@ -46,3 +46,4 @@ base:
     - certbot
   'gitlab.frickelfunk.net':
     - gitlab.runner
+    - docker
