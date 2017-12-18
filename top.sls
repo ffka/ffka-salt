@@ -44,3 +44,5 @@ base:
   'websrv.frickelfunk.net':
     - nginx
     - certbot
+  'gitlab.frickelfunk.net':
+    - gitlab.runner
