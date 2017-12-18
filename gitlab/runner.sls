@@ -34,7 +34,7 @@ gitlab_runner_registration:
     - name: |
         gitlab-runner unregister --all-runners
 {% for proj in salt['pillar.get']('gitlab:runners', []) %}
-        gitlab-runner register --non-interactive --run-untagged --tag-list {{ proj['tag_list'] }} --url {{ proj['gitlab_url'] }} --executor docker --docker-image dind --registration-token {{ proj['token'] }} --name {{ proj['name'] }} --docker-privileged
+        gitlab-runner register --non-interactive --url {{ proj['gitlab_url'] }} --run-untagged --tag-list "{{ proj['tag_list'] }}" --executor docker --docker-image dind --registration-token {{ proj['token'] }} --name {{ proj['name'] }} --docker-privileged
 {% endfor %}
     - require:
       - service: gitlab-runner.service
