@@ -6,7 +6,7 @@ gitlab-runner-repo-deps:
       - apt-transport-https
       - software-properties-common
 
-gitlab-runner-repo:
+gitlab-runner:
   pkgrepo.managed:
     - humanname: Gitlab Runner
     - name: deb https://packages.gitlab.com/runner/gitlab-runner/{{ salt['grains.get']('os')|lower }}/ {{ salt['grains.get']('oscodename') }} main
@@ -16,11 +16,9 @@ gitlab-runner-repo:
     - key_url: https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey
     - require:
       - pkg: gitlab-runner-repo-deps
-
-gitlab-runner:
   pkg.installed:
     - require:
-      - pkgrepo: runner
+      - pkgrepo: gitlab-runner
   service.running:
     - enable: True
     - require:
