@@ -8,9 +8,13 @@ server {
     access_log "/var/log/nginx/{{ site_name }}/access.log";
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
-		location /images {
+	location /images {
         try_files $uri $uri/ =404;
         alias /srv/firmware/images;
         autoindex on;
+    }
+
+    location / {
+        return 404;
     }
 }
