@@ -29,7 +29,7 @@ gitlab-runner.service:
       - pkg: gitlab-runner
 
 
-gitlab_runner_registration:
+gitlab-runner-registration:
   cmd.run:
     - name: |
         gitlab-runner unregister --all-runners
@@ -38,3 +38,14 @@ gitlab_runner_registration:
 {% endfor %}
     - require:
       - service: gitlab-runner.service
+
+gitlab-runner-output-limit:
+  file.replace:
+    - name: /etc/gitlab-runner/config.toml
+    - pattern: |
+        [[runners]]
+    - repl: |
+        [[runners]]
+        output_limit = 102400
+    - require:
+      - cmd: gitlab-runner-registration
