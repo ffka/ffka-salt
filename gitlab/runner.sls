@@ -45,7 +45,7 @@ gitlab-runner-output-limit:
     - pattern: |
         \[\[runners\]\]
     - repl: |
-        \[\[runners\]\]
+        [[runners]]
           output_limit = 102400
     - require:
       - cmd: gitlab-runner-registration
