@@ -45,6 +45,7 @@ gitlab-runner-output-limit:
     - mode: ensure
     - after: |
         \[\[runners\]\]
+    - indent: False
     - content: "  output_limit = 102400"
     - require:
       - cmd: gitlab-runner-registration
