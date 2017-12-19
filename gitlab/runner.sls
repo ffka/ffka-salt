@@ -45,7 +45,6 @@ gitlab-runner-output-limit:
     - mode: ensure
     - after: |
         \[\[runners\]\]
-    - content: |
-          output_limit = 102400
+    - content: "  output_limit = 102400"
     - require:
       - cmd: gitlab-runner-registration
