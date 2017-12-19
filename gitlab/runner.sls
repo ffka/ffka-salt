@@ -43,9 +43,9 @@ gitlab-runner-output-limit:
   file.replace:
     - name: /etc/gitlab-runner/config.toml
     - pattern: |
-        [[runners]]
+        \[\[runners\]\]
     - repl: |
-        [[runners]]
-        output_limit = 102400
+        \[\[runners\]\]
+          output_limit = 102400
     - require:
       - cmd: gitlab-runner-registration
