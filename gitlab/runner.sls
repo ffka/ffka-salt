@@ -40,12 +40,12 @@ gitlab-runner-registration:
       - service: gitlab-runner.service
 
 gitlab-runner-output-limit:
-  file.replace:
+  file.line:
     - name: /etc/gitlab-runner/config.toml
-    - pattern: |
+    - mode: ensure
+    - after: |
         \[\[runners\]\]
-    - repl: |
-        [[runners]]
+    - content: |
           output_limit = 102400
     - require:
       - cmd: gitlab-runner-registration
