@@ -83,7 +83,7 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
 nginx_{{ name }}:
   test.nop:
     - require:
-      {% if create_user %-}- user: user_{{ owner }}{-% endif %}
+      {% if create_user -%}- user: user_{{ owner }}{%- endif %}
       - file: /etc/nginx/sites-available/{{ name }}.conf
       - file: /var/log/nginx/{{ name }}
 
