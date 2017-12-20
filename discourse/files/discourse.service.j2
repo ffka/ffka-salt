@@ -1,0 +1,11 @@
+[Unit]
+Description=discourse - A platform for community discussion. Free, open, simple.
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStart={{ dir }}/launcher start app
+
+[Install]
+WantedBy=multi-user.target
