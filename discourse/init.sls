@@ -1,5 +1,10 @@
 {%- set dir = '/srv/www/forum/discourse' -%}
 
+{{ dir }}
+  file.directory:
+    - require:
+      - test: nginx_forum
+
 discourse:
   git.latest:
     - name: https://github.com/discourse/discourse_docker.git
@@ -7,7 +12,6 @@ discourse:
     - unless: test -f {{ dir }}/containers/app.yml
     - require:
       - file: {{ dir }}
-      - test: nginx_forum
 
 {{ dir }}/containers/app.yml:
   file.managed:
