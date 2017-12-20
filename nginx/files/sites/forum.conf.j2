@@ -1,4 +1,5 @@
 server {
+	listen 80;
 	listen [::]:80;
 
 	server_name {{ hostnames }};
@@ -9,7 +10,7 @@ server {
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
     location / {
-        return 404;
+        return 301 https://$host$request_uri;
     }
 }
 
