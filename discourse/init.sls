@@ -14,6 +14,7 @@ discourse:
 discourse_docker:
   git.latest:
     - name: https://github.com/discourse/discourse_docker.git
+    - force_reset: True
     - target: {{ dir }}
     - unless: test -f {{ dir }}/containers/app.yml
     - require:
