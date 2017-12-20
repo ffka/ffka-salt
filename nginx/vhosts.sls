@@ -80,6 +80,7 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
     - require_in:
       - test: nginx_{{ name }}
 
+# noop state that other changed can depend on; success indicates that the vhost is set up completely
 nginx_{{ name }}:
   test.nop:
     - require:

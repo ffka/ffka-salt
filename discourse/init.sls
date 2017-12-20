@@ -5,6 +5,7 @@
     - require:
       - test: nginx_forum
 
+# watch this repository and initiate a rebuild if it changes
 discourse:
   git.latest:
     - name: https://github.com/discourse/discourse.git
