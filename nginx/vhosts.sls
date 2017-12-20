@@ -25,6 +25,8 @@ user_{{ owner }}:
     - makedirs: True
     - require:
       - user: user_{{ name }}
+    - require_in:
+      - test: nginx_{{ name }}
 
 {% for ssh_key in vhost.get('deploy_keys', []) %}
 sshkey {{ ssh_key.key }} for {{ owner }}:
@@ -75,12 +77,13 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
   file.directory:
     - user: www-data
     - group: www-data
+    - require_in:
+      - test: nginx_{{ name }}
 
 nginx_{{ name }}:
   test.nop:
     - require:
-      - user: user_{{ owner }}
-      - file: /srv/www/{{ name }}/
+      {% if create_user %-}- user: user_{{ owner }}{-% endif %}
       - file: /etc/nginx/sites-available/{{ name }}.conf
       - file: /var/log/nginx/{{ name }}
 
