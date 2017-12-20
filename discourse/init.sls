@@ -1,6 +1,6 @@
 {%- set dir = '/srv/www/forum/discourse' -%}
 
-{{ dir }}
+{{ dir }}:
   file.directory:
     - require:
       - test: nginx_forum
