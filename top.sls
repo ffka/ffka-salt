@@ -44,6 +44,7 @@ base:
   'websrv.frickelfunk.net':
     - nginx
     - certbot
+    - docker
   'gitlab.frickelfunk.net':
     - gitlab.runner
     - docker
