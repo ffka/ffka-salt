@@ -67,12 +67,22 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
     - user: {{ owner }}
     - group: www-data
     - makedirs: True
+    - require_in:
+      - test: nginx_{{ name }}
 {% endif %}
 
 /var/log/nginx/{{ name }}:
   file.directory:
     - user: www-data
     - group: www-data
+
+nginx_{{ name }}:
+  test.nop:
+    - require:
+      - user: user_{{ owner }}
+      - file: /srv/www/{{ name }}/
+      - file: /etc/nginx/sites-available/{{ name }}.conf
+      - file: /var/log/nginx/{{ name }}
 
 {% endfor %}
 
