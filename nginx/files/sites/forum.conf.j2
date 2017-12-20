@@ -1,0 +1,14 @@
+server {
+	listen [::]:80;
+
+	server_name {{ hostnames }};
+
+	include "snippets/acme-challenge.conf";
+
+    access_log "/var/log/nginx/{{ site_name }}/access.log";
+    error_log "/var/log/nginx/{{ site_name }}/error.log";
+
+    location / {
+        return 404;
+    }
+}
