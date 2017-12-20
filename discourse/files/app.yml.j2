@@ -7,11 +7,14 @@
 ## YAML FILES ARE SUPER SUPER SENSITIVE TO MISTAKES IN WHITESPACE OR ALIGNMENT!
 ## visit http://www.yamllint.com/ to validate this file as needed
 
+{% set smtp_settings = salt['pillar.get']('discourse:smtp', False) %}
+
 templates:
   - "templates/postgres.template.yml"
   - "templates/redis.template.yml"
   - "templates/web.template.yml"
   - "templates/web.ratelimited.template.yml"
+  - "templates/web.socketed.template.yml"
 ## Uncomment these two lines if you wish to add Lets Encrypt (https)
   #- "templates/web.ssl.template.yml"
   #- "templates/web.letsencrypt.ssl.template.yml"
@@ -19,9 +22,7 @@ templates:
 ## which TCP/IP ports should this container expose?
 ## If you want Discourse to share a port with another webserver like Apache or nginx,
 ## see https://meta.discourse.org/t/17247 for details
-expose:
-  - "80:80"   # http
-  - "443:443" # https
+expose: []
 
 params:
   db_default_text_search_config: "pg_catalog.english"
@@ -55,12 +56,16 @@ env:
   ## on initial signup example 'user1@example.com,user2@example.com'
   DISCOURSE_DEVELOPER_EMAILS: 'me@example.com,you@example.com'
 
+  {% if smtp_settings %}
+
   ## TODO: The SMTP mail server used to validate new accounts and send notifications
-  DISCOURSE_SMTP_ADDRESS: smtp.example.com         # required
-  #DISCOURSE_SMTP_PORT: 587                        # (optional, default 587)
-  #DISCOURSE_SMTP_USER_NAME: user@example.com      # required
-  #DISCOURSE_SMTP_PASSWORD: pa$$word               # required, WARNING the char '#' in pw can cause problems!
-  #DISCOURSE_SMTP_ENABLE_START_TLS: true           # (optional, default true)
+  DISCOURSE_SMTP_ADDRESS: {{ smtp_settings['server'] }}        # required
+  DISCOURSE_SMTP_PORT: {{ smtp_settings['port'] }}             # (optional, default 587)
+  DISCOURSE_SMTP_USER_NAME: {{ smtp_settings['username'] }}    # required
+  DISCOURSE_SMTP_PASSWORD: {{ smtp_settings['password'] }}     # required, WARNING the char '#' in pw can cause problems!
+  DISCOURSE_SMTP_ENABLE_START_TLS: {{ smtp_settings['tls'] }}  # (optional, default true)
+
+  {% endif %}
 
   ## If you added the Lets Encrypt template, uncomment below to get a free SSL certificate
   #LETSENCRYPT_ACCOUNT_EMAIL: me@example.com
@@ -72,10 +77,10 @@ env:
 ## The Docker container is stateless; all data is stored in /shared
 volumes:
   - volume:
-      host: /var/discourse/shared/standalone
+      host: {{ dir }}/shared/standalone
       guest: /shared
   - volume:
-      host: /var/discourse/shared/standalone/log/var-log
+      host: {{ dir }}/shared/standalone/log/var-log
       guest: /var/log
 
 ## Plugins go here

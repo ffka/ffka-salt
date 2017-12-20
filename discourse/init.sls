@@ -22,3 +22,5 @@ discourse:
     - template: jinja
     - require:
       - git: discourse
+    - context:
+        dir: {{ dir }}
