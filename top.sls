@@ -45,6 +45,7 @@ base:
     - nginx
     - certbot
     - docker
+    - discourse
   'gitlab.frickelfunk.net':
     - gitlab.runner
     - docker
