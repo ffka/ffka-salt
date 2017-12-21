@@ -47,3 +47,6 @@ base:
   'gitlab.frickelfunk.net':
     - gitlab.runner
     - docker
+  'build1.ffka.net':
+    - gitlab.runner
+    - docker
