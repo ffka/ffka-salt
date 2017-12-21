@@ -56,7 +56,7 @@ nginx.service:
     - require:
       - pkg: nginx
 
-{%- set default_domainset = salt['pillar.get']('domainsets:' ~ pillar['nginx']['default_server']['domainset'], []) -%}
+{% set default_domainset = salt['pillar.get']('domainsets:' ~ pillar['nginx']['default_server']['domainset'], []) -%}
 /etc/nginx/sites-available/default.conf:
   file.managed:
     - source: salt://nginx/files/default.conf.j2
