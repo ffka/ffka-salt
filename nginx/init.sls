@@ -56,5 +56,24 @@ nginx.service:
     - require:
       - pkg: nginx
 
+{%- set default_domainset = salt['pillar.get']('domainsets:' ~ pillar['nginx']['default_server']['domainset'], []) -%}
+/etc/nginx/sites-available/default.conf:
+  file.managed:
+    - source: salt://nginx/files/default.conf.j2
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        certificate_filename: {{ default_domainset[0] }}
+    - require:
+      - pkg: nginx
+
+/etc/nginx/sites-enabled/default.conf:
+  file.symlink:
+    - target: /etc/nginx/sites-available/default.conf
+    - require:
+      - file: /etc/nginx/sites-available/default.conf
+
 include:
   - nginx.vhosts
