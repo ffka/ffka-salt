@@ -25,7 +25,7 @@ enable and start bind9 service:
     - mode: 755
     - makedirs: True
 
-/etc/logrotate.d/bind-rndc.j2
+/etc/logrotate.d/bind-rndc.conf
   file.managed:
     - source: salt://dns/files/bind-rndc.conf.j2
     - user: root
