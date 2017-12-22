@@ -17,3 +17,18 @@ enable and start bind9 service:
   service.running:
     - name: bind9
     - enable: True
+
+/var/log/bind:
+  file.directory:
+    - user: bind
+    - group: bind
+    - mode: 755
+    - makedirs: True
+
+/etc/logrotate.d/bind-rndc.j2
+  file.managed:
+    - source: salt://dns/files/bind-rndc.conf.j2
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
