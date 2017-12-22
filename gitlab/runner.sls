@@ -59,7 +59,7 @@ gitlab-runner-output-limit:
     - match: output_limit
     - content: "  output_limit = {{ salt['pillar.get']('gitlab:runner:output_limit', 1024) }}"
     - require:
-      - cmd: gitlab-runner-conf-cleanup
+      - file: gitlab-runner-conf-cleanup
 
 gitlab-runner-concurrent:
   file.line:
