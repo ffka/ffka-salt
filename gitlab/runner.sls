@@ -39,36 +39,24 @@ gitlab-runner-registration:
     - require:
       - service: gitlab-runner.service
 
-# Clean up config file (remove empty lines) so file.line works correctly
-gitlab-runner-conf-cleanup:
+gitlab-runner-concurrent:
   file.replace:
     - name: /etc/gitlab-runner/config.toml
-    - pattern: (\r*\n)+
-    - repl: \n
-    - require:
-      - cmd: gitlab-runner-registration
-
-gitlab-runner-concurrent:
-  file.line:
-    - name: /etc/gitlab-runner/config.toml
-    - mode: ensure
-    - before: |
-        \[\[runners\]\]
-    - indent: False
+    - mode: replace
+    - indent: True
     - match: concurrent
     - content: "concurrent = {{ salt['pillar.get']('gitlab:runner:concurrent', 2) }}"
     - require:
-      - file: gitlab-runner-conf-cleanup
+      - cmd: gitlab-runner-registration
 
-# Make sure that the output_limit config line has the right value by replacing it regardless of the value. If it doesn't exist, insert it at the right location
-#gitlab-runner-output-limit:
-#  file.line:
-#    - name: /etc/gitlab-runner/config.toml
-#    - mode: ensure
-#    - after: |
-#        \[\[runners\]\]
-#    - indent: False
-#    - match: output_limit
-#    - content: "  output_limit = {{ salt['pillar.get']('gitlab:runner:output_limit', 1024) }}"
-#    - require:
-#      - file: gitlab-runner-conf-cleanup
+gitlab-runner-output-limit:
+  file.line:
+    - name: /etc/gitlab-runner/config.toml
+    - mode: ensure
+    - after: |
+        \[\[runners\]\]
+    - indent: False
+    - match: output_limit
+    - content: "  output_limit = {{ salt['pillar.get']('gitlab:runner:output_limit', 1024) }}"
+    - require:
+      - file: gitlab-runner-concurrent
