@@ -27,7 +27,7 @@ enable and start bind9 service:
 
 /etc/logrotate.d/bind-rndc.conf
   file.managed:
-    - source: salt://dns/files/bind-rndc.conf.j2
+    - source: 'salt://dns/files/bind-rndc.conf.j2'
     - user: root
     - group: root
     - mode: 644
