@@ -4,20 +4,14 @@ server {
 
 	server_name {{ hostnames }};
 
-	location /stub_firmware {
-	stub_status;
-	# Security: Only allow access from the IP below.
-	allow ::1;
-	# Deny anyone else
-	deny all;
-	}
-
 	include "snippets/acme-challenge.conf";
 
     access_log "/var/log/nginx/{{ site_name }}/access.log";
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
-    return 301 https://$server_name$request_uri;
+    location / {
+        return 301 https://$server_name$request_uri;
+    }
 }
 
 server {

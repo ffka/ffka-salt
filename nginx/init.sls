@@ -75,5 +75,21 @@ nginx.service:
     - require:
       - file: /etc/nginx/sites-available/default.conf
 
+/etc/nginx/sites-available/stub_status.conf:
+  file.managed:
+    - source: salt://nginx/files/stub_status.conf.j2
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - require:
+      - pkg: nginx
+
+/etc/nginx/sites-enabled/stub_status.conf:
+  file.symlink:
+    - target: /etc/nginx/sites-available/stub_status.conf
+    - require:
+      - file: /etc/nginx/sites-available/stub_status.conf
+
 include:
   - nginx.vhosts
