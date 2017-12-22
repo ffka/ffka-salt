@@ -44,8 +44,8 @@ gitlab-runner-concurrent:
     - name: /etc/gitlab-runner/config.toml
     - mode: replace
     - indent: True
-    - match: concurrent
-    - content: "concurrent = {{ salt['pillar.get']('gitlab:runner:concurrent', 2) }}"
+    - pattern: concurrent*
+    - repl: "concurrent = {{ salt['pillar.get']('gitlab:runner:concurrent', 2) }}"
     - require:
       - cmd: gitlab-runner-registration
 
