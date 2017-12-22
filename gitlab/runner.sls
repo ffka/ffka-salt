@@ -48,6 +48,18 @@ gitlab-runner-conf-cleanup:
     - require:
       - cmd: gitlab-runner-registration
 
+gitlab-runner-concurrent:
+  file.line:
+    - name: /etc/gitlab-runner/config.toml
+    - mode: ensure
+    - before: |
+        \[\[runners\]\]
+    - indent: False
+    - match: concurrent
+    - content: "concurrent = {{ salt['pillar.get']('gitlab:runner:concurrent', 2) }}"
+    - require:
+      - file: gitlab-runner-conf-cleanup
+
 # Make sure that the output_limit config line has the right value by replacing it regardless of the value. If it doesn't exist, insert it at the right location
 #gitlab-runner-output-limit:
 #  file.line:
@@ -60,15 +72,3 @@ gitlab-runner-conf-cleanup:
 #    - content: "  output_limit = {{ salt['pillar.get']('gitlab:runner:output_limit', 1024) }}"
 #    - require:
 #      - file: gitlab-runner-conf-cleanup
-
-#gitlab-runner-concurrent:
-#  file.line:
-#    - name: /etc/gitlab-runner/config.toml
-#    - mode: ensure
-#    - before: |
-#        \[\[runners\]\]
-#    - indent: False
-#    - match: concurrent
-#    - content: "concurrent = {{ salt['pillar.get']('gitlab:runner:concurrent', 2) }}"
-#    - require:
-#      - file: gitlab-runner-output-limit
