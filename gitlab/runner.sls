@@ -34,11 +34,21 @@ gitlab-runner-registration:
     - name: |
         gitlab-runner unregister --all-runners
 {% for proj in salt['pillar.get']('gitlab:runners', []) %}
-        gitlab-runner register --non-interactive --url {{ proj['gitlab_url'] }} --run-untagged --tag-list "{{ proj['tag_list'] }}" --executor docker --docker-image dind --registration-token {{ proj['token'] }} --name {{ proj['name'] }} --docker-privileged
+        gitlab-runner register --non-interactive --url {{ proj['gitlab_url'] }} --run-untagged --tag-list "{{ proj['tag_list'] }}" --executor docker --docker-image dind --registration-token {{ proj['token'] }} --name "{{ pillar['fqdn'] }}: {{ proj['name'] }}" --docker-privileged
 {% endfor %}
     - require:
       - service: gitlab-runner.service
 
+# Clean up config file (remove empty lines) so file.line works correctly
+gitlab-runner-conf-cleanup:
+  file.replace:
+    - name: /etc/gitlab-runner/config.toml
+    - pattern: (\r*\n)+
+    - repl: \n
+    - require:
+      - cmd: gitlab-runner-registration
+
+# Make sure that the output_limit config line has the right value by replacing it regardless of the value. If it doesn't exist, insert it at the right location
 gitlab-runner-output-limit:
   file.line:
     - name: /etc/gitlab-runner/config.toml
@@ -46,6 +56,19 @@ gitlab-runner-output-limit:
     - after: |
         \[\[runners\]\]
     - indent: False
-    - content: "  output_limit = 102400"
+    - match: output_limit
+    - content: "  output_limit = {{ salt['pillar.get']('gitlab:runner:output_limit', 1024) }}"
     - require:
-      - cmd: gitlab-runner-registration
+      - cmd: gitlab-runner-conf-cleanup
+
+gitlab-runner-concurrent:
+  file.line:
+    - name: /etc/gitlab-runner/config.toml
+    - mode: ensure
+    - before: |
+        \[\[runners\]\]
+    - indent: False
+    - match: concurrent
+    - content: "concurrent = {{ salt['pillar.get']('gitlab:runner:concurrent', 2) }}"
+    - require:
+      - file: gitlab-runner-output-limit
