@@ -1,6 +1,6 @@
 options {
 directory "/var/cache/bind";
-
+statistics-file "/var/log/bind/named.stats";
 dnssec-validation auto;
 
 auth-nxdomain no;    # conform to RFC1035
