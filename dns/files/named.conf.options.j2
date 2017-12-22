@@ -24,5 +24,8 @@ transfer-source-v6 {{ grains.fqdn_ip6[0] }};
       allow-query-cache { "recursionhosts" ; };
    query-source address {{ network.lo_ffka.ipv4.ip }};
 
-
+   statistics-channels {
+           inet 127.0.0.1 port 18888 allow { 127.0.0.1; };
+           inet ::1 port 18888 allow { ::1; };
+   };
 };
