@@ -2,7 +2,7 @@ protocol radv {
 	interface "br_ffka" {
 		prefix {{ ffka.v6_ffrl_ffka }};
 	};
-	link mtu 1372;
+#	link mtu 1372;
 	rdnss {
                 lifetime mult 10;
                 ns {{ network.br_ffka.ipv6.ip }};
