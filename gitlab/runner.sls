@@ -52,14 +52,12 @@ gitlab-runner-concurrent:
       - cmd: gitlab-runner-registration
 
 gitlab-runner-output-limit:
-  file.line:
+  file.replace:
     - name: /etc/gitlab-runner/config.toml
-    - mode: ensure
-    - after: |
-        \[\[runners\]\]
-    - indent: False
-    - match: output_limit
-    - content: "  output_limit = {{ salt['pillar.get']('gitlab:runner:output_limit', 1024) }}"
+    - pattern: \[\[runners\]\]
+    - repl: |
+        [[runners]]
+          output_limit = {{ salt['pillar.get']('gitlab:runner:output_limit', 1024) }}
     - require:
       - file: gitlab-runner-concurrent
     - watch:
@@ -72,3 +70,5 @@ gitlab-runner-output-limit:
     - identifier: docker_volume_cleanup
     - require:
       - cmd: gitlab-runner-registration
+
+# curl --request POST "https://gitlab.ffka.tech/api/v4/runnication/json" -d '{"info": {}, "token": "7soxN-FJx3hbaYX38Tjq", "description": "testdesc", "tag_list": "x,y,z", "run_untagged": "true", "locked": "false"}'
