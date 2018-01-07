@@ -48,6 +48,8 @@ gitlab-runner-concurrent:
     - content: "concurrent = {{ salt['pillar.get']('gitlab:runner:concurrent', 2) }}"
     - require:
       - cmd: gitlab-runner-registration
+    - watch:
+      - cmd: gitlab-runner-registration
 
 gitlab-runner-output-limit:
   file.line:
@@ -60,3 +62,13 @@ gitlab-runner-output-limit:
     - content: "  output_limit = {{ salt['pillar.get']('gitlab:runner:output_limit', 1024) }}"
     - require:
       - file: gitlab-runner-concurrent
+    - watch:
+      - cmd: gitlab-runner-registration
+
+/usr/bin/docker volume prune --force:
+  cron.present:
+    - user: root
+    - special: '@daily'
+    - identifier: docker_volume_cleanup
+    - require:
+      - cmd: gitlab-runner-registration
