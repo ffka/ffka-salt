@@ -35,6 +35,7 @@ base:
     - yanic
     - meshviewer
     - nginx
+    - certbot
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
