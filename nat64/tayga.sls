@@ -71,6 +71,7 @@ tayga-setup.service:
     - require:
       - service: tayga.service
     - source: salt://nat64/files/tayga-setup.service.j2
+    - mode: 755
     - template: jinja
   service.running:
     - name: tayga-setup
