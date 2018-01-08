@@ -50,6 +50,7 @@ tayga.service:
       - file: /etc/systemd/system/tayga.service
     - watch:
       - file: /etc/tayga.conf
+      - file: /etc/systemd/system/tayga.service
 
 # Interface and routing setup
 /usr/local/bin/tayga_setup.sh:
@@ -83,3 +84,4 @@ tayga-setup.service:
       - file: /etc/systemd/system/tayga-setup.service
     - watch:
       - file: /usr/local/bin/tayga_setup.sh
+      - file: /etc/systemd/system/tayga-setup.service
