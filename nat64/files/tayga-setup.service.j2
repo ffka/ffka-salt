@@ -3,7 +3,9 @@ Description=Tayga NAT64 daemon interface and routing setup
 After=tayga.service
 
 [Service]
+Type=oneshot
 ExecStart=/usr/local/bin/tayga_setup.sh
+RemainAfterExit=true
 
 [Install]
 WantedBy=default.target
