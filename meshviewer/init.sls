@@ -1,4 +1,5 @@
 {%- set map_domain = salt['pillar.get']('domainsets:' ~ pillar['meshviewer']['domainset'], [])[0] -%}
+{%- set deploy_dir = salt['pillar.get']('meshviewer:webroot', None) -%}
 
 meshviewer:
   user.present
@@ -87,9 +88,11 @@ meshviewer_gulp:
     - user: meshviewer
     - name: ./node_modules/.bin/gulp
 
+
+{% if deploy_dir %}
 meshviewer_deploy:
   rsync.synchronized:
-    - name: /srv/www/{{ map_domain }}/htdocs/
+    - name: {{ deploy_dir }}
     - source: /home/meshviewer/meshviewer.git/build/
     - force: True
     - delete: True
@@ -98,6 +101,7 @@ meshviewer_deploy:
        - test: nginx_mapviewer_internal
     - onchanges:
        - git: /home/meshviewer/meshviewer.git
+{% endif %}
 
 #meshviewer_copy_to_srv_www:
 #  cmd.run:
