@@ -1,18 +1,18 @@
 proxy_cache_path /var/www/tilecache/new
-	levels=1:2 inactive=3d
-	keys_zone=new_tilecache:64m
-	max_size=1000M;
+    levels=1:2 inactive=3d
+    keys_zone=new_tilecache:64m
+    max_size=2048M;
 
 proxy_cache_path /var/cache/nginx/new_1min levels=1:2 keys_zone=cache_new_1min:1m max_size=1g inactive=10m;
 proxy_cache_path /var/cache/nginx/new_60min levels=1:2 keys_zone=cache_new_60min:60m max_size=10g inactive=3600m;
 
 server {
-	listen 80;
-	listen [::]:80;
+    listen 80;
+    listen [::]:80;
 
-	server_name {{ hostnames }};
+    server_name {{ hostnames }};
 
-	include "snippets/acme-challenge.conf";
+    include "snippets/acme-challenge.conf";
 
     access_log "/var/log/nginx/{{ site_name }}/access.log";
     error_log "/var/log/nginx/{{ site_name }}/error.log";
@@ -23,10 +23,11 @@ server {
 }
 
 server {
-	listen 443 ssl http2;
-	listen [::]:443 ssl http2;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
 
-	server_name {{ hostnames }};
+    # server_name {{ hostnames }};
+    server_name ~^(?<site_id>[0-9]+).tiles.ffka.tech$;
 
     #ssl_certificate "/etc/letsencrypt/live/{{ certificate_filename }}/fullchain.pem";
     #ssl_certificate_key "/etc/letsencrypt/live/{{ certificate_filename }}/privkey.pem";
@@ -37,43 +38,43 @@ server {
     access_log "/var/log/nginx/{{ site_name }}/access.log";
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
-	location ~ ^/tiles/(?<provider>[a-zA-Z]+)/(?<tilex>[0-9]+)/(?<tiley>[0-9]+)/(?<tilez>[0-9]+)/ {
-		map $provider $proxied_url {
-		    default       404;
+    location ~ ^/tiles/(?<provider>(giscience|ffrgb-day|ffrgb-night)+)/(?<tile_z>[0-9]+)/(?<tile_x>[0-9]+)/(?<tile_y>[0-9]+)/((?<retina>(.+))/)? {
 
-		    unih 		  http://korona.geog.uni-heidelberg.de/tiles/roads/x=$tilex&y=$tiley&z=$tilez
-		}
+        resolver 8.8.8.8 ipv6=off;
+        if ($provider = "giscience") {
+            proxy_pass "http://korona.geog.uni-heidelberg.de/tiles/roads/x=$tile_x&y=$tile_y&z=$tile_z";
+        }
+        if ($provider = "ffrgb-day") {
+            proxy_pass "https://1.tiles.ffrgb.net/$tile_z/$tile_x/$tile_y$retina.png";
+        }
+        if ($provider = "ffrgb-night") {
+            proxy_pass "https://2.tiles.ffrgb.net/n/$tile_z/$tile_x/$tile_y$retina.png";
+        }
 
-		if ($proxied_url = 404) {
-			return 404;
-		}
+        proxy_http_version    1.1;
+        proxy_set_header    Connection "";
+        proxy_set_header    Accept-Encoding "";
+        proxy_set_header    User-Agent "Mozilla/5.0 (compatible; OSMTileCache/1.0; +mailto:info@karlsruhe.freifunk.net; +https://karlsruhe.freifunk.net/karte)";
 
-		resolver 8.8.8.8 ipv6=off;
-		proxy_pass $proxied_url;
-		proxy_http_version	1.1;
-		proxy_set_header    Connection "";
-		proxy_set_header    Accept-Encoding "";
-		proxy_set_header    User-Agent "Mozilla/5.0 (compatible; OSMTileCache/1.0; +mailto:info@karlsruhe.freifunk.net; +https://karlsruhe.freifunk.net/karte)";
+        proxy_temp_path     /var/www/tilecache/temp;
+        proxy_cache         new_tilecache;
+        proxy_store         off;
+        proxy_cache_key     $uri$is_args$args;
+        proxy_ignore_headers Expires Cache-Control;
+        proxy_cache_valid   200 301 302 7d;
+        proxy_cache_valid   404 1m;
+        proxy_cache_valid   any 1m;
+        proxy_next_upstream   error timeout invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
+        proxy_cache_use_stale error timeout updating invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
 
-		proxy_temp_path     /var/www/tilecache/temp;
-		proxy_cache         new_tilecache;
-		proxy_store         off;
-		proxy_cache_key     $uri$is_args$args;
-		proxy_ignore_headers Expires Cache-Control;
-		proxy_cache_valid   200 301 302 7d;
-		proxy_cache_valid   404 1m;
-		proxy_cache_valid   any 1m;
-		proxy_next_upstream   error timeout invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
-		proxy_cache_use_stale error timeout updating invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
+        proxy_hide_header   Via;
+        proxy_hide_header   X-Cache;
+        proxy_hide_header   X-Cache-Lookup;
 
-		proxy_hide_header   Via;
-		proxy_hide_header   X-Cache;
-		proxy_hide_header   X-Cache-Lookup;
+        expires 7d;
+    }
 
-		expires 7d;
-	}
-
-	location / {
-		return 404;
-	}
+    location / {
+        return 404;
+    }
 }
