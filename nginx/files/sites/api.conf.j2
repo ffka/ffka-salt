@@ -9,8 +9,11 @@ server {
     access_log "/var/log/nginx/{{ site_name }}/access.log";
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
-    autoindex on;
+    location /yanic/meshviewer/ {
+    	autoindex on;
+	    try_files $uri $uri/ =404;
+	    root /var/lib/yanic/meshviewer/ffka/;
+	}
 
-    try_files $uri $uri/ =404;
-    root /var/lib/yanic/meshviewer/ffka/;
+	return 404;
 }
