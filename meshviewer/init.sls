@@ -1,4 +1,5 @@
-{% set map_domain = "map.frickelfunk.net" %}
+{%- set map_domain = salt['pillar.get']('domainsets:' ~ pillar['meshviewer']['domainset'], [])[0] -%}
+
 meshviewer:
   user.present
 
@@ -86,30 +87,17 @@ meshviewer_gulp:
     - user: meshviewer
     - name: ./node_modules/.bin/gulp
 
-create_srv_www:
-  file.directory:
-    - user: www-data
-    - group: www-data
-    - name: /srv/www
-
-meshviewer_empty_srv_www:
-  file.absent:
-    - name: /srv/www/{{ map_domain }}/htdocs
+meshviewer_deploy:
+  rsync.synchronized:
+    - name: /srv/www/{{ map_domain }}/htdocs/
+    - source: /home/meshviewer/meshviewer.git/build/
+    - force: True
+    - delete: True
     - require:
-       - file: /srv/www/{{ map_domain }}
        - cmd: meshviewer_gulp
-    - watch:
-       - cmd: meshviewer_gulp
-
-meshviewer_create_srv_www:
-  file.directory:
-    - user: www-data
-    - group: www-data
-    - name: /srv/www/{{ map_domain }}/htdocs
-    - require:
-       - file: meshviewer_empty_srv_www
-    - watch:
-       - file: meshviewer_empty_srv_www
+       - test: nginx_mapviewer_internal
+    - onchanges:
+       - file: meshviewer_create_srv_www
 
 meshviewer_copy_to_srv_www:
   cmd.run:
