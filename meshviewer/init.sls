@@ -40,24 +40,13 @@ yarn:
       - pkg: nodejs
       - user: meshviewer
 
-meshviewer_remove_build:
-  cmd.run:
-    - onchanges:
-      - git: /home/meshviewer/meshviewer.git
-      - pkg: nodejs
-    - watch:
-      - git: /home/meshviewer/meshviewer.git
-      - pkg: nodejs
-    - cwd: /home/meshviewer/meshviewer.git
-    - name: rm -rf build
-
 meshviewer_yarn_install:
   cmd.run:
     - onchanges:
-      - cmd: meshviewer_remove_build
+      - git: /home/meshviewer/meshviewer.git
     - require:
       - pkg: yarn
-      - cmd: meshviewer_remove_build
+      - git: /home/meshviewer/meshviewer.git
     - cwd: /home/meshviewer/meshviewer.git
     - user: meshviewer
     - name: yarn && yarn add gulp-cli

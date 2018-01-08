@@ -30,6 +30,10 @@ offline_after = "10m"
 # Prune offline nodes after a time of inactivity
 prune_after = "90d"
 
+[[nodes.output.meshviewer-ffrgb]]
+enable   = true
+path = "/var/lib/yanic/meshviewer/{{ ffka.site_code }}/meshviewer.json"
+
 [[nodes.output.meshviewer]]
 # structur of nodes.json, which to support
 # version 1 is to support legacy meshviewer (which are in master branch)
