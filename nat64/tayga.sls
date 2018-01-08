@@ -1,8 +1,9 @@
+# Basic setup
 tayga:
   pkg.installed:
     - name: tayga
 
-place tayga.conf:
+/etc/tayga.conf:
   file.managed:
     - name: /etc/tayga.conf
     - source: salt://nat64/files/tayga.conf.j2
@@ -22,9 +23,21 @@ tayga_interface:
     - cwd: /
     - require:
       - pkg: tayga
-      - file: place tayga.conf
+      - file: /etc/tayga.conf
+
+# Use systemd instead of the provided init script
+/etc/init.d/tayga:
+  file.absent:
+    - require:
+      - pkg: tayga
 
 tayga.service:
+  file.managed:
+    - name: /etc/systemd/system/tayga.service
+    - source: salt://nat64/files/tayga.service.conf.j2
+    - require:
+      - pkg: tayga
+    - template: jinja
   service.running:
     - name: tayga
     - enable: true
@@ -32,9 +45,11 @@ tayga.service:
     - require:
       - pkg: tayga
       - cmd: tayga_interface
-      - file: place tayga.conf
+      - file: /etc/tayga.conf
+      - file: /etc/init.d/tayga
+      - file: /etc/systemd/system/tayga.service
     - watch:
-      - file: place tayga.conf
+      - file: /etc/tayga.conf
 
 setup tayga interface:
   cmd.script:
