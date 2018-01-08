@@ -51,14 +51,13 @@ tayga.service:
     - watch:
       - file: /etc/tayga.conf
 
-setup tayga interface:
-  cmd.script:
-    - name: setup_tayga
+# Interface and routing setup
+/etc/tayga_setup.sh:
+  file.managed:
     - require:
       - service: tayga.service
     - source: salt://nat64/files/setup_tayga.sh.j2
     - template: jinja
-    - cwd: /
     - context:
         v4_pool: {{ pillar['network']['nat64']['v4_pool'] }}
         v4_address: {{ pillar['network']['nat64']['v4_address'] }}
