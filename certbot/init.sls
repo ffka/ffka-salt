@@ -33,6 +33,7 @@ certbot_certonly_initial_{{ name }}:
     - require:
       - pkg: certbot
       - file: certbot_webroot
+      - file: /etc/letsencrypt/cli.ini
 {% endfor %}
 
 # Renew manually
