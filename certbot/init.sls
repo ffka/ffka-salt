@@ -43,6 +43,9 @@ renew:
 {%- for name in salt['pillar.get']('certbot:domainsets', []) %}
       - cmd: certbot_certonly_initial_{{ name }}
 {% endfor %}
+    # Run renew before updating the nginx service, which will run initial cert setup
+    - require_in:
+      - service: nginx.service
 
 # Setup automatic renewal using systemd timers (remove default cronjob)
 /etc/cron.d/certbot:
