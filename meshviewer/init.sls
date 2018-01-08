@@ -51,18 +51,6 @@ meshviewer_yarn_install:
     - user: meshviewer
     - name: yarn && yarn add gulp-cli
 
-config.json:
-  file.managed:
-    - name: /home/meshviewer/meshviewer.git/config.json
-    - user: www-data
-    - group: www-data
-    - source: salt://meshviewer/files/config.json.j2
-    - template: jinja
-    - require:
-      - git: /home/meshviewer/meshviewer.git
-    - watch:
-      - git: /home/meshviewer/meshviewer.git
-
 config.js:
   file.managed:
     - name: /home/meshviewer/meshviewer.git/config.js
@@ -79,7 +67,6 @@ meshviewer_gulp:
   cmd.run:
     - onchanges:
       - cmd: meshviewer_yarn_install
-      - file: config.json
       - file: config.js
     - require:
        - cmd: meshviewer_yarn_install
