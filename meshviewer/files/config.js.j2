@@ -15,9 +15,10 @@ module.exports = function () {
     'mapLayers': [
       {
         'name': 'Freifunk Karlsruhe',
-        'url': 'https://karlsruhe.freifunk.net/tiles/roads/x={x}&y={y}&z={z}',
+        'url': 'https://{s}.tiles.ffka.tech/tiles/giscience/{z}/{x}/{y}/{retina}/',
         'config': {
           'maxZoom': 19,
+          'subdomains': '012',
           'attribution': 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data <a href="http://www.openstreetmap.org/about/" target="_blank">&copy; OpenStreetMap contributors</a>',
           'start': 0
         }
@@ -25,20 +26,20 @@ module.exports = function () {
       {
         'name': 'Freifunk Regensburg',
         // Please ask Freifunk Regensburg before using its tile server c- example with retina tiles
-        'url': 'https://{s}.tiles.ffrgb.net/{z}/{x}/{y}{retina}.png',
+        'url': 'https://{s}.tiles.ffka.tech/tiles/ffrgb-day/{z}/{x}/{y}/{retina}/',
         'config': {
           'maxZoom': 20,
-          'subdomains': '1234',
+          'subdomains': '012',
           'attribution': '<a href="http://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> <a href="http://www.openstreetmap.org/about/" target="_blank">&copy; OpenStreetMap contributors</a>',
         }
       },
       {
         'name': 'Freifunk Regensburg (Night)',
         // Please ask Freifunk Regensburg before using its tile server - example with retina and dark tiles
-        'url': 'https://{s}.tiles.ffrgb.net/n/{z}/{x}/{y}{retina}.png',
+        'url': 'https://{s}.tiles.ffka.tech/tiles/ffrgb-night/{z}/{x}/{y}/{retina}/',
         'config': {
           'maxZoom': 20,
-          'subdomains': '1234',
+          'subdomains': '012',
           'attribution': ' <a href="http://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> <a href="http://www.openstreetmap.org/about/" target="_blank">&copy; OpenStreetMap contributors</a>',
           'mode': 'night',
         }
