@@ -16,7 +16,7 @@ yanic:
       - user: yanic
   cmd.run:
     - cwd: {{ gopath }}/src/github.com/FreifunkBremen/yanic
-    - name: go get -v -u github.com/FreifunkBremen/yanic/cmd/...
+    - name: go get -v -u github.com/FreifunkBremen/yanic
     - user: yanic
     - env:
         GOPATH: {{ gopath }}
