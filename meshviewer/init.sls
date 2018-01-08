@@ -97,12 +97,12 @@ meshviewer_deploy:
        - cmd: meshviewer_gulp
        - test: nginx_mapviewer_internal
     - onchanges:
-       - file: meshviewer_create_srv_www
+       - git: /home/meshviewer/meshviewer.git
 
-meshviewer_copy_to_srv_www:
-  cmd.run:
-    - name: cp -ar /home/meshviewer/meshviewer.git/build/* /srv/www/{{ map_domain }}/htdocs/. && chown www-data:www-data -R /srv/www/{{ map_domain }}/htdocs/
-    - require:
-       - file: meshviewer_create_srv_www
-    - onchanges:
-       - file: meshviewer_create_srv_www
+#meshviewer_copy_to_srv_www:
+#  cmd.run:
+#    - name: cp -ar /home/meshviewer/meshviewer.git/build/* /srv/www/{{ map_domain }}/htdocs/. && chown www-data:www-data -R /srv/www/{{ map_domain }}/htdocs/
+#    - require:
+#       - file: meshviewer_create_srv_www
+#    - onchanges:
+#       - file: meshviewer_create_srv_www
