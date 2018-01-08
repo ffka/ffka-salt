@@ -34,7 +34,7 @@ tayga_interface:
 tayga.service:
   file.managed:
     - name: /etc/systemd/system/tayga.service
-    - source: salt://nat64/files/tayga.service.conf.j2
+    - source: salt://nat64/files/tayga.service.j2
     - require:
       - pkg: tayga
     - template: jinja
