@@ -58,6 +58,7 @@ tayga.service:
       - service: tayga.service
     - source: salt://nat64/files/setup_tayga.sh.j2
     - template: jinja
+    - mode: 755
     - context:
         v4_pool: {{ pillar['network']['nat64']['v4_pool'] }}
         v4_address: {{ pillar['network']['nat64']['v4_address'] }}
@@ -71,7 +72,7 @@ tayga-setup.service:
     - require:
       - service: tayga.service
     - source: salt://nat64/files/tayga-setup.service.j2
-    - mode: 755
+    - mode: 644
     - template: jinja
   service.running:
     - name: tayga-setup
