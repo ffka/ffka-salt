@@ -34,6 +34,7 @@ base:
     - batman
     - yanic
     - meshviewer
+    - nginx
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
