@@ -4,16 +4,24 @@ module.exports = function () {
       {
         'name': 'Statistik',
         'href': 'http://stats.karlsruhe.freifunk.net/',
-        'image': 'https://grafana.regensburg.freifunk.net/render/dashboard-solo/db/ffrgb-network-wide-stats?panelId=11&from=now-1y&width=600&height=350&theme=light',
-        'title': 'Jahresstatistik - weiteren Statistiken'
+        'image': 'http://stats.karlsruhe.freifunk.net/render/dashboard-solo/db/freifunk-karlsruhe?panelId=2&from=now-1y&width=600&height=350&theme=light',
+        'title': 'Jahresstatistik Clients - weiteren Statistiken'
       }
     ],
-    // Array of data provider are supported
     'dataPath': [
       'http://api.frickelfunk.net/yanic/meshviewer/'
     ],
     'siteName': 'Freifunk Karlsruhe',
     'mapLayers': [
+      {
+        'name': 'Freifunk Karlsruhe',
+        'url': 'https://karlsruhe.freifunk.net/tiles/roads/x={x}&y={y}&z={z}',
+        'config': {
+          'maxZoom': 20,
+          'attribution': 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data {attribution.OpenStreetMap}',
+          'start': 6
+        }
+      },
       {
         'name': 'Freifunk Regensburg',
         // Please ask Freifunk Regensburg before using its tile server c- example with retina tiles
@@ -76,23 +84,34 @@ module.exports = function () {
         }
       }
     ],
-    // Set a visible frame
-    'fixedCenter': [
-      // Northwest
-      [
-        49.3522,
-        11.7752
-      ],
-      // Southeast
-      [
-        48.7480,
-        12.8917
-      ]
-    ],
+    //'fixedCenter': [
+    //  // Northwest
+    //  [
+    //    49.3522,
+    //    11.7752
+    //  ],
+    //  // Southeast
+    //  [
+    //    48.7480,
+    //    12.8917
+    //  ]
+    //],
     'siteNames': [
       {
         'site': 'ffka',
         'name': 'Karlsruhe'
+      },
+      {
+        'site': 'ffog',
+        'name': 'Ortenau'
+      },
+      {
+        'site': 'ffhoh',
+        'name': 'Hohenlohe'
+      },
+      {
+        'site': 'ffpf',
+        'name': 'Pforzheim'
       }
     ]
   };
