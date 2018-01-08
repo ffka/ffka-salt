@@ -52,8 +52,9 @@ tayga.service:
       - file: /etc/tayga.conf
 
 # Interface and routing setup
-/etc/tayga_setup.sh:
+setup_tayga:
   file.managed:
+    - name: /usr/local/bin/tayga_setup.sh
     - require:
       - service: tayga.service
     - source: salt://nat64/files/setup_tayga.sh.j2
@@ -64,3 +65,11 @@ tayga.service:
         v4_interface_address: {{ pillar['network']['nat64']['v4_interface_address'] }}
         v6_range: {{ pillar['network']['nat64']['v6_range'] }}
         v6_interface_address: {{ pillar['network']['nat64']['v6_interface_address'] }}
+  service.running:
+    - name: setup_tayga
+    - enable: true
+    - restart: true
+    - require:
+      - file: /usr/local/bin/tayga_setup.sh
+    - watch:
+      - file: /usr/local/bin/tayga_setup.sh
