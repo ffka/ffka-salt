@@ -4,7 +4,7 @@ After=tayga.service sys-devices-virtual-net-nat64.device
 
 [Service]
 Type=oneshot
-#ExecStartPre=/bin/sleep 5
+ExecStartPre=/bin/sleep 5
 ExecStart=/usr/local/bin/tayga_setup.sh
 RemainAfterExit=true
 
