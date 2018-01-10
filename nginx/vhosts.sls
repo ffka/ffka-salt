@@ -87,7 +87,6 @@ nginx_{{ name }}:
       {% if create_user -%}- user: user_{{ owner }}{%- endif %}
       - file: /etc/nginx/sites-available/{{ name }}.conf
       - file: /var/log/nginx/{{ name }}
-      - file: /srv/www/{{ name }}/
 
 {% endfor %}
 
