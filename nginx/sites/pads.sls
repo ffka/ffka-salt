@@ -41,7 +41,7 @@ hackmdapp:
     - network_mode: hackmd_backend
     - port_bindings:
       - 127.0.0.1:3000:3000
-    - command: "/bin/bash -c dockerize \"/hackmd/docker-entrypoint.sh\""
+    - command: "/bin/bash -c \"dockerize /hackmd/docker-entrypoint.sh\""
     - restart_policy: always
     - require:
       - docker_network: hackmd_backend
