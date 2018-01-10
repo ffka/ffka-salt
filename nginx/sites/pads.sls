@@ -35,7 +35,7 @@ hackmdapp:
     - image: hackmdio/hackmd:{{ hackmd_version }}
     - environment:
       - HMD_DB_URL=postgres://hackmd:hackmdpass@hackmdpostgres:5432/hackmd
-      {%- for setting, value in salt['pillar.get']('hackmd:settings') %}
+      {%- for setting, value in salt['pillar.get']('hackmd:settings', {}).items() %}
       - {{ setting }}={{ value }}
       {% endfor %}
     - network_mode: hackmd_backend
