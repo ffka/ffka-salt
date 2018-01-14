@@ -1,4 +1,4 @@
-{% macro custom_states(name, vhost) -%}
+{% macro custom_states(name, vhost, domainset) -%}
 
 {%- set hackmd_version = "0.5.1" -%}
 {%- set hackmd_postgres_version = "9.6-alpine" -%}

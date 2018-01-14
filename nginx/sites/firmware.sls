@@ -1,4 +1,4 @@
-{% macro custom_states(name, vhost) -%}
+{% macro custom_states(name, vhost, domainset) -%}
 
 gluon-firmware-wizard:
   git.latest:

@@ -93,7 +93,7 @@ nginx_{{ name }}:
 
 {% with %}
 {% from 'nginx/sites/' ~ name ~ '.sls' import custom_states %}
-{{ custom_states(name, vhost) }}
+{{ custom_states(name, vhost, domainset) }}
 {% endwith %}
 
 {% endif %}
