@@ -40,6 +40,11 @@ hackmdapp:
     - image: hackmdio/hackmd:{{ hackmd_version }}
     - environment:
       - HMD_DB_URL=postgres://hackmd:hackmdpass@hackmdpostgres:5432/hackmd
+      - HMD_DOMAIN={{ domainset[0] }}
+      - HMD_PROTOCOL_USESSL=true
+      - HMD_URL_ADDPORT=false
+      - HMD_USECDN=false
+      - HMD_ALLOW_ORIGIN={{ domainset|join(', ') }}
       {%- for setting, value in salt['pillar.get']('hackmd:settings', {}).items() %}
       - {{ setting }}={{ value }}
       {% endfor %}
