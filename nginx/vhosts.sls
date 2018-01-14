@@ -88,7 +88,7 @@ nginx_{{ name }}:
       - file: /etc/nginx/sites-available/{{ name }}.conf
       - file: /var/log/nginx/{{ name }}
 
-{% if vhost.get('custom_states', True) %}
+{% if vhost.get('custom_states', False) %}
 # site has custom states -> include states isolated (in with section), and call the macro
 
 {% with %}
