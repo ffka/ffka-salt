@@ -105,7 +105,8 @@ hooks:
         cmd:
           - git clone https://github.com/discourse/docker_manager.git
           {% if gitlab_auth -%}
-          - git clone https://gitlab.com/gitlab-org/discourse-omniauth-gitlab.git
+          - git clone https://gitlab.com/lennart/discourse-omniauth-gitlab
+          #- git clone https://gitlab.com/gitlab-org/discourse-omniauth-gitlab.git
           {%- endif %}
 
 ## Any custom commands to run after building
