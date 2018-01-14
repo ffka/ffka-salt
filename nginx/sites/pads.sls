@@ -1,3 +1,5 @@
+{% macro custom_states(name, vhost) -%}
+
 {%- set hackmd_version = "0.5.1" -%}
 {%- set hackmd_postgres_version = "9.6-alpine" -%}
 
@@ -50,3 +52,5 @@ hackmdapp:
       - docker_network: hackmd_backend
       - docker_image: postgres:{{ hackmd_postgres_version }}
       - file: /srv/www/pads/database
+
+{%- endmacro %}

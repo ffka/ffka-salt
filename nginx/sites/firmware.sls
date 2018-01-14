@@ -1,3 +1,5 @@
+{% macro custom_states(name, vhost) -%}
+
 gluon-firmware-wizard:
   git.latest:
     - name: https://github.com/freifunk-darmstadt/gluon-firmware-wizard.git
@@ -36,3 +38,5 @@ gluon-firmware-wizard/config.js:
     - require:
       - file: /srv/firmware/images/
 {% endfor %}
+
+{%- endmacro %}
