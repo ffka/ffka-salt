@@ -5,6 +5,8 @@ Requires=docker.service
 
 [Service]
 TimeoutStartSec=0
+Type=oneshot
+RemainAfterExit=yes
 ExecStart={{ dir }}/launcher start app
 
 [Install]

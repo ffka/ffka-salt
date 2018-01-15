@@ -17,3 +17,8 @@ docker.service:
     - enable: True
     - require:
       - pkg: docker-ce
+
+python-docker:
+  pkg.installed:
+    - require:
+      - pkg: docker-ce

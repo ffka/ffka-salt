@@ -10,6 +10,7 @@
 {% set smtp_settings = salt['pillar.get']('discourse:smtp', False) %}
 {% set main_hostname = salt['pillar.get']('discourse:hostname') %}
 {% set developer_emails = salt['pillar.get']('discourse:developer_emails', []) %}
+{% set gitlab_auth = salt['pillar.get']('discourse:gitlab_auth', False) %}
 
 templates:
   - "templates/postgres.template.yml"
@@ -80,6 +81,12 @@ env:
   ## see https://meta.discourse.org/t/14857 for details
   #DISCOURSE_CDN_URL: //discourse-cdn.example.com
 
+  {% if gitlab_auth %}
+  GITLAB_APP_ID: {{ gitlab_auth['app_id'] }}
+  GITLAB_SECRET: {{ gitlab_auth['secret'] }}
+  GITLAB_URL: {{ gitlab_auth['url'] }}
+  {% endif %}
+
 ## The Docker container is stateless; all data is stored in /shared
 volumes:
   - volume:
@@ -97,6 +104,10 @@ hooks:
         cd: $home/plugins
         cmd:
           - git clone https://github.com/discourse/docker_manager.git
+          {% if gitlab_auth -%}
+          - git clone https://gitlab.com/lennart/discourse-omniauth-gitlab
+          #- git clone https://gitlab.com/gitlab-org/discourse-omniauth-gitlab.git
+          {%- endif %}
 
 ## Any custom commands to run after building
 run:

@@ -88,11 +88,14 @@ nginx_{{ name }}:
       - file: /etc/nginx/sites-available/{{ name }}.conf
       - file: /var/log/nginx/{{ name }}
 
-{% endfor %}
+{% if vhost.get('custom_states', False) %}
+# site has custom states -> include states isolated (in with section), and call the macro
 
-{% for site_name in salt['pillar.get']('nginx:vhosts', []) | selectattr("custom_states", "defined") | selectattr("custom_states") | map(attribute='site_name') %}
-{%- if loop.first -%}
-include:
+{% with %}
+{% from 'nginx/sites/' ~ name ~ '.sls' import custom_states %}
+{{ custom_states(name, vhost, domainset) }}
+{% endwith %}
+
 {% endif %}
-  - nginx.sites.{{ site_name }}
+
 {% endfor %}
