@@ -26,7 +26,7 @@ function is_self_public() {
 
 function is_self_public_uplink() {
   if net ~ [ {{ ffka.v6_ffrl }} ] then accept;
-  if net ~ [ {{ ffka.v6_ffrl }}{48,56,64} ] then {
+  if net ~ [ {{ ffka.v6_ffrl }}{48,64} ] then {
     if source = RTS_STATIC then accept;
     if source = RTS_DEVICE then accept;
     if source = RTS_STATIC_DEVICE then accept;
