@@ -62,4 +62,12 @@ hopglass-server.git:
     - source: salt://hopglass/files/instances/{{ hopglass_instance }}/aliases.json
     - require:
       - file: /etc/hopglass-server/{{ hopglass_instance }}
+
+/var/lib/hopglass-server/{{ hopglass_instance }}:
+  file.directory:
+    - user: hopglass
+    - group: hopglass
+    - mode: 755
+    - makedirs: True
+
 {% endfor %}
