@@ -15,7 +15,7 @@ user_{{ owner }}:
     - home: /srv/www/{{ name }}/
 {%- if vhost.get('webroot', False) %}
     - require_in:
-      - file: /srv/www/{{ name }}/htdocs/
+      - file: {{ name }}_webroot
 {% endif %}
 
 /srv/www/{{ name }}/:
@@ -83,7 +83,9 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
     - dir_mode: 0755
     - template: jinja
     - require:
-      - file: /srv/www/{{ name }}/htdocs/
+      - file: {{ name }}_webroot
+    - require_in:
+      - test: nginx_{{ name }}
 {% endif %}
 {% endif %}
 
