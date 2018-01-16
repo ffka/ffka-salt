@@ -64,8 +64,9 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
 {% endif %}
 
 {% if vhost.get('webroot', False) %}
-/srv/www/{{ name }}/htdocs/:
+{{ name }}_webroot:
   file.directory:
+    - name: /srv/www/{{ name }}/htdocs/
     - user: {{ owner }}
     - group: www-data
     - makedirs: True
@@ -73,7 +74,7 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
       - test: nginx_{{ name }}
 
 {% if vhost.get('sync_webroot', False) %}
-{{ name }}_webroot:
+{{ name }}_webroot_content:
   file.recurse:
     - name: /srv/www/{{ name }}/htdocs/
     - source: salt://nginx/files/sites/{{ name }}/
