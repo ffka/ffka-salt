@@ -1,4 +1,3 @@
-{%- set map_domain = salt['pillar.get']('domainsets:' ~ pillar['meshviewer']['domainset'], [])[0] -%}
 {%- set deploy_dir = salt['pillar.get']('meshviewer:webroot', None) -%}
 
 meshviewer:
@@ -50,6 +49,8 @@ config.js:
       - git: /home/meshviewer/meshviewer.git
     - watch:
       - git: /home/meshviewer/meshviewer.git
+    - context:
+      - api_endpoint: {{ salt['pillar.get']('meshviewer:api_endpoint') }}
 
 meshviewer_gulp:
   cmd.run:
