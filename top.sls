@@ -36,6 +36,7 @@ base:
     - meshviewer
     - nginx
     - certbot
+    - hopglass.server
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
