@@ -1,7 +1,9 @@
 hopglass:
   user.present
+
+hopglass-server.git:
   git.latest:
-    - name: https://github.com/hopglass/hopglass-server
+    - name: https://github.com/hopglass/hopglass-server.git
     - target: /home/hopglass/server.git
     - user: hopglass
     - branch: v0.1.3
