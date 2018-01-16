@@ -1,3 +1,5 @@
+{%- set hopglass_server_version = "v0.1.3" -%}
+
 hopglass:
   user.present
 
@@ -6,7 +8,7 @@ hopglass-server.git:
     - name: https://github.com/hopglass/hopglass-server.git
     - target: /home/hopglass/server.git
     - user: hopglass
-    - branch: v0.1.3
+    - rev: {{ hopglass_server_version }}
     - force_fetch: True
     - force_reset: True
     - require:
