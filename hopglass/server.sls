@@ -17,5 +17,5 @@ hopglass-server.git:
     - user: hopglass
     - silent: False
     - require:
-      - git: hopglass
+      - git: hopglass-server.git
       - user: hopglass
