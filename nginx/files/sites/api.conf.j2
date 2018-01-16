@@ -33,6 +33,9 @@ server {
 
     add_header Access-Control-Allow-Origin *;
 
+    rewrite ^/nodes.json$ /hopglass/nodes.json break;
+    rewrite ^/graph.json$ /hopglass/graph.json break;
+
     location /yanic/meshviewer/ {
         autoindex on;
         try_files $uri $uri/ =404;
