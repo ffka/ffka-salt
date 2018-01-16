@@ -71,6 +71,16 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
     - makedirs: True
     - require_in:
       - test: nginx_{{ name }}
+{% if vhost.get('sync_webroot', False) %}
+  file.recurse:
+    - source: salt://nginx/files/sites/{{ name }}/
+    - clean: True
+    - file_mode: 0644
+    - dir_mode: 0755
+    - template: jinja
+    - require:
+      - file: /srv/www/{{ name }}/htdocs/
+{% endif %}
 {% endif %}
 
 /var/log/nginx/{{ name }}:

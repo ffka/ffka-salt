@@ -1,0 +1,93 @@
+{
+  "name": "Freifunk Karlsruhe",
+  "url": "https://karlsruhe.freifunk.net",
+  "location": {
+    "city": "Karlsruhe",
+    "country": "DE",
+    "lat": 49.00921,
+    "lon": 8.403951,
+    "address": {
+      "Name": "Entropia",
+      "Street": "Steinstrasse 23",
+      "Zipcode": "76133"
+    }
+  },
+  "contact": {
+    "email": "info@freifunk-karlsruhe.de",
+    "irc": "irc://irc.hackint.org/ffka",
+    "ml": "freifunk-ka@lists.entropia.de",
+    "facebook": "https://facebook.com/FreifunkKA",
+    "twitter": "@FFKarlsruhe"
+  },
+  "metacommunity": "albufer",
+  "state": {
+    "nodes": 568,
+    "focus": [
+      "infrastructure/backbone",
+      "Public Free Wifi",
+      "Local services and content",
+      "Free internet access"
+    ],
+    "lastchange": "2016-07-26T13:48:07.365Z"
+  },
+  "timeline": [
+    {
+      "description": "birth",
+      "timestamp": "2014-06-20"
+    },
+    {
+      "description": "Ausgliederung Freifunk Landau",
+      "timestamp": "2015-07-10",
+      "url": "freifunk-suedpfalz.de"
+    }
+  ],
+  "feeds": [
+    {
+      "name": "News",
+      "category": "blog",
+      "type": "rss",
+      "url": "https://karlsruhe.freifunk.net/feed.xml"
+    }
+  ],
+  "nodeMaps": [
+    {
+      "url": "https://map.karlsruhe.freifunk.net/",
+      "interval": "hourly",
+      "technicalType": "meshviewer",
+      "mapType": "geographical"
+    }
+  ],
+  "techDetails": {
+    "firmware": {
+      "name": "gluon",
+      "url": "https://firmware.karlsruhe.freifunk.net/",
+      "vpnaccess": "fwimage"
+    },
+    "networks": {
+      "ipv6": [
+        {
+          "network": "2a03:2260:a::/48"
+        }
+      ],
+      "ipv4": [
+        {
+          "network": "10.214.0.0/16"
+        },
+        {
+          "network": "185.66.194.8/29"
+        }
+      ]
+    },
+    "routing": [
+      "batman-adv"
+    ],
+    "updatemode": [
+      "manual",
+      "autoupdate"
+    ],
+    "legals": [
+      "institutions"
+    ]
+  },
+  "api": "0.4.14"
+}
