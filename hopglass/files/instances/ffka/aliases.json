@@ -1,0 +1,23 @@
+{
+	"f25224c7fbdb": {
+		"hostname": "albufer2",
+		"firstseen": "2016-01-01T00:00:00.0Z",
+                     "flags": {
+                         "gateway": true
+                      }
+	},
+	"aaffcacafe03": {
+		"hostname": "albufer3",
+		"firstseen":"2016-01-01T00:00:00.0Z",
+	             "flags": {
+                         "gateway": true
+        	      }
+	},
+	"beefcafe0006": {
+		"hostname": "albufer6",
+		"firstseen": "2016-01-01T00:00:00.0Z",
+    		"flags": {
+			"gateway": true
+    		}
+	}
+}

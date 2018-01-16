@@ -37,7 +37,7 @@ hopglass-server.git:
     - source: salt://hopglass/files/hopglass-server@.service.j2
     - template: jinja
 
-{% for hopglass_instance in ["default"] %}
+{% for hopglass_instance in ["ffka"] %}
 /etc/hopglass-server/{{ hopglass_instance }}:
   file.directory:
     - user: hopglass
@@ -52,6 +52,14 @@ hopglass-server.git:
     - group: hopglass
     - source: salt://hopglass/files/instances/{{ hopglass_instance }}/config.json.j2
     - template: jinja
+    - require:
+      - file: /etc/hopglass-server/{{ hopglass_instance }}
+
+/etc/hopglass-server/{{ hopglass_instance }}/aliases.json:
+  file.managed:
+    - user: hopglass
+    - group: hopglass
+    - source: salt://hopglass/files/instances/{{ hopglass_instance }}/aliases.json
     - require:
       - file: /etc/hopglass-server/{{ hopglass_instance }}
 {% endfor %}
