@@ -19,7 +19,6 @@ hopglass-server.git:
     - user: hopglass
     - silent: False
     - require:
-      - git: hopglass-server.git
       - user: hopglass
     - watch:
       - git: hopglass-server.git
@@ -70,4 +69,15 @@ hopglass-server.git:
     - mode: 755
     - makedirs: True
 
+hopglass-server@{{ hopglass_instance }}:
+  service.running:
+    - enable: true
+    - restart: true
+    - require:
+      - file: /var/lib/hopglass-server/{{ hopglass_instance }}
+    - watch:
+      - file: /lib/systemd/system/hopglass-server@.service
+      - file: /etc/hopglass-server/{{ hopglass_instance }}/config.json
+      - file: /etc/hopglass-server/{{ hopglass_instance }}/aliases.json
+      - npm: /home/hopglass/server
 {% endfor %}
