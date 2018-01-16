@@ -14,7 +14,7 @@ hopglass-server.git:
     - require:
       - user: hopglass
 
-/home/hopglass/server.git:
+/home/hopglass/server:
   npm.bootstrap:
     - user: hopglass
     - silent: False
@@ -50,7 +50,7 @@ hopglass-server.git:
   file.managed:
     - user: hopglass
     - group: hopglass
-    - source: salt://hopglass/files/instances/{{ hopglass_instance }}/config.js.j2
+    - source: salt://hopglass/files/instances/{{ hopglass_instance }}/config.json.j2
     - template: jinja
     - require:
       - file: /etc/hopglass-server/{{ hopglass_instance }}
