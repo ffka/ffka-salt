@@ -81,6 +81,8 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
     - clean: True
     - file_mode: 0644
     - dir_mode: 0755
+    - user: {{ owner }}
+    - group: www-data
     - template: jinja
     - require:
       - file: {{ name }}_webroot
