@@ -73,7 +73,7 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
       - test: nginx_{{ name }}
 
 {% if vhost.get('sync_webroot', False) %}
-/srv/www/{{ name }}/htdocs/-files:
+{{ name }}_webroot:
   file.recurse:
     - name: /srv/www/{{ name }}/htdocs/
     - source: salt://nginx/files/sites/{{ name }}/
