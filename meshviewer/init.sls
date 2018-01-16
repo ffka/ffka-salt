@@ -50,7 +50,7 @@ config.js:
     - watch:
       - git: /home/meshviewer/meshviewer.git
     - context:
-      - api_endpoint: {{ salt['pillar.get']('meshviewer:api_endpoint') }}
+      api_endpoint: {{ salt['pillar.get']('meshviewer:api_endpoint') }}
 
 meshviewer_gulp:
   cmd.run:
