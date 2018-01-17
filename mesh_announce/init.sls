@@ -9,7 +9,6 @@ get latest mesh-announce:
   git.latest:
     - name: https://github.com/ffnord/mesh-announce
     - target: /opt/ext-respondd
-    - force_clone: True
 
 
 mesh-announce systemd service file:
