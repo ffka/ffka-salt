@@ -21,7 +21,7 @@ mesh-announce systemd service file:
 
 mesh-announce service:
   service.running:
-    - name: ext-respondd
+    - name: respondd
     - enable: True
     - require:
       - file: /etc/systemd/system/respondd.service
