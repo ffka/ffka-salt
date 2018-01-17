@@ -15,7 +15,7 @@ get latest mesh-announce:
 mesh-announce systemd service file:
   file.managed:
     - name: /etc/systemd/system/respondd.service
-    - source: salt://respondd/files/respondd.service
+    - source: salt://mesh_announce/files/respondd.service
     - user: root
     - group: root
     - mode: 644
@@ -25,4 +25,4 @@ mesh-announce service:
     - name: ext-respondd
     - enable: True
     - require:
-      - file: /lib/systemd/system/respondd.service
+      - file: /etc/systemd/system/respondd.service
