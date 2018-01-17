@@ -1,0 +1,10 @@
+[Unit]
+Description=Respondd
+
+[Service]
+ExecStart=/opt/mesh-announce/respondd.py -d /opt/mesh-announce -i br_ffka -i mesh-ffka-nat0 -i mesh-ffka-nat1 -i mesh-ffka-nat2 -i mesh-ffka-nat4 -i mesh-ffka-v6 -b bat0
+Restart=always
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[Install]
+WantedBy=multi-user.target
