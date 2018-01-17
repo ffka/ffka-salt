@@ -23,7 +23,7 @@ base:
     - radvd
     - dhcp
     - dns
-    - mesh-announce
+    - mesh_announce
     - nat64
     - kea_dhcp
   'api.frickelfunk.net':
