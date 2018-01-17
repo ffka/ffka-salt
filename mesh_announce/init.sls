@@ -8,7 +8,7 @@ install Dependencies for mesh-announce:
 get latest mesh-announce:
   git.latest:
     - name: https://github.com/ffnord/mesh-announce
-    - target: /opt/ext-respondd
+    - target: /opt/mesh-announce
     - force_reset: True
 
 
