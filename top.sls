@@ -37,6 +37,7 @@ base:
     - nginx
     - certbot
     - hopglass.server
+    - docker
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
