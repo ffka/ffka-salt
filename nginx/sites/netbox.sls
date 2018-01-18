@@ -44,7 +44,7 @@ netbox:
   docker_container.running:
     - image: ninech/netbox:{{ netbox_version }}
     - environment:
-      - ALLOWED_HOSTS: *
+      - ALLOWED_HOSTS: "*"
       - DB_NAME: netbox
       - DB_USER: netbox
       - DB_PASSWORD: MFcdVTzvghvdSIlFE
