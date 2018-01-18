@@ -11,6 +11,10 @@ server {
 
 	client_max_body_size 128M;
 
+    location /static/ {
+        alias /srv/www/netbox/htdocs/;
+    }
+
     location / {
         proxy_pass http://127.0.0.1:8001;
         proxy_set_header X-Forwarded-Host $http_host;
