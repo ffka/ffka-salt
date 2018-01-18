@@ -44,24 +44,27 @@ netbox:
   docker_container.running:
     - image: ninech/netbox:{{ netbox_version }}
     - environment:
-      - ALLOWED_HOSTS=*
-      - DB_NAME=netbox
-      - DB_USER=netbox
-      - DB_PASSWORD=MFcdVTzvghvdSIlFE
-      - DB_HOST=netboxpostgres
-      - EMAIL_SERVER=localhost
-      - EMAIL_PORT=25
-      - EMAIL_USERNAME=netbox
-      - EMAIL_PASSWORD=
-      - EMAIL_TIMEOUT=5
-      - EMAIL_FROM=netbox@bar.com
-      - NAPALM_TIMEOUT=5
-      - MAX_PAGE_SIZE=0
-      - SECRET_KEY=SAzlNxGh5StmbIwQHRGtTvF
-      - SUPERUSER_NAME=admin
-      - SUPERUSER_EMAIL=admin@example.com
-      - SUPERUSER_PASSWORD=SAzlNxGh5StmbIwQHRGtTvF
-      - SUPERUSER_API_TOKEN=SAzlNxGh5StmbIwQHRGtTvFSAzlNxGh5StmbIwQHRGtTvF
+      - ALLOWED_HOSTS: *
+      - DB_NAME: netbox
+      - DB_USER: netbox
+      - DB_PASSWORD: MFcdVTzvghvdSIlFE
+      - DB_HOST: netboxpostgres
+      - EMAIL_SERVER: localhost
+      - EMAIL_PORT: 25
+      - EMAIL_USERNAME: netbox
+      - EMAIL_PASSWORD: 
+      - EMAIL_TIMEOUT: 5
+      - EMAIL_FROM: netbox@bar.com
+      - NAPALM_TIMEOUT: 5
+      - MAX_PAGE_SIZE: 0
+      - USE_X_FORWARDED_HOST: True
+      - SECRET_KEY: SAzlNxGh5StmbIwQHRGtTvF
+      - SUPERUSER_NAME: admin
+      - SUPERUSER_EMAIL: admin@example.com
+      - SUPERUSER_PASSWORD: SAzlNxGh5StmbIwQHRGtTvF
+      - SUPERUSER_API_TOKEN: SAzlNxGh5StmbIwQHRGtTvFSAzlNxGh5StmbIwQHRGtTvF
+      - LOGIN_REQUIRED: True
+      - PAGINATE_COUNT: 100
     - network_mode: netbox_backend
     - port_bindings:
       - 127.0.0.1:8001:8001
