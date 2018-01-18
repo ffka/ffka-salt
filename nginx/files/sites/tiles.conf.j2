@@ -1,10 +1,4 @@
-proxy_cache_path /var/www/tilecache/new
-    levels=1:2 inactive=3d
-    keys_zone=new_tilecache:64m
-    max_size=2048M;
-
-proxy_cache_path /var/cache/nginx/new_1min levels=1:2 keys_zone=cache_new_1min:1m max_size=1g inactive=10m;
-proxy_cache_path /var/cache/nginx/new_60min levels=1:2 keys_zone=cache_new_60min:60m max_size=10g inactive=3600m;
+proxy_cache_path /var/www/tilecache/new levels=1:2 inactive=3d keys_zone=new_tilecache:64m max_size=4096M;
 
 server {
     listen 80;
