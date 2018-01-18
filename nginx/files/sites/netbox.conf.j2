@@ -31,8 +31,6 @@ server {
     access_log "/var/log/nginx/{{ site_name }}/access.log";
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
-	client_max_body_size 128M;
-
     location /static/ {
         alias /srv/www/netbox/htdocs/;
     }
