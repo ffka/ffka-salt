@@ -29,6 +29,7 @@ hackmdpostgres:
       - POSTGRES_DB: hackmd
     - binds:
       - /srv/www/pads/database:/var/lib/postgresql/data:rw
+    - restart_policy: always
     - network_mode: hackmd_backend
     - require:
       - docker_network: hackmd_backend
