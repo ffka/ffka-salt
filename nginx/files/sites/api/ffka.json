@@ -55,6 +55,12 @@
       "interval": "hourly",
       "technicalType": "meshviewer",
       "mapType": "geographical"
+    },
+    {
+      "url": "https://api.karlsruhe.freifunk.net/yanic/meshviewer/",
+      "interval": "1",
+      "technicalType": "ffmap",
+      "mapType": "list/status"
     }
   ],
   "techDetails": {
