@@ -46,6 +46,10 @@ nodes_path     = "/var/lib/yanic/meshviewer/{{ ffka.site_code }}/nodes.json"
 # path where to store graph.json
 graph_path     = "/var/lib/yanic/meshviewer/{{ ffka.site_code }}/graph.json"
 
+[[nodes.output.nodelist]]
+enable   = true
+path = "/var/lib/yanic/meshviewer/{{ ffka.site_code }}/nodelist.json"
+
 [database]
 # cleaning data of measurement node,
 #   which are older than 7d
