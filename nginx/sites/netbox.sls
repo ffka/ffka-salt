@@ -68,6 +68,7 @@ netbox:
       - SUPERUSER_API_TOKEN: {{ superuser.api_token }}
       - LOGIN_REQUIRED: True
       - PAGINATE_COUNT: 100
+      - TIME_ZONE: "Europe/Berlin"
     - network_mode: netbox_backend
     - port_bindings:
       - 127.0.0.1:8001:8001
