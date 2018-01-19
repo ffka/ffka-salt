@@ -40,6 +40,9 @@ netboxpostgres:
       - docker_network: netbox_backend
       - docker_image: postgres:{{ netbox_postgres_version }}
 
+{%- set smtp_settings = vhost.options.get('smtp', {}) -%}
+{%- set superuser = vhost.options.get('superuser', {}) -%}
+
 netbox:
   docker_container.running:
     - image: ninech/netbox:{{ netbox_version }}
@@ -47,22 +50,22 @@ netbox:
       - ALLOWED_HOSTS: "*"
       - DB_NAME: netbox
       - DB_USER: netbox
-      - DB_PASSWORD: MFcdVTzvghvdSIlFE
+      - DB_PASSWORD: {{ vhost.options.get('db_password') }}
       - DB_HOST: netboxpostgres
       - EMAIL_SERVER: localhost
-      - EMAIL_PORT: 25
-      - EMAIL_USERNAME: netbox
-      - EMAIL_PASSWORD: 
+      - EMAIL_PORT: {{ smtp_settings.get('port', 587) }}
+      - EMAIL_USERNAME: {{ smtp_settings.get('username', 'netbox') }}
+      - EMAIL_PASSWORD: {{ smtp_settings.get('password', '') }}
       - EMAIL_TIMEOUT: 5
-      - EMAIL_FROM: netbox@bar.com
+      - EMAIL_FROM: {{ vhost.options.get('email_address', 'netbox@netbox.de') }}
       - NAPALM_TIMEOUT: 5
       - MAX_PAGE_SIZE: 0
       - USE_X_FORWARDED_HOST: True
-      - SECRET_KEY: SAzlNxGh5StmbIwQHRGtTvF
-      - SUPERUSER_NAME: admin
-      - SUPERUSER_EMAIL: admin@example.com
-      - SUPERUSER_PASSWORD: SAzlNxGh5StmbIwQHRGtTvF
-      - SUPERUSER_API_TOKEN: SAzlNxGh5StmbIwQHRGtTvFSAzlNxGh5StmbIwQHRGtTvF
+      - SECRET_KEY: {{ vhost.options.secret_key }}
+      - SUPERUSER_NAME: {{ superuser.get('name', 'admin') }}
+      - SUPERUSER_EMAIL: {{ superuser.get('email', 'admin@example.com') }}
+      - SUPERUSER_PASSWORD: {{ superuser.password }}
+      - SUPERUSER_API_TOKEN: {{ superuser.api_token }}
       - LOGIN_REQUIRED: True
       - PAGINATE_COUNT: 100
     - network_mode: netbox_backend
