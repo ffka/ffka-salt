@@ -40,8 +40,8 @@ netboxpostgres:
       - docker_network: netbox_backend
       - docker_image: postgres:{{ netbox_postgres_version }}
 
-{%- set smtp_settings = vhost.options.get('smtp', {}) -%}
-{%- set superuser = vhost.options.get('superuser', {}) -%}
+{% set smtp_settings = vhost.options.get('smtp', {}) -%}
+{%- set superuser = vhost.options.get('superuser', {}) %}
 
 netbox:
   docker_container.running:
