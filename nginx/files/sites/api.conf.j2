@@ -42,6 +42,12 @@ server {
         alias /var/lib/yanic/meshviewer/ffka/;
     }
 
+    location /yanic/nodelist/ {
+        autoindex on;
+        try_files $uri $uri/ =404;
+        alias /var/lib/yanic/nodelist/ffka/;
+    }
+
     location /hopglass/ {
         limit_except GET {
             deny  all;

@@ -60,6 +60,13 @@ yanic:
     - dir_mode: 0755
     - makedirs: True
 
+/var/lib/yanic/nodelist/{{ ffka.site_code }}:
+  file.directory:
+    - user: yanic
+    - group: yanic
+    - dir_mode: 0755
+    - makedirs: True
+
 /etc/yanic/config-{{ ffka.site_code }}.toml:
   file.managed:
     - source: salt://yanic/files/config.toml.j2
@@ -74,6 +81,8 @@ yanic@{{ ffka.site_code }}:
   service.running:
     - enable: True
     - require:
+      - file: /var/lib/yanic/meshviewer/{{ ffka.site_code }}
+      - file: /var/lib/yanic/nodelist/{{ ffka.site_code }}
       - file: /etc/systemd/system/yanic@.service
       - file: /var/log/yanic
       - file: /etc/yanic/config-{{ ffka.site_code }}.toml

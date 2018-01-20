@@ -57,9 +57,9 @@
       "mapType": "geographical"
     },
     {
-      "url": "https://api.karlsruhe.freifunk.net/yanic/meshviewer/",
+      "url": "https://api.frickelfunk.net/yanic/nodelist/nodelist.json",
       "interval": "1",
-      "technicalType": "ffmap",
+      "technicalType": "nodelist",
       "mapType": "list/status"
     }
   ],
