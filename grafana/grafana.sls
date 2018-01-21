@@ -7,15 +7,6 @@ grafana:
     - file: /etc/apt/sources.list.d/grafana.list
   pkg.installed: []
 
-grafana-server:
-  service.running:
-    - enable: True
-    - watch:
-      - file: /etc/default/grafana-server
-      - file: /etc/grafana/grafana.ini
-    - require:
-      - pkg: grafana
-
 /etc/default/grafana-server:
   file.managed:
     - source: salt://grafana/files/grafana-server-default
@@ -27,10 +18,21 @@ grafana-server:
 
 /etc/grafana/grafana.ini:
   file.managed:
-    - source: salt://grafana/files/grafana.ini
+    - source: salt://grafana/files/grafana.ini.j2
     - user: root
     - group: root
     - mode: 644
+    - template: jinja
+    - require:
+      - pkg: grafana
+
+grafana-server:
+  service.running:
+    - enable: True
+    - restart: True
+    - watch:
+      - file: /etc/default/grafana-server
+      - file: /etc/grafana/grafana.ini
     - require:
       - pkg: grafana
 
