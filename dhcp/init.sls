@@ -37,3 +37,6 @@ service isc-dhcp-server:
     - require:
       - file: /etc/dhcp/dhcpd*.conf
       - file: /etc/default/isc-dhcp-server
+
+include:
+  - netdata.isc_dhcpd
