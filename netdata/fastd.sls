@@ -1,6 +1,7 @@
 /etc/netdata/python.d/fastd.conf:
   file.managed:
     - source: salt://netdata/files/fastd.conf.j2
+    - template: jinja
     - user: root
     - group: netdata
     - watch_in:
