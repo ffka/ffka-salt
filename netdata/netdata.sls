@@ -43,7 +43,7 @@ netdataupdate:
 
 /etc/netdata/stream.conf:
   file.managed:
-    - source: 'salt://common/files/netdata/stream.conf.j2'
+    - source: 'salt://netdata/files/stream.conf.j2'
     - user: root
     - group: netdata
     - mode: 644
@@ -53,7 +53,7 @@ netdataupdate:
 
 /etc/netdata/netdata.conf:
   file.managed:
-    - source: 'salt://common/files/netdata/netdata.conf.j2'
+    - source: 'salt://netdata/files/netdata.conf.j2'
     - user: root
     - group: netdata
     - template: jinja
@@ -62,7 +62,7 @@ netdataupdate:
 
 /etc/netdata/python.d.conf:
   file.managed:
-    - source: 'salt://common/files/netdata/python.d.conf.j2'
+    - source: 'salt://netdata/files/python.d.conf.j2'
     - user: root
     - group: netdata
     - template: jinja
