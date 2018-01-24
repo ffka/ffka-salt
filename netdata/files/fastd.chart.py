@@ -15,7 +15,7 @@ ORDER = ['peers', 'net', 'net_packets']
 CHARTS = {
     'peers': {
         'options': [None, 'All Active Peers', 'peers', 'peers', 'fastd.peers', 'line'],
-        'lines': [['peers', 'leases', 'absolute']]
+        'lines': [['peers', 'peers', 'absolute']]
     },
     'net': {
         'options': [None, 'Bandwidth', 'kilobits/s', 'throughput', 'fastd.net', 'line'],
