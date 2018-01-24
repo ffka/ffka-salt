@@ -21,6 +21,8 @@ netdatarepo:
     - depth: 1
     - target: /root/netdatagit
     - force_reset: True
+    - require:
+      - pkg: netdatarequisites
 
 netdatainstall:
   require:
@@ -39,30 +41,38 @@ netdataupdate:
     - name: ./netdata-updater.sh
     - onlyif: test -f ./netdata-updater.sh
 
-netdatastream:
-  require:
-    - cmd: netdatainstall
+/etc/netdata/stream.conf:
   file.managed:
-    - name: '/etc/netdata/stream.conf'
     - source: 'salt://common/files/netdata/stream.conf.j2'
+    - user: root
+    - group: netdata
+    - mode: 644
     - template: jinja
+    - require:
+      - cmd: netdatainstall
 
-netdataconf:
-  require:
-    - cmd: netdatainstall
+/etc/netdata/netdata.conf:
   file.managed:
-    - name: '/etc/netdata/netdata.conf'
     - source: 'salt://common/files/netdata/netdata.conf.j2'
+    - user: root
+    - group: netdata
     - template: jinja
+    - require:
+      - cmd: netdatainstall
 
-service netdata:
+/etc/netdata/python.d.conf:
+  file.managed:
+    - source: 'salt://common/files/netdata/python.d.conf.j2'
+    - user: root
+    - group: netdata
+    - template: jinja
+    - require:
+      - cmd: netdatainstall
+
+netdata.service:
   service.running:
     - name: netdata
     - enable: True
     - reload: True
-
-netdata_service_restart:
-  cmd.run:
-    - name: service netdata restart
-    - user: root
-    - group: root
+    - watch:
+      - file: /etc/netdata/*
