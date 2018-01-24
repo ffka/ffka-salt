@@ -73,6 +73,6 @@ netdata.service:
   service.running:
     - name: netdata
     - enable: True
-    - reload: True
+    - restart: True
     - watch:
       - file: /etc/netdata/*

@@ -40,3 +40,6 @@ enable/run systemd {{ interfaces.name }}:
     - branch: just-bl
     - force_fetch: True
     - force_reset: True
+
+include:
+  - netdata.fastd
