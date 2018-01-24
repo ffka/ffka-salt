@@ -72,5 +72,5 @@ nginx_log: no
 # web_log: yes
 
 {% for line in accumulator.values() %}
-{{ line }}
+{{ line[0] }}
 {% endfor %}
