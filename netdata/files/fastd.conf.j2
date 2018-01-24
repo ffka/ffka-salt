@@ -69,10 +69,8 @@
 # AUTO-DETECTION JOBS
 # only one of them will run (they have the same name)
 
-yo_3:
-  name: nat0
-  status_socket_path: /run/fastd.ffka-nat0.sock
-
-yo_4:
-  name: nat1
-  status_socket_path: /run/fastd.ffka-nat1.sock
+{% for interface in salt['pillar.get']('mesh_vpn:fastd:interfaces') %}
+ffka-{{ interface.name }}:
+  name: {{ interface.name }}
+  status_socket_path: /run/fastd.ffka-{{ interface.name }}.sock
+{% endfor %}
