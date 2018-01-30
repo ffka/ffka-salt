@@ -17,7 +17,7 @@ unms_install:
 
 unms_update:
   cmd.run:
-    - name: /root/unms-install.sh
+    - name: /root/unms-install.sh --update
     - cwd: /root/
     - onlyif: test -d /home/unms/data/
     - require:
