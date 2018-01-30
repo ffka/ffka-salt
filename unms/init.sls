@@ -8,7 +8,7 @@
 
 install unms:
   cmd.run:
-    - name: unms-install.sh:
+    - name: unms-install.sh
     - cwd: /root/
     - require:
       - service: docker.service
