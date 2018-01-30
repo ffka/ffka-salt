@@ -54,3 +54,6 @@ base:
   'build1.ffka.net':
     - gitlab.runner
     - docker
+  'unms.frickelfunk.net':
+    - docker
+    - unms
