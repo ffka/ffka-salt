@@ -10,7 +10,7 @@ unms_install:
   cmd.run:
     - name: /root/unms-install.sh
     - cwd: /root/
-    - onlyif: test ! -f /home/unms/data/
+    - onlyif: test ! -d /home/unms/data/
     - require:
       - service: docker.service
       - file: /root/unms-install.sh
@@ -19,7 +19,7 @@ unms_update:
   cmd.run:
     - name: /root/unms-install.sh
     - cwd: /root/
-    - onlyif: test -f /home/unms/data/
+    - onlyif: test -d /home/unms/data/
     - require:
       - service: docker.service
       - file: /root/unms-install.sh
