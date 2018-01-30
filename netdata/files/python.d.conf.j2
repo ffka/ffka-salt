@@ -71,6 +71,8 @@ nginx_log: no
 # varnish: yes
 # web_log: yes
 
+{% if accumulator is defined %}
 {% for line in accumulator.values() %}
 {{ line[0] }}
 {% endfor %}
+{% endif %}
