@@ -11,7 +11,7 @@ iface bat0 inet6 manual
     post-up batctl -m bat0 gw server 50000/50000
   {% endif %}
 
-{% for hood in salt['pillar.get']('hoods:hoods') %}
+{% for hood in salt['pillar.get']('hoods') %}
 
 allow-hotplug bat_{{ hood }}
 iface bat_{{ hood }} inet6 manual
