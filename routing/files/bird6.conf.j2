@@ -45,7 +45,7 @@ function is_ffka_lo() {
 protocol direct {
   interface "tun-*";
   interface "lo";
-  interface "br_ffka";
+  interface "br_*";
 }
 
 protocol static static_nat64 {
@@ -59,9 +59,6 @@ protocol static static_bgp {
   route 2a03:2260:a::/56 unreachable;
 };
 
-protocol static dhcp6_PD {
-  route {{ dhcp.ipv6_pd_range }} via "br_ffka";
-};
 
 protocol ospf IGP {
   import where is_ffka_lo();
@@ -72,7 +69,7 @@ protocol ospf IGP {
     {%- for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
     interface "tun-{{gre.name}}";
     {%- endfor %}
-    interface "br_ffka" { stub yes; };
+    interface "br_*" { stub yes; };
     interface "lo";
   };
 }

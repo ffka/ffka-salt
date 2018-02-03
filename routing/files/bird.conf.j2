@@ -44,7 +44,7 @@ protocol static static_nat64 {
 protocol direct {
   interface "tun-*";
   interface "lo";
-	interface "br_ffka";
+	interface "br_*";
 }
 
 protocol static static_bgp {
@@ -59,7 +59,7 @@ protocol ospf IGP {
 		{%- for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
 		interface "tun-{{gre.name}}";
 		{%- endfor %}
-    interface "br_ffka"{
+    interface "br_*"{
 			stub yes;
 		};
 		interface "lo";
