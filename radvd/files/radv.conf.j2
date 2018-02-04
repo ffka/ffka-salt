@@ -1,16 +1,17 @@
-protocol radv {
-	interface "br_ffka" {
-		prefix {{ ffka.v6_ffrl_ffka }};
+{% set shortname = salt['pillar.get']('shortname') -%}
+{% for hoodname,hood in salt['pillar.get']('hoods').items() %}
+protocol radv-{{ hoodname }} {
+	interface "br_{{ hoodname }}" {
+		prefix {{ hood['network']['ipv6']['net'] }};
 	};
-#	link mtu 1372;
 	rdnss {
-                lifetime mult 10;
-                ns {{ network.br_ffka.ipv6.ip }};
-        };
+    lifetime mult 10;
+    ns {{ hood['network']['ipv6'][shortname] }};
+  };
 
-        dnssl {
-                lifetime 3600;
-                domain "clients.frickelfunk.net";
+  dnssl {
+    lifetime 3600;
+    domain "clients.frickelfunk.net";
 	};
 #	trigger ::/0;
 }
