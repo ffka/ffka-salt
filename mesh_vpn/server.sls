@@ -1,7 +1,7 @@
 {% for hoodname,hood in salt['pillar.get']('hoods').items() if hoodname != "dflt" %}
 {% for ip_type in [4, 6] %}
 
-{% set if_name = hoodname ~ "_v" ~ ip_type; %}
+{% set if_name = hoodname ~ "_v" ~ ip_type %}
 {% set if_mac = "00:00:00:{:02x}:{:02x}:{:02x}"|format(pillar['gw_id'], hood.hood_id, ip_type); %}
 
 fastd config file {{ if_name }}:
