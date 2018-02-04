@@ -28,7 +28,7 @@ iface ftun-{{ gre.name }} inet manual
 {% for hood in salt['pillar.get']('hoods') %}
 auto ftun-{{ gre.name }}-{{hood}}
 iface ftun-{{ gre.name }}-{{hood}} inet manual
-    pre-up ip link add $IFACE type gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretab_dev }} key 110
+    pre-up ip link add $IFACE type gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretab_dev }} key {{ hood.network.ipv4.alb0}}
     post-up ip link set dev $IFACE up
     post-up batctl -m bat_{{ hood }} if add $IFACE
     post-down ip link del $IFACE
