@@ -15,7 +15,7 @@ iface br_{{hoodname}} inet static
 iface br_{{hoodname}} inet6 static
         address {{ hood['network']['ipv6'][shortname] }}
         netmask 64
-        {% if gateway | to_bool %}
+        {% if gateway | to_bool -%}
         post-up ip -6 addr add fe80::1/64 dev br_ffka preferred_lft 0
         {% endif %}
 {% endfor %}
