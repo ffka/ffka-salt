@@ -15,7 +15,9 @@ transfer-source-v6 {{ grains.fqdn_ip6[0] }};
 // freifunk
       listen-on {
        127.0.0.1;
-  {{ network.br_ffka.ipv4.ip }};
+{% for hoodname,hood in salt['pillar.get']('hoods').items() %}
+  {{ hood['network']['ipv4'][shortname] }};
+{% endfor %}
   {{ grains.fqdn_ip4[0] }};
   {{ network.lo_ffka.ipv4.ip }};
       };
