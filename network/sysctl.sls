@@ -1,10 +1,11 @@
 {% set sysctld = "/etc/sysctl.d" %}
 
-
-net.ipv6.conf.br_ffka.accept_dad:
+{% for hoodname in salt['pillar.get']('hoods') %}
+net.ipv6.conf.br_{{ hoodname }}.accept_dad:
   sysctl.present:
     - value: 0
-    - config: {{ sysctld }}/br_ffka.conf
+    - config: {{ sysctld }}/br_{{ hoodname }}.conf
+{% endfor %)}
 
 # conntrack
 nf_conntrack:
