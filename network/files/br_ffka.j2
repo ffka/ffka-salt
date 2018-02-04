@@ -25,3 +25,16 @@ iface br_ffka inet6 static
         post-up ip -6 rule add from 2a03:2260:a::/48 table freifunk
         post-up ip -6 addr add fe80::1/64 dev br_ffka preferred_lft 0
 {% endif %}
+
+{% set shortname = salt['pillar.get']('shortname') -%}
+{% for hoodname,hood in salt['pillar.get']('hoods').items() %}
+auto br_{{hoodname}}
+iface br_{{hoodname}} inet static
+        address {{ network['ipv4'][shortname] }}
+#        address {{ network.get('ipv4:' ~ shortname) }}
+        netmask {{ hood.network.ipv4.netmask }}
+        bridge_ports none
+iface br_{{hoodname}} inet6 static
+        address {{ br_ffka_ipv6_ip }}
+        netmask 64
+{% endfor %}
