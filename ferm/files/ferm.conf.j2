@@ -21,7 +21,6 @@ tun-{{ gre.name }}
 ftun-{{ gre.name }}
 {% endfor %}
 );
-@def $BRIDGE_IF = br_ffka;
 
 @def $NAT64_NET = {{ salt['pillar.get']('network:nat64:v4_pool') }};
 @def $NAT64_IF = (nat64);
@@ -66,7 +65,9 @@ domain eb {
 
 	chain FORWARD {
 	#	proto ARP DROP;
-		interface bat0 logical-in $BRIDGE_IF daddr Multicast jump MULTICAST;
+{% for hoodname in salt['pillar.get']('hoods') %}
+		interface bat_{{ hoodname }} logical-in br_{{ hoodname }} daddr Multicast jump MULTICAST;
+{% endfor %}
 	}
 
 	chain OUTPUT {
