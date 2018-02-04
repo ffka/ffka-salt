@@ -1,5 +1,46 @@
-{% for interfaces in salt['pillar.get']('mesh_vpn:fastd:interfaces') %}
+{% for hoodname,hood in salt['pillar.get']('hoods').items() if hoodname != "dflt" %}
+{% for ip_type in [4, 6] %}
 
+{% set if_name = hoodname ~ "_v" ~ type; %}
+{% set if_mac = "00:00:00:{:02x}:{:02x}:{:02x}"|format(pillar['gw_id'], hood.hood_id, ip_type); %}
+
+fastd config file {{ if_name }}:
+  file.managed:
+    - name: /etc/fastd/{{ if_name }}/fastd.conf
+    - source: salt://mesh_vpn/files/fastd_hood.j2
+    - makedirs: true
+    - user: root
+    - group: root
+    - mode: 660
+    - template: jinja
+    - context:
+        name: "{{ if_name }}"
+        port: hood.fastd.port
+        ip_type: v{{ ip_type }}
+        mac: "{{ if_mac }}"
+        hoodname: hoodname
+
+fastd secret {{ if_name }}:
+  file.managed:
+    - name: /etc/fastd/{{ if_name }}/secret.conf
+    - source: salt://mesh_vpn/files/secret.conf
+    - makedirs: true
+    - user: root
+    - group: root
+    - mode: 660
+    - template: jinja
+
+enable/run systemd {{ if_name }}:
+  service.running:
+    - name: fastd@{{ if_name }}
+    - enable: true
+    - watch:
+      - file: /etc/fastd/{{ if_name }}/fastd.conf
+      - file: /etc/fastd/{{ if_name }}/secret.conf
+{% endfor %}
+{% endfor %}
+
+{% for interfaces in salt['pillar.get']('mesh_vpn:fastd:interfaces') %}
 Fastd config file {{ interfaces.name }}:
   file.managed:
     - name: /etc/fastd/{{ interfaces.name }}/fastd.conf
