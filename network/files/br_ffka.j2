@@ -34,6 +34,7 @@ iface br_{{hoodname}} inet static
         netmask {{ hood.network.ipv4.netmask }}
         bridge_ports none
 iface br_{{hoodname}} inet6 static
-        address {{ br_ffka_ipv6_ip }}
+        address {{ hood['network']['ipv6'][shortname] }}
         netmask 64
+        post-up ip -6 addr add fe80::1/64 dev br_ffka preferred_lft 0
 {% endfor %}
