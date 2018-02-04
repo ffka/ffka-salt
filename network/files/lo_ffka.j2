@@ -1,10 +1,20 @@
 {% set lo_ffka_ipv4_ip = salt['pillar.get']('network:lo_ffka:ipv4:ip') -%}
 {% set lo_ffka_ipv6_ip = salt['pillar.get']('network:lo_ffka:ipv6:ip') -%}
-
+{% set gateway = salt['pillar.get']('network:br_ffka:is_gateway') -%}
 
 iface lo inet static
  address {{ lo_ffka_ipv4_ip }}
  netmask 255.255.255.255
+ {% if gateway | to_bool %}
+         up ip rule add to 10.214.0.0/16 table freifunk
+         up ip rule add from 10.214.0.0/16 table freifunk
+         up ip rule add to 185.66.194.8/29 table freifunk
+         up ip rule add from 185.66.194.8/29 table freifunk
+ {% endif %}
 iface lo inet6 static
  address {{ lo_ffka_ipv6_ip }}
  netmask 128
+ {% if gateway | to_bool %}
+         post-up ip -6 rule add to 2a03:2260:a::/48 table freifunk
+         post-up ip -6 rule add from 2a03:2260:a::/48 table freifunk
+ {% endif %}
