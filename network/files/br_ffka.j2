@@ -30,8 +30,7 @@ iface br_ffka inet6 static
 {% for hoodname,hood in salt['pillar.get']('hoods').items() %}
 auto br_{{hoodname}}
 iface br_{{hoodname}} inet static
-        address {{ network['ipv4'][shortname] }}
-#        address {{ network.get('ipv4:' ~ shortname) }}
+        address {{ hood['network']['ipv4'][shortname] }}
         netmask {{ hood.network.ipv4.netmask }}
         bridge_ports none
 iface br_{{hoodname}} inet6 static
