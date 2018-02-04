@@ -1,3 +1,4 @@
+{% set shortname = salt['pillar.get']('shortname') -%}
 options {
 directory "/var/cache/bind";
 statistics-file "/var/log/bind/named.stats";
