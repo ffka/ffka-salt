@@ -30,7 +30,7 @@ fastd secret {{ if_name }}:
     - mode: 660
     - template: jinja
 
-enable/run systemd {{ if_name }}:
+enable/run systemd fastd@{{ if_name }}:
   service.running:
     - name: fastd@{{ if_name }}
     - enable: true
