@@ -4,7 +4,7 @@ enable           = true
 # how oftern request per multicast
 collect_interval = "1m"
 # on which interface
-interfaces       = ["{% for hoodname in salt['pillar.get']('hoods').values() %}"br_{{ hoodname }}"{% if not loop.last %}, {%endif %}{% endfor %}"]
+interfaces       = ["{% for hoodname,hood in salt['pillar.get']('hoods').items() %}"br_{{ hoodname }}"{% if not loop.last %}, {%endif %}{% endfor %}"]
 
 # define a port to listen
 # (no or 0 would choose at port at his own)
