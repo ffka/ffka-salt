@@ -15,10 +15,10 @@ fastd config file {{ if_name }}:
     - template: jinja
     - context:
         name: "{{ if_name }}"
-        port: hood.fastd.port
+        port: {{ hood.fastd.port }}
         ip_type: v{{ ip_type }}
         mac: "{{ if_mac }}"
-        hoodname: hoodname
+        hoodname: {{ hoodname }}
 
 fastd secret {{ if_name }}:
   file.managed:
