@@ -1,4 +1,4 @@
-bat0 network interface:
+batman interfaces config:
   file.managed:
     - name: /etc/network/interfaces.d/batman.cfg
     - makedirs: true
