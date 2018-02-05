@@ -36,7 +36,7 @@ on verify "
 on up "
     ip link set dev $INTERFACE address {{mac}}
     ip link set dev $INTERFACE up
-    ifup bat0
+    ifup bat_dflt
     batctl if add $INTERFACE
     chmod 777 /run/fastd.ffka-{{name}}.sock
 ";
