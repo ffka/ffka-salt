@@ -1,6 +1,6 @@
 {% set shortname = salt['pillar.get']('shortname') -%}
 {% for hoodname,hood in salt['pillar.get']('hoods').items() %}
-protocol radv-{{ hoodname }} {
+protocol radv br_{{ hoodname }} {
 	interface "br_{{ hoodname }}" {
 		prefix {{ hood['network']['ipv6']['net'] }};
 	};
