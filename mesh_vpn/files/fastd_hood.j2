@@ -1,5 +1,5 @@
 {% set fqdn_ip = salt['grains.get']('fqdn_ip4')[0] -%}
-{% set fqdn_ip_6 = salt['grains.get']('fqdn_ip4')[0] -%}
+{% set fqdn_ip_6 = salt['grains.get']('fqdn_ip6')[0] -%}
 {% set fastd_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
 
 {% if ip_type == "v4" %}
