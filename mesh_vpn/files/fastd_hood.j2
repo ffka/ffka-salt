@@ -1,7 +1,7 @@
 {% set fqdn_ip = salt['grains.get']('fqdn_ip4')[0] -%}
 {% set fastd_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
 
-{% if ip_type ="v4" %}
+{% if ip_type = "v4" %}
 bind {{ fqdn_ip }}:{{ port }} interface "{{ fastd_dev }}";
 {% else %}
 bind IPV6:{{ port }} interface "{{ fastd_dev }}";
