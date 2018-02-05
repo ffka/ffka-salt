@@ -1,11 +1,11 @@
 {% set fqdn_ip = salt['grains.get']('fqdn_ip4')[0] -%}
-{% set gretab_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
+{% set gretap_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
 
 {% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
 {% if gre.mesh | to_bool %}
 auto ftun-{{ gre.name }}
 iface ftun-{{ gre.name }} inet manual
-    pre-up ip link add $IFACE type gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretab_dev }} key 111
+    pre-up ip link add $IFACE type gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretap_dev }} key 111
     post-up ip link set dev $IFACE up
     post-up batctl -m bat0 if add $IFACE
     post-down ip link del $IFACE
@@ -13,10 +13,10 @@ iface ftun-{{ gre.name }} inet manual
 {% endif %}
 {% endfor %}
 
-{% for gre in salt['pillar.get']('network:gretab_ffka_special:tunnel') %}
+{% for gre in salt['pillar.get']('network:gretap_ffka_special:tunnel') %}
 auto ftun-{{ gre.name }}
 iface ftun-{{ gre.name }} inet manual
-    pre-up ip link add $IFACE type gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretab_dev }} key 111
+    pre-up ip link add $IFACE type gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretap_dev }} key 111
     post-up ip link set dev $IFACE up
     post-up batctl -m bat0 if add $IFACE
     post-down ip link del $IFACE
@@ -28,7 +28,7 @@ iface ftun-{{ gre.name }} inet manual
 {% for hoodname,hood in salt['pillar.get']('hoods').items() %}
 auto ftun-{{ gre.name }}-{{hoodname}}
 iface ftun-{{ gre.name }}-{{hoodname}} inet manual
-    pre-up ip link add $IFACE type gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretab_dev }} key {{ hood.network.ipv4.alb0 }}
+    pre-up ip link add $IFACE type gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretap_dev }} key {{ hood.network.ipv4.alb0 }}
     post-up ip link set dev $IFACE up
     post-up batctl -m bat_{{ hoodname }} if add $IFACE
     post-down ip link del $IFACE
@@ -39,10 +39,10 @@ iface ftun-{{ gre.name }}-{{hoodname}} inet manual
 
 
 {#
-{% for gre in salt['pillar.get']('network:gretab_ffka_specialv6:tunnel') %}
+{% for gre in salt['pillar.get']('network:gretap_ffka_specialv6:tunnel') %}
 auto ftun-{{ gre.name }}
 iface ftun-{{ gre.name }} inet manual
-    pre-up ip link add $IFACE type ip6gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretab_dev }} key 111
+    pre-up ip link add $IFACE type ip6gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretap_dev }} key 111
     post-up ip link set dev $IFACE up
     post-up batctl -m bat0 if add $IFACE
     post-down ip link del $IFACE
