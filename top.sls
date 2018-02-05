@@ -31,7 +31,6 @@ base:
     - network.ip_rt_tables_freifunk
     - network.br_ffka
     - network.gre_ffka
-    - network.gretap_ffka
     - batman
     - yanic
     - meshviewer
