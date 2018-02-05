@@ -5,7 +5,7 @@
 {% if ip_type == "v4" %}
 bind {{ fqdn_ip }}:{{ port }} interface "{{ fastd_dev }}";
 {% else %}
-bind '{{ fqdn_ip }}:{{ port }}' interface "{{ fastd_dev }}";
+bind '{{ fqdn_ip_6 }}:{{ port }}' interface "{{ fastd_dev }}";
 {% endif %}
 interface "fd-{{name}}";
 # user "nobody";
