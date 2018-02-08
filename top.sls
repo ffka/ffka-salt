@@ -57,6 +57,6 @@ base:
   'unms.frickelfunk.net':
     - docker
     - unms
-  'runner-vm1.cloud.frickelfunk.net':
+  'runner-vm*':
     - gitlab.runner
     - docker
