@@ -16,6 +16,17 @@ iface ftun-{{ gre.name }}-{{hoodname}} inet manual
 {% endfor %}
 
 {% for gre in salt['pillar.get']('network:gretap_ffka_special:tunnel') %}
+{% if gre.hood == 'all' %}
+{% for hoodname,hood in salt['pillar.get']('hoods').items() %}
+auto ftun-{{ gre.name }}-{{hoodname}}
+iface ftun-{{ gre.name }}-{{hoodname}} inet manual
+    pre-up ip link add $IFACE type gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretap_dev }} key {{ hood.network.ipv4.alb0 }}
+    post-up ip link set dev $IFACE up
+    post-up batctl -m bat_{{ hoodname }} if add $IFACE
+    post-down ip link del $IFACE
+    mtu 1400
+{% endfor %}
+{% else %}
 auto ftun-{{ gre.name }}
 iface ftun-{{ gre.name }} inet manual
     pre-up ip link add $IFACE type gretap local {{ fqdn_ip }} remote {{ gre.gre_target }} ttl 64 dev {{ gretap_dev }} key 111
@@ -23,4 +34,5 @@ iface ftun-{{ gre.name }} inet manual
     post-up batctl -m bat_{{ gre.hood|default('dflt') }} if add $IFACE
     post-down ip link del $IFACE
     mtu 1400
+{% endif %}
 {% endfor %}
