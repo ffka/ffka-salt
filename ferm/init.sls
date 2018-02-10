@@ -9,6 +9,9 @@ ferm:
     - user: root
     - group: root
 
+/etc/ferm/conf.d/.keep:
+  file.managed
+
 /etc/ferm/ferm.conf:
   file.managed:
     - makedirs: true
@@ -17,6 +20,8 @@ ferm:
     - mode: 644
     - source: salt://ferm/files/ferm.conf.j2
     - template: jinja
+    - require:
+      - pkg: ferm
 
 /etc/systemd/system/ferm.service:
   file.managed:
