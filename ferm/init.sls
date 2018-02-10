@@ -1,6 +1,7 @@
 ebtables:
   pkg.installed
 
+
 ferm:
   pkg.installed
 
@@ -8,6 +9,8 @@ ferm:
   file.directory:
     - user: root
     - group: root
+    - require:
+      - pkg: ferm
 
 /etc/ferm/conf.d/.keep:
   file.managed:
