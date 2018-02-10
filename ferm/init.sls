@@ -10,7 +10,9 @@ ferm:
     - group: root
 
 /etc/ferm/conf.d/.keep:
-  file.managed
+  file.managed:
+    - require:
+      - file: /etc/ferm/conf.d
 
 /etc/ferm/ferm.conf:
   file.managed:

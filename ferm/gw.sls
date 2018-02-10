@@ -8,3 +8,5 @@
     - context:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
+    - require:
+      - file: /etc/ferm/conf.d

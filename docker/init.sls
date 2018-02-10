@@ -34,6 +34,8 @@ docker-ce:
         domain ip6 table nat chain POSTROUTING {
             saddr fd00::/64 MASQUERADE;
         }
+    - require:
+      - file: /etc/ferm/conf.d
 
 docker.service:
   service.running:
