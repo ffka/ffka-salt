@@ -18,6 +18,7 @@ base:
     - batman
     - ntp
     - ferm
+    - ferm.gw
     - mesh_vpn
     - mesh_vpn.server
     - radvd
@@ -60,3 +61,4 @@ base:
   'runner-vm*':
     - gitlab.runner
     - docker
+    - ferm

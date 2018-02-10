@@ -1,14 +1,16 @@
-install ebtables:
-  pkg.installed:
-    - name: ebtables
+ebtables:
+  pkg.installed
 
-install ferm:
-  pkg.installed:
-    - name: ferm
+ferm:
+  pkg.installed
 
-/etc/default/ferm:
+/etc/ferm/conf.d:
+  file.directory:
+    - user: root
+    - group: root
+
+/etc/ferm/ferm.conf:
   file.managed:
-    - name: /etc/ferm/ferm.conf
     - makedirs: true
     - user: root
     - group: root
@@ -26,9 +28,13 @@ install ferm:
     - group: root
     - mode: 644
 
-service ferm:
+ferm.service:
   service.running:
     - name: ferm
     - enable: true
     - require:
       - file: /etc/systemd/system/ferm.service
+      - pkg: ferm
+    - watch:
+      - file: /etc/ferm/ferm.conf
+      - file: /etc/ferm/conf.d/*

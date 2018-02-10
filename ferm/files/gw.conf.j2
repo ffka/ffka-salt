@@ -1,0 +1,81 @@
+{% set fqdn_ip = salt['grains.get']('fqdn_ip4')[0] -%}
+{% set fastd_nat_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
+#
+# Freifunk Karlsruhe
+# NAT and ebtables Rules
+#
+
+
+@def $FF_NET = {{ffka.v4_ffka}};
+@def $BACKBONE_NAT_IP = {{ network.lo_ffka.ipv4.ip }};
+@def $BACKBONE_IF = (
+{% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
+tun-{{ gre.name }}
+{% endfor %}
+{% for gre in salt['pillar.get']('network:gre_ffrl:tunnel') %}
+tun-{{ gre.name }}
+{% endfor %}
+);
+@def $L2_TUNNEL_IF = (
+{% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
+ftun-{{ gre.name }}
+{% endfor %}
+);
+
+@def $NAT64_NET = {{ salt['pillar.get']('network:nat64:v4_pool') }};
+@def $NAT64_IF = (nat64);
+
+
+domain (ip) table filter {
+	chain (INPUT OUTPUT FORWARD) {
+		policy ACCEPT;
+	}
+
+	chain FORWARD proto tcp tcp-flags (SYN RST) SYN TCPMSS clamp-mss-to-pmtu;
+}
+
+domain ip table nat {
+
+	chain PREROUTING {
+		interface ({{ fastd_nat_dev }}) {
+			proto udp {
+				mod u32 {
+					u32 '0xc&0x3=0x0' mod udp dport 10000 REDIRECT to-ports 10001;
+					u32 '0xc&0x3=0x1' mod udp dport 10000 REDIRECT to-ports 10002;
+					u32 '0xc&0x3=0x2' mod udp dport 10000 REDIRECT to-ports 10003;
+					u32 '0xc&0x3=0x3' mod udp dport 10000 REDIRECT to-ports 10004;
+				}
+                    	}
+		}
+	}
+
+	chain POSTROUTING {
+		source $FF_NET outerface $BACKBONE_IF SNAT to $BACKBONE_NAT_IP;
+		source $NAT64_NET outerface $BACKBONE_IF SNAT to $BACKBONE_NAT_IP;
+	}
+}
+
+
+domain eb {
+	chain (INPUT FORWARD) {
+		policy ACCEPT;
+		proto IPv4 interface $L2_TUNNEL_IF ip-proto udp ip-sport 67:68 DROP;
+		proto IPv4 interface $L2_TUNNEL_IF ip-proto udp ip-dport 67:68 DROP;
+	}
+
+	chain FORWARD {
+	#	proto ARP DROP;
+{% for hoodname in salt['pillar.get']('hoods') %}
+		interface bat_{{ hoodname }} logical-in br_{{ hoodname }} daddr Multicast jump MULTICAST;
+{% endfor %}
+	}
+
+	chain OUTPUT {
+		policy ACCEPT;
+	}
+
+	chain MULTICAST {
+		policy ACCEPT;
+		proto IPv4 ip-proto udp ip-dst 239.192.152.143 ip-dport 6771 DROP;
+	}
+}
