@@ -42,7 +42,8 @@ docker.service:
     - enable: True
     - require:
       - pkg: docker-ce
-      - file: /etc/docker/daemon.json
+    - watch:
+      - file: /etc/docker/*
 
 python-docker:
   pkg.installed:
