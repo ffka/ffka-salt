@@ -17,9 +17,6 @@ ferm:
     - mode: 644
     - source: salt://ferm/files/ferm.conf.j2
     - template: jinja
-    - context:
-        network: {{ pillar['network'] }}
-        ffka: {{ pillar['ffka'] }}
 
 /etc/systemd/system/ferm.service:
   file.managed:
