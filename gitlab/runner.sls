@@ -71,4 +71,12 @@ gitlab-runner-output-limit:
     - require:
       - cmd: gitlab-runner-registration
 
+/usr/bin/docker system prune --force:
+  cron.present:
+    - user: root
+    - special: '@daily'
+    - identifier: docker_volume_cleanup
+    - require:
+      - cmd: gitlab-runner-registration
+
 # curl --request POST "https://gitlab.ffka.tech/api/v4/runnication/json" -d '{"info": {}, "token": "7soxN-FJx3hbaYX38Tjq", "description": "testdesc", "tag_list": "x,y,z", "run_untagged": "true", "locked": "false"}'
