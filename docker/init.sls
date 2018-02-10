@@ -17,7 +17,7 @@ docker-ce:
     - user: root
     - group: root
     - mode: 644
-    - content: |
+    - contents: |
         {
           "ipv6": true,
           "fixed-cidr-v6": "fd00::/64"
@@ -30,7 +30,7 @@ docker-ce:
     - user: root
     - group: root
     - mode: 644
-    - content: |
+    - contents: |
         domain ip6 table nat chain POSTROUTING {
             saddr fd00::/64 MASQUERADE;
         }
