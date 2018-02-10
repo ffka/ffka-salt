@@ -49,16 +49,13 @@ base:
     - certbot
     - docker
     - discourse
-  'gitlab.frickelfunk.net':
-    - gitlab.runner
-    - docker
   'build1.ffka.net':
     - gitlab.runner
     - docker
   'unms.frickelfunk.net':
     - docker
     - unms
-  'runner-vm*':
+  'runner-vm* or gitlab.frickelfunk.net':
     - gitlab.runner
     - docker
     - ferm
