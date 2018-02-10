@@ -25,6 +25,16 @@ docker-ce:
     - require:
       - pkg: docker-ce
 
+/etc/ferm/conf.d/docker.conf:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 644
+    - content: |
+        domain ip6 table nat chain POSTROUTING {
+            saddr fd00::/64 MASQUERADE;
+        }
+
 docker.service:
   service.running:
     - enable: True
