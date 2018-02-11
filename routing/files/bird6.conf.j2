@@ -58,6 +58,9 @@ protocol static static_bgp {
   route {{ ffka.v6_ffrl }} unreachable;
   # route 2a03:2260:a:64::/64 unreachable;
   route 2a03:2260:a::/56 unreachable;
+  {% if network.cloud_uplink | to_bool %}
+  route 2a03:2260:a:c000::/52 unreachable;
+  {% endif %}
 };
 
 
