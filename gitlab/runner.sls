@@ -33,7 +33,7 @@ gitlab-runner-registration:
   cmd.run:
     - name: |
         gitlab-runner unregister --all-runners
-{% for proj in salt['pillar.get']('gitlab:runners', []) %}
+{% for proj in salt['pillar.get']('gitlab-runner:runners', []) %}
         gitlab-runner register --non-interactive --url {{ proj['gitlab_url'] }} --run-untagged --tag-list "{{ proj['tag_list'] }}" --executor docker --docker-image dind --registration-token {{ proj['token'] }} --name "{{ pillar['fqdn'] }}: {{ proj['name'] }}" --docker-privileged
 {% endfor %}
     - require:
@@ -45,7 +45,7 @@ gitlab-runner-concurrent:
     - mode: replace
     - indent: True
     - match: concurrent*
-    - content: "concurrent = {{ salt['pillar.get']('gitlab:runner:concurrent', 2) }}"
+    - content: "concurrent = {{ salt['pillar.get']('gitlab-runner:runner:concurrent', 2) }}"
     - require:
       - cmd: gitlab-runner-registration
     - watch:
@@ -57,7 +57,7 @@ gitlab-runner-output-limit:
     - pattern: \[\[runners\]\]
     - repl: |
         [[runners]]
-          output_limit = {{ salt['pillar.get']('gitlab:runner:output_limit', 1024) }}
+          output_limit = {{ salt['pillar.get']('gitlab-runner:runner:output_limit', 1024) }}
     - require:
       - file: gitlab-runner-concurrent
     - watch:
