@@ -52,7 +52,10 @@ base:
   'unms.frickelfunk.net':
     - docker
     - unms
-  'runner-vm* or gitlab.frickelfunk.net or build1.ffka.net':
+  'runner-vm* or build1.ffka.net':
     - gitlab.runner
     - docker
     - ferm
+  'gitlab.frickelfunk.net':
+    - gitlab.gitlab
+    - netdata
