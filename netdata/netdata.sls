@@ -19,6 +19,7 @@ netdatarepo:
   git.latest:
     - name: https://github.com/firehol/netdata.git
     - depth: 1
+    - rev: master
     - target: /root/netdatagit
     - force_reset: True
     - require:
