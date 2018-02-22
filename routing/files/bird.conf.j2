@@ -54,7 +54,7 @@ protocol static static_bgp {
 
 protocol ospf IGP {
 	import all;
-	export where is_self_net();
+	export where is_self_public_uplink();
 
 	area 0.0.0.0 {
 		{%- for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
