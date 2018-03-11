@@ -26,13 +26,41 @@ ftun-{{ gre.name }}
 @def $NAT64_IF = (nat64);
 
 
-domain (ip) table filter {
-	chain (INPUT OUTPUT FORWARD) {
-		policy ACCEPT;
-	}
-
-	chain FORWARD proto tcp tcp-flags (SYN RST) SYN TCPMSS clamp-mss-to-pmtu;
+domain (ip){
+ table filter {
+        chain FORWARD {
+            mod state state (ESTABLISHED RELATED) ACCEPT;
+         }
+	   }
+		 table mangle {
+	        chain FORWARD {
+					{% for hoodname in salt['pillar.get']('hoods') %}
+	            interface br_{{ hoodname }} outerface $BACKBONE_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1240;
+					{% endfor %}
+	        }
+	   }
+ }
 }
+
+domain ip6 {
+   table mangle {
+        chain FORWARD {
+            # mss = transport mtu - (batman-adv + ether) - ipv6 - tcp
+						{% for hoodname in salt['pillar.get']('hoods') %}
+            interface br_{{ hoodname }} outerface $BACKBONE_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1220;
+						{% endfor %}
+        }
+   }
+   table filter {
+        chain FORWARD {
+					{% for hoodname in salt['pillar.get']('hoods') %}
+              interface $BACKBONE_IF outerface br_{{ hoodname }} ACCEPT;
+					{% endfor %}
+        }
+   }
+}
+
+
 
 domain ip table nat {
 
