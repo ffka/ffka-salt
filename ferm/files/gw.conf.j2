@@ -34,8 +34,9 @@ domain (ip){
 	   }
 		 table mangle {
 	        chain FORWARD {
+					# mss = transport mtu - (batman-adv + ether) 32 - ipv4 20 - tcp 20
 					{% for hoodname in salt['pillar.get']('hoods') %}
-	            interface br_{{ hoodname }} outerface $BACKBONE_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1240;
+	            interface br_{{ hoodname }} outerface $BACKBONE_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1328;
 					{% endfor %}
 	        }
 	   }
@@ -45,9 +46,9 @@ domain (ip){
 domain ip6 {
    table mangle {
         chain FORWARD {
-            # mss = transport mtu - (batman-adv + ether) - ipv6 - tcp
+            # mss = transport mtu - (batman-adv + ether) 32 - ipv6 40 - tcp 20
 						{% for hoodname in salt['pillar.get']('hoods') %}
-            interface br_{{ hoodname }} outerface $BACKBONE_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1220;
+            interface br_{{ hoodname }} outerface $BACKBONE_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1312;
 						{% endfor %}
         }
    }
