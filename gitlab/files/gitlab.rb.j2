@@ -12,15 +12,6 @@
     ##! https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
     external_url '{{ salt['pillar.get']('gitlab:gitlab_url') }}'
 
-    ## Roles for multi-instance GitLab
-    ##! The default is to have no roles enabled, which results in GitLab running as an all-in-one instance.
-    ##! Options:
-    ##!   redis_sentinel_role redis_master_role redis_slave_role geo_primary_role geo_secondary_role
-    ##! For more deatils on each role, see:
-    ##! https://docs.gitlab.com/omnibus/roles/README.html#roles
-    ##!
-    # roles ['redis_sentinel_role', 'redis_master_role']
-
     ## Legend
     ##! The following notations at the beginning of each line may be used to
     ##! differentiate between components of this file and to easily select them using
@@ -49,10 +40,10 @@
     # gitlab_rails['time_zone'] = 'UTC'
 
     ### Email Settings
-    # gitlab_rails['gitlab_email_enabled'] = true
-    # gitlab_rails['gitlab_email_from'] = 'example@example.com'
-    # gitlab_rails['gitlab_email_display_name'] = 'Example'
-    # gitlab_rails['gitlab_email_reply_to'] = 'noreply@example.com'
+    gitlab_rails['gitlab_email_enabled'] = true
+    gitlab_rails['gitlab_email_from'] = 'gitlab@ffka.tech'
+    gitlab_rails['gitlab_email_display_name'] = 'ffka GitLab'
+    gitlab_rails['gitlab_email_reply_to'] = 'info@karlsruhe.freifunk.net'
     # gitlab_rails['gitlab_email_subject_suffix'] = ''
 
     ### GitLab user privileges
@@ -73,7 +64,7 @@
     ### Automatic issue closing
     ###! See https://docs.gitlab.com/ce/customization/issue_closing.html for more
     ###! information about this pattern.
-    # gitlab_rails['gitlab_issue_closing_pattern'] = "((?:[Cc]los(?:e[sd]?|ing)|[Ff]ix(?:e[sd]|ing)?|[Rr]esolv(?:e[sd]?|ing)|[Ii]mplement(?:s|ed|ing)?)(:?) +(?:(?:issues? +)?%{issue_ref}(?:(?:, *| +and +)?)|([A-Z][A-Z0-9_]+-\d+))+)"
+    # gitlab_rails['gitlab_issue_closing_pattern'] = "((?:[Cc]los(?:e[sd]?|ing)|[Ff]ix(?:e[sd]|ing)?|[Rr]esolv(?:e[sd]?|ing))(:?) +(?:(?:issues? +)?%{issue_ref}(?:(?:, *| +and +)?)|([A-Z][A-Z0-9_]+-\d+))+)"
 
     ### Download location
     ###! When a user clicks e.g. 'Download zip' on a project, a temporary zip file
@@ -329,6 +320,8 @@
 
     ### GitLab Shell settings for GitLab
     # gitlab_rails['gitlab_shell_ssh_port'] = 22
+    # gitlab_rails['git_max_size'] = 20971520
+    # gitlab_rails['git_timeout'] = 10
     # gitlab_rails['gitlab_shell_git_timeout'] = 800
 
     ### Extra customization
@@ -429,15 +422,15 @@
     ###! Docs: https://docs.gitlab.com/omnibus/settings/smtp.html
     ###! **Use smtp instead of sendmail/postfix.**
 
-    # gitlab_rails['smtp_enable'] = true
-    # gitlab_rails['smtp_address'] = "smtp.server"
-    # gitlab_rails['smtp_port'] = 465
-    # gitlab_rails['smtp_user_name'] = "smtp user"
-    # gitlab_rails['smtp_password'] = "smtp password"
-    # gitlab_rails['smtp_domain'] = "example.com"
-    # gitlab_rails['smtp_authentication'] = "login"
-    # gitlab_rails['smtp_enable_starttls_auto'] = true
-    # gitlab_rails['smtp_tls'] = false
+    gitlab_rails['smtp_enable'] = true
+    gitlab_rails['smtp_address'] = "mail.karlsruhe.freifunk.net"
+    gitlab_rails['smtp_port'] = 587
+    gitlab_rails['smtp_user_name'] = "gitlab@ffka.tech"
+    gitlab_rails['smtp_password'] = "VhSRQAimX6osKbFtc"
+    gitlab_rails['smtp_domain'] = "ffka.tech"
+    gitlab_rails['smtp_authentication'] = "login"
+    gitlab_rails['smtp_enable_starttls_auto'] = true
+    #gitlab_rails['smtp_tls'] = false
 
     ###! **Can be: 'none', 'peer', 'client_once', 'fail_if_no_peer_cert'**
     ###! Docs: http://api.rubyonrails.org/classes/ActionMailer/Base.html
@@ -454,8 +447,8 @@
     # registry_external_url 'https://registry.gitlab.example.com'
 
     ### Settings used by GitLab application
-    # gitlab_rails['registry_enabled'] = true
-    # gitlab_rails['registry_host'] = "registry.gitlab.example.com"
+    gitlab_rails['registry_enabled'] = false
+    gitlab_rails['registry_host'] = "registry.gitlab.ffka.tech"
     # gitlab_rails['registry_port'] = "5005"
     # gitlab_rails['registry_path'] = "/var/opt/gitlab/gitlab-rails/shared/registry"
 
@@ -689,7 +682,6 @@
     # postgresql['checkpoint_segments'] = 10
     # postgresql['checkpoint_timeout'] = "5min"
     # postgresql['checkpoint_completion_target'] = 0.9
-    # postgresql['effective_io_concurrency'] = 1
     # postgresql['checkpoint_warning'] = "30s"
     # postgresql['effective_cache_size'] = "1MB"
     # postgresql['shmmax'] =  17179869184 # or 4294967295
@@ -706,11 +698,6 @@
     # postgresql['statement_timeout'] = "60000"
     # postgresql['idle_in_transaction_session_timeout'] = "60000"
     # postgresql['log_line_prefix'] = "%a"
-    # postgresql['max_worker_processes'] = 8
-    # postgreslq['max_parallel_workers_per_gather'] = 0
-    # postgresql['log_lock_waits'] = 1
-    # postgresql['deadlock_timeout'] = '5s'
-    # postgresql['track_io_timing'] = 0
 
     ### Available in PostgreSQL 9.6 and later
     # postgresql['min_wal_size'] = 80MB
@@ -799,11 +786,6 @@
     # redis['client_output_buffer_limit_slave'] = '256mb 64mb 60'
     # redis['client_output_buffer_limit_pubsub'] = '32mb 8mb 60'
 
-    #####! Redis snapshotting frequency
-    #####! Set to [] to disable
-    #####! Set to [''] to clear previously set values
-    # redis['save'] = [ '900 1', '300 10', '60 10000' ]
-
     ################################################################################
     ## GitLab Web server
     ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html#using-a-non-bundled-web-server
@@ -825,8 +807,8 @@
     ################################################################################
 
     # nginx['enable'] = true
-    # nginx['client_max_body_size'] = '250m'
-    # nginx['redirect_http_to_https'] = false
+    nginx['client_max_body_size'] = '2048m'
+    nginx['redirect_http_to_https'] = false
     # nginx['redirect_http_to_https_port'] = 80
 
     ##! Most root CA's are included by default
@@ -838,8 +820,8 @@
     ##! if ssl_verify_client on, verification depth in the client certificates chain
     # nginx['ssl_verify_depth'] = "1"
 
-    # nginx['ssl_certificate'] = "/etc/gitlab/ssl/#{node['fqdn']}.crt"
-    # nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/#{node['fqdn']}.key"
+    # nginx['ssl_certificate'] = "/etc/letsencrypt/live/gitlab.ffka.tech/fullchain.pem"
+    # nginx['ssl_certificate_key'] = "/etc/letsencrypt/live/gitlab.ffka.tech/privkey.pem"
     # nginx['ssl_ciphers'] = "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256"
     # nginx['ssl_prefer_server_ciphers'] = "on"
 
@@ -854,7 +836,7 @@
     # nginx['ssl_session_timeout'] = "5m"
 
     # nginx['ssl_dhparam'] = nil # Path to dhparams.pem, eg. /etc/gitlab/ssl/dhparams.pem
-    # nginx['listen_addresses'] = ['*', '[::]']
+    nginx['listen_addresses'] = ['[::]']
 
     ##! **Defaults to forcing web browsers to always communicate using only HTTPS**
     ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html#setting-http-strict-transport-security
@@ -870,6 +852,7 @@
     # nginx['listen_https'] = nil
 
     # nginx['custom_gitlab_server_config'] = "location ^~ /foo-namespace/bar-project/raw/ {\n deny all;\n}\n"
+    nginx['custom_gitlab_server_config'] = "location ^~ /.well-known { root /var/www/letsencrypt; }"
     # nginx['custom_nginx_config'] = "include /etc/nginx/conf.d/example.conf;"
     # nginx['proxy_read_timeout'] = 3600
     # nginx['proxy_connect_timeout'] = 300
@@ -1031,10 +1014,6 @@
     # gitlab_pages['use_http2'] = true
     # gitlab_pages['dir'] = "/var/opt/gitlab/gitlab-pages"
     # gitlab_pages['log_directory'] = "/var/log/gitlab/gitlab-pages"
-
-    # gitlab_pages['artifacts_server'] = true
-    # gitlab_pages['artifacts_server_url'] = nil # Defaults to external_url + '/api/v4'
-    # gitlab_pages['artifacts_server_timeout'] = 10
 
     ##! Prometheus metrics for Pages docs: https://gitlab.com/gitlab-org/gitlab-pages/#enable-prometheus-metrics
     # gitlab_pages['metrics_address'] = ":9235"
@@ -1411,25 +1390,7 @@
     # gitaly['prometheus_grpc_latency_buckets'] = "[0.001, 0.005, 0.025, 0.1, 0.5, 1.0, 10.0, 30.0, 60.0, 300.0, 1500.0]"
     # gitaly['auth_token'] = '<secret>'
     # gitaly['auth_transitioning'] = false # When true, auth is logged to Prometheus but NOT enforced
-    # gitaly['storage'] = [
-    #   {
-    #     'name' => 'default',
-    #     'path' => '/tmp/path-1'
-    #   },
-    #   {
-    #     'name' => 'nfs1',
-    #     'path' => '/mnt/nfs1'
-    #   }
-    # ]
-    # gitaly['concurrency'] = [
-    #   {
-    #     'rpc' => "/gitaly.SmartHTTPService/PostReceivePack",
-    #     'max_per_repo' => 20
-    #   }, {
-    #     'rpc' => "/gitaly.SSHService/SSHUploadPack",
-    #     'max_per_repo' => 5
-    #   }
-    # ]
+
 
     ################################################################################
     ################################################################################
