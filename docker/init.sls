@@ -31,8 +31,9 @@ docker-ce:
     - group: root
     - mode: 644
     - contents: |
+        # Docker will allocate multiple subnets after the fd00::/64 prefix, so we enable NAT for a larger prefix
         domain ip6 table nat chain POSTROUTING {
-            saddr fd00::/64 MASQUERADE;
+            saddr fd00::/60 MASQUERADE;
         }
     - require:
       - file: /etc/ferm/conf.d

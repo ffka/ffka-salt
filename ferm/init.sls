@@ -39,6 +39,7 @@ ferm.service:
   service.running:
     - name: ferm
     - enable: true
+    - reload: true
     - require:
       - file: /etc/systemd/system/ferm.service
       - pkg: ferm
