@@ -44,9 +44,9 @@ renew:
     - name: /usr/bin/certbot renew
 
 # Dependency management: hook that can be used by other states (nginx) to wait for certificate init and renewal
-certbot_after_renew:
+hook_after_renew:
   test.nop:
-    require:
+    - require:
       - cmd: renew
 
 # Setup automatic renewal using systemd timers (remove default cronjob)
