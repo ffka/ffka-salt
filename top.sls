@@ -59,3 +59,4 @@ base:
   'gitlab.frickelfunk.net':
     - gitlab.gitlab
     - netdata
+    - certbot
