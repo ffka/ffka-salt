@@ -48,6 +48,7 @@ base:
     - nginx
     - certbot
     - docker
+    - ferm
     - discourse
   'unms.frickelfunk.net':
     - docker
