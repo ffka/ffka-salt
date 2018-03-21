@@ -37,7 +37,7 @@ reconfigure:
     - require:
       - pkg: gitlab-ce
 
-gitlab-ce-service:
+gitlab-ce.service:
   service.running:
     - name: gitlab-runsvdir
     - enable: True
