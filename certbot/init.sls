@@ -34,19 +34,20 @@ certbot_certonly_initial_{{ name }}:
       - pkg: certbot
       - file: certbot_webroot
       - file: /etc/letsencrypt/cli.ini
+    - require_in:
+      - cmd: renew
 {% endfor %}
 
 # Renew manually
 renew:
   cmd.run:
     - name: /usr/bin/certbot renew
-    - require:
-{%- for name in salt['pillar.get']('certbot:domainsets', []) %}
-      - cmd: certbot_certonly_initial_{{ name }}
-{% endfor %}
-    # Run renew before updating the nginx service, which will run initial cert setup
-    - require_in:
-      - service: nginx.service
+
+# Dependency management: hook that can be used by other states (nginx) to wait for certificate init and renewal
+certbot_after_renew:
+  test.nop:
+    require:
+      - cmd: renew
 
 # Setup automatic renewal using systemd timers (remove default cronjob)
 /etc/cron.d/certbot:

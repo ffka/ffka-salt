@@ -16,6 +16,8 @@ nginx.service:
     - require:
       - pkg: nginx
       - cmd: /etc/nginx/dhparams.pem
+      # Run certbot renew before updating the nginx service
+      - test: certbot_after_renew
     - enable: True
     - reload: True
     - watch:
