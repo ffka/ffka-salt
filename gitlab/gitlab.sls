@@ -5,23 +5,23 @@ install_gitlab_repo_dependencies:
       - openssh-server
       - ca-certificates
 
-add_gitlab_repo:
+packages.gitlab.com:
   pkgrepo.managed:
     - humanname: Gitlab
-    - name: deb https://packages.gitlab.com/gitlab/gitlab-ce/ubuntu/ xenial main
-    - dist: xenial
+    - name: deb https://packages.gitlab.com/gitlab/gitlab-ce/{{ grains.os | lower }}/ {{ grains.oscodename }} main
+    - dist: {{ grains.oscodename }}
     - file: /etc/apt/sources.list.d/gitlab_gitlab-ce.list
     - gpgcheck: 1
-    - key_url: https://packages.gitlab.com/gitlab/gitlab-ee/gpgkey
+    - key_url: https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey
 
 install_gitlab:
   pkg.installed:
     - pkgs:
       - gitlab-ce
     - require:
-      - pkgrepo: add_gitlab_repo
+      - pkgrepo: packages.gitlab.com
 
-deploy_config:
+gitlab.rb:
   file.managed:
     - name: /etc/gitlab/gitlab.rb
     - source: salt://gitlab/files/gitlab.rb.j2
@@ -29,11 +29,11 @@ deploy_config:
     - require:
       - pkg: install_gitlab
 
-reconfigure_gitlab:
+reconfigure:
   cmd.run:
     - name: gitlab-ctl reconfigure
     - onchanges:
-      - file: deploy_config
+      - file: gitlab.rb
 
 gitlab-ce-service:
   service.running:
@@ -41,4 +41,4 @@ gitlab-ce-service:
     - enable: True
     - require:
       - pkg: install_gitlab
-      - cmd: reconfigure_gitlab
+      - cmd: reconfigure
