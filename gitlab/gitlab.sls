@@ -14,7 +14,7 @@ packages.gitlab.com:
     - gpgcheck: 1
     - key_url: https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey
 
-install_gitlab:
+gitlab-ce:
   pkg.installed:
     - pkgs:
       - gitlab-ce
@@ -27,18 +27,20 @@ gitlab.rb:
     - source: salt://gitlab/files/gitlab.rb.j2
     - template: jinja
     - require:
-      - pkg: install_gitlab
+      - pkg: gitlab-ce
 
 reconfigure:
   cmd.run:
     - name: gitlab-ctl reconfigure
     - onchanges:
       - file: gitlab.rb
+    - require:
+      - pkg: gitlab-ce
 
 gitlab-ce-service:
   service.running:
     - name: gitlab-runsvdir
     - enable: True
     - require:
-      - pkg: install_gitlab
+      - pkg: gitlab-ce
       - cmd: reconfigure

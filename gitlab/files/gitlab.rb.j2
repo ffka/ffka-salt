@@ -1,3 +1,6 @@
+{%- set domainset = salt['pillar.get']('gitlab:domainset') -%}
+{%- set domains = salt['pillar.get']('domainsets:' ~ domainset) -%}
+
     ## GitLab configuration settings
     ##! This file is generated during initial installation and **is not** modified
     ##! during upgrades.
@@ -10,7 +13,7 @@
     ##! URL on which GitLab will be reachable.
     ##! For more details on configuring external_url see:
     ##! https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
-    external_url '{{ salt['pillar.get']('gitlab:gitlab_url') }}'
+    external_url 'https://{{ domains[0] }}'
 
     ## Legend
     ##! The following notations at the beginning of each line may be used to
