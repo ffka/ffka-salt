@@ -8,9 +8,9 @@ auth-nxdomain no;    # conform to RFC1035
 listen-on-v6 { any; };
 allow-query { any; };
 transfer-source-v6 {{ grains.fqdn_ip6[0] }};
-      dns64 {{ network.nat64.v6_range }} {
-              clients { {{ ffka.v6_ffrl }}; };
-      };
+#      dns64 {{ network.nat64.v6_range }} {
+#              clients { {{ ffka.v6_ffrl }}; };
+#      };
  query-source-v6 address {{ network.lo_ffka.ipv6.ip }} ;
 
 // freifunk
