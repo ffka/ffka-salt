@@ -46,7 +46,7 @@ server {
 		}
 
 		location /tiles {
-			resolver 8.8.8.8 ipv6=off;
+			resolver 1.1.1.1 ipv6=off;
 			proxy_pass http://korona.geog.uni-heidelberg.de/tiles;
 			proxy_http_version	1.1;
 			proxy_set_header    Connection "";

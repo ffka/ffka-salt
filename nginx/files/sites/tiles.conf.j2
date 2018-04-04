@@ -34,7 +34,7 @@ server {
 
     location ~ ^/tiles/(?<provider>(giscience|ffrgb-day|ffrgb-night)+)/(?<tile_z>[0-9]+)/(?<tile_x>[0-9]+)/(?<tile_y>[0-9]+)/((?<retina>(.+))/)? {
 
-        resolver 8.8.8.8 ipv6=off;
+        resolver 1.1.1.1 ipv6=off;
         if ($provider = "giscience") {
             proxy_pass "http://korona.geog.uni-heidelberg.de/tiles/roads/x=$tile_x&y=$tile_y&z=$tile_z";
         }
