@@ -50,6 +50,9 @@ protocol direct {
 
 protocol static static_bgp {
 	route {{ ffka.v4_ffrl }} unreachable;
+	{% if network.cloud_uplink | to_bool %}
+  route 185.66.194.15/32 unreachable;
+  {% endif %}
 };
 
 protocol ospf IGP {
