@@ -61,6 +61,7 @@ discourse-rebuild:
 discourse.service:
   service.running:
     - enable: True
+    - restart: True
     - name: discourse
     - require:
       - file: /etc/systemd/system/discourse.service
