@@ -6,7 +6,7 @@ acl "xferhosts" {
 
 # ACL for Recursion/Clients
 acl "recursionhosts" {
-  {{ ffka.v4_ffka }};           # Freifunk Netz
+  {{ ffka.v4_ff }};           # Freifunk Netz
 	fe80::/64;               # Freifunk link-local
 	{{ ffka.v6_ffrl }};	       # Freifunk Global v6
 	{{ ffka.v4_ffrl }};	       # Freifunk v4 Space

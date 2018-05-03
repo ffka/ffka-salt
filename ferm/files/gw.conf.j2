@@ -6,7 +6,7 @@
 #
 
 
-@def $FF_NET = {{ffka.v4_ffka}};
+@def $FF_NET = {{ffka.v4_ff}};
 @def $BACKBONE_NAT_IP = {{ network.lo_ffka.ipv4.ip }};
 @def $BACKBONE_IF = (
 {% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
