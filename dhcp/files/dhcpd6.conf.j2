@@ -3,7 +3,7 @@ max-lease-time 7200;
 log-facility local7;
 option dhcp6.name-servers {{ network.br_ffka.ipv6.ip }},{{ dhcp.dns_secondary_v6 }};
 option dhcp6.domain-search "clients.frickelfunk.net";
-subnet6 {{ ffka.v6_ffrl_ffka }} {
+subnet6 {{ ffka.v6_ffrl_ff }} {
     option interface-mtu 1400;
 
         # Prefix range for delegation to sub-routers
