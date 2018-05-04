@@ -13,22 +13,22 @@
     }
   },
   "contact": {
-    "email": "info@freifunk-karlsruhe.de",
+    "email": "info@karlsruhe.freifunk.net",
     "irc": "irc://irc.hackint.org/ffka",
     "ml": "freifunk-ka@lists.entropia.de",
     "facebook": "https://facebook.com/FreifunkKA",
     "twitter": "@FFKarlsruhe"
   },
-  "metacommunity": "albufer",
+  "metacommunity": "Freifunk Karlsruhe",
   "state": {
-    "nodes": 568,
+    "nodes": 350,
     "focus": [
       "infrastructure/backbone",
       "Public Free Wifi",
       "Local services and content",
       "Free internet access"
     ],
-    "lastchange": "2016-07-26T13:48:07.365Z"
+    "lastchange": "2018-02-27T13:48:07.365Z"
   },
   "timeline": [
     {
@@ -57,8 +57,8 @@
       "mapType": "geographical"
     },
     {
-      "url": "https://api.frickelfunk.net/yanic/nodelist/nodelist.json",
-      "interval": "1",
+      "url": "https://api.karlsruhe.freifunk.net/yanic/nodelist/nodelist.json",
+      "interval": "60",
       "technicalType": "nodelist",
       "mapType": "list/status"
     }
