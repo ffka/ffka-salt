@@ -30,7 +30,7 @@ subnet {{ hood.network.ipv4.net }} netmask {{ hood.network.ipv4.netmask }} {
     range {{ hood['dhcp'][shortname]['range']['from'] }} {{ hood['dhcp'][shortname]['range']['to'] }};
 
     option routers {{ hood['network']['ipv4'][shortname] }};
-    option interface-mtu 1372;
+    option interface-mtu 1348;
     option domain-name-servers {{ network.lo_ffka.ipv4.ip }},{{ dhcp.dns_secondary }};
 
 }
