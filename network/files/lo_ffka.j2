@@ -6,7 +6,7 @@ iface lo inet static
     address {{ lo_ffka_ipv4_ip }}
     netmask 255.255.255.255
     {% if gateway | to_bool %}
-        {% for cid in ff_communities %}
+        {% for cid in pillar.ff_communities %}
             {%- set community = pillar[cid] -%}
 	        up ip rule add to {{ community['v4_ff'] }} table freifunk
 	        up ip rule add from {{ community['v4_ff'] }} table freifunk
