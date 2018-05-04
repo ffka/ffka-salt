@@ -8,8 +8,8 @@ iface lo inet static
     {% if gateway | to_bool %}
         {% for cid in pillar.ff_communities %}
             {%- set community = pillar[cid] -%}
-	        up ip rule add to {{ community['v4_ff'] }} table freifunk
-	        up ip rule add from {{ community['v4_ff'] }} table freifunk
+        up ip rule add to {{ community['v4_ff'] }} table freifunk
+        up ip rule add from {{ community['v4_ff'] }} table freifunk
         {% endfor %}
         up ip rule add to 185.66.194.8/29 table freifunk
         up ip rule add from 185.66.194.8/29 table freifunk
@@ -19,6 +19,10 @@ iface lo inet6 static
     address {{ lo_ffka_ipv6_ip }}
     netmask 128
     {% if gateway | to_bool %}
-        post-up ip -6 rule add to 2a03:2260:a::/48 table freifunk
-        post-up ip -6 rule add from 2a03:2260:a::/48 table freifunk
+
+        {% for cid in pillar.ff_communities %}
+            {%- set community = pillar[cid] -%}
+        post-up ip -6 rule add to {{ community['v6_ffrl'] }} table freifunk
+        post-up ip -6 rule add from {{ community['v6_ffrl'] }} table freifunk
+        {% endfor %}
     {% endif %}
