@@ -12,6 +12,7 @@ yanic:
     - name: https://github.com/FreifunkBremen/yanic
     - target: {{ gopath }}/src/github.com/FreifunkBremen/yanic
     - user: yanic
+    - force_fetch: True
     - require:
       - user: yanic
   cmd.run:

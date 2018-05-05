@@ -20,7 +20,7 @@ function is_default() {
 };
 
 function is_self_net() {
-	return net ~ [ {{ salt['pillar.get']('ffka:v4_ffka') }}+ ];
+	return net ~ [ {{ salt['pillar.get']('ffka:v4_ff') }}+ ];
 }
 
 function is_self_public_uplink() {
@@ -71,7 +71,7 @@ protocol ospf IGP {
 }
 
 template bgp internal {
-	local as {{ffka.ffka_as}};
+	local as {{ffka.as}};
 #?	direct;
 #	next hop self;
   import filter {
@@ -86,12 +86,12 @@ template bgp internal {
 {% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
 protocol bgp ffka_{{gre.name}} from internal {
   source address {{ network.lo_ffka.ipv4.ip }};
-  neighbor {{gre.ffrl_ipv4}} as {{ffka.ffka_as}};
+  neighbor {{gre.ffrl_ipv4}} as {{ffka.as}};
 };
 {% endfor %}
 
 template bgp uplink {
-  local as {{ffka.ffka_as}};
+  local as {{ffka.as}};
   import where is_default();
 #	export where proto = "static_bgp";
   export where is_self_public_uplink();
