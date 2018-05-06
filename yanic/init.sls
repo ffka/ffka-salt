@@ -8,6 +8,7 @@ yanic:
   user.present:
     - home: /var/lib/yanic
     - gid_from_name: True
+  {#
   git.latest:
     - name: https://github.com/FreifunkBremen/yanic
     - target: {{ gopath }}/src/github.com/FreifunkBremen/yanic
@@ -26,6 +27,7 @@ yanic:
       - git: yanic
     - onchanges:
       - git: yanic
+    #}
 
 /var/log/yanic:
   file.directory:
@@ -90,4 +92,4 @@ yanic@{{ ffka.site_code }}:
     - watch:
       - file: /etc/systemd/system/yanic@.service
       - file: /etc/yanic/config-{{ ffka.site_code }}.toml
-      - cmd: yanic
+#      - cmd: yanic
