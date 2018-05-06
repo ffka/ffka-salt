@@ -1,14 +1,41 @@
+# This is the config file for Yanic written in "Tom's Obvious, Minimal Language."
+# syntax: https://github.com/toml-lang/toml
+# (if you need somethink multiple times, checkout out the [[array of table]] section)
+
 # Send respondd request to update information
 [respondd]
 enable           = true
-# how oftern request per multicast
+# Delay startup until a multiple of the period since zero time
+synchronize      = "1m"
+# how often request per multicast
 collect_interval = "1m"
-# on which interface
-interfaces       = [{% for hoodname,hood in salt['pillar.get']('hoods').items() %}"br_{{ hoodname }}"{% if not loop.last %}, {%endif %}{% endfor %}]
 
+# table of a site to save stats for (not exists for global only)
+#[respondd.sites.example]
+## list of domains on this site to save stats for (empty for global only)
+#domains = []
+## example
+[respondd.sites.{{ ffka.site_code }}]
+domains            = []
+
+{% for hoodname,hood in salt['pillar.get']('hoods').items() %}
+# interface that has an IP in your mesh network
+[[respondd.interfaces]]
+# name of interface on which this collector is running
+ifname = "br_{{ hoodname }}"
+# ip address which is used for sending
+# (optional - without definition used a address of ifname)
+#ip_address = "fd2f:5119:f2d::5"
+# disable sending multicast respondd request
+# (for receiving only respondd packages e.g. database respondd)
+#send_no_request = false
+# multicast address to destination of respondd
+# (optional - without definition used batman default ff02::2:1001)
+#multicast_address = "ff05::2:1001"
 # define a port to listen
-# (no or 0 would choose at port at his own)
-port = 10001
+# if not set or set to 0 the kernel will use a random free port at its own
+#port = 10001
+{% endfor %}
 
 # A little build-in webserver, which statically serves a directory.
 # This is useful for testing purposes or for a little standalone installation.
@@ -18,64 +45,151 @@ bind    = "127.0.0.1:8080"
 webroot = "/var/www/html/meshviewer"
 
 [nodes]
-# state-version of nodes.json to store cached data,
-#  these is the directly collected respondd data
+# Cache file
+# a json file to cache all data collected directly from respondd
 state_path     = "/var/lib/yanic/state/{{ ffka.site_code }}.json"
-
+# prune data in RAM, cache-file and output json files (i.e. nodes.json)
+# that were inactive for longer than
+prune_after   = "90d"
 # Export nodes and graph periodically
 save_interval = "5s"
 # Set node to offline if not seen within this period
 offline_after = "10m"
-# Prune offline nodes after a time of inactivity
-prune_after = "90d"
 
+
+## [[nodes.output.example]]
+# Each output format has its own config block and needs to be enabled by adding:
+#enable = true
+#
+# For each output format there can be set different filters
+#[nodes.output.example.filter]
+#
+# WARNING: if it is not set, it will publish contact information of other persons
+# Set to true, if you did not want the json files to contain the owner information
+#no_owner = true
+#
+# List of nodeids of nodes that should be filtered out, so they won't appear in output
+#blacklist = ["00112233445566", "1337f0badead"]
+#
+# List of site_codes of nodes that should be included in the output
+#sites = ["{{ ffka.site_code }}"]
+
+#
+# set has_location to true if you want to include only nodes that have geo-coordinates set
+# (setting this to false has no sensible effect, unless you'd want to hide nodes that have coordinates)
+#has_location = true
+
+#[nodes.output.example.filter.in_area]
+# nodes outside this area are not shown on the map but are still listed as a node without coordinates
+#latitude_min = 34.30
+#latitude_max = 71.85
+#longitude_min = -24.96
+#longitude_max = 39.72
+
+
+# definition for the new more compressed meshviewer.json
 [[nodes.output.meshviewer-ffrgb]]
 enable   = true
 path = "/var/lib/yanic/meshviewer/{{ ffka.site_code }}/meshviewer.json"
 
-[[nodes.output.meshviewer]]
-# structur of nodes.json, which to support
-# version 1 is to support legacy meshviewer (which are in master branch)
-#    i.e. https://github.com/ffnord/meshviewer/tree/master
-# version 2 is to support new version of meshviewer (which are in legacy develop branch or newer)
-#    i.e. https://github.com/ffnord/meshviewer/tree/dev
-#         https://github.com/ffrgb/meshviewer/tree/develop
-version  = 2
-# path where to store nodes.json
-nodes_path     = "/var/lib/yanic/meshviewer/{{ ffka.site_code }}/nodes.json"
-# path where to store graph.json
-graph_path     = "/var/lib/yanic/meshviewer/{{ ffka.site_code }}/graph.json"
+[nodes.output.meshviewer-ffrgb.filter]
+no_owner = true
+#blacklist = ["00112233445566", "1337f0badead"]
+sites = ["{{ ffka.site_code }}"]
+#has_location = true
 
+#[nodes.output.meshviewer-ffrgb.filter.in_area]
+#latitude_min = 34.30
+#latitude_max = 71.85
+#longitude_min = -24.96
+#longitude_max = 39.72
+
+
+# definition for nodes.json
+[[nodes.output.meshviewer]]
+enable = true
+# The structure version of the output which should be generated (i.e. nodes.json)
+# version 1 is accepted by the legacy meshviewer (which is the master branch)
+#   i.e. https://github.com/ffnord/meshviewer/tree/master
+# version 2 is accepted by the new versions of meshviewer (which are in the legacy develop branch or newer)
+#   i.e. https://github.com/ffnord/meshviewer/tree/dev
+#        https://github.com/ffrgb/meshviewer/tree/develop
+version    = 2
+# path where to store nodes.json
+nodes_path = "/var/lib/yanic/meshviewer/{{ ffka.site_code }}/nodes.json"
+# path where to store graph.json
+graph_path = "/var/lib/yanic/meshviewer/{{ ffka.site_code }}/graph.json"
+
+[nodes.output.meshviewer.filter]
+# WARNING: if it is not set, it will publish contact information of other persons
+no_owner = true
+
+
+# definition for nodelist.json
 [[nodes.output.nodelist]]
 enable   = true
 path = "/var/lib/yanic/nodelist/{{ ffka.site_code }}/nodelist.json"
 
+[nodes.output.nodelist.filter]
+# WARNING: if it is not set, it will publish contact information of other persons
+no_owner = true
+
 [database]
-# cleaning data of measurement node,
-#   which are older than 7d
-delete_after = "7d"
-#   how often run the cleaning
+# this will send delete commands to the database to prune data
+# which is older than:
+delete_after    = "7d"
+# how often run the cleaning
 delete_interval = "1h"
 
-# Save collected data to InfluxDB
-# there would be the following measurments:
-#  node: store node spezific data i.e. clients memory, airtime
-#  global: store global data, i.e. count of clients and nodes
-#  firmware: store count of nodes tagged with firmware
-#  model: store count of nodes tagged with hardware model
+## [[database.connection.example]]
+# Each database-connection has its own config block and needs to be enabled by adding:
+#enable = true
+
+# Save collected data to InfluxDB.
+# There are the following measurments:
+#   node: store node specific data i.e. clients memory, airtime
+#   global: store global data, i.e. count of clients and nodes
+#   firmware: store the count of nodes tagged with firmware
+#   model: store the count of nodes tagged with hardware model
 [[database.connection.influxdb]]
 enable   = false
 address  = "http://localhost:8086"
-database = "ffhb"
-username = ""
+database = "{{ ffka.site_code }}"
+username = "yanic"
 password = ""
 
+# Tagging of the data (optional)
+[database.connection.influxdb.tags]
+# Tags used by Yanic would override the tags from this config
+# nodeid, hostname, owner, model, firmware_base, firmware_release,frequency11g and frequency11a are tags which are already used
+#tagname1 = "tagvalue 1"
+# some useful e.g.:
+#system   = "productive"
+#site     = "ffhb"
+
+# Graphite settings
+[[database.connection.graphite]]
+enable   = false
+address  = "localhost:2003"
+# Graphite is replacing every "." in the metric name with a slash "/" and uses
+# that for the file system hierarchy it generates. it is recommended to at least
+# move the metrics out of the root namespace (that would be the empty prefix).
+# If you only intend to run one community and only freifunk on your graphite node
+# then the prefix can be set to anything (including the empty string) since you
+# probably wont care much about "polluting" the namespace.
+prefix   = "freifunk"
+
+# respondd (yanic)
+# forward collected respondd package to a address
+# (e.g. to another respondd collector like a central yanic instance or hopglass)
+[[database.connection.respondd]]
+enable   = false
+# type of network to create a connection
+type     = "udp6"
+# destination address to connect/send respondd package
+address  = "stats.bremen.freifunk.net:11001"
+
+# Logging
 [[database.connection.logging]]
 enable   = false
 path     = "/var/log/yanic/{{ ffka.site_code }}.log"
-
-
-[[database.connection.graphite]]
-enable   = false
-address  = "stats.test.h4ck.space:2003"
-prefix   = "freifunk"
