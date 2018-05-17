@@ -23,6 +23,18 @@ authoritative;
 
 log-facility local7;
 
+##### Unfi Stuff
+
+option space ubnt;
+option ubnt.unifi-address code 1 = ip-address;
+
+class "ubnt" {
+        match if substring (option vendor-class-identifier, 0, 4) = "ubnt";
+        option vendor-class-identifier "ubnt";
+        vendor-option-space ubnt;
+}
+
+
 {% set shortname = salt['pillar.get']('shortname') -%}
 {% for hoodname,hood in salt['pillar.get']('hoods').items() %}
 # DHCP Pool {{ hood.name }}
@@ -32,6 +44,7 @@ subnet {{ hood.network.ipv4.net }} netmask {{ hood.network.ipv4.netmask }} {
     option routers {{ hood['network']['ipv4'][shortname] }};
     option interface-mtu 1348;
     option domain-name-servers {{ network.lo_ffka.ipv4.ip }},{{ dhcp.dns_secondary }};
+    option ubnt.unifi-address 10.214.192.43; ### Unfi controller
 
 }
 {% endfor %}
