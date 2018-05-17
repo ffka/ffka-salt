@@ -51,6 +51,8 @@ base:
     - docker
     - ferm
     - discourse
+  'unifi.frickelfunk.net':
+    - unms
   'unms.frickelfunk.net':
     - docker
     - unms
