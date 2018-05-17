@@ -52,7 +52,7 @@ base:
     - ferm
     - discourse
   'unifi.frickelfunk.net':
-    - unms
+    - unifi
   'unms.frickelfunk.net':
     - docker
     - unms
