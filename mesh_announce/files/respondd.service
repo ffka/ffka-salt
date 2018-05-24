@@ -2,7 +2,7 @@
 Description=Respondd
 
 [Service]
-ExecStart=/opt/mesh-announce/respondd.py -d /opt/mesh-announce -i br_dftl -i mesh-ffka-nat0 -i mesh-ffka-nat1 -i mesh-ffka-nat2 -i mesh-ffka-nat4 -i mesh-ffka-v6 -b bat_dflt
+ExecStart=/opt/mesh-announce/respondd.py -d /opt/mesh-announce -i br_ka01 -b bat_ka01
 Restart=always
 Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
