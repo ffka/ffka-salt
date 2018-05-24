@@ -24,5 +24,6 @@ mesh-announce service:
   service.running:
     - name: respondd
     - enable: True
+    - reload: True
     - require:
       - file: /etc/systemd/system/respondd.service
