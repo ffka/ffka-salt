@@ -6,6 +6,16 @@ bind9:
     - enable: True
     - watch:
        - file: /etc/bind/*.conf
+       - file: /etc/bind/named.conf*
+       - git: /etc/bind/dns
+
+/var/log/bind:
+  file.directory:
+    - user: bind
+    - group: bind
+    - mode: 755
+    - require:
+      - pkg: bind9
 
 /etc/bind/id_deploy:
   file.managed:
@@ -21,14 +31,19 @@ bind9:
     - branch: master
     - target: /etc/bind/dns
     - identity: /etc/bind/id_deploy
-    - watch_in:
-       - service: bind9
     - require:
        - pkg: packages_base
        - pkg: bind9
        - file: /etc/bind/id_deploy
 
-{% for subconfig in ['', '.acl','.default-zones','.local','.options','.log'] %}
+/etc/bind/named.conf.zones:
+  file.symlink:
+    - target: /etc/bind/dns/named.conf.zones
+    - require:
+      - git: /etc/bind/dns
+
+
+{% for subconfig in ['', '.acl','.default-zones','.options','.log'] %}
 place bind9 named.conf{{subconfig}}:
   file.managed:
     - name: '/etc/bind/named.conf{{ subconfig }}'
@@ -38,13 +53,6 @@ place bind9 named.conf{{subconfig}}:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
 {% endfor %}
-
-/var/log/bind:
-  file.directory:
-    - user: bind
-    - group: bind
-    - mode: 755
-    - makedirs: True
 
 /etc/logrotate.d/bind-rndc.conf:
   file.managed:
