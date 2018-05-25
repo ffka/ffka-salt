@@ -16,4 +16,12 @@ sshkey {{ ssh_key.key }} for {{ ffka_user.name }}:
 /home/{{ ffka_user.name }}/.screenrc:
   file.managed:
     - source: salt://common/files/screenrc.root
+
+{% if ffka_user.get('custom_states', False) %}
+  {% with %}
+  {% from 'common/users/' ~ ffka_user.name ~ '.sls' import user_states %}
+  {{ user_states(name, '/home/' ~ ffka_user.name ~ '/') }}
+  {% endwith %}
+{% end %}
+
 {% endfor %}
