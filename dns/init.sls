@@ -9,7 +9,7 @@ bind9:
 
 /etc/bind/id_deploy:
   file.managed:
-    - user: dns
+    - user: root
     - mode: 600
     - contents_pillar: dns:deployment_key
     - require:
@@ -24,7 +24,7 @@ bind9:
     - watch_in:
        - service: bind9
     - require:
-       - pkg: git
+       - pkg: packages_base
        - pkg: bind9
        - file: /etc/bind/id_deploy
 
