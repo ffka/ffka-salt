@@ -1,6 +1,32 @@
-install bind9:
+bind9:
   pkg.installed:
     - name: bind9
+  service.running:
+    - name: bind9
+    - enable: True
+    - watch:
+       - file: /etc/bind/*.conf
+
+/etc/bind/id_deploy:
+  file.managed:
+    - user: dns
+    - mode: 600
+    - contents_pillar: dns:deployment_key
+    - require:
+      - pkg: bind9
+
+/etc/bind/dns:
+  git.latest:
+    - name: {{ dns.zones_repo }}
+    - branch: master
+    - target: /etc/bind/dns
+    - identity: /etc/bind/id_deploy
+    - watch_in:
+       - service: bind9
+    - require:
+       - pkg: git
+       - pkg: bind9
+       - file: /etc/bind/id_deploy
 
 {% for subconfig in ['', '.acl','.default-zones','.local','.options','.log'] %}
 place bind9 named.conf{{subconfig}}:
@@ -12,11 +38,6 @@ place bind9 named.conf{{subconfig}}:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
 {% endfor %}
-
-enable and start bind9 service:
-  service.running:
-    - name: bind9
-    - enable: True
 
 /var/log/bind:
   file.directory:
