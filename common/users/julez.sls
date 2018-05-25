@@ -1,4 +1,4 @@
-{% macro user_states(name, home) -%}
+{% macro user_states(username, home) -%}
 
 julez_packages:
   pkg.installed:
@@ -11,7 +11,7 @@ julez_dotfiles:
     - name: https://git.home.julez.io/stuff/dotfiles
     - target: {{ home }}/.dotfiles
     - branch: master
-    - user: {{ name }}
+    - user: {{ username }}
     - submodules: True
   require:
     - pkg: julez_packages
@@ -19,7 +19,7 @@ julez_dotfiles:
 update dotfiles:
   cmd.run:
     - name: {{ home }}/.dotfiles/update.sh do_update
-    - user: {{ name }}
+    - user: {{ username }}
     - onchanges:
       - git: julez_dotfiles
     - require:
