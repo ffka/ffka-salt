@@ -24,5 +24,7 @@ update dotfiles:
       - git: julez_dotfiles
     - require:
       - pkg: julez_packages
+    - env:
+      - HOME: {{ home }}
 
 {%- endmacro %}
