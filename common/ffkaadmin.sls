@@ -22,6 +22,6 @@ sshkey {{ ssh_key.key }} for {{ ffka_user.name }}:
   {% from 'common/users/' ~ ffka_user.name ~ '.sls' import user_states %}
   {{ user_states(name, '/home/' ~ ffka_user.name ~ '/') }}
   {% endwith %}
-{% end %}
+{% endif %}
 
 {% endfor %}
