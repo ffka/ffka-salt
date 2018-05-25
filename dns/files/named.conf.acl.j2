@@ -1,22 +1,22 @@
 # ACL for Zone-Transfers
 acl "xferhosts" {
-	127.0.0.1;		 # localhost
+	127.0.0.1;
 	::1;
 };
 
 # ACL for Recursion/Clients
 acl "recursionhosts" {
-  {{ ffka.v4_ff }};           # Freifunk Netz
-	fe80::/64;               # Freifunk link-local
-	{{ ffka.v6_ffrl }};	       # Freifunk Global v6
-	{{ ffka.v4_ffrl }};	       # Freifunk v4 Space
-  127.0.0.0/8;             # localhost
-  ::1;                     # localhost
-	{{ grains.fqdn_ip4[0] }};          # lokale IP
-	{{ grains.fqdn_ip6[0] }};          # lokale IP
+  	{{ ffka.v4_ff }};			# Freifunk Netz
+	fe80::/64;               	# Freifunk link-local
+	{{ ffka.v6_ffrl }};	        # Freifunk Global v6
+	{{ ffka.v4_ffrl }};	        # Freifunk v4 Space
+    127.0.0.0/8;
+  	::1;
+	{{ grains.fqdn_ip4[0] }};   # local IP
+	{{ grains.fqdn_ip6[0] }};   # local IP
 };
 
 key dhcpkey {
-        algorithm hmac-md5;
-        secret "JFd0ZDa1i6UbCCwZN9/oFgIPSECEJBI1GC6/P8njRpJzyTdD+8SV/IeELH9oOWLYC/tpjXAzhd2y6UvvflFXbQ==";
-        };
+    algorithm hmac-md5;
+    secret "JFd0ZDa1i6UbCCwZN9/oFgIPSECEJBI1GC6/P8njRpJzyTdD+8SV/IeELH9oOWLYC/tpjXAzhd2y6UvvflFXbQ==";
+};

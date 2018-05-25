@@ -1,30 +1,32 @@
 {% set shortname = salt['pillar.get']('shortname') -%}
+
 options {
-directory "/var/cache/bind";
-statistics-file "/var/log/bind/named.stats";
-dnssec-validation auto;
+    directory "/var/cache/bind";
+    statistics-file "/var/log/bind/named.stats";
 
-auth-nxdomain no;    # conform to RFC1035
-listen-on-v6 { any; };
-allow-query { any; };
-transfer-source-v6 {{ grains.fqdn_ip6[0] }};
-      dns64 {{ network.nat64.v6_range }} {
-              clients { {{ ffka.v6_ffrl }}; };
-      };
- query-source-v6 address {{ network.lo_ffka.ipv6.ip }} ;
+    listen-on {
+        127.0.0.1;
+        {% for hoodname,hood in salt['pillar.get']('hoods').items() %}
+          {{ hood['network']['ipv4'][shortname] }};
+        {%- endfor %}
+        {{ grains.fqdn_ip4[0] }};
+        {{ network.lo_ffka.ipv4.ip }};
+    };
+    listen-on-v6 { any; };
 
-// freifunk
-      listen-on {
-       127.0.0.1;
-{% for hoodname,hood in salt['pillar.get']('hoods').items() %}
-  {{ hood['network']['ipv4'][shortname] }};
-{% endfor %}
-  {{ grains.fqdn_ip4[0] }};
-  {{ network.lo_ffka.ipv4.ip }};
-      };
-      allow-transfer { "xferhosts" ; };
-      allow-recursion { "recursionhosts" ; };
-      allow-query-cache { "recursionhosts" ; };
-   query-source address {{ network.lo_ffka.ipv4.ip }};
+    allow-transfer { "xferhosts" ; };
+    query-source address {{ network.lo_ffka.ipv4.ip }};
+    transfer-source-v6 {{ grains.fqdn_ip6[0] }};
+    query-source-v6 address {{ network.lo_ffka.ipv6.ip }};
 
+    dns64 {{ network.nat64.v6_range }} {
+        clients { {{ ffka.v6_ffrl }}; };
+    };
+
+    dnssec-validation auto;
+    auth-nxdomain no;    # conform to RFC1035 
+
+    allow-query { any; };
+    allow-recursion { "recursionhosts" ; };
+    allow-query-cache { "recursionhosts" ; };
 };

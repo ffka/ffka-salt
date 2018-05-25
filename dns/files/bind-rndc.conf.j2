@@ -1,12 +1,11 @@
-/var/log/bind/named.stats {
-   
-     daily
-     rotate 4
-     compress
-     delaycompress
-     create 0644 bind bind
-     missingok
-     postrotate
-         rndc reload > /dev/null
-     endscript
- }
+/var/log/bind/named.stats {   
+    daily
+    rotate 4
+    compress
+    delaycompress
+    create 0644 bind bind
+    missingok
+    postrotate
+        rndc reload > /dev/null
+    endscript
+}
