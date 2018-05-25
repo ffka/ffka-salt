@@ -19,7 +19,7 @@ julez_dotfiles:
 update dotfiles:
   cmd.run:
     - name: {{ home }}/.dotfiles/update.sh do_update
-    - user: {{ username }}
+    - runas: {{ username }}
     - onchanges:
       - git: julez_dotfiles
     - require:
