@@ -31,6 +31,7 @@ bind9:
     - branch: master
     - target: /etc/bind/dns
     - identity: /etc/bind/id_deploy
+    - force_reset: True
     - require:
        - pkg: packages_base
        - pkg: bind9
