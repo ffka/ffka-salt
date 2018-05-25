@@ -17,7 +17,7 @@ bind9:
 
 /etc/bind/dns:
   git.latest:
-    - name: {{ dns.zones_repo }}
+    - name: {{ pillar.dns.zones_repo }}
     - branch: master
     - target: /etc/bind/dns
     - identity: /etc/bind/id_deploy
