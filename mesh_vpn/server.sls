@@ -1,5 +1,5 @@
 {% macro generate_mac(gw_id, hood_id, ip_type) -%}
-"{{ "fd:ca:ff:%02x:%02x:%02x" | format(gw_id, hood_id, ip_type) }}"
+"{{ "fc:ca:ff:%02x:%02x:%02x" | format(gw_id, hood_id, ip_type) }}"
 {%- endmacro %}
 
 {% for hoodname,hood in salt['pillar.get']('hoods').items() if hoodname != "dflt" %}
