@@ -42,5 +42,8 @@ on up "
     ip link set dev $INTERFACE up
     ifup bat_{{ hoodname }}
     batctl -m bat_{{ hoodname }} if add $INTERFACE
-    chmod 777 /run/fastd.fd-{{name}}.sock
+    (
+    	sleep 0.5
+    	chmod 777 /run/fastd.fd-{{name}}.sock
+    ) &
 ";
