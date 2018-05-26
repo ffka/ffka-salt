@@ -92,7 +92,7 @@ Fastd config file for {{ if_name }}:
         ip_type: {{ ip_type }}
         name: {{ if_name }}
 
-Fastd secret {{ mesh_trunk }}:
+Fastd secret {{ if_name }}:
   file.managed:
     - name: /etc/fastd/{{ if_name }}/secret.conf
     - source: salt://mesh_vpn/files/secret.conf
@@ -102,12 +102,12 @@ Fastd secret {{ mesh_trunk }}:
     - mode: 660
     - template: jinja
 
-#enable/run systemd {{ interfaces.name }}:
+#enable/run systemd {{ if_name }}:
 #  service.running:
-#    - name: fastd@{{ interfaces.name }}
+#    - name: fastd@{{ if_name }}
 #    - enable: true
 #    - watch:
-#      - file: /etc/fastd/{{ interfaces.name }}/fastd.conf
+#      - file: /etc/fastd/{{ if_name }}/fastd.conf
 {% endfor %}
 
 /etc/fastd/fastdbl:
