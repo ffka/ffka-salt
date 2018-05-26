@@ -38,5 +38,8 @@ on up "
     ip link set dev $INTERFACE up
     ifup bat_dflt
     batctl -m bat_dflt if add $INTERFACE
-    chmod 777 /run/fastd.ffka-{{name}}.sock
+    (
+    	sleep 0.5
+    	chmod 777 /run/fastd.ffka-{{name}}.sock
+    ) &
 ";
