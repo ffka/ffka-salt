@@ -77,7 +77,7 @@ enable/run systemd {{ interfaces.name }}:
 {% endfor %}
 
 {% for ip_type in [4, 6] %}
-{% set if_name = trunk ~ "_v" ~ ip_type %}
+{% set if_name = "trunk" ~ "_v" ~ ip_type %}
 Fastd config file for {{ if_name }}:
   file.managed:
     - name: /etc/fastd/{{ if_name }}/fastd.conf
@@ -90,6 +90,7 @@ Fastd config file for {{ if_name }}:
     - context:
         mac: {{ generate_mac(pillar['gw_id'], 255, ip_type) }}
         ip_type: {{ ip_type }}
+        name: {{ if_name }}
 
 Fastd secret {{ mesh_trunk }}:
   file.managed:
