@@ -8,7 +8,7 @@ bind {{ fqdn_ip }}:20017 interface "{{ fastd_dev }}";
 bind [{{ fqdn_ip_6 }}]:20017 interface "{{ fastd_dev }}";
 {% endif %}
 
-interface "{{ name }}";
+interface "fd-{{ name }}";
 mode tap;
 
 method "null+salsa2012+umac";
@@ -40,7 +40,7 @@ on up "
     ip link set dev ${INTERFACE} address {{ mac }}
     ip link set dev ${INTERFACE} up
 {% for hoodname, hood in salt['pillar.get']('hoods').items() %}
-	{%- set vlan_id = '%02d' | format(hood.hood_id) -%}
+	{%- set vlan_id = '%03d' | format(hood.hood_id + 400) %}
 	ip link add link ${INTERFACE} name ${INTERFACE}.{{ vlan_id }} type vlan id {{ vlan_id }}
 	batctl -m bat_{{ hoodname }} if add ${INTERFACE}.{{ vlan_id }}
 {% endfor %}
