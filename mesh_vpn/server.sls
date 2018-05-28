@@ -1,8 +1,11 @@
+{% macro generate_mac(gw_id, hood_id, ip_type) -%}
+"{{ "fc:ca:ff:%02x:%02x:%02x" | format(gw_id, hood_id, ip_type) }}"
+{%- endmacro %}
+
 {% for hoodname,hood in salt['pillar.get']('hoods').items() if hoodname != "dflt" %}
 {% for ip_type in [4, 6] %}
 
 {% set if_name = hoodname ~ "_v" ~ ip_type %}
-{% set if_mac = "fd:ca:ff:%02x:%02x:%02x"|format(pillar['gw_id'], hood.hood_id, ip_type) %}
 
 fastd config file {{ if_name }}:
   file.managed:
@@ -16,8 +19,8 @@ fastd config file {{ if_name }}:
     - context:
         name: "{{ if_name }}"
         port: {{ hood.fastd.port }}
-        ip_type: v{{ ip_type }}
-        mac: "{{ if_mac }}"
+        ip_type: {{ ip_type }}
+        mac: {{ generate_mac(pillar['gw_id'], hood.hood_id, ip_type) }}
         hoodname: {{ hoodname }}
 
 fastd secret {{ if_name }}:
@@ -71,6 +74,40 @@ enable/run systemd {{ interfaces.name }}:
     - enable: true
     - watch:
       - file: /etc/fastd/{{ interfaces.name }}/fastd.conf
+{% endfor %}
+
+{% for ip_type in [4, 6] %}
+{% set if_name = "trunk" ~ "_v" ~ ip_type %}
+Fastd config file for {{ if_name }}:
+  file.managed:
+    - name: /etc/fastd/{{ if_name }}/fastd.conf
+    - source: salt://mesh_vpn/files/fastd_trunk.j2
+    - makedirs: true
+    - user: root
+    - group: root
+    - mode: 660
+    - template: jinja
+    - context:
+        mac: {{ generate_mac(pillar['gw_id'], 255, ip_type) }}
+        ip_type: {{ ip_type }}
+        name: {{ if_name }}
+
+Fastd secret {{ if_name }}:
+  file.managed:
+    - name: /etc/fastd/{{ if_name }}/secret.conf
+    - source: salt://mesh_vpn/files/secret.conf
+    - makedirs: true
+    - user: root
+    - group: root
+    - mode: 660
+    - template: jinja
+
+#enable/run systemd {{ if_name }}:
+#  service.running:
+#    - name: fastd@{{ if_name }}
+#    - enable: true
+#    - watch:
+#      - file: /etc/fastd/{{ if_name }}/fastd.conf
 {% endfor %}
 
 /etc/fastd/fastdbl:
