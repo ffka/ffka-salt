@@ -7,7 +7,8 @@ acl "xferhosts" {
 # ACL for Recursion/Clients
 acl "recursionhosts" {
 {% for cid in pillar.ff_communities %}
-    {%- set community = pillar[cid] -%}
+    {%- set community = pillar[cid] %}
+    # {{ cid }}
     {{ community.v4_ff }};      # Freifunk Netz
     {{ community.v6_ffrl }};    # Freifunk Global v6
     {{ community.v4_ffrl }};	# Freifunk v4 Space
