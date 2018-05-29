@@ -79,5 +79,9 @@ netdata.service:
     - name: netdata
     - enable: True
     - restart: True
+    - require:
+      - cmd: netdatainstall
+      - cmd: netdataupdate
     - watch:
       - file: /etc/netdata/*
+      - git: netdatarepo
