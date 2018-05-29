@@ -76,11 +76,9 @@ enable/run systemd {{ interfaces.name }}:
       - file: /etc/fastd/{{ interfaces.name }}/fastd.conf
 {% endfor %}
 
-{% for ip_type in [4, 6] %}
-{% set if_name = "trunk" ~ "_v" ~ ip_type %}
-Fastd config file for {{ if_name }}:
+Fastd config file for trunk:
   file.managed:
-    - name: /etc/fastd/{{ if_name }}/fastd.conf
+    - name: /etc/fastd/trunk/fastd.conf
     - source: salt://mesh_vpn/files/fastd_trunk.j2
     - makedirs: true
     - user: root
@@ -88,13 +86,12 @@ Fastd config file for {{ if_name }}:
     - mode: 660
     - template: jinja
     - context:
-        mac: {{ generate_mac(pillar['gw_id'], 255, ip_type) }}
-        ip_type: {{ ip_type }}
-        name: {{ if_name }}
+        mac: {{ generate_mac(pillar['gw_id'], 255, 0) }}
+        name: trunk
 
-Fastd secret {{ if_name }}:
+Fastd secret trunk:
   file.managed:
-    - name: /etc/fastd/{{ if_name }}/secret.conf
+    - name: /etc/fastd/trunk/secret.conf
     - source: salt://mesh_vpn/files/secret.conf
     - makedirs: true
     - user: root
@@ -102,13 +99,12 @@ Fastd secret {{ if_name }}:
     - mode: 660
     - template: jinja
 
-#enable/run systemd {{ if_name }}:
-#  service.running:
-#    - name: fastd@{{ if_name }}
-#    - enable: true
-#    - watch:
-#      - file: /etc/fastd/{{ if_name }}/fastd.conf
-{% endfor %}
+enable/run systemd trunk:
+  service.running:
+    - name: fastd@trunk
+    - enable: true
+    - watch:
+      - file: /etc/fastd/trunk/fastd.conf
 
 /etc/fastd/fastdbl:
   git.latest:

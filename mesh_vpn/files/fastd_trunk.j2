@@ -2,11 +2,8 @@
 {% set fqdn_ip_6 = salt['grains.get']('fqdn_ip6')[0] -%}
 {% set fastd_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
 
-{% if ip_type == 4 %}
 bind {{ fqdn_ip }}:20017 interface "{{ fastd_dev }}";
-{% else %}
 bind [{{ fqdn_ip_6 }}]:20017 interface "{{ fastd_dev }}";
-{% endif %}
 
 interface "fd-{{ name }}";
 mode tap;
