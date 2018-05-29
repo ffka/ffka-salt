@@ -41,6 +41,8 @@ netdataupdate:
     - cwd: /root/netdatagit
     - name: ./netdata-updater.sh
     - onlyif: test -f ./netdata-updater.sh
+    - onchanges:
+      - git: netdatarepo
 
 /etc/netdata/stream.conf:
   file.managed:
@@ -51,6 +53,7 @@ netdataupdate:
     - template: jinja
     - require:
       - cmd: netdatainstall
+      - cmd: netdataupdate
 
 /etc/netdata/netdata.conf:
   file.managed:
@@ -60,6 +63,7 @@ netdataupdate:
     - template: jinja
     - require:
       - cmd: netdatainstall
+      - cmd: netdataupdate
 
 /etc/netdata/python.d.conf:
   file.managed:
