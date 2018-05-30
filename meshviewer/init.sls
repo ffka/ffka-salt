@@ -35,7 +35,7 @@ meshviewer_yarn_install:
       - pkg: yarn
       - git: /home/meshviewer/meshviewer.git
     - cwd: /home/meshviewer/meshviewer.git
-    - user: meshviewer
+    - runas: meshviewer
     - name: yarn && yarn add gulp-cli
 
 config.js:
@@ -61,7 +61,7 @@ meshviewer_gulp:
        - cmd: meshviewer_yarn_install
        - git: /home/meshviewer/meshviewer.git
     - cwd: /home/meshviewer/meshviewer.git
-    - user: meshviewer
+    - runas: meshviewer
     - name: ./node_modules/.bin/gulp
 
 
