@@ -6,15 +6,17 @@ knot:
     - file: /etc/apt/sources.list.d/knot.list
   pkg.installed: []
 
-/etc/knot/knot.conf:
+{% for config_file in ["knot", "remotes", "templates"] %}
+/etc/knot/{{ config_file }}.conf:
   file.managed:
-    - source: salt://knot/files/knot.conf.j2
+    - source: salt://knot/files/{{ config_file }}.conf.j2
     - user: root
     - group: root
     - mode: 644
     - template: jinja
     - require:
       - pkg: knot
+{% endfor %}
 
 /etc/knot/id_deploy:
   file.managed:

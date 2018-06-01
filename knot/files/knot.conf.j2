@@ -1,8 +1,7 @@
 server:
-    # Listen on all configured IPv4 interfaces.
-    listen: 0.0.0.0@53
-    # Listen on all configured IPv6 interfaces.
-    listen: ::@53
+    listen: {{ grains.fqdn_ip4[0] }}@53
+    listen: {{ grains.fqdn_ip6[0] }}@53
+
     # User for running the server.
     # user: knot:knot
 
@@ -10,4 +9,6 @@ log:
   - target: syslog
     any: info
 
+include: templates.conf
+include: remotes.conf
 include: zones.*.conf

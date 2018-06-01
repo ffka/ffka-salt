@@ -1,0 +1,8 @@
+template:
+  - id: master
+    storage: /etc/knot/zones/
+    semantic-checks: on
+  - id: slave_entropia
+    storage: /etc/knot/zones/
+    semantic-checks: off
+    master: entropia_master
