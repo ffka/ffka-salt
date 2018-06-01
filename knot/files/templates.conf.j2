@@ -1,8 +1,9 @@
 template:
-  - id: master
+  - id: master_entropia_slave        # we are master, entropia is slave -> allow AXFR from entropia
     storage: /etc/knot/zones/
     semantic-checks: on
-  - id: slave_entropia
+    acl: [entropia_slave_allow_transfer]
+  - id: slave_entropia_master        # we are slave, entropia is master -> allow notify
     storage: /etc/knot/zones/
     semantic-checks: off
     master: entropia_master

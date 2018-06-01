@@ -6,7 +6,7 @@ knot:
     - file: /etc/apt/sources.list.d/knot.list
   pkg.installed: []
 
-{% for config_file in ["knot", "remotes", "templates"] %}
+{% for config_file in ["knot", "remotes", "templates", "acls"] %}
 /etc/knot/{{ config_file }}.conf:
   file.managed:
     - source: salt://knot/files/{{ config_file }}.conf.j2
