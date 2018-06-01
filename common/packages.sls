@@ -26,3 +26,4 @@ packages_base:
       - git
       - apt-transport-https
       - python-apt
+      - net-tools
