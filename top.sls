@@ -64,3 +64,5 @@ base:
     - gitlab.gitlab
     - netdata
     - certbot
+  'ns1.frickelfunk.net':
+    - knot
