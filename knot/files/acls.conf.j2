@@ -1,7 +1,7 @@
 acl:
-  - id: entropia_slave_allow_transfer
+  - id: entropia_slave_allow_transfer    # Allow entropia slave to retrieve zone from freifunk master
     address: [2001:db8::1]
     action: transfer
-  - id: entropia_master_allow_notify
+  - id: entropia_master_allow_notify     # Allow freifunk slave to retrieve notifications from entropia master
     address: [2001:db8::1]
     action: notify
