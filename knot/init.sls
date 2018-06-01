@@ -28,10 +28,18 @@ knot:
   git.latest:
     - name: {{ pillar.dns.zones_repo }}
     - branch: master
-    - target: /etc/knot/dns
+    - target: /etc/knot/zones
     - identity: /etc/knot/id_deploy
     - force_reset: True
     - require:
        - pkg: packages_base
        - pkg: knot
        - file: /etc/knot/id_deploy
+
+{% for zone_type in ["master", "slave"] %}
+/etc/knot/zones.{{ zone_type }}.conf:
+  file.symlink:
+    - target: /etc/knot/zones/zones.{{ zone_type }}.conf
+    - require:
+      - pkg: knot
+{% endfor %}
