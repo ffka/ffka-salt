@@ -41,7 +41,7 @@ knot:
 {% for zone_type in ["master", "slave"] %}
 /etc/knot/zones.{{ zone_type }}.conf:
   file.symlink:
-    - target: /etc/knot/zones/zones.{{ zone_type }}.conf
+    - target: /etc/knot/zones/knot.zones.{{ zone_type }}.conf
     - require:
       - pkg: knot
 {% endfor %}
