@@ -50,7 +50,7 @@ domain ip6 {
         chain FORWARD {
             # mss = transport mtu - (batman-adv + ether) 32 - ipv6 40 - tcp 20
 						{% for hoodname in salt['pillar.get']('hoods') %}
-            interface br_{{ hoodname }} outerface $BACKBONE_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1260;
+            interface br_{{ hoodname }} outerface $BACKBONE_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1312;
 						{% endfor %}
         }
    }
