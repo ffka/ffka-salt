@@ -17,10 +17,11 @@ wekan-db:
     - binds:
       - /srv/www/todo/mongodb_data:/data/db
       - /srv/www/todo/mongodb_dump:/dump
-    - networks:
-      - wekan:
-        - aliases:
-          - wekandb
+#    - networks:
+#      - wekan:
+#        - aliases:
+#          - wekandb
+    - network_mode: wekan
     - restart_policy: always
     - require:
       - docker_image: wekan
@@ -30,10 +31,11 @@ wekan-app:
   docker_container.running:
     - image: quay.io/wekan/wekan
     - name: wekan-app
-    - networks:
-      - wekan:
-        - aliases:
-          - wekanapp
+#    - networks:
+#      - wekan:
+#        - aliases:
+#          - wekanapp
+    - network_mode: wekan
     - restart_policy: always
     - port_bindings:
       - 127.0.0.1:8088:80
