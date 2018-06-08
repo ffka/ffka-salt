@@ -16,6 +16,8 @@ knot:
     - template: jinja
     - require:
       - pkg: knot
+    - watch_in:
+      - service: knot.service
 {% endfor %}
 
 /etc/knot/id_deploy:
@@ -25,6 +27,8 @@ knot:
     - contents_pillar: dns:deployment_key
     - require:
       - pkg: knot
+    - watch_in:
+      - service: knot.service 
 
 /etc/knot/zones:
   git.latest:
@@ -37,6 +41,8 @@ knot:
        - pkg: packages_base
        - pkg: knot
        - file: /etc/knot/id_deploy
+    - watch_in:
+      - service: knot.service
 
 {% for zone_type in ["master", "slave"] %}
 /etc/knot/zones.{{ zone_type }}.conf:
@@ -44,4 +50,11 @@ knot:
     - target: /etc/knot/zones/knot.zones.{{ zone_type }}.conf
     - require:
       - pkg: knot
+    - watch_in:
+      - service: knot.service
 {% endfor %}
+
+knot.service:
+  service.running:
+    - enable: true
+    - reload: true
