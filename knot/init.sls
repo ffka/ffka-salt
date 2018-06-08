@@ -5,6 +5,7 @@ knot:
     - key_url: https://deb.knot-dns.cz/knot/apt.gpg
     - file: /etc/apt/sources.list.d/knot.list
   pkg.installed: []
+  user.present: []
 
 {% for config_file in ["knot", "remotes", "templates", "acls"] %}
 /etc/knot/{{ config_file }}.conf:
