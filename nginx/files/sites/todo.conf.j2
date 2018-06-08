@@ -27,8 +27,8 @@ server {
 
 	client_max_body_size 128M;
 
-#    ssl_certificate "/etc/letsencrypt/live/{{ certificate_filename }}/fullchain.pem";
-#    ssl_certificate_key "/etc/letsencrypt/live/{{ certificate_filename }}/privkey.pem";
+    ssl_certificate "/etc/letsencrypt/live/{{ certificate_filename }}/fullchain.pem";
+    ssl_certificate_key "/etc/letsencrypt/live/{{ certificate_filename }}/privkey.pem";
 
     include "snippets/acme-challenge.conf";
     include "snippets/tls.conf";
