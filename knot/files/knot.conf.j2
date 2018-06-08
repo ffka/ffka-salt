@@ -1,6 +1,8 @@
 server:
-    listen: {{ grains.fqdn_ip4[0] }}@53
-    listen: {{ grains.fqdn_ip6[0] }}@53
+#    listen: {{ grains.fqdn_ip4[0] }}@53
+#    listen: {{ grains.fqdn_ip6[0] }}@53
+    listen: 0.0.0.0@53
+    listen: ::@53
 
     # User for running the server.
     # user: knot:knot
