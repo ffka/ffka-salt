@@ -23,4 +23,20 @@ wekan-db:
       - docker_image: wekan
       - docker_network: wekan
 
+wekan-app:
+  docker_container.running:
+    - image: quay.io/wekan/wekan
+    - name: wekan-app
+    - network: wekan
+    - restart_policy: always
+    - port_bindings:
+      - 127.0.0.1:8088:80
+    - environment:
+      - ROOT_URL: "https://todo.ffka.vzffnrmo.de"
+      - MONGO_URL: "mongodb://wekan-db:27017/wekan"
+    - require:
+      - docker_image: wekan
+      - docker_network: wekan
+      - docker_container: wekan-db
+
 {%- endmacro %}
