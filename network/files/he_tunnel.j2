@@ -1,0 +1,12 @@
+{% for he in salt['pillar.get']('network:he:tunnel') %}
+
+auto he-ipv6
+iface he-ipv6 inet6 v4tunnel
+        address {{ he.address }}
+        netmask 64
+        endpoint {{ he.endpoint }}
+        local {{ he.local }}
+        ttl 255
+        gateway {{ he.gateway }}
+
+{% endfor %}
