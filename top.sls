@@ -43,6 +43,7 @@ base:
   'core*':
     - network
     - network.he_tunnel
+    - network.cloud_gateway
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
