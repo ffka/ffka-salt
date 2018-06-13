@@ -40,6 +40,9 @@ base:
     - certbot
     - hopglass.server
     - docker
+  'core*':
+    - network
+    - network.he_tunnel
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
