@@ -5,7 +5,7 @@ iface he-ipv6 inet6 v4tunnel
         address {{ he.address }}
         netmask 64
         endpoint {{ he.endpoint }}
-        local {{ grains.fqdn_ip4[0]}}
+        local {{ he.local }}
         ttl 255
         gateway {{ he.gateway }}
 
