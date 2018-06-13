@@ -8,3 +8,5 @@ iface he-ipv6 inet6 v4tunnel
         local {{ grains.fqdn_ip4[0]}}
         ttl 255
         gateway {{ he.gateway }}
+
+{% endfor %}
