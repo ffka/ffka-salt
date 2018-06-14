@@ -1,29 +1,32 @@
 bird:
-  pkg.installed
+  pkg.installed: []
+  user.present: []
 
 {% for bird in ['bird','bird6'] %}
 /etc/bird/{{ bird }}.d:
   file.directory:
-    - user: root
-    - group: root
+    - user: bird
+    - group: bird
     - dir_mode: 755
     - require:
       - pkg: bird
+      - user: bird
 
 /etc/bird/{{ bird }}.conf:
   file.managed:
-    - user: root
-    - group: root
+    - user: bird
+    - group: bird
     - mode: 644
     - require:
       - pkg: bird
+      - user: bird
     - contents: |
         include "/etc/bird/{{ bird }}.d/*.conf";
 
 /etc/bird/{{ bird }}.d/00-common.conf:
   file.managed:
-    - user: root
-    - group: root
+    - user: bird
+    - group: bird
     - mode: 644
     - template: jinja
     - source: salt://routing/files/common.conf
@@ -31,6 +34,7 @@ bird:
         network: {{ pillar['network'] }}
     - require:
       - pkg: bird
+      - user: bird
       - file: /etc/bird/{{ bird }}.d
 
 service {{ bird }}:
