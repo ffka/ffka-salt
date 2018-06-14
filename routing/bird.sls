@@ -27,6 +27,8 @@ bird:
     - mode: 644
     - template: jinja
     - source: salt://routing/files/common.conf
+    - context:
+        network: {{ pillar['network'] }}
     - require:
       - pkg: bird
       - file: /etc/bird/{{ bird }}.d
