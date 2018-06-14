@@ -16,9 +16,9 @@
       - file: /etc/bird/{{ bird }}.d
 {% endfor %}
 
-/etc/bird/{{ bird }}.d/42-radv.conf:
+/etc/bird/bird6.d/42-radv.conf:
   file.managed:
-    - source: salt://routing/files/{{ bird }}.d/radv.conf
+    - source: salt://routing/files/bird6.d/radv.conf
     - template: jinja
     - context:
         network: {{ pillar['network'] }}
