@@ -4,6 +4,7 @@
     - user: root
     - group: root
     - mode: 644
+    - template: jinja
     - source: salt://routing/files/{{ bird }}.d/cloud-gateway.conf
     - watch_in:
       - service: {{ bird }}
