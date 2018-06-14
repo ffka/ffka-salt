@@ -7,7 +7,7 @@ knot:
   pkg.installed: []
   user.present: []
 
-{% for config_file in ["knot", "remotes", "templates", "acls"] %}
+{% for config_file in ["knot", "remotes", "templates", "acls", "dynamic"] %}
 /etc/knot/{{ config_file }}.conf:
   file.managed:
     - source: salt://knot/files/{{ config_file }}.conf.j2
@@ -29,7 +29,7 @@ knot:
     - require:
       - pkg: knot
     - watch_in:
-      - service: knot.service 
+      - service: knot.service
 
 /etc/knot/zones:
   git.latest:
