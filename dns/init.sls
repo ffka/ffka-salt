@@ -7,7 +7,6 @@ bind9:
     - watch:
        - file: /etc/bind/*.conf
        - file: /etc/bind/named.conf*
-       - git: /etc/bind/dns
 
 /var/log/bind:
   file.directory:
