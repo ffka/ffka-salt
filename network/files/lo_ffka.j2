@@ -22,6 +22,8 @@ iface lo inet6 static
 
         {% for cid in pillar.ff_communities %}
             {%- set community = pillar[cid] -%}
+        post-up ip -6 rule add to 2001:678:6e0::/45 table vzffnrmo
+        post-up ip -6 rule add from 2001:678:6e0::/45 table vzffnrmo
         post-up ip -6 rule add to {{ community['v6_ffrl'] }} table freifunk
         post-up ip -6 rule add from {{ community['v6_ffrl'] }} table freifunk
         {% endfor %}
