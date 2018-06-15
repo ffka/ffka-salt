@@ -15,6 +15,7 @@ base:
     - network.gre_ffrl
     - network.lo_ffka
     - routing
+    - routing.albufer
     - batman
     - ntp
     - ferm
@@ -44,6 +45,9 @@ base:
     - network
     - network.he_tunnel
     - network.cloud_gateway
+    - routing
+    - routing.core
+    - routing.cloud_gateway
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
