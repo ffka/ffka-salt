@@ -5,5 +5,5 @@ gre_vzffnrmo network interface:
     - user: root
     - group: root
     - mode: 644
-    - source: salt://network/files/gre_vzffnrmo.j2
+    - source: salt://network/files/gre_VZFFNRMO.j2
     - template: jinja
