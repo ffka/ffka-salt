@@ -3,7 +3,7 @@ key:
     algorithm: hmac-md5
     secret: {{ pillar.dns.tsig_vzffnrmo }}
 key:
-  - id: TRANSFERENTROPIA                  # The real TSIG key name
+  - id: dns.entropia.de-ffka                  # The real TSIG key name
     algorithm: hmac-md5
     secret: {{ pillar.dns.tsig_entropia }}
 
@@ -15,7 +15,7 @@ acl:
     action: transfer
   - id: entropia_master_allow_notify     # Allow freifunk slave to retrieve notifications from entropia master
     address: [2a01:4f8:221:2f83:2120::2]
-    key: TRANSFERENTROPIA
+    key: dns.entropia.de-ffka
     action: notify
   - id: deprecated_slave_allow_transfer  # Allow deprecated slave to retrieve zone from freifunk master
     address: [2001:41d0:c:ac6::124]
