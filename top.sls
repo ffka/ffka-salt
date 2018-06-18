@@ -14,6 +14,7 @@ base:
     - network.gre_ffka
     - network.gre_ffrl
     - network.lo_ffka
+    - network.gre_vzffnrmo
     - routing
     - routing.albufer
     - batman
