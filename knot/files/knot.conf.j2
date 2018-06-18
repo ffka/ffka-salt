@@ -10,8 +10,8 @@ log:
   - target: syslog
     any: info
 
+include: acls.conf
 include: dynamic.conf
 include: remotes.conf
-include: acls.conf
 include: templates.conf
 include: zones.*.conf

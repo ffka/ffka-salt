@@ -2,7 +2,6 @@ key:
   - id: TRANSFERVZFFNRMO                  # The real TSIG key name
     algorithm: hmac-md5
     secret: {{ pillar.dns.tsig_vzffnrmo }}
-key:
   - id: dns.entropia.de-ffka                  # The real TSIG key name
     algorithm: hmac-sha512
     secret: {{ pillar.dns.tsig_entropia }}

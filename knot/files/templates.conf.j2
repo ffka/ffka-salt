@@ -10,9 +10,9 @@ template:
     acl: [entropia_slave_allow_transfer]
     notify: [entropia_master]
   - id: slave_entropia_master           # we are slave, entropia is master -> allow notify
-    storage: /etc/knot/zones/
+    storage: /var/lib/knot/zones/
     semantic-checks: off
-    master: entropia_master
+    master: entropia_slave
     acl: [entropia_master_allow_notify]
   - id: master_deprecated_slave
     storage: /etc/knot/zones/
