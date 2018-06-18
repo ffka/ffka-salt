@@ -13,5 +13,4 @@ iface tun-{{ gre.name }} inet tunnel
 
 iface tun-{{ gre.name }} inet6 static
   address {{ gre.v6_network }}
-
 {% endfor %}
