@@ -2,6 +2,11 @@ key:
   - id: TRANSFERVZFFNRMO                  # The real TSIG key name
     algorithm: hmac-md5
     secret: {{ pillar.dns.tsig_vzffnrmo }}
+key:
+  - id: TRANSFERENTROPIA                  # The real TSIG key name
+    algorithm: hmac-md5
+    secret: {{ pillar.dns.tsig_entropia }}
+
 
 acl:
   - id: entropia_slave_allow_transfer    # Allow entropia slave to retrieve zone from freifunk master
@@ -10,6 +15,7 @@ acl:
     action: transfer
   - id: entropia_master_allow_notify     # Allow freifunk slave to retrieve notifications from entropia master
     address: [2a01:4f8:221:2f83:2120::2]
+    key: TRANSFERENTROPIA
     action: notify
   - id: deprecated_slave_allow_transfer  # Allow deprecated slave to retrieve zone from freifunk master
     address: [2001:41d0:c:ac6::124]
