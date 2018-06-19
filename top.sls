@@ -46,6 +46,7 @@ base:
     - network
     - network.he_tunnel
     - network.cloud_gateway
+    - network.gre_vzffnrmo
     - routing
     - routing.core
     - routing.cloud_gateway
