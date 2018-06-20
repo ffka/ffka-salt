@@ -5,8 +5,8 @@
 iface lo inet static
     address {{ lo_main_v4 }}
     netmask 255.255.255.255
+    up ip addr add {{ lo_vzffnrmo_v4 }}/32 dev lo
     {% if gateway | to_bool %}
-        up ip addr add {{ lo_vzffnrmo_v4 }}/32 dev lo
         post-up ip rule add to {{ pillar.vzffnrmo.prefix_v4 }} table vzffnrmo
         post-up ip rule add from {{ pillar.vzffnrmo.prefix_v4 }} table vzffnrmo
         {% for cid in pillar.ff_communities %}
@@ -24,8 +24,8 @@ iface lo inet static
 iface lo inet6 static
     address {{ lo_main_v6 }}
     netmask 128
+    up ip addr add {{ lo_vzffnrmo_v6 }}/128 dev lo
     {% if gateway | to_bool %}
-        up ip addr add {{ lo_vzffnrmo_v6 }}/128 dev lo
         post-up ip -6 rule add to {{ pillar.vzffnrmo.prefix_v6 }} table vzffnrmo
         post-up ip -6 rule add from {{ pillar.vzffnrmo.prefix_v6 }} table vzffnrmo
         {% for cid in pillar.ff_communities %}
