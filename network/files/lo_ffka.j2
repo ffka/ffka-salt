@@ -1,4 +1,4 @@
-{% set gateway = salt['pillar.get']('network:br_ffka:is_gateway') -%}
+{% set gateway = salt['pillar.get']('network:is_bat_gateway') -%}
 
 {% set lo_main_v4 = salt['pillar.get']('network:lo:ipv4:ffrl') -%}
 {% set lo_vzffnrmo_v4 = salt['pillar.get']('network:lo:ipv4:vzffnrmo') -%}

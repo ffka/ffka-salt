@@ -1,4 +1,4 @@
-{% set gateway = salt['pillar.get']('network:br_ffka:is_gateway') -%}
+{% set gateway = salt['pillar.get']('network:is_bat_gateway') -%}
 
 {% for hood in salt['pillar.get']('hoods') %}
 

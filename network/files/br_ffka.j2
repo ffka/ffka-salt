@@ -2,7 +2,7 @@
 {% set br_ffka_ipv4_ip = salt['pillar.get']('network:br_ffka:ipv4:ip') -%}
 {% set br_ffka_ipv4_netmask = salt['pillar.get']('network:br_ffka:ipv4:netmask') -%}
 {% set br_ffka_ipv6_ip = salt['pillar.get']('network:br_ffka:ipv6:ip') -%}
-{% set gateway = salt['pillar.get']('network:br_ffka:is_gateway') -%}
+{% set gateway = salt['pillar.get']('network:is_bat_gateway') -%}
 
 
 {% set shortname = salt['pillar.get']('shortname') -%}
