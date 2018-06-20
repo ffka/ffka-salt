@@ -18,7 +18,6 @@ base:
     - routing
     - routing.albufer
     - routing.gateway_bat
-    - routing.vzffnrmo_loopback
     - batman
     - ntp
     - ferm
