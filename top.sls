@@ -54,7 +54,6 @@ base:
     - routing.core
     - routing.cloud_gateway
     - routing.core_bat
-    - routing.vzffnrmo_loopback
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
