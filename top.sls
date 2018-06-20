@@ -45,6 +45,7 @@ base:
     - hopglass.server
     - docker
   'core*':
+    - kernel.sysctl
     - network
     - network.lo
     - network.he_tunnel
