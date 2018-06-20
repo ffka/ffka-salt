@@ -7,8 +7,8 @@ iface lo inet static
     netmask 255.255.255.255
     up ip addr add {{ lo_vzffnrmo_v4 }}/32 dev lo
     {% if gateway | to_bool %}
-        post-up ip rule add to {{ pillar.vzffnrmo.prefix_v4 }} table vzffnrmo
-        post-up ip rule add from {{ pillar.vzffnrmo.prefix_v4 }} table vzffnrmo
+        post-up ip rule add to {{ pillar.vzffnrmo.prefix_v4_bat }} table vzffnrmo
+        post-up ip rule add from {{ pillar.vzffnrmo.prefix_v4_bat }} table vzffnrmo
         {% for cid in pillar.ff_communities %}
         {%- set community = pillar[cid] -%}
         up ip rule add to {{ community['v4_ff'] }} table freifunk
@@ -26,8 +26,8 @@ iface lo inet6 static
     netmask 128
     up ip addr add {{ lo_vzffnrmo_v6 }}/128 dev lo
     {% if gateway | to_bool %}
-        post-up ip -6 rule add to {{ pillar.vzffnrmo.prefix_v6 }} table vzffnrmo
-        post-up ip -6 rule add from {{ pillar.vzffnrmo.prefix_v6 }} table vzffnrmo
+        post-up ip -6 rule add to {{ pillar.vzffnrmo.prefix_v6_bat }} table vzffnrmo
+        post-up ip -6 rule add from {{ pillar.vzffnrmo.prefix_v6_bat }} table vzffnrmo
         {% for cid in pillar.ff_communities %}
         {%- set community = pillar[cid] -%}
         post-up ip -6 rule add to {{ community['v6_ffrl'] }} table freifunk
