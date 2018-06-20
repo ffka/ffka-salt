@@ -12,6 +12,6 @@ iface tun-{{ gre.name }} inet tunnel
   mtu 1400
 
 iface tun-{{ gre.name }} inet6 static
-  address {{ gre.v6_network }}
+  address {{ gre.v6_address }}/{{ gre.v6_prefixlen }}
 
 {% endfor %}
