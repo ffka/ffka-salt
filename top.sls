@@ -13,7 +13,7 @@ base:
     - network.br_ffka
     - network.gre_ffka
     - network.gre_ffrl
-    - network.lo_ffka
+    - network.lo
     - network.gre_vzffnrmo
     - routing
     - routing.albufer

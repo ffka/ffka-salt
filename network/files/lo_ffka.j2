@@ -1,13 +1,16 @@
-{% set lo_ffka_ipv4_ip = salt['pillar.get']('network:lo_ffka:ipv4:ip') -%}
-{% set lo_ffka_ipv6_ip = salt['pillar.get']('network:lo_ffka:ipv6:ip') -%}
 {% set gateway = salt['pillar.get']('network:br_ffka:is_gateway') -%}
 
+{% set lo_main_v4 = salt['pillar.get']('network:lo:ipv4:ffrl') -%}
+{% set lo_vzffnrmo_v4 = salt['pillar.get']('network:lo:ipv4:vzffnrmo') -%}
 iface lo inet static
-    address {{ lo_ffka_ipv4_ip }}
+    address {{ lo_main_v4 }}
     netmask 255.255.255.255
     {% if gateway | to_bool %}
+        up ip addr add {{ lo_vzffnrmo_v4 }}/32 dev lo
+        post-up ip rule add to {{ pillar.vzffnrmo.prefix_v4 }} table vzffnrmo
+        post-up ip rule add from {{ pillar.vzffnrmo.prefix_v4 }} table vzffnrmo
         {% for cid in pillar.ff_communities %}
-            {%- set community = pillar[cid] -%}
+        {%- set community = pillar[cid] -%}
         up ip rule add to {{ community['v4_ff'] }} table freifunk
         up ip rule add from {{ community['v4_ff'] }} table freifunk
         {% endfor %}
@@ -15,15 +18,18 @@ iface lo inet static
         up ip rule add from 185.66.194.8/29 table freifunk
     {% endif %}
 
+
+{% set lo_main_v6 = salt['pillar.get']('network:lo:ipv6:ffrl') -%}
+{% set lo_vzffnrmo_v6 = salt['pillar.get']('network:lo:ipv6:vzffnrmo') -%}
 iface lo inet6 static
-    address {{ lo_ffka_ipv6_ip }}
+    address {{ lo_main_v6 }}
     netmask 128
     {% if gateway | to_bool %}
-
+        up ip addr add {{ lo_vzffnrmo_v6 }}/128 dev lo
+        post-up ip -6 rule add to {{ pillar.vzffnrmo.prefix_v6 }} table vzffnrmo
+        post-up ip -6 rule add from {{ pillar.vzffnrmo.prefix_v6 }} table vzffnrmo
         {% for cid in pillar.ff_communities %}
-            {%- set community = pillar[cid] -%}
-        post-up ip -6 rule add to 2001:678:6e0::/45 table vzffnrmo
-        post-up ip -6 rule add from 2001:678:6e0::/45 table vzffnrmo
+        {%- set community = pillar[cid] -%}
         post-up ip -6 rule add to {{ community['v6_ffrl'] }} table freifunk
         post-up ip -6 rule add from {{ community['v6_ffrl'] }} table freifunk
         {% endfor %}
