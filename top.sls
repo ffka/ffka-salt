@@ -50,6 +50,7 @@ base:
     - routing
     - routing.core
     - routing.cloud_gateway
+    - routing.core_bat
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
