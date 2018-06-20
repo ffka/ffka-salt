@@ -17,6 +17,7 @@ base:
     - network.gre_vzffnrmo
     - routing
     - routing.albufer
+    - routing.gateway_bat
     - batman
     - ntp
     - ferm
