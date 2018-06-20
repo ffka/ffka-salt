@@ -1,4 +1,4 @@
-/etc/bird/bird6.d/40-vzffnrmo-loopback.conf:
+/etc/bird/bird6.d/35-vzffnrmo-loopback.conf:
   file.managed:
     - user: bird
     - group: bird
