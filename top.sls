@@ -44,6 +44,7 @@ base:
     - docker
   'core*':
     - network
+    - network.lo
     - network.he_tunnel
     - network.cloud_gateway
     - network.gre_vzffnrmo
