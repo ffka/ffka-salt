@@ -1,0 +1,21 @@
+# gre6 tunnel between gateway batman nodes
+# should create a full mesh between gateay batman nodes
+
+{% for gre in salt['pillar.get']('network:gre_gateway_bat:tunnel') %}
+auto tun-{{ gre.name }}
+iface tun-{{ gre.name }} inet tunnel
+    mode ip6gre
+
+    endpoint {{ gre.gre_target }}
+    local {{ grains.fqdn_ip6[0] }}
+
+    address {{ gre.local }}
+    netmask 255.255.255.255
+    dstaddr {{ gre.remote }}
+
+    ttl 64
+    mtu 1400
+
+iface tun-{{ gre.name }} inet6 static
+    address {{ gre.v6_address }}/{{ gre.v6_prefixlen }}
+{% endfor %}

@@ -15,6 +15,7 @@ base:
     - network.gre_ffrl
     - network.lo
     - network.gre_vzffnrmo
+    - network.gre_gateway_bat
     - routing
     - routing.albufer
     - routing.gateway_bat
