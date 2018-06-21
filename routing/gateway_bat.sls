@@ -5,9 +5,6 @@
     - mode: 644
     - template: jinja
     - source: salt://routing/files/bird6.d/gateway-bat.conf
-    - context:
-        network: {{ pillar['network'] }}
-        ffka: {{ pillar['ffka'] }}
     - watch_in:
       - service: bird6
     - require:
