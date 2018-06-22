@@ -68,7 +68,7 @@ jool-dkms-install:
 
 jool-kmod:
   kmod.present:
-    - name: jool
+    - name: jool no_instance
     - persist: True
     - require:
       - cmd: jool-dkms-install
