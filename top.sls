@@ -44,6 +44,7 @@ base:
     - certbot
     - hopglass.server
     - docker
+    - influxdb
   'core*':
     - kernel.sysctl
     - network
