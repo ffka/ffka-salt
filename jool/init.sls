@@ -6,6 +6,7 @@ jool-build-deps:
       - build-essential
       - git
       - dkms
+      - linux-headers-{{ grains.kernelrelease }}
 
 jool_src:
   git.latest:
