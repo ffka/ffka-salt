@@ -16,6 +16,16 @@ jool-src:
     - require:
       - pkg: jool-build-deps
 
+jool-dkms-remove:
+  cmd.run:
+    - onchanges:
+      - git: jool-src
+    - onlyif: test -e /var/lib/dkms/jool/current/
+    - require:
+      - pkg: jool-build-deps
+      - git: jool-src
+    - name: dkms remove -m jool -v {{ jool_version }} --all
+
 /usr/src/jool-{{ jool_version }}/dkms.package_version.conf:
   file.managed:
     - user: root
@@ -33,6 +43,7 @@ jool-dkms-add:
     - require:
       - pkg: jool-build-deps
       - git: jool-src
+      - cmd: jool-dkms-remove
       - file: /usr/src/jool-{{ jool_version }}/dkms.package_version.conf
     - name: dkms add -m jool -v {{ jool_version }}
 
