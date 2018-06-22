@@ -24,7 +24,7 @@ jool-src:
     - contents: |
         PACKAGE_VERSION={{ jool_version }}
     - require:
-      - pkg: jool-src
+      - git: jool-src
 
 jool-dkms-add:
   cmd.run:
