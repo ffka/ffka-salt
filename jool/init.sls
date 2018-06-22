@@ -7,6 +7,8 @@ jool-build-deps:
       - git
       - dkms
       - linux-headers-{{ grains.kernelrelease }}
+      - pkg-config
+      - libnl-genl-3-dev
 
 jool-src:
   git.latest:
@@ -58,3 +60,13 @@ jool-dkms-install:
     - onchanges:
       - cmd: jool-dkms-build
     - name: dkms install -m jool -v {{ jool_version }}
+
+jool-userland:
+  cmd.run:
+    - onchanges:
+      - git: jool-src
+    - require:
+      - pkg: jool-build-deps
+      - git: jool-src
+    - cwd: /usr/src/jool-{{ jool_version }}/usr/
+    - name: ./autogen.sh && ./configure && make && make install
