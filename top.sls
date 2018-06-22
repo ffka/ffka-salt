@@ -82,3 +82,5 @@ base:
     - certbot
   'ns1.frickelfunk.net':
     - knot
+  'testbed.frickelfunk.net':
+    - jool
