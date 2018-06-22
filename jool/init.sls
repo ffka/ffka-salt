@@ -66,13 +66,6 @@ jool-dkms-install:
       - cmd: jool-dkms-build
     - name: dkms install -m jool -v {{ jool_version }}
 
-jool-kmod:
-  kmod.present:
-    - name: 'jool no_instance'
-    - persist: True
-    - require:
-      - cmd: jool-dkms-install
-
 jool-userland:
   cmd.run:
     - onchanges:
