@@ -35,3 +35,15 @@ jool-dkms-add:
       - git: jool-src
       - file: /usr/src/jool-{{ jool_version }}/dkms.package_version.conf
     - name: dkms add -m jool -v {{ jool_version }}
+
+jool-dkms-build:
+  cmd.run:
+    - onchanges:
+      - cmd: jool-dkms-add
+    - name: dkms build -m jool -v {{ jool_version }}
+
+jool-dkms-install:
+  cmd.run:
+    - onchanges:
+      - cmd: jool-dkms-build
+    - name: dkms install -m jool -v {{ jool_version }}
