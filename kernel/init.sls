@@ -7,7 +7,7 @@ stretch_backports:
 
 packages_kernel:
   pkg.installed:
-    - fromrepo: stretch_backports
+    - fromrepo: deb http://ftp.debian.org/debian stretch-backports main
     - pkgs:
       - linux-image-amd64
       - linux-headers-amd64
