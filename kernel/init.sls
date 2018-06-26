@@ -8,6 +8,7 @@ stretch_backports:
 packages_kernel:
   pkg.installed:
     - fromrepo: stretch-backports
+    - refresh: True
     - pkgs:
       - linux-image-amd64
       - linux-headers-amd64
