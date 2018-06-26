@@ -6,7 +6,7 @@ stretch_backports:
 
 
 packages_kernel:
-  pkg.installed:
+  pkg.latest:
     - fromrepo: stretch-backports
     - refresh: True
     - pkgs:
