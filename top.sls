@@ -46,6 +46,7 @@ base:
     - docker
     - influxdb
   'core*':
+    - kernel
     - kernel.sysctl
     - network
     - network.lo
