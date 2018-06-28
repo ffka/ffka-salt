@@ -11,7 +11,7 @@ yanic:
   git.latest:
     - name: https://github.com/FreifunkBremen/yanic
     - target: {{ gopath }}/src/github.com/FreifunkBremen/yanic
-    - rev: fed895312c13c7318618061889b402311ad93077
+    - rev: master
     - user: yanic
     - force_fetch: True
     - require:
