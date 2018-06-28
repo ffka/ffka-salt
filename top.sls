@@ -86,3 +86,4 @@ base:
   'testbed.frickelfunk.net':
     - jool
     - netflow
+    - ferm
