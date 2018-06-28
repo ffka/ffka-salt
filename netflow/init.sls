@@ -44,7 +44,7 @@ netflow-ipt-dkms-make:
     - group: root
     - mode: 644
     - contents: |
-        options ipt_NETFLOW destination=127.0.0.1:2055 protocol=10
+        options ipt_NETFLOW destination=127.0.0.1:4739 protocol=10
     - require:
       - git: netflow-ipt-src
 
