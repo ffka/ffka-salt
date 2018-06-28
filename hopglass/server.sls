@@ -10,7 +10,7 @@ hopglass-server.git:
     - user: hopglass
     - rev: {{ hopglass_server_version }}
     - force_fetch: True
-    - force_reset: True
+    - force_checkout: True
     - require:
       - user: hopglass
 
