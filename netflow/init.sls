@@ -33,9 +33,10 @@ netflow-ipt-dkms-configure:
 
 netflow-ipt-dkms-make:
   cmd.run:
+    - name: make all install
+    - cwd: /usr/src/ipt-netflow
     - onchanges:
       - cmd: netflow-ipt-dkms-configure
-    - name: make all install
 
 /etc/modprobe.d/ipt_NETFLOW.conf:
   file.managed:
