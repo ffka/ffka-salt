@@ -34,3 +34,13 @@ netflow-ipt-dkms:
     - require:
       - pkg: netflow-ipt-build-deps
       - git: netflow-ipt-src
+
+/etc/modprobe.d/ipt_NETFLOW.conf:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 644
+    - contents: |
+        options ipt_NETFLOW destination=127.0.0.1:2055 protocol=10
+    - require:
+      - git: netflow-ipt-src
