@@ -21,19 +21,21 @@ netflow-ipt-src:
     - require:
       - pkg: netflow-ipt-build-deps
 
-netflow-ipt-dkms:
+netflow-ipt-dkms-configure:
   cmd.run:
-    - name: |
-        ./install-dkms.sh --install
-        MVERSION=$(./version.sh)
-        dkms build -m ipt-netflow -v ${MVERSION}
-        dkms install -m ipt-netflow -v ${MVERSION}
+    - name: ./configure
     - cwd: /usr/src/ipt-netflow
     - onchanges:
       - git: netflow-ipt-src
     - require:
       - pkg: netflow-ipt-build-deps
       - git: netflow-ipt-src
+
+netflow-ipt-dkms-make:
+  cmd.run:
+    - onchanges:
+      - cmd: netflow-ipt-dkms-configure
+    - name: make all install
 
 /etc/modprobe.d/ipt_NETFLOW.conf:
   file.managed:
@@ -50,4 +52,5 @@ ipt_NETFLOW:
     - persist: True
     - require:
       - file: /etc/modprobe.d/ipt_NETFLOW.conf
-      - cmd: netflow-ipt-dkms
+      - cmd: netflow-ipt-dkms-configure
+      - cmd: netflow-ipt-dkms-make
