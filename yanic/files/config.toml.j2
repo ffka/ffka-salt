@@ -11,7 +11,7 @@ synchronize      = "1m"
 collect_interval = "1m"
 
 [respondd.sites.ffka]
-domains          = [{% for hood in salt['pillar.get']('hoods').items() %}"{{ hood.name }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+domains          = [{% for hood in salt['pillar.get']('hoods').values() %}"{{ hood.domain_code }}"{% if not loop.last %}, {% endif %}{% endfor %}]
 
 {% for hoodname,hood in salt['pillar.get']('hoods').items() %}
 [[respondd.interfaces]]
