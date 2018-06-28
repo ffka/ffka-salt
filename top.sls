@@ -85,3 +85,4 @@ base:
     - knot
   'testbed.frickelfunk.net':
     - jool
+    - netflow
