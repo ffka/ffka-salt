@@ -55,3 +55,32 @@ ipt_NETFLOW:
       - file: /etc/modprobe.d/ipt_NETFLOW.conf
       - cmd: netflow-ipt-dkms-configure
       - cmd: netflow-ipt-dkms-make
+
+/etc/ferm/conf.d/netflow.conf:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 644
+    - contents: |
+        domain ip6 chain FORWARD {
+            jump NETFLOW;
+        }
+        domain ip6 chain INPUT {
+            jump NETFLOW;
+        }
+        domain ip6 chain OUTPUT {
+            jump NETFLOW;
+        }
+
+        chain FORWARD {
+            jump NETFLOW;
+        }
+        chain INPUT {
+            jump NETFLOW;
+        }
+        chain OUTPUT {
+            jump NETFLOW;
+        }
+    - require:
+      - file: /etc/ferm/conf.d
+      - kmod: ipt_NETFLOW
