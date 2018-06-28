@@ -11,9 +11,9 @@ synchronize      = "1m"
 collect_interval = "1m"
 
 {% for hoodname,hood in salt['pillar.get']('hoods').items() %}
-[[respondd.interfaces]]
+#[[respondd.interfaces]]
 # name of interface on which this collector is running
-ifname = "br_{{ hoodname }}"
+#ifname = "br_{{ hoodname }}"
 # ip address which is used for sending
 # (optional - without definition used a address of ifname)
 #ip_address = "fd2f:5119:f2d::5"
@@ -28,7 +28,7 @@ ifname = "br_{{ hoodname }}"
 #port = 10001
 {% endfor %}
 
-# interfaces = [{% for hoodname,hood in salt['pillar.get']('hoods').items() %}"br_{{ hoodname }}"{% if not loop.last %}, {%endif %}{% endfor %}]
+interfaces = [{% for hoodname,hood in salt['pillar.get']('hoods').items() %}"br_{{ hoodname }}"{% if not loop.last %}, {%endif %}{% endfor %}]
 
 # A little build-in webserver, which statically serves a directory.
 # This is useful for testing purposes or for a little standalone installation.
