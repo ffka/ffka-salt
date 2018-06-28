@@ -44,3 +44,10 @@ netflow-ipt-dkms:
         options ipt_NETFLOW destination=127.0.0.1:2055 protocol=10
     - require:
       - git: netflow-ipt-src
+
+ipt_NETFLOW:
+  kmod.present:
+    - persist: True
+    - require:
+      - file: /etc/modprobe.d/ipt_NETFLOW.conf
+      - cmd: netflow-ipt-dkms
