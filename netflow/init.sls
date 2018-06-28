@@ -24,10 +24,10 @@ netflow-ipt-src:
 netflow-ipt-dkms:
   cmd.run:
     - name: |
-      ./install-dkms.sh --install
-      MVERSION=$(./version.sh)
-      dkms build -m ipt-netflow -v ${MVERSION}
-      dkms install -m ipt-netflow -v ${MVERSION}
+        ./install-dkms.sh --install
+        MVERSION=$(./version.sh)
+        dkms build -m ipt-netflow -v ${MVERSION}
+        dkms install -m ipt-netflow -v ${MVERSION}
     - cwd: /usr/src/ipt-netflow
     - onchanges:
       - git: netflow-ipt-src
