@@ -11,6 +11,7 @@ netflow-ipt-build-deps:
       - linux-headers-{{ grains.kernelrelease }}
       - pkg-config
       - module-assistant
+      - libxtables-dev
 
 netflow-ipt-src:
   git.latest:
