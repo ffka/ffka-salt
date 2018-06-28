@@ -8,7 +8,6 @@ yanic:
   user.present:
     - home: /var/lib/yanic
     - gid_from_name: True
-  {#
   git.latest:
     - name: https://github.com/FreifunkBremen/yanic
     - target: {{ gopath }}/src/github.com/FreifunkBremen/yanic
@@ -27,7 +26,6 @@ yanic:
       - git: yanic
     - onchanges:
       - git: yanic
-    #}
 
 /var/log/yanic:
   file.directory:
