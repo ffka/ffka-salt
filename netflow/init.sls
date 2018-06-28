@@ -21,9 +21,13 @@ netflow-ipt-src:
     - require:
       - pkg: netflow-ipt-build-deps
 
-netflow-ipt-install:
+netflow-ipt-dkms:
   cmd.run:
-    - name: ./install-dkms.sh --install
+    - name: |
+      ./install-dkms.sh --install
+      MVERSION=$(./version.sh)
+      dkms build -m ipt-netflow -v ${MVERSION}
+      dkms install -m ipt-netflow -v ${MVERSION}
     - cwd: /usr/src/ipt-netflow
     - onchanges:
       - git: netflow-ipt-src
