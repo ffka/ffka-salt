@@ -90,4 +90,4 @@ yanic@{{ ffka.site_code }}:
     - watch:
       - file: /etc/systemd/system/yanic@.service
       - file: /etc/yanic/config-{{ ffka.site_code }}.toml
-#      - cmd: yanic
+      - cmd: yanic
