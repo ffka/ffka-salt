@@ -87,3 +87,5 @@ base:
     - jool
     - netflow
     - ferm
+    - golang
+    - tflow2
