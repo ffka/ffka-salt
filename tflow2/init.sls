@@ -3,7 +3,6 @@
 tflow2:
   user.present:
     - home: /var/lib/tflow2
-    - gid_from_name: True
   git.latest:
     - name: https://github.com/taktv6/tflow2.git
     - target: {{ gopath }}/src/github.com/taktv6/tflow2
@@ -26,8 +25,8 @@ tflow2:
 
 /etc/tflow2:
   file.directory:
-    - user: root
-    - group: tflow2
+    - user: tflow2
+    - group: root
     - dir_mode: 0755
     - require:
       - user: tflow2
@@ -35,7 +34,7 @@ tflow2:
 /var/log/tflow2:
   file.directory:
     - user: tflow2
-    - group: tflow2
+    - group: root
     - dir_mode: 2750
     - require:
       - user: tflow2
@@ -43,8 +42,8 @@ tflow2:
 /etc/tflow2/config.yml:
   file.managed:
     - source: salt://tflow2/files/config.yml.j2
-    - user: root
-    - group: tflow2
+    - user: tflow2
+    - group: root
     - mode: 0644
     - template: jinja
     - require:
