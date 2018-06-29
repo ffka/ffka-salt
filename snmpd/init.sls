@@ -17,4 +17,4 @@ snmpd.service:
     - reload: True
     - require:
       - pkg: snmpd
-      - file: /etc/snmpd/snmpd.conf
+      - file: /etc/snmp/snmpd.conf
