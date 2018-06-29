@@ -12,6 +12,7 @@ netflow-ipt-build-deps:
       - pkg-config
       - module-assistant
       - libxtables-dev
+      - libsnmp-dev
 
 netflow-ipt-src:
   git.latest:

@@ -1,5 +1,9 @@
 {%- set gopath = '/var/lib/tflow2/go' %}
 
+include:
+  - golang
+  - snmpd
+
 tflow2:
   user.present:
     - home: /var/lib/tflow2
