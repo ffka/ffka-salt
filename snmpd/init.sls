@@ -1,7 +1,7 @@
 snmpd:
   pkg.installed
 
-/etc/snmpd/snmpd.conf:
+/etc/snmp/snmpd.conf:
   file.managed:
     - source: salt://snmpd/files/snmpd.conf.j2
     - user: root
