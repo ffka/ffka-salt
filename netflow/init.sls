@@ -45,14 +45,21 @@ netflow-ipt-dkms-make:
     - group: root
     - mode: 644
     - contents: |
-        options ipt_NETFLOW destination=127.0.0.1:4739 protocol=10
+        options ipt_NETFLOW destination={{ monitoring.netflow.destination }} protocol=10
     - require:
       - git: netflow-ipt-src
+
+ipt_NETFLOW remove:
+  kmod.absent:
+    - onchanges:
+      - git: netflow-ipt-src
+      - file: /etc/modprobe.d/ipt_NETFLOW.conf
 
 ipt_NETFLOW:
   kmod.present:
     - persist: True
     - require:
+      - kmod: ipt_NETFLOW remove
       - file: /etc/modprobe.d/ipt_NETFLOW.conf
       - cmd: netflow-ipt-dkms-configure
       - cmd: netflow-ipt-dkms-make
