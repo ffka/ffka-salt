@@ -1,0 +1,27 @@
+{% for gre in tunnels %}
+
+#################### tun-{{ gre.name }} ####################
+auto tun-{{ gre.name }}
+iface tun-{{ gre.name }} inet6 static
+  {% if gre.type == 'gre6' -%}
+  mode ip6gre
+  local {{ gre.local | default(grains.fqdn_ip6[0]) }}
+  {% else %}
+  mode gre
+  local {{ gre.local | default(grains.fqdn_ip[0]) }}
+  {% endif %}
+  endpoint {{ gre.endpoint }}
+
+  address {{ gre.ipv6.address }}/{{ gre.ipv6.prefixlength }}
+
+  {% if gre.ttl is defined -%} ttl {{ gre.ttl }} {{% endif %}}
+  {% if gre.mtu is defined -%} mtu {{ gre.mtu }} {{% endif %}}
+
+{% if gre.ipv4 is defined %}
+iface tun-{{ gre.name }} inet tunnel
+  netmask {{ gre.ipv4.netmask | default('255.255.255.255') }}
+  address {{ gre.ipv4.local_address }}
+  dstaddr {{ gre.ipv4.remote_address }}
+{% endif %}
+
+{% endfor %}
