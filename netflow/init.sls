@@ -45,7 +45,7 @@ netflow-ipt-dkms-make:
     - group: root
     - mode: 644
     - contents: |
-        options ipt_NETFLOW destination={{ monitoring.netflow.destination }} protocol=10
+        options ipt_NETFLOW destination={{ pillar.monitoring.netflow.destination | default('127.0.0.1') }} protocol=10
     - require:
       - git: netflow-ipt-src
 
