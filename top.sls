@@ -53,7 +53,6 @@ base:
     - network.he_tunnel
     - network.cloud_gateway
     - network.gre_vzffnrmo
-    - network.gre
     - routing
     - routing.core
     - routing.cloud_gateway
@@ -63,6 +62,7 @@ base:
     - prometheus
     - nginx
     - certbot
+    - network.gre
   'websrv.frickelfunk.net':
     - nginx
     - certbot
