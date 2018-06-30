@@ -10,6 +10,6 @@ gre_{{ name }}:
     - source: salt://network/files/gre.j2
     - template: jinja
     - context:
-      - tunnels: {{ tunnels }}
+        tunnels: {{ tunnels }}
 
 {% endfor %}
