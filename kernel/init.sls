@@ -1,3 +1,11 @@
+/etc/apt/preferences.d/stretch-backports-kernel:
+  file.managed:
+    - source: salt://common/files/stretch-backports-kernel
+    - template: jinja
+    - require_in:
+      - pkg: packages_kernel
+
+
 stretch_backports:
   pkgrepo.managed:
     - humanname: stretch_backports
