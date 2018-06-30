@@ -49,17 +49,10 @@ netflow-ipt-dkms-make:
     - require:
       - git: netflow-ipt-src
 
-ipt_NETFLOW remove:
-  kmod.absent:
-    - onchanges:
-      - git: netflow-ipt-src
-      - file: /etc/modprobe.d/ipt_NETFLOW.conf
-
 ipt_NETFLOW:
   kmod.present:
     - persist: True
     - require:
-      - kmod: ipt_NETFLOW remove
       - file: /etc/modprobe.d/ipt_NETFLOW.conf
       - cmd: netflow-ipt-dkms-configure
       - cmd: netflow-ipt-dkms-make
