@@ -14,8 +14,8 @@ iface tun-{{ gre.name }} inet6 static
 
   address {{ gre.ipv6.address }}/{{ gre.ipv6.prefixlength }}
 
-  {% if gre.ttl is defined -%} ttl {{ gre.ttl }} {{% endif %}}
-  {% if gre.mtu is defined -%} mtu {{ gre.mtu }} {{% endif %}}
+  {% if gre.ttl is defined -%} ttl {{ gre.ttl }} {% endif %}
+  {% if gre.mtu is defined -%} mtu {{ gre.mtu }} {% endif %}
 
 {% if gre.ipv4 is defined %}
 iface tun-{{ gre.name }} inet tunnel
