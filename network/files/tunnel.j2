@@ -3,16 +3,18 @@
 #################### tun-{{ name }} ####################
 auto tun-{{ name }}
 
-iface tun-{{ name }} inet tunnel
   {% if tunnel.type == 'gre6' -%}
+iface tun-{{ name }} inet tunnel
   mode ip6gre
   local {{ tunnel.gre.local | default(grains.fqdn_ip6[0]) }}
   endpoint {{ tunnel.gre.endpoint }}
   {% elif tunnel.type == 'gre' %}
+iface tun-{{ name }} inet tunnel
   mode gre
   local {{ tunnel.gre.local | default(grains.fqdn_ip[0]) }}
   endpoint {{ tunnel.gre.endpoint }}
   {% elif tunnel.type == 'vxlan' %}
+iface tun-{{ name }} inet static
   pre-up ip link add name tun-{{ name }} type vxlan id {{ tunnel.vxlan.id }} dev {{ tunnel.vxlan.dev }} remote {{ tunnel.vxlan.remote }} local {{ tunnel.vxlan.local }} dstport {{ tunnel.vxlan.dstport }} || true
   up ip link set tun-{{ name }} up
   down ip link set tun-{{ name }} down
