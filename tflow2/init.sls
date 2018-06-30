@@ -2,7 +2,6 @@
 
 include:
   - golang
-  - snmpd
 
 tflow2:
   user.present:

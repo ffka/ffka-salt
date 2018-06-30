@@ -63,6 +63,8 @@ base:
     - nginx
     - certbot
     - network.tunnel
+    - golang
+    - tflow2
   'websrv.frickelfunk.net':
     - nginx
     - certbot
@@ -88,6 +90,4 @@ base:
     - jool
     - netflow
     - ferm
-    - golang
-    - tflow2
     - network.tunnel
