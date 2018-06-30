@@ -16,8 +16,8 @@ iface tun-{{ name }} inet tunnel
   {% elif tunnel.type == 'vxlan' %}
 iface tun-{{ name }} inet static
   pre-up ip link add name tun-{{ name }} type vxlan id {{ tunnel.vxlan.id }} dev {{ tunnel.vxlan.dev }} remote {{ tunnel.vxlan.remote }} local {{ tunnel.vxlan.local }} dstport {{ tunnel.vxlan.dstport }} || true
-  up ip link set tun-{{ name }} up
-  down ip link set tun-{{ name }} down
+  #up ip link set tun-{{ name }} up
+  #down ip link set tun-{{ name }} down
   post-down ip link del tun-{{ name }} || true
   {% endif -%}
 
