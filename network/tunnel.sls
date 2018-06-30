@@ -7,7 +7,7 @@ gre_{{ name }}:
     - user: root
     - group: root
     - mode: 644
-    - source: salt://network/files/gre.j2
+    - source: salt://network/files/tunnel.j2
     - template: jinja
     - context:
         tunnels: {{ tunnels }}

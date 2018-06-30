@@ -1,0 +1,32 @@
+{% for name, tunnel in tunnels.items() %}
+
+#################### tun-{{ name }} ####################
+auto tun-{{ name }}
+
+iface tun-{{ name }} inet tunnel
+  {% if tunnel.type == 'gre6' -%}
+  mode ip6gre
+  local {{ tunnel.gre.local | default(grains.fqdn_ip6[0]) }}
+  endpoint {{ tunnel.gre.endpoint }}
+  {% elif tunnel.type == 'gre' %}
+  mode gre
+  local {{ tunnel.gre.local | default(grains.fqdn_ip[0]) }}
+  endpoint {{ tunnel.gre.endpoint }}
+  {% elif tunnel.type == 'vxlan' %}
+  pre-up ip link add name tun-{{ name }} type vxlan id {{ tunnel.vxlan.id }} dev {{ tunnel.vxlan.dev }} remote {{ tunnel.vxlan.remote }} local {{ tunnel.vxlan.local }} dstport {{ tunnel.vxlan.dstport }} || true
+  up ip link set tun-{{ name }} up
+  down ip link set tun-{{ name }} down
+  post-down ip link del tun-{{ name }} || true
+  {% endif -%}
+
+  netmask {{ tunnel.ipv4.netmask | default('255.255.255.255') }}
+  address {{ tunnel.ipv4.local_address }}
+  dstaddr {{ tunnel.ipv4.remote_address }}
+
+  {% if tunnel.ttl is defined -%} ttl {{ tunnel.ttl }} {% endif %}
+  {% if tunnel.mtu is defined -%} mtu {{ tunnel.mtu }} {% endif %}
+
+iface tun-{{ name }} inet6 static
+  address {{ tunnel.ipv6.address }}/{{ tunnel.ipv6.prefixlength }}
+
+{% endfor %}

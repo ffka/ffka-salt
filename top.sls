@@ -62,7 +62,7 @@ base:
     - prometheus
     - nginx
     - certbot
-    - network.gre
+    - network.tunnel
   'websrv.frickelfunk.net':
     - nginx
     - certbot
@@ -90,4 +90,4 @@ base:
     - ferm
     - golang
     - tflow2
-    - network.gre
+    - network.tunnel
