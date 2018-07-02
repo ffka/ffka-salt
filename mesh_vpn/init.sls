@@ -1,3 +1,12 @@
-install fastd:
+fastd:
   pkg.latest:
-    - name: fastd
+    - fromrepo: stretch-backports
+    - refresh: True
+
+disable fastd autostart:
+  file.replace:
+    - name: /etc/default/fastd
+    - pattern: ^AUTOSTART=(.*)$
+    - repl: AUTOSTART="none"
+    - require:
+      - pkg: fastd
