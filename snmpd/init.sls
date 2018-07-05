@@ -19,3 +19,4 @@ snmpd.service:
       - file: /etc/snmp/snmpd.conf
     - require:
       - pkg: snmpd
+      - file: /etc/snmp/snmpd.conf
