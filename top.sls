@@ -58,6 +58,7 @@ base:
     - routing.core
     - routing.cloud_gateway
     - routing.core_bat
+    - snmpd
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
