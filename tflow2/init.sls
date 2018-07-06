@@ -34,6 +34,14 @@ tflow2:
     - require:
       - user: tflow2
 
+/var/tflow2/data:
+  file.directory:
+    - user: tflow2
+    - group: root
+    - dir_mode: 0755
+    - require:
+      - user: tflow2
+
 /var/log/tflow2:
   file.directory:
     - user: tflow2
