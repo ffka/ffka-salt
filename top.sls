@@ -59,6 +59,7 @@ base:
     - routing.cloud_gateway
     - routing.core_bat
     - snmpd
+    - ferm
     - netflow
   'monitor.frickelfunk.net':
     - grafana
