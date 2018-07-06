@@ -14,7 +14,7 @@ snmpd:
 snmpd.service:
   service.running:
     - enable: True
-    - reload: True
+    - restart: True
     - watch:
       - file: /etc/snmp/snmpd.conf
     - require:
