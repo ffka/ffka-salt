@@ -60,6 +60,7 @@ base:
     - routing.core_bat
     - snmpd
     - ferm
+    - ferm.core
     - netflow
   'monitor.frickelfunk.net':
     - grafana
