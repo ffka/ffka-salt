@@ -7,7 +7,7 @@ anonymize: false
 cache_time: 1800
 
 netflow_v9:
-  enabled: true
+  enabled: false
   listen: ":2055"
 
 ipfix:
@@ -15,7 +15,7 @@ ipfix:
   listen: ":4739"
 
 sflow:
-  enable: true
+  enable: false
   listen: ":6343"
 
 frontend:
@@ -32,7 +32,9 @@ annotators:
     target: "localhost:21222"
 
 agents:
-  - name: "bb01.fra01"
-    ip_address: "127.0.0.1"
+{% for agent in salt['pillar.get']('monitoring:tflow2:agents', []) %}
+  - name: {{ agent.name }}
+    ip_address: "{{ agent.address }}"
     snmp_community: "public"
-    samplerate: 1000
+    samplerate: {{ agent.samplerate }}
+{% endfor %}
