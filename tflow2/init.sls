@@ -39,6 +39,7 @@ tflow2:
     - user: tflow2
     - group: root
     - dir_mode: 0755
+    - makedirs: True
     - require:
       - user: tflow2
 
