@@ -61,12 +61,15 @@ tflow2:
     - require:
       - file: /etc/tflow2
 
-/etc/systemd/system/tflow2.service:
+/etc/systemd/system/tflow2.service.j2:
   file.managed:
     - source: salt://tflow2/files/tflow2.service
+    - template: jinja
     - user: root
     - group: root
     - mode: 644
+    - context:
+        gopath: {{ gopath }}
 
 tflow2.service:
   service.running:

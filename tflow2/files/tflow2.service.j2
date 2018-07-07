@@ -5,8 +5,8 @@ Description=tflow2 flow information collector
 Type=simple
 User=tflow2
 Group=tflow2
-WorkingDirectory=/etc/tflow2/
-ExecStart=/var/lib/tflow2/go/bin/tflow2 -config /etc/tflow2/config.yml -logtostderr -v 10
+WorkingDirectory={{ gopath }}/src/github.com/taktv6/tflow2
+ExecStart={{ gopath }}/bin/tflow2 -config /etc/tflow2/config.yml -logtostderr -v 10
 Restart=always
 
 [Install]
