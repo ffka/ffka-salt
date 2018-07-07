@@ -1,0 +1,13 @@
+[Unit]
+Description=tflow2 flow information collector
+
+[Service]
+Type=simple
+User=tflow2
+Group=tflow2
+WorkingDirectory=/etc/tflow2/
+ExecStart=/var/lib/tflow2/go/bin/tflow2 -config /etc/tflow2/config.yml -logtostderr -v 10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

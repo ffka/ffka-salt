@@ -60,3 +60,23 @@ tflow2:
     - template: jinja
     - require:
       - file: /etc/tflow2
+
+/etc/systemd/system/tflow2.service:
+  file.managed:
+    - source: salt://tflow2/files/tflow2.service
+    - user: root
+    - group: root
+    - mode: 644
+
+tflow2.service:
+  service.running:
+    - enable: True
+    - restart: True
+    - require:
+    - watch:
+      - cmd: tflow2
+      - file: /etc/tflow2/config.yml
+      - file: /etc/systemd/system/tflow2.service
+    - require:
+      - file: /var/tflow2/data
+      - file: /var/log/tflow2
