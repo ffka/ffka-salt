@@ -72,7 +72,6 @@ tflow2.service:
   service.running:
     - enable: True
     - restart: True
-    - require:
     - watch:
       - cmd: tflow2
       - file: /etc/tflow2/config.yml
