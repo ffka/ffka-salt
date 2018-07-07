@@ -1,6 +1,6 @@
 {% set sysctld = "/etc/sysctl.d" %}
 
-# Reboot 1 second after kernel panic, oops or BUG 
+# Reboot 1 second after kernel panic, oops or BUG
 kernel.panic:
   sysctl.present:
     - value: 1
@@ -61,7 +61,7 @@ net.ipv4.neigh.default.gc_thresh3:
 
 net.ipv6.neigh.default.gc_thresh1:
   sysctl.present:
-    - value: 2048 
+    - value: 2048
     - config: {{ sysctld }}/neigh.conf
 
 net.ipv6.neigh.default.gc_thresh2:
@@ -112,13 +112,13 @@ net.ipv6.conf.default.accept_source_route:
 #core
 net.core.rmem_max:
   sysctl.present:
-    - value: 83886080
+    - value: 8388608
     - config: {{ sysctld }}/rmem.conf
 
 #core
 net.core.rmem_default:
   sysctl.present:
-    - value: 83886080
+    - value: 8388608
     - config: {{ sysctld }}/rmem.conf
 
 #nc
@@ -130,13 +130,13 @@ net.ipv4.udp_rmem_min:
 #core
 net.core.wmem_max:
   sysctl.present:
-    - value: 83886080
+    - value: 8388608
     - config: {{ sysctld }}/wmem.conf
 
 #core
 net.core.wmem_default:
   sysctl.present:
-    - value: 83886080
+    - value: 8388608
     - config: {{ sysctld }}/wmem.conf
 
 #nc
@@ -165,4 +165,3 @@ net.ipv6.conf.all.accept_dad:
   sysctl.present:
     - value: 0
     - config: {{ sysctld }}/ipv6.conf
-
