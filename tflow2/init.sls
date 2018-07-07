@@ -61,9 +61,9 @@ tflow2:
     - require:
       - file: /etc/tflow2
 
-/etc/systemd/system/tflow2.service.j2:
+/etc/systemd/system/tflow2.service:
   file.managed:
-    - source: salt://tflow2/files/tflow2.service
+    - source: salt://tflow2/files/tflow2.service.j2
     - template: jinja
     - user: root
     - group: root
