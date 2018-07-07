@@ -27,9 +27,7 @@ bgp_augmentation:
   bird_socket: "/var/run/bird/bird.ctl"
   bird6_socket: "/var/run/bird/bird6.ctl"
 
-annotators:
-  - name: "BGP Annotator"
-    target: "localhost:21222"
+annotators: []
 
 agents:
 {% for agent in salt['pillar.get']('monitoring:tflow2:agents', []) %}
