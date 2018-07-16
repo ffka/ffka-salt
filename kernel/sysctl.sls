@@ -165,3 +165,21 @@ net.ipv6.conf.all.accept_dad:
   sysctl.present:
     - value: 0
     - config: {{ sysctld }}/ipv6.conf
+
+# Increase the maximum memory used to reassemble IP fragments
+
+net.ipv4.ipfrag_low_thresh:
+  sysctl.present:
+    - value: 446464
+    - config: {{ sysctld }}/ipv4.conf
+
+# Accept ICMP redirect messages; default = 0
+net.ipv4.conf.default.accept_redirects:
+  sysctl.present:
+    - value: 1
+    - config: {{ sysctld }}/ipv4.conf
+
+net.ipv4.conf.all.accept_redirects:
+  sysctl.present:
+    - value: 1
+    - config: {{ sysctld }}/ipv4.conf
