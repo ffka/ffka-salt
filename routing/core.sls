@@ -1,5 +1,5 @@
 {% for bird in ['bird','bird6'] %}
-/etc/bird/bird6.d/30-core.conf:
+/etc/bird/{{ bird }}.d/30-core.conf:
   file.managed:
     - user: bird
     - group: bird
