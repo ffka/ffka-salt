@@ -52,6 +52,7 @@ base:
     - network.lo
     - network.he_tunnel
     - network.cloud_gateway
+    - network.gre_ffffm_uplink
     - network.gre_vzffnrmo
     - network.tunnel
     - routing
