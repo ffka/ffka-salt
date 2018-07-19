@@ -1,16 +1,18 @@
-/etc/bird/bird6.d/60-core-bat.conf:
+{% for bird in ['bird','bird6'] %}
+/etc/bird/{{ bird }}.d/60-core-bat.conf:
   file.managed:
     - user: bird
     - group: bird
     - mode: 644
     - template: jinja
-    - source: salt://routing/files/bird6.d/core-bat.conf
+    - source: salt://routing/files/{{ bird }}.d/core-bat.conf
     - context:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
     - watch_in:
-      - service: bird6
+      - service: {{ bird }}
     - require:
       - pkg: bird
       - user: bird
-      - file: /etc/bird/bird6.d
+      - file: /etc/bird/{{ bird }}.d
+{% endfor %}
