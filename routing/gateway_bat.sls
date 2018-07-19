@@ -1,5 +1,5 @@
 {% for bird in ['bird','bird6'] %}
-/etc/bird/bird6.d/61-gateway-bat.conf:
+/etc/bird/{{ bird }}.d/61-gateway-bat.conf:
   file.managed:
     - user: bird
     - group: bird
