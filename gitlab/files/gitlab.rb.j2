@@ -839,7 +839,7 @@
     # nginx['ssl_session_timeout'] = "5m"
 
     # nginx['ssl_dhparam'] = nil # Path to dhparams.pem, eg. /etc/gitlab/ssl/dhparams.pem
-    nginx['listen_addresses'] = ['[::]']
+    nginx['listen_addresses'] = ["0.0.0.0", "[::]"]
 
     ##! **Defaults to forcing web browsers to always communicate using only HTTPS**
     ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html#setting-http-strict-transport-security
