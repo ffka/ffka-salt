@@ -82,3 +82,27 @@ tflow2.service:
     - require:
       - file: /var/tflow2/data
       - file: /var/log/tflow2
+
+{% for bird in ['bird','bird6'] %}
+/etc/bird/{{ bird }}.d/90-tflow2-common.conf:
+  file.managed:
+    - user: bird
+    - group: bird
+    - mode: 644
+    - template: jinja
+    - source: salt://tflow2/files/bird_common.conf.j2
+    - require:
+      - pkg: bird
+      - file: /etc/bird/{{ bird }}.d
+
+/etc/bird/{{ bird }}.d/91-tflow2.conf:
+  file.managed:
+    - user: bird
+    - group: bird
+    - mode: 644
+    - template: jinja
+    - source: salt://tflow2/files/{{ bird }}_client.conf.j2
+    - require:
+      - pkg: bird
+      - file: /etc/bird/{{ bird }}.d
+{% endfor %}
