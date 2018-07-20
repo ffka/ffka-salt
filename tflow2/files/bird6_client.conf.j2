@@ -1,5 +1,5 @@
 {% for agent in salt['pillar.get']('monitoring:tflow2:agents', []) %}
-protocol bgp nf_{{ address }} from tflow2_client {
-  neighbor {{ address }} as 202329;
+protocol bgp nf_{{ agent['address'] }} from tflow2_client {
+  neighbor {{ agent['address'] }} as 202329;
 };
 {% endfor %}
