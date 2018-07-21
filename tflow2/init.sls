@@ -14,17 +14,30 @@ tflow2:
     - force_fetch: True
     - require:
       - user: tflow2
+go get:
   cmd.run:
     - cwd: {{ gopath }}/src/github.com/taktv6/tflow2
-    - name: go get -v -u github.com/taktv6/tflow2
+    - name: go get -v -d
     - runas: tflow2
     - env:
         GOPATH: {{ gopath }}
     - require:
       - pkg: golang
-      - git: tflow2
     - onchanges:
       - git: tflow2
+
+go install:
+  cmd.run:
+    - cwd: {{ gopath }}/src/github.com/taktv6/tflow2
+    - name: go install -a -v
+    - runas: tflow2
+    - env:
+        GOPATH: {{ gopath }}
+    - require:
+      - pkg: golang
+    - onchanges:
+      - git: tflow2
+      - cmd: go get
 
 /etc/tflow2:
   file.directory:
@@ -76,7 +89,8 @@ tflow2.service:
     - enable: True
     - restart: True
     - watch:
-      - cmd: tflow2
+      - cmd: go get
+      - cmd: go install
       - file: /etc/tflow2/config.yml
       - file: /etc/systemd/system/tflow2.service
     - require:
