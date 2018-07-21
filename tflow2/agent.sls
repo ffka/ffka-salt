@@ -8,7 +8,7 @@
     - template: jinja
     - source: salt://tflow2/files/bird_agent.conf.j2
     - context:
-        neighbor: salt['pillar.get']('monitoring:tflow:agent:bgp_neighbor_v4')
+        neighbor: {{ salt['pillar.get']('monitoring:tflow:agent:bgp_neighbor_v4') }}
     - require:
       - pkg: bird
       - file: /etc/bird/bird.d
@@ -21,7 +21,7 @@
     - template: jinja
     - source: salt://tflow2/files/bird_agent.conf.j2
     - context:
-        neighbor: salt['pillar.get']('monitoring:tflow:agent:bgp_neighbor_v6')
+        neighbor: {{ salt['pillar.get']('monitoring:tflow:agent:bgp_neighbor_v6') }}
     - require:
       - pkg: bird
       - file: /etc/bird/bird6.d
