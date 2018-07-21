@@ -23,14 +23,14 @@ frontend:
   listen: ":4444"
 
 bgp_augmentation:
-  enabled: false
+  enabled: true
   bird_socket: "/var/run/bird/bird.ctl"
   bird6_socket: "/var/run/bird/bird6.ctl"
 
 annotators: []
 
 agents:
-{% for agent in salt['pillar.get']('monitoring:tflow2:agents', []) %}
+{% for agent in salt['pillar.get']('monitoring:tflow2:agents', []) -%}
   - name: {{ agent.name }}
     ip_address: "{{ agent.address_v4 }}"
     snmp_community: "public"
