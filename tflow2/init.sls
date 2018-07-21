@@ -30,7 +30,7 @@ go install:
   cmd.run:
     - cwd: {{ gopath }}/src/github.com/taktv6/tflow2
     - name: go install -a -v
-    - runas: tflow2
+    - runas: root
     - env:
         GOPATH: {{ gopath }}
     - require:
