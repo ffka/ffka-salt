@@ -30,7 +30,7 @@ bgp_augmentation:
 annotators: []
 
 agents:
-{% for agent in salt['pillar.get']('monitoring:tflow2:agents', []) -%}
+{%- for agent in salt['pillar.get']('monitoring:tflow2:agents', []) %}
   - name: {{ agent.name }}
     ip_address: "{{ agent.address_v4 }}"
     snmp_community: "public"
