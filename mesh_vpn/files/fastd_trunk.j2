@@ -36,11 +36,13 @@ on verify "
 on up "
     ip link set dev ${INTERFACE} address {{ mac }}
     ip link set dev ${INTERFACE} up
+
 {% for hoodname, hood in salt['pillar.get']('hoods').items() %}
-	{%- set vlan_id = '%03d' | format(hood.hood_id + 400) %}
-	ip link add link ${INTERFACE} name ${INTERFACE}.{{ vlan_id }} type vlan id {{ vlan_id }}
-	ip link set dev ${INTERFACE}.{{ vlan_id }} up
-	batctl -m bat_{{ hoodname }} if add ${INTERFACE}.{{ vlan_id }}
+    # Hood {{ hood.name }}
+    ip link add ${INTERFACE}-{{ hoodname }} type vxlan id {{ hood.network.vxlan_id }} dstport 4789 group ff02::15c dev ${INTERFACE} ttl 64
+    ip link set up fd-trunk-ort
+	ip link set dev ${INTERFACE}-{{ hoodname }} up
+	batctl -m bat_{{ hoodname }} if add ${INTERFACE}-{{ hoodname }}
 {% endfor %}
     chmod 777 /run/fastd.fd-{{ name }}.sock
 ";
