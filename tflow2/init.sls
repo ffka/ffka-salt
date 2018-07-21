@@ -1,3 +1,5 @@
+# State will install and configure tflow2 netflow analyzer
+
 {%- set gopath = '/var/lib/tflow2/go' %}
 
 include:

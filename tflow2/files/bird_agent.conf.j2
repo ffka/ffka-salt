@@ -5,7 +5,6 @@ template bgp tflow2_server {
 };
 
 protocol bgp tflow2 from tflow2_server {
-  disabled;
   table as202329;
   neighbor {{ neighbor }} as 202329;
   next hop self;
