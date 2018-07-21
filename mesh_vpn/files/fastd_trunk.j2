@@ -40,7 +40,6 @@ on up "
 {% for hoodname, hood in salt['pillar.get']('hoods').items() %}
     # Hood {{ hood.name }}
     ip link add ${INTERFACE}-{{ hoodname }} type vxlan id {{ hood.network.vxlan_id }} dstport 4789 group ff02::15c dev ${INTERFACE} ttl 64
-    ip link set up ${INTERFACE}-ort
 	ip link set dev ${INTERFACE}-{{ hoodname }} up
 	batctl -m bat_{{ hoodname }} if add ${INTERFACE}-{{ hoodname }}
 {% endfor %}
