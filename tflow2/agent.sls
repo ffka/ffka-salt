@@ -11,7 +11,7 @@
         neighbor: salt['pillar.get']('monitoring:tflow:agent:bgp_neighbor_v4')
     - require:
       - pkg: bird
-      - file: /etc/bird/{{ bird }}.d
+      - file: /etc/bird/bird.d
 
 /etc/bird/bird6.d/92-tflow2-agent.conf:
   file.managed:
@@ -24,4 +24,4 @@
         neighbor: salt['pillar.get']('monitoring:tflow:agent:bgp_neighbor_v6')
     - require:
       - pkg: bird
-      - file: /etc/bird/{{ bird }}.d
+      - file: /etc/bird/bird6.d
