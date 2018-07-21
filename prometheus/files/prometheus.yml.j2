@@ -30,3 +30,7 @@ scrape_configs:
 
     static_configs:
       - targets: ['localhost:19999']
+
+{% for scrape_config in salt['pillar.get']('monitoring:prometheus:scrape_configs', []) %}
+  - {{ scrape_config | yaml }}
+{% endfor %}
