@@ -63,6 +63,7 @@ base:
     - ferm
     - ferm.core
     - netflow
+    - tflow2.agent
   'monitor.frickelfunk.net':
     - grafana
     - prometheus

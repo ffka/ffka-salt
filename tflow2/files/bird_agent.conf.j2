@@ -1,0 +1,12 @@
+template bgp tflow2_server {
+    local as 202329;
+    import none;
+    export all;
+};
+
+protocol bgp tflow2 from tflow2_server {
+  disabled;
+  table as202329;
+  neighbor {{ neighbor }} as 202329;
+  next hop self;
+};
