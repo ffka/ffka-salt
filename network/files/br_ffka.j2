@@ -12,6 +12,15 @@ iface br_{{hoodname}} inet static
         address {{ hood['network']['ipv4'][shortname] }}
         netmask {{ hood.network.ipv4.netmask }}
         bridge_ports none
+        {% if gateway | to_bool %}
+        {% if hood.exit_net == "ffrl" %}
+        post-up ip rule add to {{ hood.network.ipv4.net }}/{{ hood.network.ipv4.netmask }}  table freifunk
+        post-up ip rule add from {{ hood.network.ipv4.net }}/{{ hood.network.ipv4.netmask }}  table freifunk
+        {% elif hood.exit_net == "vzffnrmo" %}
+        post-up ip rule add to {{ hood.network.ipv4.net }}/{{ hood.network.ipv4.netmask }}  table vzffnrmo
+        post-up ip rule add from {{ hood.network.ipv4.net }}/{{ hood.network.ipv4.netmask }}  table vzffnrmo
+        {% endif %}
+        {% endif %}
 iface br_{{hoodname}} inet6 static
         address {{ hood['network']['ipv6'][shortname] }}
         netmask 64
