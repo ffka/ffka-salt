@@ -1,4 +1,4 @@
-{% for name, tunnels in salt['pillar.get']('network:gre', {}).items() %}
+{% for name, tunnels in salt['pillar.get']('network:tunnel', {}).items() %}
 
 gre_{{ name }}:
   file.managed:
