@@ -49,7 +49,6 @@ netdataupdate:
     - source: 'salt://netdata/files/stream.conf.j2'
     - user: root
     - group: netdata
-    - mode: 644
     - template: jinja
     - require:
       - cmd: netdatainstall
