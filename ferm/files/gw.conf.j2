@@ -11,8 +11,8 @@
 @def $FFWP_NET = 10.198.0.0/16;
 @def $BACKBONE_NAT_IP = {{ network.lo.ipv4.ffrl }};
 @def $BACKBONE_IF = (
-{% for gre in salt['pillar.get']('network:gre_vzffnrmo:tunnel') %}
-tun-{{ gre.name }}
+{% for tun in salt['pillar.get']('network:tunnel:vzffnrmo', {}).keys() -%}
+tun-{{ tun }}
 {% endfor %}
 {% for gre in salt['pillar.get']('network:gre_ffka:tunnel') %}
 tun-{{ gre.name }}

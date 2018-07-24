@@ -14,7 +14,6 @@ base:
     - network.gre_ffka
     - network.gre_ffrl
     - network.lo
-    - network.gre_vzffnrmo
     - network.tunnel
     - routing
     - routing.albufer
@@ -53,7 +52,6 @@ base:
     - network.he_tunnel
     - network.cloud_gateway
     - network.gre_ffffm_uplink
-    - network.gre_vzffnrmo
     - network.tunnel
     - routing
     - routing.core
