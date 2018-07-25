@@ -24,7 +24,7 @@ zammad:
       - pkgrepo: zammad-repo
       - pkgrepo: elasticsearch-repo
 
-elasticsearch-plugin-ingest-attachment
+elasticsearch-plugin-ingest-attachment:
   cmd.run:
     - name: /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
     - require:
