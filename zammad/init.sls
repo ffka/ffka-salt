@@ -58,7 +58,7 @@ elasticsearch.service:
 enable elasticsearch:
   cmd.run:
     - name: zammad run rails r "Setting.set('es_url', 'http://localhost:9200')"
-    - onchange:
+    - onchanges:
       - pkg: zammad
 
 rebuild elasticsearch:
