@@ -54,3 +54,15 @@ elasticsearch.service:
     - require:
       - pkg: elasticsearch
       - cmd: elasticsearch-plugin-ingest-attachment
+
+enable elasticsearch:
+  cmd.run:
+    - name: zammad run rails r "Setting.set('es_url', 'http://localhost:9200')"
+    - onchange:
+      - pkg: zammad
+
+rebuild elasticsearch:
+  cmd.run:
+    - name: zammad run rails r "Setting.set('es_url', 'http://localhost:9200')"
+    - watch:
+      - cmd: enable elasticsearch
