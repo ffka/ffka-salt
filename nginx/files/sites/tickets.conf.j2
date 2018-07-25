@@ -37,11 +37,6 @@ server {
     access_log "/var/log/nginx/{{ site_name }}/access.log";
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
-    client_max_body_size 50M;
-
-    location ~ ^/(assets/|robots.txt|humans.txt|favicon.ico) {
-        expires max;
-    }
 
     location /ws {
         proxy_http_version 1.1;
