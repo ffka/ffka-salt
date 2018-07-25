@@ -34,6 +34,17 @@ zammad:
       - cmd: elasticsearch-plugin-ingest-attachment
       - pkgrepo: zammad-repo
 
+/etc/nginx/sites-enabled/zammad.conf:
+  file.absent:
+    - require:
+      - pkg: zammad
+
+
+/etc/nginx/sites-available/zammad.conf:
+  file.absent:
+    - require:
+      - pkg: zammad
+
 elasticsearch.service:
   service.running:
     - enable: true
