@@ -65,4 +65,6 @@ rebuild elasticsearch:
   cmd.run:
     - name: zammad run rake searchindex:rebuild
     - onchanges:
+      - pkg: zammad
+    - require:
       - cmd: enable elasticsearch
