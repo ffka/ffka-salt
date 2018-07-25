@@ -14,27 +14,32 @@ elasticsearch-repo:
     - gpgcheck: 1
     - key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
-zammad:
-  pkg.installed:
-    - packages:
-      - zammad
+elasticsearch:
+  pkg.latest:
+    - pkgs:
       - openjdk-8-jre
       - elasticsearch
     - require:
-      - pkgrepo: zammad-repo
       - pkgrepo: elasticsearch-repo
 
 elasticsearch-plugin-ingest-attachment:
   cmd.run:
     - name: /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
-    - require:
-      - pkg: zammad
     - onchanges:
-      - pkg: zammad
+      - pkg: elasticsearch
+
+zammad:
+  pkg.latest:
+    - require:
+      - cmd: elasticsearch-plugin-ingest-attachment
+      - pkgrepo: zammad-repo
 
 elasticsearch.service:
   service.running:
     - enable: true
     - restart: true
     - watch:
+      - cmd: elasticsearch-plugin-ingest-attachment
+    - require:
+      - pkg: elasticsearch
       - cmd: elasticsearch-plugin-ingest-attachment
