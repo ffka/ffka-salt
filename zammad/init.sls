@@ -63,6 +63,6 @@ enable elasticsearch:
 
 rebuild elasticsearch:
   cmd.run:
-    - name: zammad run rails r "Setting.set('es_url', 'http://localhost:9200')"
+    - name: zammad run rake searchindex:rebuild
     - watch:
       - cmd: enable elasticsearch
