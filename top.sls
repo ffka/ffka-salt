@@ -92,6 +92,8 @@ base:
     - certbot
   'ns1.frickelfunk.net':
     - knot
+  'tickets.frickelfunk.net':
+    - zammad
   'testbed.frickelfunk.net':
     - jool
     - netflow
