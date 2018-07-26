@@ -42,10 +42,10 @@ domain (ip){
 	        chain FORWARD {
 					# mss = transport mtu - (batman-adv + ether) 32 - ipv4 20 - tcp 20
 					{% for hoodname in salt['pillar.get']('hoods') %}
-	            interface br_{{ hoodname }} outerface $FFRL_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1328;
-              interface br_{{ hoodname }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1328;
-              outerface br_{{ hoodname }} outerface $FFRL_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1328;
-              outerface br_{{ hoodname }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss 1328;
+	            interface br_{{ hoodname }} outerface $FFRL_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS clamp-mss-to-pmtu;
+              interface br_{{ hoodname }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS clamp-mss-to-pmtu;
+              outerface br_{{ hoodname }} outerface $FFRL_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS clamp-mss-to-pmtu;
+              outerface br_{{ hoodname }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS clamp-mss-to-pmtu;
 					{% endfor %}
 	        }
 	   }
