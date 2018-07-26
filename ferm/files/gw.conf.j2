@@ -59,8 +59,6 @@ domain ip6 {
 						{% for hoodname in salt['pillar.get']('hoods') %}
             interface br_{{ hoodname }} outerface $FFRL_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss clamp-mss-to-pmtu;
             interface br_{{ hoodname }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss clamp-mss-to-pmtu;
-            outerface br_{{ hoodname }} outerface $FFRL_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss clamp-mss-to-pmtu;
-            outerface br_{{ hoodname }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss clamp-mss-to-pmtu;
 						{% endfor %}
         }
    }
