@@ -5,8 +5,8 @@
 auto {{ ifname_br }}
 iface {{ ifname_br }} inet manual
 	pre-up ip link add name $IFACE type bridge
-	pre-up ip link set up dev $IFACE
 	pre-up ip link set address {{ salt['domain_networking.generate_mac']('br', domain, 1) }} dev $IFACE # ToDO: Remove hardcoded host identifier
+	pre-up ip link set up dev $IFACE
 
 	post-down ip link delete dev $IFACE
 
@@ -16,8 +16,18 @@ iface {{ ifname_br }} inet static
 	netmask {{ network['netmask'] }}
 {%- endfor %}
 
-{%- for network in domain.get('ipv6', {}).values() if 'address' in network %}
+{% for network in domain.get('ipv6', {}).values() if 'address' in network %}
 iface {{ ifname_br }} inet6 static
 	address {{ network['address'] }}
 	netmask {{ network['prefixlen'] }}
 {%- endfor %}
+
+{% set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') %}
+# {{ ifname_bat }}
+auto {{ ifname_bat }}
+iface {{ ifname_bat }} inet manual
+	pre-up ip link add name $IFACE type batadv
+	pre-up ip link set address {{ salt['domain_networking.generate_mac']('bat', domain, 1) }} dev $IFACE # ToDO: Remove hardcoded host identifier
+	pre-up ip link set up dev $IFACE
+
+	post-up ip link set master {{ ifname_br }} dev $IFACE
