@@ -106,3 +106,5 @@ base:
   'gwbattb.frickelfunk.net':
     - kernel.backports
     - batman
+    - ferm
+    - network
