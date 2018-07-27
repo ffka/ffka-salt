@@ -1,0 +1,39 @@
+{%- set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fastd', fastd['name']) %}
+{% set fastd_mac = salt['domain_networking.generate_mac'](domain, 'fastd', 1, fastd_id) -%} # ToDo: change host ID
+
+interface {{ fastd_ifname }};
+
+bind {{ salt['grains.get']('fqdn_ip4')[0] }}:{{ fastd['port'] }};
+bind [{{ salt['grains.get']('fqdn_ip6')[0] }}]:{{ fastd['port'] }};
+
+mtu {{ domain['fastd']['mtu'] }};
+
+method "null+salsa2012+umac";
+method "null+salsa2012+gmac";
+method "salsa2012+umac";
+method "salsa2012+gmac";
+
+secure handshakes yes;
+
+status socket "/run/fastd.{{ fastd_ifname }}.sock";
+
+#secret "{{ salt['pillar.get']('fastd:secret') }}";
+
+# blacklisting, everybody else will be accepted
+on verify "/etc/fastd/fastdbl/fastd-blacklist.sh $PEER_KEY";
+
+on up "
+    ip link set dev $INTERFACE address {{ fastd_mac }}
+    ip link set dev $INTERFACE up
+    ifup bat_{{ hoodname }}
+    batctl -m bat_{{ hoodname }} if add $INTERFACE
+    (
+    	sleep 0.5
+    	chmod 777 /run/fastd.fd-{{name}}.sock
+    ) &
+";
+
+
+log to syslog as "{{ fastd_ifname }}" level debug;
+hide mac addresses yes;
+hide ip addresses yes;
