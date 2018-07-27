@@ -1,14 +1,16 @@
 {% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
-{% for fastd_id, fastd in enumerate(domain.get('fastd', {}).get('instances', [])) %}
+{% for fastd in domain.get('fastd', {}).get('instances', []) %}
 
-/etc/fastd/{{ domain_id }}/{{ fastd['name'] }}:
+{%- set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fastd', fastd['name']) %}
+
+/etc/fastd/{{ fastd_ifname }}:
   file.directory:
     - mode: 755
     - makedirs: True
     - require:
       - pkg: fastd
 
-/etc/fastd/{{ domain_id }}/{{ fastd['name'] }}/fastd.conf:
+/etc/fastd/{{ fastd_ifname }}/fastd.conf:
   file.managed:
     - source: salt://fastd/files/fastd_domain.conf.j2
     - template: jinja
@@ -18,17 +20,9 @@
     - context:
         domain: {{ domain }}
         fastd: {{ fastd }}
-        fastd_id: {{ fastd_id }}
+        fastd_id: {{ loop.index0 }}
     - require:
-      - file: /etc/fastd/{{ domain_id }}/{{ fastd['name'] }}
+      - file: /etc/fastd/{{ fastd_ifname }}
 
-#enable/run systemd fastd@{{ if_name }}:
-#  service.running:
-#    - name: fastd@{{ if_name }}
-#    - enable: true
-#    - watch:
-#      - file: /etc/fastd/{{ if_name }}/fastd.conf
-#      - file: /etc/fastd/{{ if_name }}/secret.conf
-# git: /etc/fastd/fastdbl
 {% endfor %}
 {% endfor %}
