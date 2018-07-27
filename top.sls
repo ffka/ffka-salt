@@ -108,3 +108,5 @@ base:
     - batman
     - ferm
     - network
+    - network.domains
+
