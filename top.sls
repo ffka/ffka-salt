@@ -103,3 +103,6 @@ base:
     - netflow
     - ferm
     - network.tunnel
+  'gwbattb.frickelfunk.net':
+    - kernel.backports
+    - batman
