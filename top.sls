@@ -6,7 +6,7 @@ base:
     - common.sudo
     - netdata
   'albufer*':
-    - kernel
+    - kernel.backports
     - kernel.sysctl
     - network
     - network.ip_rt_tables_freifunk
@@ -47,7 +47,7 @@ base:
     - docker
     - influxdb
   'core*':
-    - kernel
+    - kernel.backports
     - kernel.sysctl
     - network
     - network.lo
