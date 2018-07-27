@@ -19,6 +19,7 @@ base:
     - routing.albufer
     - routing.gateway_bat
     - batman
+    - network.batman
     - ntp
     - ferm
     - ferm.gw
@@ -37,6 +38,7 @@ base:
     - network.gre_ffka
     - ferm
     - batman
+    - network.batman
     - yanic
     - meshviewer
     - nginx
