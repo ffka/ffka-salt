@@ -110,3 +110,4 @@ base:
     - network
     - network.domains
     - fastd
+    - fastd.domains
