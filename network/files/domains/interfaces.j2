@@ -10,3 +10,14 @@ iface {{ ifname_br }} inet manual
 
 	post-down ip link delete dev $IFACE
 
+{%- for network in domain.get('ipv4', {}).values() if 'address' in network %}
+iface {{ ifname_br }} inet static
+	address {{ network['address'] }}
+	netmask {{ network['netmask'] }}
+{%- endfor %}
+
+{%- for network in domain.get('ipv6', {}).values() if 'address' in network %}
+iface {{ ifname_br }} inet6 static
+	address {{ network['address'] }}
+	netmask {{ network['prefixlen'] }}
+{%- endfor %}
