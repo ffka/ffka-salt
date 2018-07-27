@@ -109,4 +109,4 @@ base:
     - ferm
     - network
     - network.domains
-
+    - fastd

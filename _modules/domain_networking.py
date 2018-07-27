@@ -1,7 +1,9 @@
-def generate_ifname(domain, iftype=None):
+def generate_ifname(domain, iftype=None, suffix=None):
   if iftype is None:
     return 'dom{0:02d}'.format(domain['domain_id'])
-  return 'dom{0:02d}-{1:s}'.format(domain['domain_id'], iftype)
+  if suffix is None:
+    return 'dom{0:02d}-{1:s}'.format(domain['domain_id'], iftype)
+  return 'dom{0:02d}-{1:s}-{2:s}'.format(domain['domain_id'], iftype, suffix)
 
 def generate_mac(type, domain, host_id):
   if type == 'br':
