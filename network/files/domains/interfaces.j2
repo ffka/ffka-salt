@@ -4,5 +4,9 @@
 # {{ ifname_br }}
 auto {{ ifname_br }}
 iface {{ ifname_br }} inet manual
-	bridge_ports none
+	pre-up ip link add name $IFACE type bridge
 	pre-up ip link set up dev $IFACE
+	pre-up ip link set address {{ salt['domain_networking.generate_mac']('br', domain, 1) }} dev $IFACE # ToDO: Remove hardcoded host identifier
+
+	post-down ip link delete dev $IFACE
+
