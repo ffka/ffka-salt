@@ -94,6 +94,8 @@ base:
     - knot
   'tickets.frickelfunk.net':
     - zammad
+    - nginx
+    - certbot
   'testbed.frickelfunk.net':
     - jool
     - netflow

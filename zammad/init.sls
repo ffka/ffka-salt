@@ -14,22 +14,35 @@ elasticsearch-repo:
     - gpgcheck: 1
     - key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
-zammad:
-  pkg.installed:
-    - packages:
-      - zammad
+elasticsearch:
+  pkg.latest:
+    - pkgs:
       - openjdk-8-jre
       - elasticsearch
     - require:
-      - pkgrepo: zammad-repo
       - pkgrepo: elasticsearch-repo
 
 elasticsearch-plugin-ingest-attachment:
   cmd.run:
     - name: /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
+    - onchanges:
+      - pkg: elasticsearch
+
+zammad:
+  pkg.latest:
+    - require:
+      - cmd: elasticsearch-plugin-ingest-attachment
+      - pkgrepo: zammad-repo
+
+/etc/nginx/sites-enabled/zammad.conf:
+  file.absent:
     - require:
       - pkg: zammad
-    - onchanges:
+
+
+/etc/nginx/sites-available/zammad.conf:
+  file.absent:
+    - require:
       - pkg: zammad
 
 elasticsearch.service:
@@ -38,3 +51,20 @@ elasticsearch.service:
     - restart: true
     - watch:
       - cmd: elasticsearch-plugin-ingest-attachment
+    - require:
+      - pkg: elasticsearch
+      - cmd: elasticsearch-plugin-ingest-attachment
+
+enable elasticsearch:
+  cmd.run:
+    - name: zammad run rails r "Setting.set('es_url', 'http://localhost:9200')"
+    - onchanges:
+      - pkg: zammad
+
+rebuild elasticsearch:
+  cmd.run:
+    - name: zammad run rake searchindex:rebuild
+    - onchanges:
+      - pkg: zammad
+    - require:
+      - cmd: enable elasticsearch

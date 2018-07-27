@@ -19,12 +19,12 @@ options {
     transfer-source-v6 {{ grains.fqdn_ip6[0] }};
     query-source-v6 address {{ network.lo.ipv6.ffrl }};
 
-    dns64 {{ network.nat64.v6_range }} {
-        clients { {{ ffka.v6_ffrl }}; };
-    };
+#    dns64 {{ network.nat64.v6_range }} {
+#        clients { {{ ffka.v6_ffrl }}; };
+#    };
 
     dnssec-validation auto;
-    auth-nxdomain no;    # conform to RFC1035 
+    auth-nxdomain no;    # conform to RFC1035
 
     allow-query { any; };
     allow-recursion { "recursionhosts" ; };
