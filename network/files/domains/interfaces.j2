@@ -10,16 +10,17 @@ iface {{ ifname_br }} inet manual
 
 	post-down ip link delete dev $IFACE
 
-{%- for network in domain.get('ipv4', {}).values() if 'address' in network %}
+{% for network in domain.get('ipv4', {}).values() if 'address' in network %}
 iface {{ ifname_br }} inet static
 	address {{ network['address'] }}
 	netmask {{ network['netmask'] }}
 {%- endfor %}
 
-{% for network in domain.get('ipv6', {}).values() if 'address' in network %}
+{-% for network in domain.get('ipv6', {}).values() if 'address' in network %}
 iface {{ ifname_br }} inet6 static
 	address {{ network['address'] }}
 	netmask {{ network['prefixlen'] }}
+	dad-attempts 0
 {%- endfor %}
 
 {% set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') %}
@@ -31,3 +32,4 @@ iface {{ ifname_bat }} inet manual
 	pre-up ip link set up dev $IFACE
 
 	post-up ip link set master {{ ifname_br }} dev $IFACE
+
