@@ -16,7 +16,7 @@ iface {{ ifname_br }} inet static
 	netmask {{ network['netmask'] }}
 {%- endfor %}
 
-{-% for network in domain.get('ipv6', {}).values() if 'address' in network %}
+{%- for network in domain.get('ipv6', {}).values() if 'address' in network %}
 iface {{ ifname_br }} inet6 static
 	address {{ network['address'] }}
 	netmask {{ network['prefixlen'] }}
