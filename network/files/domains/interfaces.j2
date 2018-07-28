@@ -38,8 +38,8 @@ iface {{ ifname_bat }} inet manual
 	post-down ip link delete dev $IFACE
 
 {%- for fastd in domain.get('fastd', {}).get('instances', []) %}
-{% set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fd', fastd['name']) %}
-{% set fastd_mac = salt['domain_networking.generate_mac'](domain, 'fastd', salt['pillar.get']('gwbatid'), loop.index0) -%}
+{% set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fastd', fastd['name']) %}
+{% set fastd_mac = salt['domain_networking.generate_mac']('fastd', domain, salt['pillar.get']('gwbatid'), loop.index0) -%}
 allow-hotplug {{ fastd_ifname }}
 iface {{ fastd_ifname }} inet manual
 	pre-up ip link set address {{ fastd_mac }} dev $IFACE

@@ -1,4 +1,4 @@
-{%- set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fd', fastd['name']) %}
+{%- set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fastd', fastd['name']) %}
 
 interface "{{ fastd_ifname }}";
 
