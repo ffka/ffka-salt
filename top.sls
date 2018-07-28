@@ -111,3 +111,4 @@ base:
     - network.domains
     - fastd
     - fastd.domains
+    - dhcpv4
