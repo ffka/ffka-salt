@@ -1,0 +1,108 @@
+{
+"Dhcp4": {
+    "interfaces-config": {
+        // See section 8.2.4 for more details. You probably want to add just
+        // interface name (e.g. "eth0" or specific IPv4 address on that
+        // interface name (e.g. "eth0/192.0.2.1").
+        "interfaces": [
+            {%- for if in accumulator.get('dhcpv4-interfaces', []) %}
+            "{{ if }}"{% if not loop.last %},{% endif %}
+            {% endfor -%}
+        ],
+        "dhcp-socket-type": "raw"
+    },
+
+    "control-socket": {
+        "socket-type": "unix",
+        "socket-name": "/tmp/kea-dhcp4-ctrl.sock"
+    },
+
+    "lease-database": {
+        "type": "memfile",
+        "lfc-interval": 3600
+    },
+
+    "expired-leases-processing": {
+        "reclaim-timer-wait-time": 10,
+        "flush-reclaimed-timer-wait-time": 25,
+        "hold-reclaimed-time": 3600,
+        "max-reclaim-leases": 100,
+        "max-reclaim-time": 250,
+        "unwarned-reclaim-cycles": 5
+    },
+
+    // Global timers specified here apply to all subnets, unless there are
+    // subnet specific values defined in particular subnets.
+    "renew-timer": 900,
+    "rebind-timer": 1800,
+    "valid-lifetime": 3600,
+
+    // Many additional parameters can be specified here:
+    // - option definitions (if you want to define vendor options, your own
+    //                       custom options or perhaps handle standard options
+    //                       that Kea does not support out of the box yet)
+    // - client classes
+    // - hooks
+    // - ddns information (how the DHCPv4 component can reach a DDNS daemon)
+    //
+    // Some of them have examples below, but there are other parameters.
+    // Consult Kea User's Guide to find out about them.
+
+    // These are global options. They are going to be sent when a client
+    // requests them, unless overwritten with values in more specific scopes.
+    // The scope hierarchy is:
+    // - global (most generic, can be overwritten by class, subnet or host)
+    // - class (can be overwritten by subnet or host)
+    // - subnet (can be overwritten by host)
+    // - host (most specific, overwrites any other scopes)
+
+    "subnet4": [
+        <?include "/etc/kea/dhcp4-domains.conf"?>
+    ]
+},
+
+// Logging configuration starts here. Kea uses different loggers to log various
+// activities. For details (e.g. names of loggers), see Chapter 18.
+"Logging":
+{
+  "loggers": [
+    {
+        // This section affects kea-dhcp4, which is the base logger for DHCPv4
+        // component. It tells DHCPv4 server to write all log messages (on
+        // severity INFO or more) to a file.
+        "name": "kea-dhcp4",
+        "output_options": [
+            {
+                // Specifies the output file. There are several special values
+                // supported:
+                // - stdout (prints on standard output)
+                // - stderr (prints on standard error)
+                // - syslog (logs to syslog)
+                // - syslog:name (logs to syslog using specified name)
+                // Any other value is considered a name of a time
+                "output": "stdout"
+
+                // This governs whether the log output is flushed to disk after
+                // every write.
+                // "flush": false,
+
+                // This specifies the maximum size of the file before it is
+                // rotated.
+                // "maxsize": 1048576,
+
+                // This specifies the maximum number of rotated files to keep.
+                // "maxver": 8
+            }
+        ],
+        // This specifies the severity of log messages to keep. Supported values
+        // are: FATAL, ERROR, WARN, INFO, DEBUG
+        "severity": "INFO",
+
+        // If DEBUG level is specified, this value is used. 0 is least verbose,
+        // 99 is most verbose. Be cautious, Kea can generate lots and lots
+        // of logs if told to do so.
+        "debuglevel": 0
+    }
+  ]
+}
+}
