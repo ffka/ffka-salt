@@ -17,7 +17,7 @@ secure handshakes yes;
 
 status socket "/run/fastd.{{ fastd_ifname }}.sock";
 
-#secret "{{ salt['pillar.get']('fastd:secret') }}";
+secret "{{ salt['pillar.get']('fastd:domains:secret') }}";
 
 # blacklisting, everybody else will be accepted
 on verify "/etc/fastd/fastdbl/fastd-blacklist.sh $PEER_KEY";
