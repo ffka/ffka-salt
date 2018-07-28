@@ -36,3 +36,14 @@ iface {{ ifname_bat }} inet manual
 	post-up batctl -m {{ ifname_bat }} gw_mode server 50000/50000
 
 	post-down ip link delete dev $IFACE
+
+{%- for fastd in domain.get('fastd', {}).get('instances', []) %}
+{% set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fd', fastd['name']) %}
+{% set fastd_mac = salt['domain_networking.generate_mac'](domain, 'fastd', salt['pillar.get']('gwbatid'), loop.index0) -%}
+allow-hotplug {{ fastd_ifname }}
+iface {{ fastd_ifname }} inet manual
+	pre-up ip link set address {{ fastd_mac }} dev $IFACE
+	pre-up ip link set up dev $IFACE
+
+	post-up ip link set master {{ ifname_bat }} dev $IFACE
+{%- endfor %}
