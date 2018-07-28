@@ -1,7 +1,7 @@
-{%- set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fastd', fastd['name']) %}
+{%- set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fd', fastd['name']) %}
 {% set fastd_mac = salt['domain_networking.generate_mac'](domain, 'fastd', salt['pillar.get']('gwbatid'), fastd_id) -%}
 
-interface {{ fastd_ifname }};
+interface "{{ fastd_ifname }}";
 
 bind {{ salt['grains.get']('fqdn_ip4')[0] }}:{{ fastd['port'] }};
 bind [{{ salt['grains.get']('fqdn_ip6')[0] }}]:{{ fastd['port'] }};
