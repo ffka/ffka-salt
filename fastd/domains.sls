@@ -22,5 +22,11 @@
     - require:
       - file: /etc/fastd/{{ domain_id }}/{{ fastd['name'] }}
 
+fastd@{{ domain_id }}-{{ fastd['name'] }}.service:
+  service.running:
+    - enable: True
+    - restart: True
+    - watch:
+      - file: /etc/fastd/{{ domain_id }}/{{ fastd['name'] }}/fastd.conf
 {% endfor %}
 {% endfor %}
