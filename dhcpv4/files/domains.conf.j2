@@ -27,7 +27,8 @@
             "data": "{% for sd in domain['dns']['search'] %}{{ sd }}{% if not loop.last %}, {% endif %}{% endfor %}"
         }
     ]
-},
-
+}
+{% if not loop.last %}, {% endif %}
 {% endfor %}
+{% if not loop.last %}, {% endif %}
 {% endfor %}
