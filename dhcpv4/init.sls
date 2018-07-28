@@ -1,5 +1,11 @@
+include:
+  - common.debian_testing
+
 kea-dhcp4-server:
-  pkg.installed
+  pkg.installed:
+    - fromrepo: testing
+    - require:
+      - pkgrepo: testing
 
 kea-dhcp4-server.service:
   service.running:
