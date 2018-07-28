@@ -4,9 +4,7 @@
     "subnet": "{{ net['prefix'] }}",
 
     "pools": [
-        {%- for pool in net.get('dhcpv4', {}).get('pools', []) %}
-        { "pool": "{{ pool['first'] }} - {{ pool['last'] }}" }{% if not loop.last %}, {% endif %}
-        {% endfor -%}
+        {%- for pool in net.get('dhcpv4', {}).get('pools', []) %} { "pool": "{{ pool['first'] }} - {{ pool['last'] }}" }{% if not loop.last %}, {% endif %} {% endfor -%}
     ],
 
     "option-data": [

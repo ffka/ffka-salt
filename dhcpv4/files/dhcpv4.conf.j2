@@ -37,6 +37,13 @@
     "rebind-timer": 1800,
     "valid-lifetime": 3600,
 
+    "option-data": [
+        {
+            "name": "interface-mtu",
+            "data": "{{ salt['pillar.get']('dhcpv4:mtu') }}"
+        }
+    ],
+
     // Many additional parameters can be specified here:
     // - option definitions (if you want to define vendor options, your own
     //                       custom options or perhaps handle standard options
