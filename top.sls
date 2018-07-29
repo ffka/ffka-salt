@@ -113,3 +113,5 @@ base:
     - fastd.domains
     - dhcpv4
     - dhcpv4.domains
+    - dhcpv6
+    - dhcpv6.domains
