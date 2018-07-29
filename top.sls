@@ -115,3 +115,4 @@ base:
     - dhcpv4.domains
     - dhcpv6
     - dhcpv6.domains
+    - routing.bird
