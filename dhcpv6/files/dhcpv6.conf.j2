@@ -1,0 +1,27 @@
+// A very simply stateless configuration that provides information about DNS
+// servers to all clients, regardless of their point of attachment.
+//
+// It is also possible to specify options on a per subnet basis
+// in the same way as in stateful mode.
+//
+
+{
+"Dhcp6": {
+    "interfaces-config": {
+        "interfaces": [
+            {%- for if in accumulator.get('dhcpv6-interfaces', []) %} "{{ if }}"{% if not loop.last %},{% endif %} {% endfor -%}
+        ]
+    },
+
+    "option-data": [ {
+        "name": "dns-servers",
+        "data": "2001:db8::1, 2001:db8::2"
+    } ],
+
+    "subnet6": [
+        {%- for file in accumulator.get('dhcpv6-subnets', []) %}
+        <?include "{{ file }}"?> {% if not loop.last %},{% endif %}
+        {%- endfor %}
+    ]
+}
+}

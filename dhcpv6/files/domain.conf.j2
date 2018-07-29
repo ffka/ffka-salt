@@ -1,0 +1,18 @@
+{% for net in domain.get('ipv6', {}).values() %}
+{
+    "subnet": "{{ net['prefix'] }}",
+
+    "option-data": [
+
+        {
+            "name": "dns-servers",
+            "data": "{% for ns4 in domain['dns']['nameservers6'] %}{{ ns4 }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        },
+        {
+            "name": "domain-search",
+            "data": "{% for sd in domain['dns']['search'] %}{{ sd }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        }
+    ]
+}
+{%- if not loop.last %}, {% endif %}
+{%- endfor %}
