@@ -105,6 +105,7 @@ base:
     - network.tunnel
   'gwbattb.frickelfunk.net':
     - kernel.backports
+    - common.locale
     - batman
     - ferm
     - network
