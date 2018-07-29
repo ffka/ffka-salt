@@ -8,6 +8,8 @@ protocol radv radv_{{ domain_id }} {
     prefix {{ net['prefix'] }};
     {% endfor -%}
 
+    link mtu {{ domain['network_mtu'] }};
+
     rdnss {
       lifetime mult 10;
       {%- for ns6 in domain['dns']['nameservers6'] %}

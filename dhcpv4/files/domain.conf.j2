@@ -22,6 +22,10 @@
         {
             "name": "domain-search",
             "data": "{% for sd in domain['dns']['search'] %}{{ sd }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        },
+        {
+            "name": "interface-mtu",
+            "data": "{{ domain['network_mtu'] }}"
         }
     ]
 }
