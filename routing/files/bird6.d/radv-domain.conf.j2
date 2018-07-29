@@ -1,0 +1,24 @@
+{% set ifname_br = salt['domain_networking.generate_ifname'](domain, 'br') -%}
+
+protocol radv radv_{{ domain_id }} {
+  interface "{{ ifname_br }}" {
+    other config yes;
+
+    {%- for net in domain.get('ipv6', {}).values() %}
+    prefix {{ net['prefix'] }};
+    {% endfor -%}
+
+    rdnss {
+      lifetime mult 10;
+      {%- for ns6 in domain['dns']['nameservers6'] %}
+      ns {{ ns6 }};
+      {%- endfor %}
+    };
+    dnssl {
+      lifetime 3600;
+      {%- for sd in domain['dns']['search'] %}
+      domain "{{ sd }}";
+      {%- endfor %}
+    };
+  };
+}

@@ -116,3 +116,5 @@ base:
     - dhcpv6
     - dhcpv6.domains
     - routing.bird
+    - routing.domains
+    - routing.domains.radv
