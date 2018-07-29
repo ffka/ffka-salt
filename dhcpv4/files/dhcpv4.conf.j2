@@ -107,37 +107,14 @@
     ]
 },
 
-// Logging configuration starts here. Kea uses different loggers to log various
-// activities. For details (e.g. names of loggers), see Chapter 18.
 "Logging":
 {
   "loggers": [
     {
-        // This section affects kea-dhcp4, which is the base logger for DHCPv4
-        // component. It tells DHCPv4 server to write all log messages (on
-        // severity INFO or more) to a file.
         "name": "kea-dhcp4",
         "output_options": [
             {
-                // Specifies the output file. There are several special values
-                // supported:
-                // - stdout (prints on standard output)
-                // - stderr (prints on standard error)
-                // - syslog (logs to syslog)
-                // - syslog:name (logs to syslog using specified name)
-                // Any other value is considered a name of a time
                 "output": "stdout"
-
-                // This governs whether the log output is flushed to disk after
-                // every write.
-                // "flush": false,
-
-                // This specifies the maximum size of the file before it is
-                // rotated.
-                // "maxsize": 1048576,
-
-                // This specifies the maximum number of rotated files to keep.
-                // "maxver": 8
             }
         ],
         // This specifies the severity of log messages to keep. Supported values
