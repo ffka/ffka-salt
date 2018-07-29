@@ -6,7 +6,7 @@
 
         {
             "name": "dns-servers",
-            "data": "{% for ns4 in domain['dns']['nameservers6'] %}{{ ns4 }}{% if not loop.last %}, {% endif %}{% endfor %}"
+            "data": "{% for ns6 in domain['dns']['nameservers6'] %}{{ ns6 }}{% if not loop.last %}, {% endif %}{% endfor %}"
         },
         {
             "name": "domain-search",
