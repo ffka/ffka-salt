@@ -9,7 +9,7 @@
 auto {{ ifname_mesh }}
 
 iface {{ ifname_mesh }} inet manual
-  pre-up ip link add name {{ ifname_mesh }} type vxlan id 777 dev {{ ifinfo['my']['iface'] }} remote {{ ifinfo['other']['ipv6']['address'] }} local {{ ifinfo['my']['ipv6']['address'] }} dstport 777 || true
+  pre-up ip link add name {{ ifname_mesh }} type vxlan id {{ domain['vxlan']['id‚'] }} dev {{ ifinfo['my']['iface'] }} remote {{ ifinfo['other']['ipv6']['address'] }} local {{ ifinfo['my']['ipv6']['address'] }} dstport 4789 || true
   post-down ip link del {{ ifname_mesh }} || true
 
   ttl 64
