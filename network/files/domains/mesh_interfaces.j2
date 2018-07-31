@@ -5,12 +5,14 @@
 
 {% set ifname_mesh = salt['domain_networking.generate_ifname'](domain, 'mesh', 'gw{0:02d}'.format(id)) -%}
 {% set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') -%}
+{% set mesh_mac = salt['domain_networking.generate_mac']('mesh', domain, gwbatid, id) %}
 
 # Mesh interfaces for {{ ifname_mesh }} domain {{ domain['domain_id'] }} @ gateway {{ id }}, ifaces: {{ ifinfo }}
 auto {{ ifname_mesh }}
 
 iface {{ ifname_mesh }} inet manual
   pre-up ip link add name {{ ifname_mesh }} type vxlan id {{ domain['vxlan']['id'] }} dev {{ ifinfo['my']['iface'] }} remote {{ ifinfo['other']['ipv6']['address'] }} local {{ ifinfo['my']['ipv6']['address'] }} dstport 4789
+  pre-up ip link set address {{ mesh_mac }} dev {{ ifname_mesh }}
 
   post-up ip link set master {{ ifname_bat }} dev {{ ifname_mesh }}
 

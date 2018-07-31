@@ -32,5 +32,13 @@ def generate_mac(type, domain, host_id, instance_id=None):
       '{0:02d}'.format(domain['domain_id']),
       '{0:02d}'.format(host_id),
       '{0:02d}'.format(instance_id)])
+  elif type == 'mesh':
+    return ":".join([
+      'fc',
+      'e5',
+      '17',
+      '{0:02d}'.format(domain['domain_id']),
+      '{0:02d}'.format(host_id),
+      '{0:02d}'.format(instance_id)])
   else:
     return "INVALID"
