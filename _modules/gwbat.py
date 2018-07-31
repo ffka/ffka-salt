@@ -1,3 +1,5 @@
+from itertools import ifilter
+
 def _get_sites_with_role(sites, role):
     return [site for site in sites if any(role in ifa['roles'] for ifa in site['interfaces'])]
 
