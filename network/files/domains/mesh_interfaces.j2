@@ -4,15 +4,19 @@
 {% set ifinfo = salt['gwbat.find_interface_combination'](gwbatid, id, 'mesh') %}
 
 {% set ifname_mesh = salt['domain_networking.generate_ifname'](domain, 'mesh', 'gw{0:02d}'.format(id)) -%}
+{% set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') -%}
 
 # Mesh interfaces for {{ ifname_mesh }} domain {{ domain['domain_id'] }} @ gateway {{ id }}, ifaces: {{ ifinfo }}
 auto {{ ifname_mesh }}
 
 iface {{ ifname_mesh }} inet manual
-  pre-up ip link add name {{ ifname_mesh }} type vxlan id {{ domain['vxlan']['id'] }} dev {{ ifinfo['my']['iface'] }} remote {{ ifinfo['other']['ipv6']['address'] }} local {{ ifinfo['my']['ipv6']['address'] }} dstport 4789 || true
-  post-down ip link del {{ ifname_mesh }} || true
+  pre-up ip link add name {{ ifname_mesh }} type vxlan id {{ domain['vxlan']['id'] }} dev {{ ifinfo['my']['iface'] }} remote {{ ifinfo['other']['ipv6']['address'] }} local {{ ifinfo['my']['ipv6']['address'] }} dstport 4789
+
+  post-up ip link set master {{ ifname_bat }} dev {{ ifname_mesh }}
+
+  post-down ip link del {{ ifname_mesh }}
 
   ttl 64
-  # mtu
+  mtu {{ domain['network_mtu'] }}
 
 {% endfor %}
