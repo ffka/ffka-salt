@@ -1,13 +1,14 @@
-{% set gwbatid = salt['pillar.get']('gwbatid') %}
+{%- set gwbatid = salt['pillar.get']('gwbatid') -%}
 
 {% for id in salt['pillar.get']('gwbat', {}).keys() if id != gwbatid %}
-{% set ifinfo = salt['gwbat.find_interface_combination'](gwbatid, id, 'mesh') %}
+{%- set ifinfo = salt['gwbat.find_interface_combination'](gwbatid, id, 'mesh') %}
 
-{% set ifname_mesh = salt['domain_networking.generate_ifname'](domain, 'mesh', 'gw{0:02d}'.format(id)) -%}
-{% set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') -%}
-{% set mesh_mac = salt['domain_networking.generate_mac']('mesh', domain, gwbatid, id) %}
+{% if ifinfo['my']['type'] == 'ptp' %}
+{%- set ifname_mesh = salt['domain_networking.generate_ifname'](domain, 'mesh', 'gw{0:02d}'.format(id)) -%}
+{%- set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') -%}
+{%- set mesh_mac = salt['domain_networking.generate_mac']('mesh', domain, gwbatid, id) %}
 
-# Mesh interfaces for {{ ifname_mesh }} domain {{ domain['domain_id'] }} @ gateway {{ id }}, ifaces: {{ ifinfo }}
+# PTP Mesh interfaces {{ ifname_mesh }} for domain {{ domain['domain_id'] }} @ gateway {{ id }}
 auto {{ ifname_mesh }}
 
 iface {{ ifname_mesh }} inet manual
@@ -20,5 +21,30 @@ iface {{ ifname_mesh }} inet manual
 
   ttl 64
   mtu {{ domain['network_mtu'] }}
+{% else %}
+# Link for domain {{ domain['domain_id'] }} to gateway {{ id }} is not a point to point link
+{% endif %}
 
+{% endfor %}
+
+{% for site in salt['pillar.get']('gwbat', {}).get(gwbatid, {}).get('sites', []) %}
+{% for interface in site['interfaces'] if interface['type'] == 'broadcast' and 'mesh' in interface['roles'] %}
+
+{%- set ifname_mesh = salt['domain_networking.generate_ifname'](domain, 'mesh', interface['name']) -%}
+{%- set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') -%}
+{%- set mesh_mac = salt['domain_networking.generate_mac']('mesh', domain, gwbatid, loop.index0 + 128) %}
+
+auto {{ ifname_mesh }}
+
+iface {{ ifname_mesh }} inet manual
+  pre-up ip link add name {{ ifname_mesh }} type vxlan id {{ domain['vxlan']['id'] }} dev {{ interface['iface'] }} dstport 4789 group ff02::15c
+  pre-up ip link set address {{ mesh_mac }} dev {{ ifname_mesh }}
+
+  post-up ip link set master {{ ifname_bat }} dev {{ ifname_mesh }}
+
+  post-down ip link del {{ ifname_mesh }}
+
+  ttl 64
+  mtu {{ domain['network_mtu'] }}
+{% endfor %}
 {% endfor %}
