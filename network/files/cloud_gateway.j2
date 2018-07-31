@@ -53,6 +53,19 @@ iface br_backend inet6 static
     netmask {{ cloud.backend.netmask_v6 }}
 
 # TEMP Network ZKM-Turm
+auto br_gwbat
+iface br_gwbat inet static
+    address 10.214.199.1
+    netmask 255.255.255.0
+    bridge_ports vlan1100
+    up ip route add 10.214.199.0/24 dev br_gwbat table freifunk
+
+iface br_gwbat inet6 static
+    address 2001:678:6e0:1100::1
+    netmask 64
+
+
+# TEMP Network ZKM-Turm
 auto br_turm
 iface br_turm inet static
     address 10.214.200.1
