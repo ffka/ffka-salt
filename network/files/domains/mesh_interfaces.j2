@@ -2,5 +2,17 @@
 
 {% for id in salt['pillar.get']('gwbat', {}).keys() if id != gwbatid %}
 {% set ifinfo = salt['gwbat.find_interface_combination'](gwbatid, id, 'mesh') %}
-# Mesh interfaces for domain {{ domain['domain_id'] }} @ gateway {{ id }}, ifaces: {{ ifinfo }}
+
+{% set ifname_mesh = salt['domain_networking.generate_ifname'](domain, 'mesh', 'gw{0:02d}'.format(id)) -%}
+
+# Mesh interfaces for {{ ifname_mesh }} domain {{ domain['domain_id'] }} @ gateway {{ id }}, ifaces: {{ ifinfo }}
+auto {{ ifname_mesh }}
+
+iface {{ ifname_mesh }} inet manual
+  pre-up ip link add name {{ ifname_mesh }} type vxlan id 777 dev {{ ifinfo['my']['iface'] }} remote {{ ifinfo['other']['ipv6']['address'] }} local {{ ifinfo['my']['ipv6']['address'] }} dstport 777 || true
+  post-down ip link del {{ ifname_mesh }} || true
+
+  ttl 64
+  # mtu
+
 {% endfor %}
