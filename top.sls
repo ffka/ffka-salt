@@ -110,6 +110,7 @@ base:
     - ferm
     - network
     - network.domains
+    - network.domains.mesh
     - fastd
     - fastd.domains
     - dhcpv4

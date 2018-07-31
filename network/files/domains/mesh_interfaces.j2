@@ -1,0 +1,6 @@
+{% set gwbatid = salt['pillar.get']('gwbatid') %}
+
+{% for id in salt['pillar.get']('gwbat', {}).keys() if id != gwbatid %}
+{% set ifinfo = salt['gwbat.find_interface_combination'](gwbatid, id, 'mesh') %}
+# Mesh interfaces for domain {{ domain['domain_id'] }}, ifaces: {{ ifinfo }}
+{% endfor %}

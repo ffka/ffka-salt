@@ -1,6 +1,8 @@
 def generate_ifname(domain, iftype=None, suffix=None):
-  if iftype is None:
+  if iftype is None and suffix is None:
     return 'dom{0:02d}'.format(domain['domain_id'])
+  if iftype is None:
+    return 'dom{0:02d}-{1:s}'.format(domain['domain_id'], suffix)
   if suffix is None:
     return 'dom{0:02d}-{1:s}'.format(domain['domain_id'], iftype)
   return 'dom{0:02d}-{1:s}-{2:s}'.format(domain['domain_id'], iftype, suffix[:3])
