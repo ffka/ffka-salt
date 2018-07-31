@@ -5,7 +5,7 @@ def generate_ifname(domain, iftype=None, suffix=None):
     return 'dom{0:02d}-{1:s}'.format(domain['domain_id'], suffix)
   if suffix is None:
     return 'dom{0:02d}-{1:s}'.format(domain['domain_id'], iftype)
-  return 'dom{0:02d}-{1:s}-{2:s}'.format(domain['domain_id'], iftype, suffix[:3])
+  return 'dom{0:02d}-{1:s}-{2:s}'.format(domain['domain_id'], iftype, suffix[:4])
 
 def generate_mac(type, domain, host_id, instance_id=None):
   if type == 'br':
