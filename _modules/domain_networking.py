@@ -14,31 +14,31 @@ def generate_mac(type, domain, host_id, instance_id=None):
       'cb',
       'ff',
       '00',
-      '{0:02d}'.format(domain['domain_id']),
-      '{0:02d}'.format(host_id)])
+      '{0:02x}'.format(domain['domain_id']),
+      '{0:02x}'.format(host_id)])
   elif type == 'bat':
     return ":".join([
       'fc',
       'ba',
       '1f',
       'ff',
-      '{0:02d}'.format(domain['domain_id']),
-      '{0:02d}'.format(host_id)])
+      '{0:02x}'.format(domain['domain_id']),
+      '{0:02x}'.format(host_id)])
   elif type == 'fastd':
     return ":".join([
       'fc',
       'fa',
       '51',
-      '{0:02d}'.format(domain['domain_id']),
-      '{0:02d}'.format(host_id),
-      '{0:02d}'.format(instance_id)])
+      '{0:02x}'.format(domain['domain_id']),
+      '{0:02x}'.format(host_id),
+      '{0:02x}'.format(instance_id)])
   elif type == 'mesh':
     return ":".join([
       'fc',
       'e5',
       '17',
-      '{0:02d}'.format(domain['domain_id']),
-      '{0:02d}'.format(host_id),
-      '{0:02d}'.format(instance_id)])
+      '{0:02x}'.format(domain['domain_id']),
+      '{0:02x}'.format(host_id),
+      '{0:02x}'.format(instance_id)])
   else:
     return "INVALID"
