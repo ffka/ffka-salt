@@ -1,4 +1,5 @@
 {%- set gwbatid = salt['pillar.get']('gwbatid') -%}
+{%- set gw = salt['pillar.get']('gwbat', {}).get(gwbatid) -%}
 
 {%- set ifname_mesh = salt['domain_networking.generate_ifname'](domain, 'mesh') -%}
 {%- set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') -%}
@@ -7,18 +8,13 @@
 auto {{ ifname_mesh }}
 
 iface {{ ifname_mesh }} inet manual
-  pre-up ip link add name {{ ifname_mesh }} type vxlan id {{ domain['vxlan']['id'] }} dev {{ salt['pillar.get']('domains_config:mesh_interface') }} dstport 4789 group ff02::15c
+  pre-up ip link add name {{ ifname_mesh }} type vxlan id {{ domain['vxlan']['id'] }} dev {{ gw['mesh']['iface'] }} dstport 4789 group ff02::15c
   pre-up ip link set address {{ mesh_mac }} dev {{ ifname_mesh }}
   pre-up ip link set master {{ ifname_bat }} dev {{ ifname_mesh }}
 
-  {%- for id in salt['pillar.get']('gwbat', {}).keys() if id != gwbatid %}
-  {%- set ifinfo = salt['gwbat.find_interface_combination'](gwbatid, id, 'mesh') %}
-
-  {% if ifinfo['my']['type'] == 'ptp' %}
-  post-up bridge fdb append 00:00:00:00:00:00 dev {{ ifname_mesh }} dst {{ ifinfo['other']['ipv6']['address'] }} via {{ ifinfo['my']['iface'] }}
-  {% endif %}
-
-  {% endfor -%}
+  {%- for id, other_gw in salt['pillar.get']('gwbat', {}).items() if id != gwbatid and other_gw['mesh']['name'] != gw['mesh']['name'] %}
+  post-up bridge fdb append 00:00:00:00:00:00 dev {{ ifname_mesh }} dst {{ other_gw['ipv6']['address'] }} via {{ other_gw['ipv6']['iface'] }}
+  {% endfor %}
 
   post-down ip link del {{ ifname_mesh }}
 
