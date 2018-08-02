@@ -7,7 +7,7 @@ iface tap-gwbat inet manual
   pre-up ip link set address {{ 'fc:1a:ff:00:00:{:02x}'.format(gwbatid) }} dev tap-gwbat
 
   {%- for id, other_gw in salt['pillar.get']('gwbat', {}).items() if id != gwbatid and other_gw['mesh']['name'] != gw['mesh']['name'] %}
-  post-up bridge fdb append 00:00:00:00:00:00 dev tap-gwbat dst {{ other_gw['ipv6']['address'] }} via {{ other_gw['ipv6']['iface'] }}
+  post-up bridge fdb append 00:00:00:00:00:00 dev tap-gwbat dst {{ other_gw['ipv6']['address'] }} via {{ gw['ipv6']['iface'] }}
   {% endfor %}
 
   post-down ip link del tap-gwbat
