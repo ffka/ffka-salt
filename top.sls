@@ -120,3 +120,4 @@ base:
     - routing.bird
     - routing.domains
     - routing.domains.radv
+    - kernel.sysctl
