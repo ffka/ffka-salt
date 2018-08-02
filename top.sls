@@ -110,6 +110,7 @@ base:
     - network
     - network.domains
     - network.domains.mesh
+    - network.gwbat_internal
     - fastd
     - fastd.domains
     - dhcpv4
