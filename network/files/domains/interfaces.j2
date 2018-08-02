@@ -18,6 +18,7 @@ iface {{ ifname_br }} inet static
 
 {%- for network in domain.get('ipv6', {}).values() if 'address' in network %}
 iface {{ ifname_br }} inet6 static
+    accept_ra 0
 	address {{ network['address'] }}
 	netmask {{ network['prefixlen'] }}
 	dad-attempts 0
