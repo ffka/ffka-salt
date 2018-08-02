@@ -121,3 +121,4 @@ base:
     - routing.domains
     - routing.domains.radv
     - kernel.sysctl
+    - network.ip_rt_tables_freifunk
