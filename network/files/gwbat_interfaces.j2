@@ -15,3 +15,7 @@ iface tap-gwbat inet manual
   ttl 64
   # MTU 1500 - IPv4 (20) - Gre (4) - IPv6 (40) - UDP (8) - VxLAN (50)
   mtu 1378
+
+iface tap-gwbat inet static
+    address {{ '192.168.200.{:02d}'.format(gwbatid) }}
+    netmask 255.255.255.0
