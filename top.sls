@@ -122,3 +122,4 @@ base:
     - routing.domains.radv
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
+    - routing.domains.device-routes
