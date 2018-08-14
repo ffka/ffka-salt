@@ -84,14 +84,14 @@ module.exports = function () {
     'nodeInfos': [
       {
         'name': 'Clientstatistik',
-        'href': 'http://stats.karlsruhe.freifunk.net/dashboard/file/pernode.json?var-Knotenname={NODE_ID}',
-        'image': 'https://stats.karlsruhe.freifunk.net/render/dashboard-solo/file/pernode.json?panelId=2&from=now-7d&var-Knotenname={NODE_ID}&width=650&height=350&theme=light&_t={TIME}',
+        'href': 'https://monitor.frickelfunk.net/grafana/d/000000002/nodes?refresh=1m&orgId=1&var-node={NODE_ID}&var-saveinterval=60',
+        'image': 'https://monitor.frickelfunk.net/grafana/render/d-solo/000000002/nodes?refresh=1m&orgId=1&var-node={NODE_ID}&var-saveinterval=60&panelId=1&width=650&height=350&theme=light&_t={TIME}',
         'title': 'Knoten {NODE_ID} - weiteren Statistiken'
       },
       {
         'name': 'Trafficstatistik',
-        'href': 'http://stats.karlsruhe.freifunk.net/dashboard/file/pernode.json?var-Knotenname={NODE_ID}',
-        'image': 'https://stats.karlsruhe.freifunk.net/render/dashboard-solo/file/pernode.json?panelId=3&from=now-7d&var-Knotenname={NODE_ID}&width=650&height=350&theme=light&_t={TIME}',
+        'href': 'https://monitor.frickelfunk.net/grafana/d/000000002/nodes?refresh=1m&orgId=1&var-node={NODE_ID}&var-saveinterval=60',
+        'image': 'https://monitor.frickelfunk.net/grafana/render/d-solo/000000002/nodes?refresh=1m&orgId=1&var-node={NODE_ID}&var-saveinterval=60&panelId=2&width=650&height=350&theme=light&_t={TIME}',
         'title': 'Knoten {NODE_ID} - weiteren Statistiken'
       }
     ]
