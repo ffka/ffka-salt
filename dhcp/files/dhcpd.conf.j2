@@ -42,7 +42,7 @@ subnet {{ hood.network.ipv4.net }} netmask {{ hood.network.ipv4.netmask }} {
     range {{ hood['dhcp'][shortname]['range']['from'] }} {{ hood['dhcp'][shortname]['range']['to'] }};
 
     option routers {{ hood['network']['ipv4'][shortname] }};
-    option interface-mtu 1280;
+    option interface-mtu 1320;
     option domain-name-servers {{ network.lo.ipv4.ffrl }},{{ dhcp.dns_secondary }};
     option ubnt.unifi-address 10.214.192.43; ### Unfi controller
 
