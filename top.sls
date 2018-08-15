@@ -123,3 +123,4 @@ base:
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - routing.domains.device-routes
+    - network.tunnel
