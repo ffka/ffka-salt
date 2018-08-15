@@ -1,0 +1,13 @@
+{% set lo_vzffnrmo_v4 = salt['pillar.get']('network:lo:ipv4:vzffnrmo') -%}
+iface lo inet static
+    address {{ lo_vzffnrmo_v4 }}
+    netmask 255.255.255.255
+        up ip rule add to 185.645.241.0/24 table vzffnrmo
+        up ip rule add from 185.645.241.0/24 table vzffnrmo
+
+
+
+{% set lo_vzffnrmo_v6 = salt['pillar.get']('network:lo:ipv6:vzffnrmo') -%}
+iface lo inet6 static
+    address {{ lo_vzffnrmo_v6 }}
+    netmask 128
