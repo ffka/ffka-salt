@@ -50,7 +50,7 @@ base:
     - kernel.backports
     - kernel.sysctl
     - network
-    - network.lo
+    - network.lo_core
     - network.he_tunnel
     - network.cloud_gateway
     - network.gre_ffffm_uplink
