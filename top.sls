@@ -124,3 +124,24 @@ base:
     - network.ip_rt_tables_freifunk
     - routing.domains.device-routes
     - network.tunnel
+  'gwbat*.frickelfunk.net':
+    - kernel.backports
+    - batman
+    - ferm
+    - network
+    - network.domains
+    - network.domains.mesh
+    - network.gwbat_internal
+    - fastd
+    - fastd.domains
+    - dhcpv4
+    - dhcpv4.domains
+    - dhcpv6
+    - dhcpv6.domains
+    - routing.bird
+    - routing.domains
+    - routing.domains.radv
+    - kernel.sysctl
+    - network.ip_rt_tables_freifunk
+    - routing.domains.device-routes
+    - network.tunnel
