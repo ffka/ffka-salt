@@ -1,0 +1,31 @@
+{% set fqdn_ip = salt['grains.get']('fqdn_ip4')[0] -%}
+{% set nat_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
+#
+# Freifunk Karlsruhe
+# NAT and ebtables Rules
+#
+
+
+@def $VZFFNRMO_NAT_IP = {{ fqdn_ip }};
+@def $VZFFNRMO_IF = (
+
+{{ nat_dev }}
+
+);
+
+
+
+
+domain ip table nat {
+
+
+	chain POSTROUTING {
+  {% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
+{% for network in domain.get('ipv4', {}).values() if 'address' in network %}
+		source {{ network['address'] }}/{{ network['netmask'] }} outerface $VZFFNRMO_IF SNAT to $VZFFNRMO_NAT_IP;
+
+  {% endfor %}
+  {% endfor %}
+
+	}
+}
