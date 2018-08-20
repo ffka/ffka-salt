@@ -1,15 +1,14 @@
-{% set fqdn_ip = salt['grains.get']('fqdn_ip4')[0] -%}
-{% set nat_dev = salt['network.ifacestartswith']( fqdn_ip )[0] -%}
+
 #
 # Freifunk Karlsruhe
 # NAT and ebtables Rules
 #
 
 
-@def $VZFFNRMO_NAT_IP = {{ fqdn_ip }};
+@def $VZFFNRMO_NAT_IP = 185.65.241.22;
 @def $VZFFNRMO_IF = (
 
-{{ nat_dev }}
+enp1s0
 
 );
 
