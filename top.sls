@@ -128,6 +128,7 @@ base:
     - kernel.backports
     - batman
     - ferm
+    - ferm.gwbat
     - network
     - network.domains
     - network.domains.mesh
