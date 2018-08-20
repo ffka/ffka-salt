@@ -24,7 +24,7 @@ domain (ip){
 					# mss = transport mtu - (batman-adv + ether) 32 - ipv4 20 - tcp 20
 					{% for domain in salt['pillar.get']('domains', {}).values() %}
           {% set ifname_br = salt['domain_networking.generate_ifname'](domain, 'br') -%}
-              interface {{ ifname_br }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ domain['network_mtu'] - 32 - 20 - 20 }};
+              interface {{ ifname_br }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ domain['network_mtu'] - 20 - 20 }};
 					{% endfor %}
 	        }
 	   }
@@ -37,7 +37,7 @@ domain ip6 {
             # mss = transport mtu - (batman-adv + ether) 32 - ipv6 40 - tcp 20
 						{% for domain in salt['pillar.get']('domains', {}).values() %}
             {% set ifname_br = salt['domain_networking.generate_ifname'](domain, 'br') -%}
-            interface {{ ifname_br }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ domain['network_mtu'] - 32 - 40 - 20 }};
+            interface {{ ifname_br }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ domain['network_mtu'] - 40 - 20 }};
 						{% endfor %}
         }
    }
