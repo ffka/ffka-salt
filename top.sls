@@ -64,6 +64,8 @@ base:
     - ferm.core
     - netflow
     - tflow2.agent
+  'dns*':
+    - unbound
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
