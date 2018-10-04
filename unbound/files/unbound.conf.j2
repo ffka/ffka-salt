@@ -1,7 +1,7 @@
 verbosity: 1
 extended-statistics: yes
 
-interface: 185.65.241.40
+interface: {{ grains.fqdn_ip4[0] }}
 interface: 2001:678:6e0:1001:78c3:97ff:fe9c:c2e0
 
 access-control: 10.214.0.0/16 allow
