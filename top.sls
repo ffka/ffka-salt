@@ -36,6 +36,11 @@ base:
     - network.ip_rt_tables_freifunk
     - network.br_ffka
     - network.gre_ffka
+
+    - network.domains
+    - network.domains.mesh
+    - network.gwbat_internal
+
     - ferm
     - batman
     - network.batman

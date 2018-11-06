@@ -5,11 +5,9 @@
 #
 
 
-@def $VZFFNRMO_NAT_IP = 185.65.241.22;
+@def $VZFFNRMO_NAT_IP = {{ salt['pillar.get']('network:nat_ip') }};
 @def $VZFFNRMO_IF = (
-
-enp1s0
-
+    {{ salt['pillar.get']('network:nat_interfaces') | join(" ") }}
 );
 
 domain (ip ip6) {
@@ -17,11 +15,11 @@ domain (ip ip6) {
         chain FORWARD {
         {% for domain in salt['pillar.get']('domains', {}).values() %}
         {% set ifname_br = salt['domain_networking.generate_ifname'](domain, 'br') -%}
-            interface {{ ifname_br }} saddr ({{ " ".join(nets4 + nets6) }}) {
+            interface {{ ifname_br }} saddr ({{ " ".join(domain.get('ipv4', {}).keys() + domain.get('ipv6', {}).keys()) }}) {
                 proto tcp dport smtp REJECT;
                 ACCEPT;
-        {% endfor %}
             }
+        {% endfor %}
         }
     }
 }
