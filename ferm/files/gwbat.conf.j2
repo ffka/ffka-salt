@@ -20,8 +20,8 @@ domain (ip ip6) {
             interface {{ ifname_br }} saddr ({{ " ".join(domain.get('ipv4', {}).keys() + domain.get('ipv6', {}).keys()) }}) {
                 proto tcp dport smtp REJECT;
                 ACCEPT;
-        {% endfor %}
             }
+        {% endfor %}
         }
     }
 }
