@@ -12,6 +12,19 @@ enp1s0
 
 );
 
+domain (ip ip6) {
+    table filter {
+        chain FORWARD {
+        {% for domain in salt['pillar.get']('domains', {}).values() %}
+        {% set ifname_br = salt['domain_networking.generate_ifname'](domain, 'br') -%}
+            interface {{ ifname_br }} saddr ({{ " ".join(nets4 + nets6) }}) {
+                proto tcp dport smtp REJECT;
+                ACCEPT;
+        {% endfor %}
+            }
+        }
+    }
+}
 
 domain (ip){
  table filter {
