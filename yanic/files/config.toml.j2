@@ -31,6 +31,25 @@ ifname = "br_{{ hoodname }}"
 port = 10001
 {% endfor %}
 
+{% for domain in salt['pillar.get']('domains', {}).values() %}
+{% set ifname_br = salt['domain_networking.generate_ifname'](domain, 'br') -%}
+[[respondd.interfaces]]
+# name of interface on which this collector is running
+ifname = "{{ ifname_br }}"
+# ip address which is used for sending
+# (optional - without definition used a address of ifname)
+#ip_address = "fd2f:5119:f2d::5"
+# disable sending multicast respondd request
+# (for receiving only respondd packages e.g. database respondd)
+#send_no_request = false
+# multicast address to destination of respondd
+# (optional - without definition used batman default ff02::2:1001)
+#multicast_address = "ff05::2:1001"
+# define a port to listen
+# if not set or set to 0 the kernel will use a random free port at its own
+port = 10001
+{% endfor %}
+
 #interfaces = [{% for hoodname,hood in salt['pillar.get']('hoods').items() %}"br_{{ hoodname }}"{% if not loop.last %}, {%endif %}{% endfor %}]
 
 # A little build-in webserver, which statically serves a directory.
