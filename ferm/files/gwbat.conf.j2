@@ -5,11 +5,9 @@
 #
 
 
-@def $VZFFNRMO_NAT_IP = 185.65.241.22;
+@def $VZFFNRMO_NAT_IP = {{ salt['pillar.get']('network:nat_ip') }};
 @def $VZFFNRMO_IF = (
-
-enp1s0
-
+    {{ salt['pillar.get']('network:nat_interfaces') | join(" ") }}
 );
 
 domain (ip ip6) {
