@@ -81,6 +81,7 @@ module.exports = function () {
         'name': 'Westpfalz'
       }
     ],
+    'domainNames': {{ map(lambda (k, v): {'domain': k, 'name': v},salt['domain_networking.domain_names']().items() ) | json }},
     'nodeInfos': [
       {
         'name': 'Clientstatistik',
