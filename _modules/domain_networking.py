@@ -42,3 +42,10 @@ def generate_mac(type, domain, host_id, instance_id=None):
       '{0:02x}'.format(instance_id)])
   else:
     return "INVALID"
+
+def domain_names():
+  domains = {}
+  for domain in __salt__['pillar.get']('domains').values():
+    for code, name in domain['domain_names'].items():
+      domains[code] = name.decode('utf-8')
+  return domains
