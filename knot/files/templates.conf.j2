@@ -9,6 +9,11 @@ template:
     semantic-checks: on
     acl: [entropia_slave_allow_transfer]
     notify: [entropia_master]
+
+  - id: reverse_master   # we are master, no slave
+    storage: /etc/knot/zones/reverse/
+    semantic-checks: on
+
   - id: slave_entropia_master           # we are slave, entropia is master -> allow notify
     storage: /var/lib/knot/zones/
     semantic-checks: off
