@@ -6,8 +6,7 @@ unbound:
     - enable: True
     - reload: True
     - watch:
-      - file: /etc/unbound/unbound.conf.d/ffka.conf
-
+      - file: /etc/unbound/unbound.conf.d/*
 
 /etc/unbound/unbound.conf.d/ffka.conf:
   file.managed:
