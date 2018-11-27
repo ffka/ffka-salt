@@ -1,17 +1,18 @@
 server:
-    {% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
+    {%- for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
     {% for net in domain.get('ipv4', {}).keys() %}
     access-control-view: {{ net }} {{ domain_id }}
-    {% endfor %}
+    {% endfor -%}
     {% for net in domain.get('ipv6', {}).keys() %}
     access-control-view: {{ net }} {{ domain_id }}
-    {% endfor %}
-    {% endfor %}
+    {% endfor -%}
+    {% endfor -%}
 
 
 {% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
 view:
     name: "{{ domain_id }}"
     local-zone: "nextnode.ffka.space." static
-    local-data: "nextnode.ffka.space. IN A 1.2.3.4"
+    local-data: "nextnode.ffka.space. IN A {{ domain['dns']['nextnode4'] }}"
+    local-data: "nextnode.ffka.space. IN AAAA {{ domain['dns']['nextnode6'] }}"
 {% endfor %}
