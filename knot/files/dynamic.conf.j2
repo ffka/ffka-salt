@@ -1,4 +1,20 @@
 mod-synthrecord:
+  
+{% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
+{%- set main_network = domain['ipv6'].keys()[0] -%}
+  - id: {{ domain_id }}_forward
+    type: forward
+    prefix: dynamic-
+    ttl: 400
+    network: {{ main_network }}
+  - id: {{ domain_id }}_reverse
+    type: reverse
+    prefix: dynamic-
+    origin: {{ domain_id }}.ffka-ipconnect.de
+    ttl: 400
+    network: {{ main_network }}
+{% endfor %}
+
   - id: 6e3_forward
     type: forward
     prefix: dynamic-
