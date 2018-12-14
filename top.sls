@@ -17,7 +17,7 @@ base:
     - network.tunnel
     - routing
     - routing.albufer
-    - routing.gateway_bat
+    - routing.albufer_gateway_bat
     - batman
     - network.batman
     - ntp
@@ -62,8 +62,8 @@ base:
     - network.tunnel
     - routing
     - routing.core
+    - routing.core.core_bat
     - routing.cloud_gateway
-    - routing.core_bat
     - snmpd
     - ferm
     - ferm.core
@@ -125,8 +125,10 @@ base:
     - dhcpv6
     - dhcpv6.domains
     - routing.bird
-    - routing.domains
-    - routing.domains.radv
+    - routing.gwbat.kernel_as202329
+    - routing.gwbat.bat_core
+    - routing.gwbat.domains
+    - routing.gwbat.domains.radv
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - routing.domains.device-routes
@@ -147,9 +149,11 @@ base:
     - dhcpv6
     - dhcpv6.domains
     - routing.bird
-    - routing.domains
-    - routing.domains.radv
+    - routing.gwbat.kernel_as202329
+    - routing.gwbat.bat_core
+    - routing.gwbat.domains
+    - routing.gwbat.domains.radv
+    - routing.gwbat.domains.device-routes
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
-    - routing.domains.device-routes
     - network.tunnel

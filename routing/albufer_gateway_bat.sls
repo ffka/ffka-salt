@@ -5,7 +5,7 @@
     - group: bird
     - mode: 644
     - template: jinja
-    - source: salt://routing/files/{{ bird }}.d/gateway-bat.conf
+    - source: salt://routing/files/{{ bird }}.d/albufer-gateway-bat.conf
     - watch_in:
       - service: {{ bird }}
     - require:

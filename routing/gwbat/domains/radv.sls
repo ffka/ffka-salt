@@ -1,7 +1,7 @@
 {% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
 /etc/bird/bird6.d/62-radv-{{ domain_id }}.conf:
   file.managed:
-    - source: salt://routing/files/bird6.d/radv-domain.conf.j2
+    - source: salt://routing/files/bird6.d/gwbat/domains-radv.conf
     - template: jinja
     - user: bird
     - group: bird
