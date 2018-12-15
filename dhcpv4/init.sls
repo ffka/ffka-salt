@@ -43,7 +43,7 @@ kea-dhcp4-server:
 kea-dhcp4-server.service:
   service.running:
     - enable: True
-    - reload: True
+    - restart: True
     - watch:
       - pkg: kea-dhcp4-server
       - file: /etc/kea/kea-dhcp4.conf
