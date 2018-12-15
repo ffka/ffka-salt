@@ -1,0 +1,17 @@
+[Unit]
+Description=Domain-Director - Directing ALL THE NODS
+Wants=network.target
+After=network.target
+
+[Service]
+Type=simple
+User=director
+Group=director
+WorkingDirectory=/var/lib/director/domain-director
+ExecStart=/var/lib/director/venv/bin/python3 -m domain_director --config /etc/domain-director/config.yml
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+
