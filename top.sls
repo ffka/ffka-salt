@@ -157,5 +157,5 @@ base:
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - network.tunnel
-  'domain-director.frickelfunk.net:
+  'domain-director.frickelfunk.net':
     - domain-director
