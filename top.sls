@@ -25,7 +25,6 @@ base:
     - ferm.gw
     - mesh_vpn
     - mesh_vpn.server
-    - radvd
     - dhcp
     - dns
     - mesh_announce
