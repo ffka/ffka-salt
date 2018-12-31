@@ -15,6 +15,12 @@ server {
         autoindex on;
     }
 
+	location /firmware {
+        try_files $uri $uri/ =404;
+				alias /srv/firmware/images;
+	      autoindex on;
+	  }
+
     location / {
         return 404;
     }
