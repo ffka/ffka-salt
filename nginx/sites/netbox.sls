@@ -1,6 +1,6 @@
 {% macro custom_states(name, vhost, domainset) -%}
 
-{%- set netbox_version = "v2.2.8" -%}
+{%- set netbox_version = "v2.5.2" -%}
 {%- set netbox_postgres_version = "9.6-alpine" -%}
 
 {% for dir in ["database", "media", "reports"] %}
