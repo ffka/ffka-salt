@@ -35,11 +35,9 @@ base:
     - network.ip_rt_tables_freifunk
     - network.br_ffka
     - network.gre_ffka
-
     - network.domains
     - network.domains.mesh
     - network.gwbat_internal
-
     - ferm
     - batman
     - network.batman
@@ -50,7 +48,7 @@ base:
     - hopglass.server
     - docker
     - influxdb
-  'core*':
+  'core0.zkm.ka*':
     - kernel.backports
     - kernel.sysctl
     - network
@@ -68,6 +66,18 @@ base:
     - ferm.core
     - netflow
     - tflow2.agent
+  'core1.zkm.ka*':
+    - kernel.backports
+    - kernel.sysctl
+    - network
+    - network.tunnel
+    - routing
+  'edge.ntsltr.fra*':
+    - kernel.backports
+    - kernel.sysctl
+    - network
+    - network.tunnel   
+    - routing
   'dns*':
     - unbound
   'monitor.frickelfunk.net':
