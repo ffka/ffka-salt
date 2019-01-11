@@ -2,16 +2,6 @@
   file.managed:
     - source: salt://kernel/files/stretch-backports-kernel
     - template: jinja
-    - require_in:
-      - pkg: packages_kernel
-
-
-stretch_backports:
-  pkgrepo.managed:
-    - humanname: stretch_backports
-    - name: deb http://ftp.debian.org/debian stretch-backports main
-    - file: /etc/apt/sources.list.d/backports.list
-
 
 packages_kernel:
   pkg.latest:
@@ -20,3 +10,6 @@ packages_kernel:
     - pkgs:
       - linux-image-amd64
       - linux-headers-amd64
+    - require:
+      - pkgrepo: stretch_backports
+      - file: /etc/apt/preferences.d/stretch-backports-kernel
