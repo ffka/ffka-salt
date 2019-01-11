@@ -4,6 +4,7 @@ base:
     - common.datetime
     - common.ffkaadmin
     - common.sudo
+    - common.backport_repo
     - netdata
   'albufer*':
     - kernel.backports
