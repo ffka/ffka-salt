@@ -4,11 +4,6 @@ golang:
   pkg.installed:
     - fromrepo: stretch-backports
 
-# manage the `go` symlink manually as golang-go is too opinionated about
-# which go version to choose and cannot be reconfigured.
-golang-go:
-  pkg.purged
-
 /usr/bin/go:
   file.symlink:
     - target: /usr/lib/go-{{ go_version }}/bin/go
