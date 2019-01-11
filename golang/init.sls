@@ -1,6 +1,6 @@
 {% set go_version = "1.10" %}
 
-golang-{{ go_version }}:
+golang:
   pkg.installed:
     - fromrepo: stretch-backports
 
