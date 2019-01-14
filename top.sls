@@ -72,12 +72,14 @@ base:
     - kernel.sysctl
     - network
     - network.tunnel
+    - network.lo_core
     - routing
   'edge.ntsltr.fra*':
     - kernel.backports
     - kernel.sysctl
     - network
-    - network.tunnel   
+    - network.tunnel
+    - network.lo_core   
     - routing
   'dns*':
     - unbound
