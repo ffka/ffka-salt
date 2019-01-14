@@ -42,7 +42,7 @@ service {{ bird }}:
     - group: bird
     - mode: 644
     - template: jinja
-    - source: salt://routing/bird6.d/backbone/ospf6.conf
+    - source: salt://routing/files/bird6.d/backbone/ospf6.conf
     - require:
       - pkg: bird
       - user: bird
