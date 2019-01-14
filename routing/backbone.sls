@@ -18,7 +18,7 @@ bird:
     - group: bird
     - mode: 644
     - template: jinja
-    - source: salt://routing/files/{{ bird }}.d/backbone/bird6.conf
+    - source: salt://routing/files/{{ bird }}.d/backbone/{{ bird }}.conf
     - require:
       - pkg: bird
       - user: bird
