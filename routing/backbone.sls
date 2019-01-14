@@ -46,4 +46,4 @@ service {{ bird }}:
     - require:
       - pkg: bird
       - user: bird
-      - file: /etc/bird/{{ bird }}.d
+      - file: /etc/bird/bird6.d
