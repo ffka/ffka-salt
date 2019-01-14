@@ -35,3 +35,15 @@ service {{ bird }}:
       - /etc/bird/{{ bird }}.conf
       - /etc/bird/{{ bird }}.d/*.conf
 {% endfor %}
+
+/etc/bird/bird6.d/ospf6.conf:
+  file.managed:
+    - user: bird
+    - group: bird
+    - mode: 644
+    - template: jinja
+    - source: salt://routing/bird6.d/backbone/ospf6.conf
+    - require:
+      - pkg: bird
+      - user: bird
+      - file: /etc/bird/{{ bird }}.d
