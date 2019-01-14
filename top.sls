@@ -73,7 +73,6 @@ base:
     - network
     - network.tunnel
     - network.lo_core
-    - routing
     - routing.backbone
   'edge.ntsltr.fra*':
     - kernel.backports
@@ -81,7 +80,6 @@ base:
     - network
     - network.tunnel
     - network.lo_core
-    - routing
     - routing.backbone
   'dns*':
     - unbound
