@@ -74,13 +74,15 @@ base:
     - network.tunnel
     - network.lo_core
     - routing
+    - routing.backbone
   'edge.ntsltr.fra*':
     - kernel.backports
     - kernel.sysctl
     - network
     - network.tunnel
-    - network.lo_core   
+    - network.lo_core
     - routing
+    - routing.backbone
   'dns*':
     - unbound
   'monitor.frickelfunk.net':
