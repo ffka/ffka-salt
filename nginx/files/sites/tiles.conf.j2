@@ -1,4 +1,4 @@
-proxy_cache_path /var/www/tilecache/new levels=1:2 inactive=3d keys_zone=new_tilecache:64m max_size=4096M;
+proxy_cache_path /var/www/tilecache/new levels=1:2 inactive=7d keys_zone=new_tilecache:256m max_size=4096M;
 
 server {
     listen 80;
@@ -36,7 +36,8 @@ server {
 
         resolver 1.1.1.1 ipv6=off;
         if ($provider = "giscience") {
-            proxy_pass "http://korona.geog.uni-heidelberg.de/tiles/roads/x=$tile_x&y=$tile_y&z=$tile_z";
+            #proxy_pass "https://korona.geog.uni-heidelberg.de/tiles/roads/x=$tile_x&y=$tile_y&z=$tile_z&api_key=5b3ce3597851110001cf624807d1d7567ae24baeb813266414a48c82";
+            proxy_pass "http://api.openrouteservice.org/mapsurfer/$tile_z/$tile_x/$tile_y.png?api_key=5b3ce3597851110001cf624807d1d7567ae24baeb813266414a48c82";
         }
         if ($provider = "ffrgb-day") {
             proxy_pass "https://1.tiles.ffrgb.net/$tile_z/$tile_x/$tile_y$retina.png";
@@ -45,27 +46,31 @@ server {
             proxy_pass "https://2.tiles.ffrgb.net/n/$tile_z/$tile_x/$tile_y$retina.png";
         }
 
-        proxy_http_version    1.1;
-        proxy_set_header    Connection "";
-        proxy_set_header    Accept-Encoding "";
-        proxy_set_header    User-Agent "Mozilla/5.0 (compatible; OSMTileCache/1.0; +mailto:info@karlsruhe.freifunk.net; +https://karlsruhe.freifunk.net/karte)";
+        proxy_http_version              1.1;
+        proxy_set_header                Connection "";
+        #proxy_set_header               Accept-Encoding "";
+        proxy_set_header                User-Agent "Mozilla/5.0 (compatible; OSMTileCache/1.0; +mailto:info@karlsruhe.freifunk.net; +https://karlsruhe.freifunk.net/karte)";
 
-        proxy_temp_path     /var/www/tilecache/temp;
-        proxy_cache         new_tilecache;
-        proxy_store         off;
-        proxy_cache_key     $uri$is_args$args;
-        proxy_ignore_headers Expires Cache-Control;
-        proxy_cache_valid   200 301 302 7d;
-        proxy_cache_valid   404 1m;
-        proxy_cache_valid   any 1m;
-        proxy_next_upstream   error timeout invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
-        proxy_cache_use_stale error timeout updating invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
+        proxy_temp_path                 /var/www/tilecache/temp;
+        proxy_cache                     new_tilecache;
+        proxy_store                     off;
+        proxy_cache_key                 $uri$is_args$args;
+        proxy_ignore_headers            Expires Cache-Control;
+        proxy_cache_valid               200 1m;
+        proxy_cache_valid               301 302 2h;
+        proxy_cache_valid               404 14d;
+        proxy_cache_valid               any 6h;
+        proxy_intercept_errors          on;
+        proxy_read_timeout              15s;
+        error_page                      301 302 303 307 308 400 401 402 403 404 405 406 407 408 415 416 500 501 502 503 504 =503 /var/www/tilecache/error.png;
+        proxy_next_upstream             error timeout invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
+        proxy_cache_use_stale           error timeout updating invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
 
         proxy_hide_header   Via;
         proxy_hide_header   X-Cache;
         proxy_hide_header   X-Cache-Lookup;
 
-        expires 7d;
+        expires 14d;
     }
 
     location / {
