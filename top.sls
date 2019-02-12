@@ -77,6 +77,7 @@ base:
   'edge.ntsltr.fra*':
     - kernel.backports
     - kernel.sysctl
+    - iproute2.backports
     - network
     - network.tunnel
     - network.lo_core
