@@ -1,8 +1,10 @@
+auto dummy
 {% set lo_vzffnrmo_v4 = salt['pillar.get']('network:lo:ipv4:vzffnrmo') -%}
 iface dummy inet static
     address {{ lo_vzffnrmo_v4 }}
     netmask 255.255.255.255
-
+    pre-up ip link add $IFACE type dummy
+    post-up ip link set master vrf-as202329 dev $IFACE
 
 {% set lo_vzffnrmo_v6 = salt['pillar.get']('network:lo:ipv6:vzffnrmo') -%}
 iface dummy inet6 static
