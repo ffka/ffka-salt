@@ -73,7 +73,7 @@ base:
     - network
     - network.tunnel
     - network.lo_core
-    - routing.backbone
+    - routing.bird2
   'edge.ntsltr.fra*':
     - kernel.backports
     - kernel.sysctl
