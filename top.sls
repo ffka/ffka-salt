@@ -75,7 +75,6 @@ base:
     - network.tunnel
     - network.lo_core
     - routing.bird2
-    - routing.bird2.ibgp
   'edge.ntsltr.fra*':
     - kernel.backports
     - kernel.sysctl
@@ -84,7 +83,6 @@ base:
     - network.tunnel
     - network.lo_core
     - routing.bird2
-    - routing.bird2.ibgp
   'dns*':
     - unbound
   'monitor.frickelfunk.net':

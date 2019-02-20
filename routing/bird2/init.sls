@@ -52,3 +52,7 @@ bird2.service:
     - require:
       - file: /etc/bird2/bird.d/
 {% endfor %}
+
+include:
+  - routing.bird2.ibgp
+  - routing.bird2.ebgp
