@@ -8,7 +8,7 @@
     - template: jinja
     - user: root
     - group: root
-    - mode: 440
+    - mode: 644
     - context:
         name: {{ name }}
         gw: {{ gw | yaml }}

@@ -29,7 +29,7 @@ bird2.service:
         include "bird.d/*.conf";
     - user: root
     - group: root
-    - mode: 440
+    - mode: 664
     - require:
       - file: /etc/bird2/bird.d/
 
@@ -48,7 +48,7 @@ bird2.service:
     - template: jinja
     - user: root
     - group: root
-    - mode: 440
+    - mode: 644
     - require:
       - file: /etc/bird2/bird.d/
 {% endfor %}
