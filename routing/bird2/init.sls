@@ -37,6 +37,7 @@ bird2.service:
 /etc/bird2/bird.d/{{ file }}.conf:
   file.managed:
     - source: salt://routing/files/bird2/bird.d/{{ file }}.conf
+    - template: jinja
     - user: root
     - group: root
     - mode: 440
