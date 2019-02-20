@@ -183,3 +183,9 @@ net.ipv4.conf.all.accept_redirects:
   sysctl.present:
     - value: 1
     - config: {{ sysctld }}/ipv4.conf
+
+# VRF no lose IPv6 Magic
+net.ipv6.conf.all.keep_addr_on_down:
+  sysctl.present:
+    - value: 1
+    - config: {{ sysctld }}/vrf.conf
