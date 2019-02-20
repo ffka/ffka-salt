@@ -33,7 +33,7 @@ bird2.service:
     - require:
       - file: /etc/bird2/bird.d/
 
-{% for dir in ["transits", "peerings", "customers", "ibgp"] %}
+{% for dir in ["transits", "ixps", "peerings", "customers", "ibgp"] %}
 /etc/bird2/bird.d/{{ dir }}/:
   file.directory:
     - mode: 644
