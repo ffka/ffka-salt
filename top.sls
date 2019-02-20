@@ -16,7 +16,7 @@ base:
     - network.gre_ffrl
     - network.lo
     - network.tunnel
-    - routing
+    - routing.bird
     - routing.albufer
     - routing.albufer_gateway_bat
     - batman
@@ -58,7 +58,7 @@ base:
     - network.cloud_gateway
     - network.gre_ffffm_uplink
     - network.tunnel
-    - routing
+    - routing.bird
     - routing.core
     - routing.core.core_bat
     - routing.cloud_gateway
@@ -81,7 +81,7 @@ base:
     - network
     - network.tunnel
     - network.lo_core
-    - routing.backbone
+    - routing.bird2
   'dns*':
     - unbound
   'monitor.frickelfunk.net':
