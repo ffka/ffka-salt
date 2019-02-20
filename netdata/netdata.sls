@@ -22,6 +22,7 @@ netdatarepo:
     - rev: master
     - target: /root/netdatagit
     - force_reset: True
+    - force_fetch: True
     - require:
       - pkg: netdatarequisites
 
