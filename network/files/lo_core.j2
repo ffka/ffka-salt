@@ -5,6 +5,7 @@ iface dummy inet static
     netmask 255.255.255.255
     pre-up ip link add $IFACE type dummy
     post-up ip link set master vrf-as202329 dev $IFACE
+    post-down ip link del $IFACE
 
 {% set lo_vzffnrmo_v6 = salt['pillar.get']('network:lo:ipv6:vzffnrmo') -%}
 iface dummy inet6 static
