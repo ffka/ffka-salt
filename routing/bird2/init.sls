@@ -8,6 +8,11 @@ bird:
     - group: root
     - mode: 644
 
+/etc/bird2/bird.d/:
+  file.directory:
+    - mode: 644
+    - makedirs: True
+
 bird2.service:
   service.running:
     - enable: True
@@ -25,6 +30,8 @@ bird2.service:
     - user: root
     - group: root
     - mode: 440
+    - require:
+      - file: /etc/bird2/bird.d/
 
 {% for file in ["05-communities", "06-constants", "10-basic-settings", "20-basic-protocols", "25-igp", "30-policy-communities", "31-policy-ebgp-in-basic", "31-policy-ebgp-out-basic", "39-policy-ebpg", "39-policy-ibgp", "40-bgp-base", "45-bgp-sessions"] %}
 /etc/bird2/bird.d/{{ file }}.conf:
@@ -33,4 +40,6 @@ bird2.service:
     - user: root
     - group: root
     - mode: 440
+    - require:
+      - file: /etc/bird2/bird.d/
 {% endfor %}
