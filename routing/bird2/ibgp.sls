@@ -10,7 +10,7 @@
     - group: root
     - mode: 440
     - context:
-    	name: {{ name }}
+        name: {{ name }}
         gw: {{ gw | yaml }}
         other_name: {{ other_name }}
         other_gw: {{ other_gw | yaml }}
