@@ -33,7 +33,7 @@ bird2.service:
     - require:
       - file: /etc/bird2/bird.d/
 
-{% for dir in ["transits", "ixps", "peerings", "customers", "ibgp"] %}
+{% for dir in ["transits", "ixps", "peerings", "customers", "ibgp", "internal_downstreams"] %}
 /etc/bird2/bird.d/{{ dir }}/:
   file.directory:
     - mode: 644
@@ -41,7 +41,7 @@ bird2.service:
       - file: /etc/bird2/bird.d/
 {% endfor %}
 
-{% for file in ["05-communities", "06-constants", "10-basic-settings", "20-basic-protocols", "25-igp", "30-policy-communities", "31-policy-ebgp-in-basic", "31-policy-ebgp-out-basic", "39-policy-ebpg", "39-policy-ibgp", "40-bgp-base", "45-bgp-sessions"] %}
+{% for file in ["05-communities", "06-constants", "10-basic-settings", "20-basic-protocols", "25-igp", "30-policy-communities", "31-policy-ebgp-in-basic", "31-policy-ebgp-out-basic", "31-policy-ibgp-in-basic", "39-policy-ebpg", "39-policy-ibgp", "40-bgp-base", "45-bgp-sessions"] %}
 /etc/bird2/bird.d/{{ file }}.conf:
   file.managed:
     - source: salt://routing/files/bird2/bird.d/{{ file }}.conf
