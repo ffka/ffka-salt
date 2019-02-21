@@ -106,7 +106,7 @@ base:
   'unms.frickelfunk.net':
     - docker
     - unms
-  'runner-vm* or gitlab-runner-nitrado.frickelfunk.net or build1.ffka.net':
+  'runner-vm*':
     - gitlab.runner
     - docker
     - ferm
@@ -120,34 +120,6 @@ base:
     - zammad
     - nginx
     - certbot
-  'testbed.frickelfunk.net':
-    - jool
-    - netflow
-    - ferm
-    - network.tunnel
-  'gwbattb*.frickelfunk.net':
-    - kernel.backports
-    - batman
-    - ferm
-    - network
-    - network.domains
-    - network.domains.mesh
-    - network.gwbat_internal
-    - fastd
-    - fastd.domains
-    - dhcpv4
-    - dhcpv4.domains
-    - dhcpv6
-    - dhcpv6.domains
-    - routing.bird
-    - routing.gwbat.kernel_as202329
-    - routing.gwbat.bat_core
-    - routing.gwbat.domains
-    - routing.gwbat.domains.radv
-    - kernel.sysctl
-    - network.ip_rt_tables_freifunk
-    - routing.domains.device-routes
-    - network.tunnel
   'gwbat*.frickelfunk.net':
     - kernel.backports
     - batman
