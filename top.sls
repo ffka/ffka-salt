@@ -73,6 +73,7 @@ base:
     - iproute2.backports
     - network
     - network.tunnel
+    - network.he_tunnel
     - network.lo_core
     - routing.bird2
   'edge.ntsltr.fra*':
