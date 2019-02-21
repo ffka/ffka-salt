@@ -11,7 +11,7 @@ iface tun-{{ name }} inet tunnel
   {% elif tunnel.type == 'gre' %}
 iface tun-{{ name }} inet tunnel
   mode gre
-  local {{ tunnel.gre.local | default(grains.fqdn_ip[0]) }}
+  local {{ tunnel.gre.local | default(grains.fqdn_ip4[0]) }}
   endpoint {{ tunnel.gre.endpoint }}
   {% elif tunnel.type == 'vxlan' %}
 iface tun-{{ name }} inet static
