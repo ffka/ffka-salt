@@ -1,7 +1,7 @@
 {%- for name, peer in salt['pillar.get']('routing:ebgp', {}).items() %}
 /etc/bird2/bird.d/{{ peer['type'] }}s/{{ name }}.conf:
   file.managed:
-    - source: salt://routing/files/bird2/{{ peer['type'] }}.conf
+    - source: salt://routing/files/bird2/session_templates/{{ peer['type'] }}.conf
     - template: jinja
     - user: root
     - group: root
