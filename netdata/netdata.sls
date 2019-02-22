@@ -32,7 +32,7 @@ netdatainstall:
     - pkg: netdatarequisites
   cmd.run:
     - cwd: /root/netdatagit
-    - name: ./netdata-installer.sh --dont-wait --auto-update
+    - name: /bin/bash netdata-installer.sh --dont-wait --auto-update
     - unless: test -f ./netdata-updater.sh
 
 netdataupdate:
@@ -40,7 +40,7 @@ netdataupdate:
     - cmd: netdatainstall
   cmd.run:
     - cwd: /root/netdatagit
-    - name: ./netdata-updater.sh
+    - name: /bin/bash netdata-updater.sh
     - onlyif: test -f ./netdata-updater.sh
     - onchanges:
       - git: netdatarepo
