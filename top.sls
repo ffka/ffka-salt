@@ -73,6 +73,7 @@ base:
     - routing.bird2
   'cloud-router.zkm.ka.frickelfunk.net':
     - routing.bird
+    - routing.cloud_router
   'edge.ntsltr.fra*':
     - kernel.backports
     - kernel.sysctl
