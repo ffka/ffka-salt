@@ -49,15 +49,16 @@ base:
     - hopglass.server
     - docker
     - influxdb
-  'core0.zkm.ka*':
+  'core*.zkm.ka*':
     - kernel.backports
     - kernel.sysctl
     - network
-    - network.lo_core
     - network.he_tunnel
+    - network.lo_core
+    - network.tunnel
+  'core0.zkm.ka*':
     - network.cloud_gateway
     - network.gre_ffffm_uplink
-    - network.tunnel
     - routing.bird
     - routing.core
     - routing.core.core_bat
@@ -68,14 +69,10 @@ base:
     - netflow
     - tflow2.agent
   'core1.zkm.ka*':
-    - kernel.backports
-    - kernel.sysctl
     - iproute2.backports
-    - network
-    - network.tunnel
-    - network.he_tunnel
-    - network.lo_core
     - routing.bird2
+  'cloud-router.zkm.ka.frickelfunk.net':
+    - routing.bird
   'edge.ntsltr.fra*':
     - kernel.backports
     - kernel.sysctl
