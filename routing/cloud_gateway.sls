@@ -1,3 +1,4 @@
+# This state will be deleted once core0 is mighrated to the new backbone
 {% for bird in ['bird','bird6'] %}
 /etc/bird/{{ bird }}.d/50-cloud-gateway.conf:
   file.managed:
