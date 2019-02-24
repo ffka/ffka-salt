@@ -30,7 +30,6 @@ base:
     - dns
     - mesh_announce
     - nat64
-    - kea_dhcp
   'api.frickelfunk.net':
     - network
     - network.ip_rt_tables_freifunk
