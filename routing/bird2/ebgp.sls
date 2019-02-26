@@ -13,9 +13,9 @@
       - file: /etc/bird2/bird.d/{{ peer['type'] }}s/
 {% endfor %}
 
-/etc/bird2/bird.d/22-basic-protocols-originated-prefixes.conf:
+/etc/bird2/bird.d/41-basic-protocols-originated-prefixes.conf:
   file.managed:
-    - source: salt://routing/files/bird2/bird.d/22-basic-protocols-originated-prefixes.conf
+    - source: salt://routing/files/bird2/bird.d/41-basic-protocols-originated-prefixes.conf
     - template: jinja
     - user: root
     - group: root
