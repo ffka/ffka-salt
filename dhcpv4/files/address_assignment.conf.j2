@@ -1,0 +1,29 @@
+{% for net in interface.get('ipv4', {}).values() %}
+{
+    "subnet": "{{ net['prefix'] }}",
+
+    "pools": [
+        {%- for pool in net.get('dhcpv4', {}).get('pools', []) %} { "pool": "{{ pool['first'] }} - {{ pool['last'] }}" }{% if not loop.last %}, {% endif %} {% endfor -%}
+    ],
+
+    "option-data": [
+        {
+            "name": "routers",
+            "data": "{{ net['address'] }}"
+        },
+        {
+            "name": "domain-name-servers",
+            "data": "{% for ns4 in interface['dns']['nameservers4'] %}{{ ns4 }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        },
+        {
+            "name": "domain-name",
+            "data": "{{ interface['dns']['domain'] }}"
+        },
+        {
+            "name": "domain-search",
+            "data": "{% for sd in interface['dns']['search'] %}{{ sd }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        }
+    ]
+}
+{%- if not loop.last %}, {% endif %}
+{%- endfor %}
