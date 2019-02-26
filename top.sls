@@ -142,7 +142,7 @@ base:
     - routing.gwbat.domains
     - routing.gwbat.domains.radv
     - routing.gwbat.domains.device-routes
-    - routing.internal_upstream
+    - routing.gwbat.internal_upstream
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - network.tunnel
