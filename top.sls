@@ -74,7 +74,7 @@ base:
     - kernel.backports
     - kernel.sysctl
     - routing.bird
-    - routing.cloud_router
+    - routing.internal_upstream
     - dhcpv4
     - dhcpv4.address_assignment
   'edge.ntsltr.fra*':
@@ -142,6 +142,7 @@ base:
     - routing.gwbat.domains
     - routing.gwbat.domains.radv
     - routing.gwbat.domains.device-routes
+    - routing.internal_upstream
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - network.tunnel

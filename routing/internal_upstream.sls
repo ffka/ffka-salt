@@ -1,9 +1,9 @@
 {%- for bird, af in [['bird', 'ipv4'], ['bird6', 'ipv6']] %}
 {% for name, peer in salt['pillar.get']('routing:internal_upstream', {}).items() %}
 
-/etc/bird/{{ bird }}.d/50-cloud-router-upstream-{{ name }}.conf:
+/etc/bird/{{ bird }}.d/51-internal-upstream-{{ name }}.conf:
   file.managed:
-    - source: salt://routing/files/{{ bird }}.d/cloud-router.conf
+    - source: salt://routing/files/{{ bird }}.d/internal-upstream.conf
     - user: bird
     - group: bird
     - mode: 644
