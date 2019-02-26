@@ -24,7 +24,7 @@
     - group: bird
     - mode: 644
     - template: jinja
-    - source: salt://routing/files/bird6.d/radv.conf
+    - source: salt://routing/files/bird6.d/radv_hoods.conf
     - context:
         network: {{ pillar['network'] }}
         ffka: {{ pillar['ffka'] }}
