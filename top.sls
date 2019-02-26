@@ -71,6 +71,8 @@ base:
     - iproute2.backports
     - routing.bird2
   'cloud-router.zkm.ka.frickelfunk.net':
+    - kernel.backports
+    - kernel.sysctl
     - routing.bird
     - routing.cloud_router
   'edge.ntsltr.fra*':
