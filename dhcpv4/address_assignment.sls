@@ -5,7 +5,7 @@
     - require:
       - pkg: kea-dhcp4-server
 
-{% for interface_name, domain in salt['pillar.get']('address_assignment', {}).items() %}
+{% for interface_name, interface in salt['pillar.get']('address_assignment', {}).items() %}
 dhcpv4 @ {{ interface_name }}:
   file.accumulated:
     - name: dhcpv4-interfaces
