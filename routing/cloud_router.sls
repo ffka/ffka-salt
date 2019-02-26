@@ -1,7 +1,7 @@
 {% for bird in ['bird','bird6'] %}
 /etc/bird/{{ bird }}.d/50-internal-upstreams-basic.conf:
   file.managed:
-    - content: |
+    - contents: |
         template bgp internal_upstream {
         };
     - user: bird
