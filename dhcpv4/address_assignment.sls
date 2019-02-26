@@ -22,7 +22,7 @@ dhcpv4 @ {{ interface_name }}:
     - group: root
     - mode: 600
     - context:
-      domain: {{ interface }}
+      interface: {{ interface }}
     - require:
       - pkg: kea-dhcp4-server
       - file: /etc/kea/dhcp4-interfaces
