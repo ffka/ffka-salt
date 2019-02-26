@@ -15,5 +15,6 @@
       - service: {{ bird }}
 {% endfor %}
 
-include:
+include: 
   - routing.internal_upstream
+  - routing.radv
