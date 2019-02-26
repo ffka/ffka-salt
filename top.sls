@@ -75,6 +75,8 @@ base:
     - kernel.sysctl
     - routing.bird
     - routing.cloud_router
+    - dhcpv4
+    - dhcpv4.address_assignment
   'edge.ntsltr.fra*':
     - kernel.backports
     - kernel.sysctl
