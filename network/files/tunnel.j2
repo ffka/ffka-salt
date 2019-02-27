@@ -21,6 +21,10 @@ iface tun-{{ name }} inet static
   post-down ip link del tun-{{ name }} || true
   {% endif -%}
 
+  {%- if tunnel.get('vrf', False) %}
+  post-up ip link set master {{ tunnel.vrf }} dev tun-{{ name }} || true
+  {% endif %}
+
   netmask {{ tunnel.ipv4.netmask | default('255.255.255.255') }}
   address {{ tunnel.ipv4.local_address }}
   dstaddr {{ tunnel.ipv4.remote_address }}
