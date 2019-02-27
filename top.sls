@@ -52,12 +52,12 @@ base:
     - kernel.backports
     - kernel.sysctl
     - network
-    - network.he_tunnel
     - network.lo_core
     - network.tunnel
   'core0.zkm.ka*':
     - network.cloud_gateway
     - network.gre_ffffm_uplink
+    - network.he_tunnel
     - routing.bird
     - routing.core
     - routing.core.core_bat
