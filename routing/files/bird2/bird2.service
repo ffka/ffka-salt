@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 ExecStartPre=/usr/local/sbin/bird -c /etc/bird2/bird.conf -p
-ExecReload=/usr/local/sbin/birdc configure
+ExecReload=/usr/local/sbin/birdc configure | grep -Fxq "Reconfigured"
 ExecStart=/usr/local/sbin/bird -f -c /etc/bird2/bird.conf
 Restart=on-abort
 
