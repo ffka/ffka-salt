@@ -19,10 +19,10 @@ iface tun-{{ name }} inet static
   #up ip link set tun-{{ name }} up
   #down ip link set tun-{{ name }} down
   post-down ip link del tun-{{ name }} || true
-{% elif tunnel.type == '6in4' %}
+{% elif tunnel.type == 'sixinfour' %}
 iface tun-{{ name }} inet6 v4tunnel
-  local {{ tunnel.6in4.local | default(grains.fqdn_ip4[0]) }}
-  endpoint {{ tunnel.6in4.endpoint }}
+  local {{ tunnel.sixinfour.local | default(grains.fqdn_ip4[0]) }}
+  endpoint {{ tunnel.sixinfour.endpoint }}
 
   address {{ tunnel.ipv6.address }}/{{ tunnel.ipv6.prefixlength }}
 {% endif -%}
@@ -34,7 +34,7 @@ iface tun-{{ name }} inet6 v4tunnel
   {% if tunnel.ttl is defined -%} ttl {{ tunnel.ttl }} {% endif %}
   {% if tunnel.mtu is defined -%} mtu {{ tunnel.mtu }} {% endif %}
 
-{% if tunnel.type != '6in4' %}
+{% if tunnel.type != 'sixinfour' %}
   netmask {{ tunnel.ipv4.netmask | default('255.255.255.255') }}
   address {{ tunnel.ipv4.local_address }}
   dstaddr {{ tunnel.ipv4.remote_address }}
