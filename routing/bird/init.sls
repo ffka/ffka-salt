@@ -2,7 +2,7 @@ bird:
   pkg.installed: []
   user.present: []
 
-{% for bird in ['bird','bird6'] %}
+{% for bird, af in [['bird', 'ipv4'], ['bird6', 'ipv6']] %}
 /etc/bird/{{ bird }}.d:
   file.directory:
     - user: bird
@@ -30,6 +30,8 @@ bird:
     - mode: 644
     - template: jinja
     - source: salt://routing/files/common.conf
+    - context:
+      af: {{ af }}
     - require:
       - pkg: bird
       - user: bird
