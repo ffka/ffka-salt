@@ -17,6 +17,7 @@
 /etc/bird/{{ bird }}.d/20-basic-protocols.conf:
   file.managed:
     - source: salt://routing/files/{{ bird }}.d/cloud_router/basic-protocols.conf
+    - template: jinja
     - user: bird
     - group: bird
     - mode: 644
