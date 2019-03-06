@@ -138,7 +138,6 @@ base:
     - dhcpv6.domains
     - routing.bird
     - routing.gwbat.kernel_as202329
-    - routing.gwbat.bat_core
     - routing.gwbat.domains
     - routing.gwbat.domains.radv
     - routing.gwbat.domains.device-routes
