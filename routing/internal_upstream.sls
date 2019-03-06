@@ -33,5 +33,4 @@
       - pkg: bird
       - user: bird
       - file: /etc/bird/{{ bird }}.d
-
 {% endfor %}
