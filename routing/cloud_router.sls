@@ -29,6 +29,20 @@
       - service: {{ bird }}
 {% endfor %}
 
+/etc/bird/bird.d/21-static-routes.conf:
+  file.managed:
+    - source: salt://routing/files/bird.d/static-routes.conf
+    - template: jinja
+    - user: bird
+    - group: bird
+    - mode: 644
+    - require:
+      - pkg: bird
+      - user: bird
+      - file: /etc/bird/bird.d
+    - watch_in:
+      - service: bird
+
 include: 
   - routing.internal_upstream
   - routing.radv
