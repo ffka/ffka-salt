@@ -1,19 +1,19 @@
 include:
-  - common.debian_testing
+  - common.debian_unstable
 
-/etc/apt/preferences.d/kea-dhcp6-server-testing:
+/etc/apt/preferences.d/kea-dhcp6-server-unstable:
   file.managed:
     - contents: |
         Package: kea-dhcp6-*
-        Pin: release n=testing
+        Pin: release n=unstable
         Pin-Priority: 800
 
 kea-dhcp6-server:
   pkg.installed:
-    - fromrepo: testing
+    - fromrepo: unstable
     - require:
-      - pkgrepo: testing
-      - file: /etc/apt/preferences.d/kea-dhcp6-server-testing
+      - pkgrepo: unstable
+      - file: /etc/apt/preferences.d/kea-dhcp6-server-unstable
 
 /etc/kea/kea-dhcp6.conf:
   file.managed:

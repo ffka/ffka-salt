@@ -1,19 +1,19 @@
 include:
-  - common.debian_testing
+  - common.debian_unstable
 
-/etc/apt/preferences.d/kea-dhcp4-server-testing:
+/etc/apt/preferences.d/kea-dhcp4-server-unstable:
   file.managed:
     - contents: |
         Package: kea-dhcp4-*
-        Pin: release n=testing
+        Pin: release n=unstable
         Pin-Priority: 800
 
 kea-dhcp4-server:
   pkg.installed:
-    - fromrepo: testing
+    - fromrepo: unstable
     - require:
-      - pkgrepo: testing
-      - file: /etc/apt/preferences.d/kea-dhcp4-server-testing
+      - pkgrepo: unstable
+      - file: /etc/apt/preferences.d/kea-dhcp4-server-unstable
 
 /etc/kea/kea-dhcp4.conf:
   file.managed:
