@@ -74,3 +74,10 @@ ffka-{{ interface.name }}:
   name: {{ interface.name }}
   status_socket_path: /run/fastd.ffka-{{ interface.name }}.sock
 {% endfor %}
+
+{% for name in accumulator.get('fastd-instances', []) %}
+"{{ name }}":
+  name: {{ name }}
+  status_socket_path: /run/fastd.{{ name }}.sock
+{% endfor %}
+
