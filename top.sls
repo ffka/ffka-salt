@@ -54,22 +54,12 @@ base:
     - network
     - network.lo_core
     - network.tunnel
-  'core0.zkm.ka*':
-    - network.cloud_gateway
-    - network.gre_ffffm_uplink
-    - network.he_tunnel
-    - routing.bird
-    - routing.core
-    - routing.core.core_bat
-    - routing.cloud_gateway
-    - snmpd
-    - ferm
-    - ferm.core
-    - netflow
-    - tflow2.agent
-  'core1.zkm.ka*':
     - iproute2.backports
     - routing.bird2
+    - ferm
+#    - snmpd
+#    - netflow
+#    - tflow2.agent
   'cloud-router.zkm.ka.frickelfunk.net':
     - kernel.backports
     - kernel.sysctl
