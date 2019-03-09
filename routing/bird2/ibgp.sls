@@ -33,9 +33,9 @@
       - file: /etc/bird2/bird.d/internal_downstreams/
 {% endfor %}
 
-/etc/bird2/bird.d/21-basic-protocols-internal-downstreams.conf:
+/etc/bird2/bird.d/41-basic-protocols-internal-downstreams.conf:
   file.managed:
-    - source: salt://routing/files/bird2/bird.d/21-basic-protocols-internal-downstreams.conf
+    - source: salt://routing/files/bird2/bird.d/41-basic-protocols-internal-downstreams.conf
     - template: jinja
     - user: root
     - group: root
