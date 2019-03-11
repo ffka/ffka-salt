@@ -28,7 +28,6 @@ base:
     - mesh_vpn.server
     - dhcp
     - dns
-    - mesh_announce
     - nat64
   'api.frickelfunk.net':
     - network
@@ -135,5 +134,7 @@ base:
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - network.tunnel
+    - mesh-announce
+    - mesh-announce.domains
   'domain-director.frickelfunk.net':
     - domain-director
