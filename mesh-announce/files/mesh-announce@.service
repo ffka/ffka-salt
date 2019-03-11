@@ -7,7 +7,7 @@ EnvironmentFile=/etc/mesh-announce/%i.env
 ExecStart=/opt/mesh-announce/respondd.py $ARGS
 Restart=always
 WorkingDirectory=/opt/mesh-announce
-Environment=PATH=/usr/bin:/usr/local/bin:/sbin:/usr/local/sbin
+Environment=PATH=/usr/bin:/usr/local/bin:/sbin:/usr/local/sbin:/usr/sbin
 
 [Install]
 WantedBy=multi-user.target
