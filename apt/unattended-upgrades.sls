@@ -22,20 +22,12 @@ unattended-upgrades:
     - require:
       - file: /etc/systemd/system/apt-daily-upgrade.timer.d
 
-{% for config in ["02periodic", "20auto-upgrades"] %}
+{% for config in ["02periodic", "20auto-upgrades", "50unattended-upgrades"] %}
 /etc/apt/apt.conf.d/{{ config }}:
   file.managed:
     - source: salt://apt/files/{{ config }}
-    - user: root
-    - group: root
-    - mode: 644
-{% endfor %}
-
-unattended-upgrades-config:
-  file.managed:
-    - name: /etc/apt/apt.conf.d/50unattended-upgrades
-    - source: salt://apt/files/50unattended-upgrades
     - template: jinja
     - user: root
     - group: root
     - mode: 644
+{% endfor %}

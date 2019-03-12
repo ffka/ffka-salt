@@ -48,7 +48,7 @@ gitlab-ce.service:
 unattended upgrades @ gitlab-ce:
   file.accumulated:
     - name: repos
-    - filename: unattended-upgrades-config
+    - filename: /etc/apt/apt.conf.d/50unattended-upgrades
     - text: "n={{ grains.oscodename }},l=gitlab-ce"
     - require_in:
-      - file: unattended-upgrades-config
+      - file: /etc/apt/apt.conf.d/50unattended-upgrades
