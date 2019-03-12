@@ -102,6 +102,7 @@ base:
     - ferm
   'gitlab.frickelfunk.net':
     - gitlab.gitlab
+    - apt.unattended-upgrades
     - netdata
     - certbot
   'ns1.frickelfunk.net':
