@@ -1,0 +1,36 @@
+// Syntax:
+//   a,archive,suite (eg, "stable")
+//   c,component     (eg, "main", "contrib", "non-free")
+//   l,label         (eg, "Debian", "Debian-Security")
+//   o,origin        (eg, "Debian", "Unofficial Multimedia Packages")
+//   n,codename      (eg, "jessie", "jessie-updates")
+//     site          (eg, "http.debian.net")
+Unattended-Upgrade::Origins-Pattern {
+    "o=${distro_id},n=${distro_codename},l=${distro_id}";
+    "o=${distro_id},n=${distro_codename},l=${distro_id}-Security";
+    {% if accumulator is defined %}
+    {%- for repo in accumulator.get('repos', []) %}
+    "{{ repo }}";
+    {%- endfor %}
+    {%- endif %}
+};
+
+Unattended-Upgrade::AutoFixInterruptedDpkg "true";
+Unattended-Upgrade::MinimalSteps "true";
+
+// Do automatic removal of new unused dependencies after the upgrade.
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+
+// Install upgrades when the machine is shuting down instead of doing it in the background.
+Unattended-Upgrade::InstallOnShutdown "false";
+
+// Don't do automatic reboots
+Unattended-Upgrade::Automatic-Reboot "false";
+Unattended-Upgrade::Automatic-Reboot-WithUsers "false";
+Unattended-Upgrade::Automatic-Reboot-Time "now";
+
+// E-Mail notifications
+Unattended-Upgrade::Mail "noc+unattended-upgrades@vzffnrmo.de";
+Unattended-Upgrade::MailOnlyOnError "true";
+
+Unattended-Upgrade::SyslogEnable "true";

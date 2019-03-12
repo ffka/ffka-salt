@@ -138,3 +138,5 @@ base:
     - mesh-announce.domains
   'domain-director.frickelfunk.net':
     - domain-director
+  'speedtest.frickelfunk.net':
+    - apt.unattended-upgrades

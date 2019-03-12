@@ -44,3 +44,11 @@ gitlab-ce.service:
     - require:
       - pkg: gitlab-ce
       - cmd: reconfigure
+
+unattended upgrades @ gitlab-ce:
+  file.accumulated:
+    - name: repos
+    - filename: unattended-upgrades-config
+    - text: "n={{ grains.oscodename }},l=gitlab-ce"
+    - require_in:
+      - file: unattended-upgrades-config
