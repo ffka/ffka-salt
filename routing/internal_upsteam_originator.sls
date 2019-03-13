@@ -16,7 +16,7 @@
 
 /etc/bird/{{ bird }}.d/20-basic-protocols.conf:
   file.managed:
-    - source: salt://routing/files/{{ bird }}.d/cloud_router/basic-protocols.conf
+    - source: salt://routing/files/{{ bird }}.d/internal_upsteam_originator/basic-protocols.conf
     - template: jinja
     - user: bird
     - group: bird
