@@ -14,7 +14,7 @@ base:
     - network.br_ffka
     - network.gre_ffka
     - network.gre_ffrl
-    - network.lo
+    - network.lo_alb
     - network.tunnel
     - routing.bird
     - routing.albufer
@@ -80,9 +80,10 @@ base:
   'dns*':
     - unbound
     - kernel.sysctl
+    - network.lo
+    - network.internal_upstream
     - routing.bird
     - routing.internal_upsteam_originator
-    - network.internal_upstream
     - ferm
   'monitor.frickelfunk.net':
     - grafana
