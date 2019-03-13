@@ -81,6 +81,7 @@ base:
     - unbound
     - kernel.sysctl
     - routing.bird
+    - routing.internal_upsteam_originator
     - network.internal_upstream
     - ferm
   'monitor.frickelfunk.net':
