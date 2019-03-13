@@ -16,6 +16,7 @@ unattended-upgrades:
         [Timer]
         OnCalendar=
         OnCalendar=*-*-* 3:30:00
+        RandomizedDelaySec=5min
     - user: root
     - group: root
     - mode: 644
@@ -31,3 +32,9 @@ unattended-upgrades:
     - group: root
     - mode: 644
 {% endfor %}
+
+daemon-reload @ apt-daily-upgrade.timer:
+  cmd.run:
+    - name: systemctl daemon-reload
+    - onchanges:
+      - file: /etc/systemd/system/apt-daily-upgrade.timer.d/upgrade-time.conf
