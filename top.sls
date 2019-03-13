@@ -82,6 +82,7 @@ base:
     - kernel.sysctl
     - routing.bird
     - network.internal_upstream
+    - ferm
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
