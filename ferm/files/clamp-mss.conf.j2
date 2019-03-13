@@ -1,0 +1,19 @@
+domain ip {
+    table mangle {
+        chain FORWARD {
+            {% for if, mss in ipv4.items() %}
+            outerface {{ if }} proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ mss }};
+            {% endfor %}
+        }
+    }
+}
+
+domain ip6 {
+    table mangle {
+        chain FORWARD {
+            {% for if, mss in ipv6.items() %}
+            outerface {{ if }} proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ mss }};
+            {% endfor %}
+        }
+    }
+}
