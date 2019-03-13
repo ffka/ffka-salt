@@ -10,3 +10,5 @@
         ffka: {{ pillar['ffka'] }}
     - require:
       - file: /etc/ferm/conf.d
+    - watch_in:
+      - service: ferm.service
