@@ -43,6 +43,5 @@
     - watch_in:
       - service: bird
 
-include: 
+include:
   - routing.internal_upstream
-  - routing.radv
