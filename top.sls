@@ -63,7 +63,7 @@ base:
     - kernel.backports
     - kernel.sysctl
     - routing.bird
-    - routing.cloud_router
+    - routing.internal_upsteam_originator
     - network.internal_upstream
     - dhcpv4
     - dhcpv4.address_assignment
@@ -78,6 +78,9 @@ base:
     - routing.bird2
   'dns*':
     - unbound
+    - kernel.sysctl
+    - routing.bird
+    - network.internal_upstream
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
