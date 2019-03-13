@@ -64,6 +64,7 @@ base:
     - kernel.sysctl
     - routing.bird
     - routing.internal_upsteam_originator
+    - routing.radv
     - network.internal_upstream
     - dhcpv4
     - dhcpv4.address_assignment
