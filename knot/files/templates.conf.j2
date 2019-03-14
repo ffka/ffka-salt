@@ -19,8 +19,3 @@ template:
     semantic-checks: off
     master: entropia_slave
     acl: [entropia_master_allow_notify]
-  - id: master_deprecated_slave
-    storage: /etc/knot/zones/
-    semantic-checks: on
-    acl: [deprecated_slave_allow_transfer]
-    notify: [deprecated_master]
