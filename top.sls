@@ -86,6 +86,14 @@ base:
     - routing.bird
     - routing.internal_upsteam_originator
     - ferm
+  'nat64*.frickelfunk.net':
+    - kernel.sysctl
+    - network.lo
+    - network.internal_upstream
+    - routing.bird
+    - routing.internal_upsteam_originator
+    - ferm
+    - jool
   'monitor.frickelfunk.net':
     - grafana
     - prometheus
