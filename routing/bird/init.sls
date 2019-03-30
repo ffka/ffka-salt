@@ -37,6 +37,20 @@ bird:
       - user: bird
       - file: /etc/bird/{{ bird }}.d
 
+/etc/bird/{{ bird }}.d/05-communities.conf:
+  file.managed:
+    - user: bird
+    - group: bird
+    - mode: 644
+    - template: jinja
+    - source: salt://routing/files/common/05-communities.conf
+    - context:
+      af: {{ af }}
+    - require:
+      - pkg: bird
+      - user: bird
+      - file: /etc/bird/{{ bird }}.d
+
 service {{ bird }}:
   service.running:
     - name: {{ bird }}

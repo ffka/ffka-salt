@@ -93,3 +93,20 @@ jool-userland:
       - archive: jool-src
     - cwd: /usr/src/jool-{{ jool_version }}/
     - name: ./configure && cd src/usr/ && make && make install
+
+/etc/ferm/conf.d/jool.conf:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 644
+    - contents: |
+        domain ip6 table mangle chain PREROUTING {
+          daddr 64:ff9b::/96 JOOL instance default;
+        }
+        domain ip table mangle chain PREROUTING {
+          proto tcp daddr 185.65.241.64 dport 61001:65535 JOOL instance default;
+          proto udp daddr 185.65.241.64 dport 61001:65535 JOOL instance default;
+          proto icmp daddr 185.65.241.64 JOOL instance default;
+        }
+    - require:
+      - file: /etc/ferm/conf.d

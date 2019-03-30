@@ -1,4 +1,4 @@
-{% for bird in ['bird','bird6'] %}
+{%- for bird, af in [['bird', 'ipv4'], ['bird6', 'ipv6']] %}
 /etc/bird/{{ bird }}.d/50-internal-upstreams-basic.conf:
   file.managed:
     - contents: |
@@ -14,13 +14,18 @@
     - watch_in:
       - service: {{ bird }}
 
-/etc/bird/{{ bird }}.d/20-basic-protocols.conf:
+{% for number, file in [[20, "basic-protocols"], [21, "static-routes"]] %}
+/etc/bird/{{ bird }}.d/{{ number }}-{{ file }}.conf:
   file.managed:
-    - source: salt://routing/files/{{ bird }}.d/internal_upsteam_originator/basic-protocols.conf
+    - source:
+      - salt://routing/files/{{ bird }}.d/internal_upsteam_originator/{{ file }}.conf
+      - salt://routing/files/common/{{ file }}.conf
     - template: jinja
     - user: bird
     - group: bird
     - mode: 644
+    - context:
+      af: {{ af }}
     - require:
       - pkg: bird
       - user: bird
@@ -28,20 +33,7 @@
     - watch_in:
       - service: {{ bird }}
 {% endfor %}
-
-/etc/bird/bird.d/21-static-routes.conf:
-  file.managed:
-    - source: salt://routing/files/bird.d/static-routes.conf
-    - template: jinja
-    - user: bird
-    - group: bird
-    - mode: 644
-    - require:
-      - pkg: bird
-      - user: bird
-      - file: /etc/bird/bird.d
-    - watch_in:
-      - service: bird
+{% endfor %}
 
 include:
   - routing.internal_upstream

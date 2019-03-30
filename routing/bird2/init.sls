@@ -44,7 +44,9 @@ bird2.service:
 {% for file in ["05-communities", "06-constants", "10-basic-settings", "20-basic-protocols", "25-igp", "30-policy-communities", "31-policy-ebgp-in-basic", "31-policy-ebgp-out-basic", "31-policy-ibgp-in-basic", "39-policy-ebpg", "39-policy-ibgp", "40-bgp-base", "45-bgp-sessions"] %}
 /etc/bird2/bird.d/{{ file }}.conf:
   file.managed:
-    - source: salt://routing/files/bird2/bird.d/{{ file }}.conf
+    - source:
+      - salt://routing/files/bird2/bird.d/{{ file }}.conf
+      - salt://routing/files/common/{{ file }}.conf
     - template: jinja
     - user: root
     - group: root
