@@ -112,7 +112,9 @@ jool:
 {% for name, instance in salt['pillar.get']('network:nat64:instances', {}).items() %}
 /etc/jool/{{ name }}.env:
   file.managed:
-    - contents: ARGS= --iptables --pool6 {{ instance['prefix'] }}
+    - contents: |
+        ARGS= --iptables --pool6 {{ instance['prefix'] }}
+        ARGS_POOL4= 185.65.241.64/32 61001-65535 --max-iterations 1024
     - user: root
     - group: root
     - mode: 644
