@@ -114,7 +114,7 @@ jool:
   file.managed:
     - contents: |
         ARGS= --iptables --pool6 {{ instance['prefix'] }}
-        ARGS_POOL4= 185.65.241.64/32 61001-65535 --max-iterations 1024
+        ARGS_POOL4= {{ instance['nat_address'] }} 61001-65535 --max-iterations 1024
     - user: root
     - group: root
     - mode: 644
