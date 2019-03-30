@@ -94,6 +94,15 @@ jool-userland:
     - cwd: /usr/src/jool-{{ jool_version }}/
     - name: ./configure && cd src/usr/ && make && make install
 
+ferm-jool:
+  file.line:
+    - name: /usr/sbin/ferm
+    - content: "add_target_def 'JOOL', qw(instance);"
+    - mode: ensure
+    - after: "add_target_def 'ULOG'.*"
+    - require:
+      - pkg: ferm
+
 /etc/ferm/conf.d/jool.conf:
   file.managed:
     - user: root
@@ -110,3 +119,4 @@ jool-userland:
         }
     - require:
       - file: /etc/ferm/conf.d
+      - file: ferm-jool

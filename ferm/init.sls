@@ -37,7 +37,6 @@ ferm:
 
 ferm.service:
   service.running:
-    - name: ferm
     - enable: true
     - reload: true
     - require:
