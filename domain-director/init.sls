@@ -15,7 +15,7 @@ https://github.com/freifunk-darmstadt/ffda-domain-director.git:
     - user: director
     - force_fetch: True
     - force_reset: True
-    - refspec_branch: master
+    - refspec_branch: pr-refactor
     - require:
       - user: director
     - require_in:
