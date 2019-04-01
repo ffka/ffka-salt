@@ -1,0 +1,14 @@
+[Unit]
+Description=Unbound DNS server (%i)
+After=network.target
+Before=nss-lookup.target
+Wants=nss-lookup.target
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart=/usr/sbin/unbound -d $DAEMON_OPTS -c /etc/unbound/%i.conf
+ExecReload=/usr/sbin/unbound-control -c /etc/unbound/%i.conf reload
+
+[Install]
+WantedBy=multi-user.target
