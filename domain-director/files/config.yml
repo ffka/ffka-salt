@@ -2,22 +2,19 @@
 host: "::1"
 port: 28530
 
-# data paths
-sqlite_path: "/var/lib/director/director.db"
+geo:
+  provider: "mozilla"
+  mozilla:
+    api_key: "test"
 
-# mozilla location services
-mls_api_key: "test"
 
-# domain config
-geojson: "/etc/domain-director/domains.geojson"
-default_domain: ffka_default
-
-# how often to update from meshviewer
-update_interval: 1800
-meshviewer_json_url: "https://api.karlsruhe.freifunk.net/yanic/meshviewer/meshviewer.json"
-
-# when to switch the domain
-domain_switch_time: -1
-
-# migrate meshes with only one node
-only_migrate_vpn: true
+director:
+  sqlite_path: "/var/lib/director/director.db"
+  geojson: "/etc/domain-director/domains.geojson"
+  default_domain: ffka_default
+  update_interval: 1800
+  meshviewer_json_url: "https://api.karlsruhe.freifunk.net/yanic/meshviewer/meshviewer.json"
+  domain_switch_time: -1
+  only_migrate_vpn: true
+  tolerance_distance: 200
+  max_accuracy: 100
