@@ -13,7 +13,7 @@ https://github.com/freifunk-darmstadt/ffda-domain-director.git:
   git.latest:
     - target: /var/lib/director/domain-director
     - user: director
-    - force_checkou: True
+    - force_checkout: True
     - force_fetch: True
     - force_reset: True
     - branch: pr-refactor
