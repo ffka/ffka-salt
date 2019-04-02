@@ -1,8 +1,12 @@
 auto lo
 
+{% for addrinfo in salt['pillar.get']('network:lo:ipv4', []) %}
 iface lo inet static
-  address {{ salt['pillar.get']('network:lo:ipv4:local_address') }}
-  netmask {{ salt['pillar.get']('network:lo:ipv4:netmask') }}
+  address {{ addrinfo['local_address'] }}
+  netmask {{ addrinfo['netmask'] }}
+{% endfor %}
 
+{% for addrinfo in salt['pillar.get']('network:lo:ipv6', []) %}
 iface lo inet6 static
-  address {{ salt['pillar.get']('network:lo:ipv6:address') }}/{{ salt['pillar.get']('network:lo:ipv6:prefixlength') }}
+  address {{ addrinfo['address'] }}/{{ addrinfo['prefixlength'] }}
+{% endfor %}
