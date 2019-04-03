@@ -1,0 +1,8 @@
+{% set instances = {
+  'default': {
+    'files': ['bind', 'dnssec', 'domains', 'unbound']
+  },
+  'nat64': {
+    'files': ['bind', 'dnssec', 'unbound', 'nat64']
+  }
+} %}

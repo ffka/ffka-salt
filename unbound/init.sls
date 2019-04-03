@@ -1,3 +1,5 @@
+{%- from 'unbound/instances.map' import instances with context -%}
+
 unbound:
   pkg.installed:
     - pkg:
@@ -29,6 +31,8 @@ unbound.service:
     - contents: |
         server:
             pidfile: "/var/run/unbound-{{ instance }}.pid"
+        remote-control:
+            control-interface: "/var/run/unbound-{{ instance }}.ctl"
         include: "/etc/unbound/{{ instance }}.conf.d/*.conf"
     - user: root
     - group: root
@@ -36,13 +40,20 @@ unbound.service:
     - require:
       - file: /etc/unbound/{{ instance }}.conf.d
 
-/etc/unbound/{{ instance }}.conf.d/:
-  file.recurse:
-    - source: salt://unbound/files/{{ instance }}.conf.d/
-    - clean: True
+{% set files = instances[instance].get('files', []) %}
+{% for file in files %}
+/etc/unbound/{{ instance }}.conf.d/{{ file }}.conf:
+  file.managed:
+    - source: salt://unbound/files/{{ file }}.conf
     - template: jinja
+    - user: root
+    - group: root
+    - mode: 644
+    - context:
+      settings: {{ settings | yaml }}
     - require:
       - file: /etc/unbound/{{ instance }}.conf.d
+{% endfor %}
 
 unbound@{{ instance }}.service:
   service.running:
@@ -51,20 +62,4 @@ unbound@{{ instance }}.service:
     - watch:
       - file: /etc/unbound/{{ instance }}.conf.d*
       - file: /etc/systemd/system/unbound@.service
-
-/etc/unbound/unbound.conf.d/ffka.conf:
-  file.managed:
-    - source: salt://unbound/files/unbound.conf.j2
-    - user: root
-    - group: root
-    - mode: 644
-    - template: jinja
-
-/etc/unbound/unbound.conf.d/domains.conf:
-  file.managed:
-    - source: salt://unbound/files/domains.conf.j2
-    - user: root
-    - group: root
-    - mode: 644
-    - template: jinja
 {% endfor %}

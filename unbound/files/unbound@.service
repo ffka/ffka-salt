@@ -7,7 +7,7 @@ Wants=nss-lookup.target
 [Service]
 Type=simple
 Restart=on-failure
-ExecStart=/usr/sbin/unbound -d $DAEMON_OPTS -c /etc/unbound/%i.conf
+ExecStart=/usr/sbin/unbound -d -c /etc/unbound/%i.conf
 ExecReload=/usr/sbin/unbound-control -c /etc/unbound/%i.conf reload
 
 [Install]
