@@ -12,7 +12,7 @@ netdatarequisites:
       - zlib1g-dev
       - uuid-dev
       - libmnl-dev
-      - netcat
+      - netcat-traditional
       - pkg-config
 
 netdatarepo:
