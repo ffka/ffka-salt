@@ -35,6 +35,7 @@ tun-{{ tun }}
 domain (ip){
  table filter {
         chain FORWARD {
+            proto tcp dport smtp REJECT;
             mod state state (ESTABLISHED RELATED) ACCEPT;
          }
 	   }
@@ -62,6 +63,7 @@ domain ip6 {
    }
    table filter {
         chain FORWARD {
+            proto tcp dport smtp REJECT;
 					{% for hoodname in salt['pillar.get']('hoods') %}
               interface $FFRL_IF outerface br_{{ hoodname }} ACCEPT;
               interface $VZFFNRMO_IF outerface br_{{ hoodname }} ACCEPT;
