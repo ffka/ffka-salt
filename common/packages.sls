@@ -27,3 +27,4 @@ packages_base:
       - apt-transport-https
       - python-apt
       - net-tools
+      - ethtool
