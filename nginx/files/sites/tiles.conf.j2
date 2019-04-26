@@ -36,7 +36,8 @@ server {
 
         resolver 1.1.1.1 ipv6=off;
         if ($provider = "giscience") {
-            proxy_pass "http://api.openrouteservice.org/mapsurfer/$tile_z/$tile_x/$tile_y.png?api_key=5b3ce3597851110001cf624807d1d7567ae24baeb813266414a48c82";
+#            proxy_pass "http://api.openrouteservice.org/mapsurfer/$tile_z/$tile_x/$tile_y.png?api_key=5b3ce3597851110001cf624807d1d7567ae24baeb813266414a48c82";
+            proxy_pass "https://maps.heigit.org/openmapsurfer/tiles/roads/webmercator/$tile_z/$tile_x/$tile_y.png";
         }
         if ($provider = "ffrgb-day") {
             proxy_pass "https://1.tiles.ffrgb.net/$tile_z/$tile_x/$tile_y$retina.png";
@@ -54,21 +55,22 @@ server {
         proxy_store                     off;
         proxy_cache_key                 $uri$is_args$args;
         proxy_ignore_headers            Expires Cache-Control;
-        proxy_cache_valid               200 7d;
-        proxy_cache_valid               301 302 429 5m;
-        proxy_cache_valid               any 1m;
+        proxy_cache_valid               200 30d;
+        proxy_cache_valid               301 302 429 30s;
+        proxy_cache_valid               429 5s;
+        proxy_cache_valid               any 2s;
         proxy_intercept_errors          on;
 
-        proxy_read_timeout              15s;
-        proxy_next_upstream             error timeout invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
-        proxy_cache_use_stale           error timeout updating invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
+        proxy_read_timeout              45s;
+        #proxy_next_upstream             error timeout invalid_header http_500 http_502 http_503 http_504 http_403 http_404;
+        proxy_cache_use_stale           error updating timeout invalid_header http_500 http_502 http_503 http_504 http_403 http_404; # http_429;
         proxy_hide_header               Via;
         proxy_hide_header               X-Cache;
         proxy_hide_header               X-Cache-Lookup;
 
         error_page 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414 415 416 417 418 420 422 423 424 426 428 429 431 444 449 450 451 500 501 502 503 504 505 506 507 508 509 510 511 @error;
 
-        expires 14d;
+        expires 7d;
     }
 
     location @error {
