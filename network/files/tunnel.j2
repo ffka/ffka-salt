@@ -4,10 +4,9 @@
 auto tun-{{ name }}
 
 {% if tunnel.type == 'gre6' -%}
-iface tun-{{ name }} inet tunnel
-  mode ip6gre
-  local {{ tunnel.gre.local | default(grains.fqdn_ip6[0]) }}
-  endpoint {{ tunnel.gre.endpoint }}
+iface tun-{{ name }} inet static
+  pre-up ip -6 tunnel add tun-{{ name }} mode ip6gre remote {{ tunnel.gre.endpoint }} local {{ tunnel.gre.local | default(grains.fqdn_ip6[0]) }}{% if 'dev' in tunnel %} dev {{ tunnel.dev }}{% endif %} || true
+  post-down ip link del tun-{{ name }} || true
 {% elif tunnel.type == 'gre' %}
 iface tun-{{ name }} inet tunnel
   mode gre
@@ -15,9 +14,7 @@ iface tun-{{ name }} inet tunnel
   endpoint {{ tunnel.gre.endpoint }}
 {% elif tunnel.type == 'vxlan' %}
 iface tun-{{ name }} inet static
-  pre-up ip link add name tun-{{ name }} type vxlan id {{ tunnel.vxlan.id }} dev {{ tunnel.vxlan.dev }} remote {{ tunnel.vxlan.remote }} local {{ tunnel.vxlan.local }} dstport {{ tunnel.vxlan.dstport }} || true
-  #up ip link set tun-{{ name }} up
-  #down ip link set tun-{{ name }} down
+  pre-up ip link add name tun-{{ name }} type vxlan id {{ tunnel.vxlan.id }} dev {{ tunnel.dev }} remote {{ tunnel.vxlan.remote }} local {{ tunnel.vxlan.local }} dstport {{ tunnel.vxlan.dstport }} || true
   post-down ip link del tun-{{ name }} || true
 {% elif tunnel.type == 'sixinfour' %}
 iface tun-{{ name }} inet6 v4tunnel
