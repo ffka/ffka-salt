@@ -8,6 +8,7 @@ geo:
     api_key: "test"
 
 
+
 director:
   sqlite_path: "/var/lib/director/director.db"
   geojson: "/etc/domain-director/domains.geojson"
@@ -18,3 +19,10 @@ director:
   only_migrate_vpn: true
   tolerance_distance: 200
   max_accuracy: 100
+
+  admin:
+    enabled: true
+    token: Lah9IdcJFCjwqBhDsFccdWXCuEtlQmrygyNM1RRX6H8VBI27XFf1gZMtcmn6cy0tOGbvCvp0751U8HGIKYQbZCWcnSg2UerS9qqJ
+
+locator:
+  enabled: true
