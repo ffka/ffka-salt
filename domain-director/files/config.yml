@@ -7,9 +7,8 @@ geo:
   mozilla:
     api_key: "test"
 
-
-
 director:
+  enabled: true
   sqlite_path: "/var/lib/director/director.db"
   geojson: "/etc/domain-director/domains.geojson"
   default_domain: ffka_default
