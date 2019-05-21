@@ -43,7 +43,7 @@ server {
             proxy_pass "https://1.tiles.ffrgb.net/$tile_z/$tile_x/$tile_y$retina.png";
         }
         if ($provider = "ffrgb-night") {
-            proxy_pass "https://2.tiles.ffrgb.net/n/$tile_z/$tile_x/$tile_y$retina.png";
+            proxy_pass "https://1.tiles.ffrgb.net/n/$tile_z/$tile_x/$tile_y$retina.png";
         }
 
         proxy_http_version              1.1;
