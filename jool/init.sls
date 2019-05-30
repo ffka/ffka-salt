@@ -3,7 +3,7 @@
 # and automation is easier. The version will always be replaced by a newer version.
 
 {% set jool_version = 'current' %}
-{% set jool_download_url = 'https://github.com/NICMx/Jool/releases/download/v4.0.0/jool_4.0.0.tar.gz' %}
+{% set jool_download_url = 'https://github.com/NICMx/Jool/releases/download/v4.0.1/jool_4.0.1.tar.gz' %}
 
 jool-build-deps:
   pkg.installed:
