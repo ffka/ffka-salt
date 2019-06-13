@@ -44,7 +44,6 @@ base:
     - meshviewer
     - nginx
     - certbot
-    - hopglass.server
     - docker
     - influxdb
   'core*.zkm.ka*':
