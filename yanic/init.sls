@@ -1,5 +1,4 @@
 {%- set gopath = '/var/lib/yanic/go' %}
-{% set ffka = salt['pillar.get']('ffka') -%}
 
 include:
   - golang
@@ -41,12 +40,16 @@ yanic:
     - user: root
     - group: yanic
     - dir_mode: 0755
+    - require:
+      - user: yanic
 
 /var/lib/yanic/state:
   file.directory:
     - user: yanic
     - group: yanic
     - dir_mode: 0755
+    - require:
+      - user: yanic
 
 /etc/systemd/system/yanic@.service:
   file.managed:
@@ -55,40 +58,50 @@ yanic:
     - group: root
     - mode: 0644
 
-/var/lib/yanic/meshviewer/{{ ffka.site_code }}:
+{% for instance, settings in salt['pillar.get']('yanic:instances', {}).items() %}
+/var/lib/yanic/meshviewer/{{ instance }}:
   file.directory:
     - user: yanic
     - group: yanic
     - dir_mode: 0755
     - makedirs: True
+    - require:
+      - user: yanic
+    - require_in:
+      - service: yanic@{{ instance }}
 
-/var/lib/yanic/nodelist/{{ ffka.site_code }}:
+/var/lib/yanic/nodelist/{{ instance }}:
   file.directory:
     - user: yanic
     - group: yanic
     - dir_mode: 0755
     - makedirs: True
+    - require:
+      - user: yanic
+    - require_in:
+      - service: yanic@{{ instance }}
 
-/etc/yanic/config-{{ ffka.site_code }}.toml:
+/etc/yanic/config-{{ instance }}.toml:
   file.managed:
-    - source: salt://yanic/files/config.toml.j2
+    - source: salt://yanic/files/{{ settings['type'] }}.toml.j2
     - user: root
     - group: root
     - mode: 0644
     - template: jinja
     - context:
-        ffka: {{ pillar['ffka'] }}
+        instance: {{ instance }}
+        settings: {{ settings | yaml }}
+    - require:
+      - file: /etc/yanic
+    - watch_in:
+      - service: yanic@{{ instance }}
 
-yanic@{{ ffka.site_code }}:
+yanic@{{ instance }}:
   service.running:
     - enable: True
     - require:
-      - file: /var/lib/yanic/meshviewer/{{ ffka.site_code }}
-      - file: /var/lib/yanic/nodelist/{{ ffka.site_code }}
-      - file: /etc/systemd/system/yanic@.service
       - file: /var/log/yanic
-      - file: /etc/yanic/config-{{ ffka.site_code }}.toml
     - watch:
       - file: /etc/systemd/system/yanic@.service
-      - file: /etc/yanic/config-{{ ffka.site_code }}.toml
       - cmd: yanic
+{% endfor %}
