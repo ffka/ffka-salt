@@ -1,5 +1,3 @@
-proxy_cache_path /var/cache/nginx/hopglass_1min levels=1:2 keys_zone=hopglass_1min:1m max_size=500m inactive=10m;
-
 server {
     listen 80;
     listen [::]:80;
@@ -54,8 +52,11 @@ server {
 
     add_header Access-Control-Allow-Origin *;
 
-    rewrite ^/nodes.json$ /hopglass/nodes.json break;
-    rewrite ^/graph.json$ /hopglass/graph.json break;
+    location ~ ^/yanic/(?<t>(meshviewer|nodelist)+)/(?<community>({{ salt['pillar.get']('yanic:instances', {}).keys() | join('|') }})+)/(?<p>(.*))$ {
+        autoindex on;
+        try_files $p $p/ =404;
+        alias /var/lib/yanic/$t/$community/;
+    }
 
     location /yanic/meshviewer/ {
         autoindex on;
@@ -67,20 +68,6 @@ server {
         autoindex on;
         try_files $uri $uri/ =404;
         alias /var/lib/yanic/nodelist/ffka/;
-    }
-
-    location /hopglass/ {
-        limit_except GET {
-            deny  all;
-        }
-
-        add_header X-Cache-Status $upstream_cache_status;
-        proxy_cache hopglass_1min;
-        proxy_cache_revalidate on;
-        proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-        proxy_cache_lock on;
-        proxy_cache_valid 1m;
-        proxy_pass http://127.0.0.1:4040/;
     }
 
     location /grafana/ {
