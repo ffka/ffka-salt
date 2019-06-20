@@ -31,6 +31,7 @@ server {
 
     gzip off;
 
+    autoindex on;
     try_files $uri $uri/ =404;
     root /srv/www/{{ site_name }}/htdocs/;
 }
