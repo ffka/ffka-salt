@@ -1,6 +1,6 @@
 {% macro custom_states(name, vhost, domainset) -%}
 
-{%- set hackmd_version = "0.5.1" -%}
+{%- set hackmd_version = "1.4.0" -%}
 {%- set hackmd_postgres_version = "9.6-alpine" -%}
 
 /srv/www/pads/database:
@@ -38,14 +38,14 @@ hackmdpostgres:
 
 hackmdapp:
   docker_container.running:
-    - image: hackmdio/hackmd:{{ hackmd_version }}
+    - image: quay.io/codimd/server:{{ hackmd_version }}
     - environment:
-      - HMD_DB_URL=postgres://hackmd:hackmdpass@hackmdpostgres:5432/hackmd
-      - HMD_DOMAIN={{ domainset[0] }}
-      - HMD_PROTOCOL_USESSL=true
-      - HMD_URL_ADDPORT=false
-      - HMD_USECDN=false
-      - HMD_ALLOW_ORIGIN={{ domainset|join(', ') }}
+      - CMD_DB_URL=postgres://hackmd:hackmdpass@hackmdpostgres:5432/hackmd
+      - CMD_DOMAIN={{ domainset[0] }}
+      - CMD_PROTOCOL_USESSL=true
+      - CMD_URL_ADDPORT=false
+      - CMD_USECDN=false
+      - CMD_ALLOW_ORIGIN={{ domainset|join(', ') }}
       {%- for setting, value in salt['pillar.get']('hackmd:settings', {}).items() %}
       - {{ setting }}={{ value }}
       {% endfor %}
