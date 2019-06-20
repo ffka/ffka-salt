@@ -18,7 +18,7 @@ images:
   docker_image.present:
     - names:
       - postgres:{{ hackmd_postgres_version }}
-      - hackmdio/hackmd:{{ hackmd_version }}
+      - quay.io/codimd/server:{{ hackmd_version }}
 
 hackmdpostgres:
   docker_container.running:
