@@ -14,8 +14,6 @@ iface {{ ifname_br }} inet manual
 iface {{ ifname_br }} inet static
 	address {{ network['address'] }}
 	netmask {{ network['netmask'] }}
-	post-up ip rule add from {{ network['prefix'] }} table 10
-	post-up ip rule add to {{ network['prefix'] }} table 10
 {%- endfor %}
 
 {%- for network in domain.get('ipv6', {}).values() if 'address' in network %}
@@ -23,8 +21,6 @@ iface {{ ifname_br }} inet6 static
     accept_ra 0
 	address {{ network['address'] }}
 	netmask {{ network['prefixlen'] }}
-	post-up ip -6 rule add from {{ network['prefix'] }} table 10
-	post-up ip -6 rule add to {{ network['prefix'] }} table 10
 	dad-attempts 0
 {%- endfor %}
 
