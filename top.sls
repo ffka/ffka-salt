@@ -154,6 +154,32 @@ base:
     - network.tunnel
     - mesh-announce
     - mesh-announce.domains
+  'gwffwp*.frickelfunk.net':
+    - kernel.backports
+    - batman
+    - ferm
+    - ferm.gwbat
+    - network
+    - network.domains
+    - network.domains.mesh
+    - network.gwbat_internal
+    - fastd
+    - fastd.domains
+    - dhcpv4
+    - dhcpv4.domains
+    - dhcpv6
+    - dhcpv6.domains
+    - routing.bird
+    - routing.gwbat.kernel_as202329
+    - routing.gwbat.domains
+    - routing.gwbat.domains.radv
+    - routing.gwbat.domains.device-routes
+    - routing.gwbat.internal_upstream
+    - kernel.sysctl
+    - network.ip_rt_tables_freifunk
+    - network.tunnel
+    - mesh-announce
+    - mesh-announce.domains
   'domain-director.frickelfunk.net':
     - domain-director
   'speedtest.frickelfunk.net':
