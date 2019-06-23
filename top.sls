@@ -28,7 +28,6 @@ base:
     - mesh_vpn.server
     - dhcp
     - dns
-    - nat64
   'api.frickelfunk.net':
     - network
     - network.ip_rt_tables_freifunk
