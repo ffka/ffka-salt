@@ -1,0 +1,27 @@
+# listening socket
+host: "::1"
+port: 28531
+
+geo:
+  provider: "mozilla"
+  mozilla:
+    api_key: "test"
+
+director:
+  enabled: true
+  sqlite_path: "/var/lib/director/ffwp.db"
+  geojson: "/etc/domain-director/ffwp/domains.geojson"
+  default_domain: ffwp_default
+  update_interval: 1800
+  meshviewer_json_url: "https://api.karlsruhe.freifunk.net/yanic/meshviewer/ffwp/meshviewer.json"
+  domain_switch_time: -1
+  only_migrate_vpn: true
+  tolerance_distance: 200
+  max_accuracy: 100
+
+  admin:
+    enabled: true
+    token: vib8Moo7Gaf1aim4Faa6metaca4uoG2RJo5aiz3deiYee1Jataisoo4EeZ9eish9
+
+locator:
+  enabled: true
