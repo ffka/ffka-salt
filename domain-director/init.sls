@@ -51,6 +51,7 @@ https://github.com/freifunk-darmstadt/ffda-domain-director.git:
     - watch_in:
       - service: domain-director.service
 
+
 /etc/systemd/system/domain-director.service:
   file.managed:
     - source: salt://domain-director/files/domain-director.service
@@ -62,9 +63,22 @@ https://github.com/freifunk-darmstadt/ffda-domain-director.git:
     - watch_in:
       - service: domain-director.service
 
-/etc/domain-director/config.yml:
+{% for community, settings in salt['pillar.get']('director:community', {}).items() %}
+/etc/domain-director/{{ community }}.yml:
   file.managed:
-    - source: salt://domain-director/files/config.yml
+    - source: salt://domain-director/files/{{ community }}/config.yml
+    - user: root
+    - group: root
+    - mode: 0644
+    - makedirs: True
+    - require_in:
+      - service: domain-director@{{ community }}
+    - watch_in:
+      - service: domain-director@{{ community }}
+
+/etc/domain-director/{{ community }}/domains.geojson:
+  file.managed:
+    - source: salt://domain-director/files/{{ community }}/domains.geojson
     - user: root
     - group: root
     - mode: 0644
@@ -74,18 +88,7 @@ https://github.com/freifunk-darmstadt/ffda-domain-director.git:
     - watch_in:
       - service: domain-director.service
 
-/etc/domain-director/domains.geojson:
-  file.managed:
-    - source: salt://domain-director/files/domains.geojson
-    - user: root
-    - group: root
-    - mode: 0644
-    - makedirs: True
-    - require_in:
-      - service: domain-director.service
-    - watch_in:
-      - service: domain-director.service
-
-domain-director.service:
+domain-director@{{ community }}:
   service.running:
     - enable: True
+{% endfor %}

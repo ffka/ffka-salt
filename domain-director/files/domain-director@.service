@@ -8,7 +8,7 @@ Type=simple
 User=director
 Group=director
 WorkingDirectory=/var/lib/director/domain-director
-ExecStart=/var/lib/director/venv/bin/python3 -m director --config /etc/domain-director/config.yml
+ExecStart=/var/lib/director/venv/bin/python3 -m director --config /etc/domain-director/%I.yml
 Restart=always
 RestartSec=5s
 
