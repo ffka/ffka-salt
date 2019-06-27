@@ -19,10 +19,7 @@ https://github.com/freifunk-darmstadt/ffda-domain-director.git:
     - rev: pr-refactor
     - require:
       - user: director
-    - require_in:
-      - service: domain-director.service
-    - watch_in:
-      - service: domain-director.service
+
 
 /var/lib/director/venv:
   virtualenv.managed:
@@ -46,22 +43,15 @@ https://github.com/freifunk-darmstadt/ffda-domain-director.git:
     - require:
       - user: director
       - pkg: director builddeps
-    - require_in:
-      - service: domain-director.service
-    - watch_in:
-      - service: domain-director.service
 
 
-/etc/systemd/system/domain-director.service:
+/etc/systemd/system/domain-director@.service:
   file.managed:
-    - source: salt://domain-director/files/domain-director.service
+    - source: salt://domain-director/files/domain-director@.service
     - user: root
     - group: root
     - mode: 0644
-    - require_in:
-      - service: domain-director.service
-    - watch_in:
-      - service: domain-director.service
+
 
 {% for community, settings in salt['pillar.get']('director:community', {}).items() %}
 /etc/domain-director/{{ community }}.yml:
@@ -84,9 +74,9 @@ https://github.com/freifunk-darmstadt/ffda-domain-director.git:
     - mode: 0644
     - makedirs: True
     - require_in:
-      - service: domain-director.service
+      - service: domain-director@{{ community }}
     - watch_in:
-      - service: domain-director.service
+      - service: domain-director@{{ community }}
 
 domain-director@{{ community }}:
   service.running:
