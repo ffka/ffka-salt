@@ -11,7 +11,7 @@ director:
   enabled: true
   sqlite_path: "/var/lib/director/ffwp.db"
   geojson: "/etc/domain-director/ffwp/domains.geojson"
-  default_domain: ffwp_default
+  default_domain: ffwp_fallback
   update_interval: 1800
   meshviewer_json_url: "https://api.karlsruhe.freifunk.net/yanic/meshviewer/ffwp/meshviewer.json"
   domain_switch_time: -1
