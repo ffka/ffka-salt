@@ -10,7 +10,7 @@ geo:
 director:
   enabled: true
   sqlite_path: "/var/lib/director/director.db"
-  geojson: "/etc/domain-director/domains.geojson"
+  geojson: "/etc/domain-director/ffka/domains.geojson"
   default_domain: ffka_default
   update_interval: 1800
   meshviewer_json_url: "https://api.karlsruhe.freifunk.net/yanic/meshviewer/meshviewer.json"
