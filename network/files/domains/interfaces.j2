@@ -1,7 +1,7 @@
 # Interfaces for domain {{ '%02d' | format(domain.domain_id) }}
 
-{%- set community_id = salt['pillar.get']('community_id') %}
-{% set ifname_br = salt['domain_networking.generate_ifname'](domain, 'br') -%}
+{%- set community_id = pillar.community_id %}
+{% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
 # {{ ifname_br }}
 auto {{ ifname_br }}
 iface {{ ifname_br }} inet manual
@@ -25,7 +25,7 @@ iface {{ ifname_br }} inet6 static
 	dad-attempts 0
 {%- endfor %}
 
-{% set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') %}
+{% set ifname_bat = salt['domain_networking.generate_ifname'](community_id, domain, 'bat') %}
 # {{ ifname_bat }}
 auto {{ ifname_bat }}
 iface {{ ifname_bat }} inet manual
@@ -40,7 +40,7 @@ iface {{ ifname_bat }} inet manual
 	post-down ip link delete dev $IFACE
 
 {%- for fastd in domain.get('fastd', {}).get('instances', []) %}
-{% set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fd', fastd['name']) %}
+{% set fastd_ifname = salt['domain_networking.generate_ifname'](community_id, domain, 'fd', fastd['name']) %}
 {% set fastd_mac = salt['domain_networking.generate_mac']('fastd', community_id, domain, salt['pillar.get']('gwbatid'), loop.index0) -%}
 # {{ fastd_ifname }}
 allow-hotplug {{ fastd_ifname }}

@@ -5,8 +5,9 @@
     - require:
       - pkg: kea-dhcp6-server
 
+{%- set community_id = pillar.community_id %}
 {% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
-{% set ifname_br = salt['domain_networking.generate_ifname'](domain, 'br') -%}
+{% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
 dhcpv6 @ {{ ifname_br }}:
   file.accumulated:
     - name: dhcpv6-interfaces

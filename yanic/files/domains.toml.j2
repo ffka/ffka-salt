@@ -17,8 +17,9 @@ domains = [
 {% endfor %}
 ]
 
+{%- set community_id = pillar.community_id %}
 {% for domain in salt['pillar.get']('domains', {}).values() %}
-{% set ifname_br = salt['domain_networking.generate_ifname'](domain, 'br') -%}
+{% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
 [[respondd.interfaces]]
 # name of interface on which this collector is running
 ifname = "{{ ifname_br }}"

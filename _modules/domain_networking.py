@@ -1,11 +1,15 @@
-def generate_ifname(domain, iftype=None, suffix=None):
+def generate_ifname(community_id, domain, iftype=None, suffix=None):
+  if_prefix = ('dom{1:02d}' if community_id == 0 else 'dom{0:01d}{1:02d}').format(community_id, domain['domain_id'])
+
   if iftype is None and suffix is None:
-    return 'dom{0:02d}'.format(domain['domain_id'])
+    return if_prefix
   if iftype is None:
-    return 'dom{0:02d}-{1:s}'.format(domain['domain_id'], suffix)
+    return if_prefix + '-{0:s}'.format(suffix)
   if suffix is None:
-    return 'dom{0:02d}-{1:s}'.format(domain['domain_id'], iftype)
-  return 'dom{0:02d}-{1:s}-{2:s}'.format(domain['domain_id'], iftype, suffix[:4])
+    return if_prefix + '-{0:s}'.format(iftype)
+
+  max_suffix_length = 15 - (len(if_prefix) + 5)
+  return if_prefix + '-{0:s}-{1:s}'.format(iftype, suffix[:(max_suffix_length - 1)])
 
 def generate_mac(type, community_id, domain, host_id, instance_id=None):
   if type == 'br':

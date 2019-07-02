@@ -1,9 +1,9 @@
 {%- set gwbatid = salt['pillar.get']('gwbatid') -%}
 {%- set gw = salt['pillar.get']('gwbat', {}).get(gwbatid) -%}
+{%- set community_id = pillar.community_id %}
 
-{%- set ifname_mesh = salt['domain_networking.generate_ifname'](domain, 'mesh') -%}
-{%- set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') -%}
-{%- set community_id = salt['pillar.get']('community_id') %}
+{%- set ifname_mesh = salt['domain_networking.generate_ifname'](community_id, domain, 'mesh') -%}
+{%- set ifname_bat = salt['domain_networking.generate_ifname'](community_id, domain, 'bat') -%}
 {%- set mesh_mac = salt['domain_networking.generate_mac']('mesh', community_id, domain, gwbatid, 128) %}
 
 auto {{ ifname_mesh }}

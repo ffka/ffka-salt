@@ -1,7 +1,8 @@
 {% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
 {% for fastd in domain.get('fastd', {}).get('instances', []) %}
 
-{% set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fd', fastd['name']) %}
+{%- set community_id = pillar.community_id %}
+{% set fastd_ifname = salt['domain_networking.generate_ifname'](community_id, domain, 'fd', fastd['name']) %}
 
 /etc/fastd/{{ domain_id }}/{{ fastd['name'] }}:
   file.directory:
