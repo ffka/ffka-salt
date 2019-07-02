@@ -7,11 +7,11 @@ def generate_ifname(domain, iftype=None, suffix=None):
     return 'dom{0:02d}-{1:s}'.format(domain['domain_id'], iftype)
   return 'dom{0:02d}-{1:s}-{2:s}'.format(domain['domain_id'], iftype, suffix[:4])
 
-def generate_mac(type, domain, host_id, instance_id=None):
+def generate_mac(type, community_id, domain, host_id, instance_id=None):
   if type == 'br':
     return ":".join([
       'fc',
-      'cb',
+      '{0:02x}'.format(0xcb + community_id),
       'ff',
       '00',
       '{0:02x}'.format(domain['domain_id']),
@@ -19,7 +19,7 @@ def generate_mac(type, domain, host_id, instance_id=None):
   elif type == 'bat':
     return ":".join([
       'fc',
-      'ba',
+      '{0:02x}'.format(0xba + community_id),
       '1f',
       'ff',
       '{0:02x}'.format(domain['domain_id']),
@@ -27,7 +27,7 @@ def generate_mac(type, domain, host_id, instance_id=None):
   elif type == 'fastd':
     return ":".join([
       'fc',
-      'fa',
+      '{0:02x}'.format(0xfa + community_id),
       '51',
       '{0:02x}'.format(domain['domain_id']),
       '{0:02x}'.format(host_id),
@@ -35,7 +35,7 @@ def generate_mac(type, domain, host_id, instance_id=None):
   elif type == 'mesh':
     return ":".join([
       'fc',
-      'e5',
+      '{0:02x}'.format(0xe5 + community_id),
       '17',
       '{0:02x}'.format(domain['domain_id']),
       '{0:02x}'.format(host_id),

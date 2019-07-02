@@ -1,11 +1,12 @@
 # Interfaces for domain {{ '%02d' | format(domain.domain_id) }}
 
+{%- set community_id = salt['pillar.get']('community_id') %}
 {% set ifname_br = salt['domain_networking.generate_ifname'](domain, 'br') -%}
 # {{ ifname_br }}
 auto {{ ifname_br }}
 iface {{ ifname_br }} inet manual
 	pre-up ip link add name $IFACE type bridge
-	pre-up ip link set address {{ salt['domain_networking.generate_mac']('br', domain, salt['pillar.get']('gwbatid')) }} dev $IFACE
+	pre-up ip link set address {{ salt['domain_networking.generate_mac']('br', community_id, domain, salt['pillar.get']('gwbatid')) }} dev $IFACE
 	pre-up ip link set up dev $IFACE
 
 	post-down ip link delete dev $IFACE
@@ -29,7 +30,7 @@ iface {{ ifname_br }} inet6 static
 auto {{ ifname_bat }}
 iface {{ ifname_bat }} inet manual
 	pre-up ip link add name $IFACE type batadv
-	pre-up ip link set address {{ salt['domain_networking.generate_mac']('bat', domain, salt['pillar.get']('gwbatid')) }} dev $IFACE
+	pre-up ip link set address {{ salt['domain_networking.generate_mac']('bat', community_id, domain, salt['pillar.get']('gwbatid')) }} dev $IFACE
 	pre-up ip link set up dev $IFACE
 
 	post-up ip link set master {{ ifname_br }} dev $IFACE
@@ -40,7 +41,7 @@ iface {{ ifname_bat }} inet manual
 
 {%- for fastd in domain.get('fastd', {}).get('instances', []) %}
 {% set fastd_ifname = salt['domain_networking.generate_ifname'](domain, 'fd', fastd['name']) %}
-{% set fastd_mac = salt['domain_networking.generate_mac']('fastd', domain, salt['pillar.get']('gwbatid'), loop.index0) -%}
+{% set fastd_mac = salt['domain_networking.generate_mac']('fastd', community_id, domain, salt['pillar.get']('gwbatid'), loop.index0) -%}
 # {{ fastd_ifname }}
 allow-hotplug {{ fastd_ifname }}
 iface {{ fastd_ifname }} inet manual

@@ -3,7 +3,8 @@
 
 {%- set ifname_mesh = salt['domain_networking.generate_ifname'](domain, 'mesh') -%}
 {%- set ifname_bat = salt['domain_networking.generate_ifname'](domain, 'bat') -%}
-{%- set mesh_mac = salt['domain_networking.generate_mac']('mesh', domain, gwbatid, 128) %}
+{%- set community_id = salt['pillar.get']('community_id') %}
+{%- set mesh_mac = salt['domain_networking.generate_mac']('mesh', community_id, domain, gwbatid, 128) %}
 
 auto {{ ifname_mesh }}
 
