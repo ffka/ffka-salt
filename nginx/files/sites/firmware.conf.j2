@@ -34,6 +34,8 @@ server {
     }
 
     location /images {
+        include "snippets/block-432.conf";
+
         try_files $uri $uri/ =404;
         alias /srv/firmware/images;
         autoindex on;

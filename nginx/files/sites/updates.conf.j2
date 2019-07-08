@@ -10,6 +10,8 @@ server {
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
 	location /images {
+        include "snippets/block-432.conf";
+
         try_files $uri $uri/ =404;
         alias /srv/firmware/images;
         autoindex on;
@@ -17,9 +19,9 @@ server {
 
 	location /firmware {
         try_files $uri $uri/ =404;
-				alias /srv/firmware/images;
-	      autoindex on;
-	  }
+		alias /srv/firmware/images;
+	    autoindex on;
+	}
 
     location / {
         return 404;
