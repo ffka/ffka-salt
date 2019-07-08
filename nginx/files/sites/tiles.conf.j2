@@ -8,7 +8,7 @@ server {
 
     include "snippets/acme-challenge.conf";
 
-    access_log "/var/log/nginx/{{ site_name }}/access.log";
+    access_log /dev/null;
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
     location / {
@@ -29,7 +29,7 @@ server {
     include "snippets/acme-challenge.conf";
     include "snippets/tls.conf";
 
-    access_log "/var/log/nginx/{{ site_name }}/access.log";
+    access_log /dev/null;
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
     location ~ ^/tiles/(?<provider>(giscience|otherexample)+)/(?<tile_z>[0-9]+)/(?<tile_x>[0-9]+)/(?<tile_y>[0-9]+)/((?<retina>(.+))/)? {
