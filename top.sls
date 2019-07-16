@@ -58,7 +58,6 @@ base:
 #    - netflow
 #    - tflow2.agent
   'cloud-router.zkm.ka.frickelfunk.net':
-    - kernel.backports
     - kernel.sysctl
     - routing.bird
     - routing.internal_upsteam_originator
