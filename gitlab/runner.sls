@@ -58,6 +58,7 @@ gitlab-runner-output-limit:
     - repl: |
         [[runners]]
           output_limit = {{ salt['pillar.get']('gitlab:runner:output_limit', 1024) }}
+          environment = ["DOCKER_TLS_CERTDIR="]
     - require:
       - file: gitlab-runner-concurrent
     - watch:
