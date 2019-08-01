@@ -2,7 +2,11 @@
 
 golang:
   pkg.installed:
+    {% if salt['grains.get']('osfinger') == 'Debian-9' %}
     - fromrepo: stretch-backports
+    {% else %}
+    []
+    {% endif %}
 
 /usr/bin/go:
   file.symlink:
