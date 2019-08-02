@@ -15,9 +15,8 @@ netdatarequisites:
       - netcat-traditional
       - pkg-config
 
-netdatarepo:
+https://github.com/firehol/netdata.git:
   git.latest:
-    - name: https://github.com/firehol/netdata.git
     - depth: 1
     - rev: master
     - target: /root/netdatagit
@@ -28,51 +27,34 @@ netdatarepo:
 
 netdatainstall:
   require:
-    - git: netdatarepo
+    - git: https://github.com/firehol/netdata.git
     - pkg: netdatarequisites
   cmd.run:
     - cwd: /root/netdatagit
     - name: /bin/bash netdata-installer.sh --dont-wait --auto-update
-    - unless: test -f ./netdata-updater.sh
+    - unless: test -f /usr/libexec/netdata/netdata-updater.sh
 
 netdataupdate:
   require:
     - cmd: netdatainstall
   cmd.run:
     - cwd: /root/netdatagit
-    - name: /bin/bash netdata-updater.sh
-    - onlyif: test -f ./netdata-updater.sh
+    - name: /bin/bash /usr/libexec/netdata/netdata-updater.sh
+    - onlyif: test -f /usr/libexec/netdata/netdata-updater.sh
     - onchanges:
-      - git: netdatarepo
+      - git: https://github.com/firehol/netdata.git
 
-/etc/netdata/stream.conf:
+{% for file in ["stream", "netdata", "python.d"] %}
+/etc/netdata/{{ file }}.conf:
   file.managed:
-    - source: 'salt://netdata/files/stream.conf.j2'
+    - source: salt://netdata/files/{{ file }}.conf.j2
     - user: root
     - group: netdata
     - template: jinja
     - require:
       - cmd: netdatainstall
       - cmd: netdataupdate
-
-/etc/netdata/netdata.conf:
-  file.managed:
-    - source: 'salt://netdata/files/netdata.conf.j2'
-    - user: root
-    - group: netdata
-    - template: jinja
-    - require:
-      - cmd: netdatainstall
-      - cmd: netdataupdate
-
-/etc/netdata/python.d.conf:
-  file.managed:
-    - source: 'salt://netdata/files/python.d.conf.j2'
-    - user: root
-    - group: netdata
-    - template: jinja
-    - require:
-      - cmd: netdatainstall
+{% endfor %}
 
 netdata.service:
   service.running:
@@ -84,4 +66,4 @@ netdata.service:
       - cmd: netdataupdate
     - watch:
       - file: /etc/netdata/*
-      - git: netdatarepo
+      - git: https://github.com/firehol/netdata.git

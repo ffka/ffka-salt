@@ -182,3 +182,22 @@ base:
     - domain-director
   'speedtest.frickelfunk.net':
     - apt.unattended-upgrades
+  'apiffka.frickelfunk.net':
+    - network
+    - network.domains
+    - network.domains.mesh
+    - network.gwbat_internal
+    - ferm
+    - batman
+    - network.batman
+    - yanic
+  'apiffwp.frickelfunk.net':
+    - network
+    - network.domains
+    - network.domains.mesh
+    - network.gwbat_internal
+    - ferm
+    - batman
+    - network.batman
+    - yanic
+    - nginx

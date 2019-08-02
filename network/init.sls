@@ -5,6 +5,5 @@ network-pkg:
       - vlan
       - tcpdump
       - vnstat
-      - host
       - ipv6calc
-
+      - dnsutils

@@ -4,6 +4,8 @@ include:
   - golang
 
 yanic:
+  group.present:
+    []
   user.present:
     - home: /var/lib/yanic
     - gid_from_name: True
@@ -57,6 +59,8 @@ yanic:
     - user: root
     - group: root
     - mode: 0644
+    - require:
+      - user: yanic
 
 {% for instance, settings in salt['pillar.get']('yanic:instances', {}).items() %}
 /var/lib/yanic/meshviewer/{{ instance }}:

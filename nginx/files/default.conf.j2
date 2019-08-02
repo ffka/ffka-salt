@@ -12,8 +12,13 @@ server {
 
     server_name _;
 
+    {% if certificate_filename is defined %}
     ssl_certificate "/etc/letsencrypt/live/{{ certificate_filename }}/fullchain.pem";
     ssl_certificate_key "/etc/letsencrypt/live/{{ certificate_filename }}/privkey.pem";
+    {% else %}
+    ssl_certificate "/etc/ssl/certs/ssl-cert-snakeoil.pem";
+    ssl_certificate_key "/etc/ssl/private/ssl-cert-snakeoil.key";
+    {% endif %}
 
     return       444;
 }
