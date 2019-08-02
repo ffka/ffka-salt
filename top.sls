@@ -200,3 +200,4 @@ base:
     - batman
     - network.batman
     - yanic
+    - nginx
