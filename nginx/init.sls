@@ -92,4 +92,5 @@ nginx.service:
       - file: /etc/nginx/sites-available/stub_status.conf
 
 include:
+  - snakeoil-cert
   - nginx.vhosts
