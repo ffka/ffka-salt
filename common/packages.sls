@@ -9,7 +9,7 @@ packages_base:
       - curl
       - tree
       - sudo
-      - ack-grep
+      - ack
       - zsh
       - bash-completion
       - sudo
