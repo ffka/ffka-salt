@@ -56,7 +56,10 @@ nginx.service:
     - require:
       - pkg: nginx
 
-{% set default_domainset = salt['pillar.get']('domainsets:' ~ pillar['nginx']['default_server']['domainset'], []) -%}
+{% if salt['pillar.get']('nginx:default_server:domainset') %}
+{% set default_certificate_name = salt['pillar.get']('domainsets:' ~ pillar['nginx']['default_server']['domainset'], [])[0] -%}
+{% endif %}
+
 /etc/nginx/sites-available/default.conf:
   file.managed:
     - source: salt://nginx/files/default.conf.j2
@@ -64,8 +67,10 @@ nginx.service:
     - group: root
     - mode: 644
     - template: jinja
+    {% if default_certificate_name is defined %}
     - context:
-        certificate_filename: {{ default_domainset[0] }}
+        certificate_filename: {{ default_certificate_name }}
+    {% endif %}
     - require:
       - pkg: nginx
 
