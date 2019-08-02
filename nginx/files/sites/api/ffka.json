@@ -16,12 +16,11 @@
     "email": "info@karlsruhe.freifunk.net",
     "irc": "irc://irc.hackint.org/ffka",
     "ml": "freifunk-ka@lists.entropia.de",
-    "facebook": "https://facebook.com/FreifunkKA",
     "twitter": "@FFKarlsruhe"
   },
   "metacommunity": "Freifunk Karlsruhe",
   "state": {
-    "nodes": 350,
+    "nodes": 440,
     "focus": [
       "infrastructure/backbone",
       "Public Free Wifi",
@@ -72,7 +71,7 @@
     "networks": {
       "ipv6": [
         {
-          "network": "2a03:2260:a::/48"
+          "network": "2001:678:6e0::/45"
         }
       ],
       "ipv4": [
@@ -80,7 +79,7 @@
           "network": "10.214.0.0/16"
         },
         {
-          "network": "185.66.194.8/29"
+          "network": "185.65.241.0/24"
         }
       ]
     },
