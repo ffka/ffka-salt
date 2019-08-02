@@ -7,7 +7,6 @@ packages_base:
       - mosh
       - wget
       - curl
-      - realpath
       - tree
       - sudo
       - ack-grep
