@@ -9,6 +9,8 @@ server {
     access_log /dev/null;
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
+    resolver [2001:678:6e3:40d::1] [2001:678:6e3:40d::2];
+
     add_header Access-Control-Allow-Origin *;
 
     location ~ ^/yanic/(?<t>(meshviewer|nodelist)+)/(?<community>(ffka|ffwp)+)/(?<p>(.*))$ {
@@ -19,8 +21,16 @@ server {
         proxy_redirect off;
     }
 
-    location ~ ^/yanic/(?<t>(meshviewer|nodelist)+)/ {
-        proxy_pass  http://apiffka.frickelfunk.net/yanic/$t/;
+    set $default_community ffka;
+    location /yanic/meshviewer/ {
+        proxy_pass  http://api${default_community}.frickelfunk.net/yanic/meshviewer/${default_community}/;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+    }
+
+    location /yanic/nodelist/ {
+        proxy_pass  http://api${default_community}.frickelfunk.net/yanic/nodelist/${default_community}/;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_redirect off;
