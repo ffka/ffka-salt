@@ -1,0 +1,33 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name {{ hostnames }};
+
+    include "snippets/acme-challenge.conf";
+
+    access_log /dev/null;
+    error_log "/var/log/nginx/{{ site_name }}/error.log";
+
+    add_header Access-Control-Allow-Origin *;
+
+    location ~ ^/yanic/(?<t>(meshviewer|nodelist)+)/(?<community>(ffka|ffwp)+)/(?<p>(.*))$ {
+        # no trailing slash -> url is passed 1:1
+        proxy_pass  http://api${community}.frickelfunk.net;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+    }
+
+    location ~ ^/yanic/(?<t>(meshviewer|nodelist)+)/ {
+        proxy_pass  http://apiffka.frickelfunk.net/yanic/$t/;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+        root /srv/www/{{ site_name }}/htdocs/;
+    }
+}
