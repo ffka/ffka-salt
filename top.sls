@@ -63,6 +63,7 @@ base:
     - routing.internal_upsteam_originator
     - routing.radv
     - network.lo
+    - network.nat
     - network.internal_upstream
     - dhcpv4
     - dhcpv4.address_assignment
@@ -182,16 +183,8 @@ base:
     - domain-director
   'speedtest.frickelfunk.net':
     - apt.unattended-upgrades
-  'apiffka.frickelfunk.net':
-    - network
-    - network.domains
-    - network.domains.mesh
-    - network.gwbat_internal
-    - ferm
-    - batman
-    - network.batman
-    - yanic
-  'apiffwp.frickelfunk.net':
+  '^api(ffka|ffwp).frickelfunk.net$':
+    - match: pcre
     - network
     - network.domains
     - network.domains.mesh
