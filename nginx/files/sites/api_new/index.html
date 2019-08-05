@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>api.karlsruhe.freifunk.net</title>
+	</head>
+	<body>
+		<pre>
+<h1>api.karlsruhe.freifunk.net</h1>
+
+Uff, belastend! This is the Freifunk Karlsruhe API. Here you can find raw JSON files with data about our network, nodes and everything else.
+
+<b>IMPORTANT:</b> Please provide contact information if you crawl those files. For example via the UserAgent header.
+
+Files providing information about the main network:
+
+<a href="./ffka.json">./ffka.json</a>
+<a href="./yanic/meshviewer/graph.json">./yanic/meshviewer/graph.json</a>
+<a href="./yanic/meshviewer/meshviewer.json">./yanic/meshviewer/meshviewer.json</a>
+<a href="./yanic/meshviewer/nodes.json">./yanic/meshviewer/nodes.json</a>
+<a href="./yanic/nodelist/nodelist.json">./yanic/nodelist/nodelist.json</a>
+
+Further networks:
+<h4>ffwp</h4>
+<a href="./yanic/meshviewer/ffwp/graph.json">./yanic/meshviewer/ffwp/graph.json</a>
+<a href="./yanic/meshviewer/ffwp/meshviewer.json">./yanic/meshviewer/ffwp/meshviewer.json</a>
+<a href="./yanic/meshviewer/ffwp/nodes.json">./yanic/meshviewer/ffwp/nodes.json</a>
+<a href="./yanic/nodelist/ffwp/nodelist.json">./yanic/nodelist/ffwp/nodelist.json</a>
+
+<h4>ffka legacy network</h4>
+<a href="./yanic/meshviewer/legacy/graph.json">./yanic/meshviewer/legacy/graph.json</a>
+<a href="./yanic/meshviewer/legacy/meshviewer.json">./yanic/meshviewer/legacy/meshviewer.json</a>
+<a href="./yanic/meshviewer/legacy/nodes.json">./yanic/meshviewer/legacy/nodes.json</a>
+<a href="./yanic/nodelist/legacy/nodelist.json">./yanic/nodelist/legacy/nodelist.json</a>
+
+Additionally, a public InfluxDB server is provided which can be used to retrieve collected statistics:
+Server: influxdb.api.karlsruhe.freifunk.net
+Port: port 80
+User: ffka
+Password: public
+		</pre>
+	</body>
+</html>
