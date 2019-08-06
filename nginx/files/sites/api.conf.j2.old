@@ -1,0 +1,86 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name {{ hostnames }};
+
+    include "snippets/acme-challenge.conf";
+
+    access_log /dev/null;
+    error_log "/var/log/nginx/{{ site_name }}/error.log";
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name influxdb.api.karlsruhe.freifunk.net influxdb.api.frickelfunk.net;
+
+    access_log "/var/log/nginx/api/access.log";
+    error_log "/var/log/nginx/api/error.log";
+
+    location / {
+        proxy_pass http://127.0.0.1:8086/;
+        proxy_redirect default;
+        proxy_set_header   Host          $host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name {{ hostnames }};
+
+    ssl_certificate "/etc/letsencrypt/live/{{ certificate_filename }}/fullchain.pem";
+    ssl_certificate_key "/etc/letsencrypt/live/{{ certificate_filename }}/privkey.pem";
+
+    include "snippets/acme-challenge.conf";
+    include "snippets/tls.conf";
+
+    access_log /dev/null;
+    error_log "/var/log/nginx/{{ site_name }}/error.log";
+
+    add_header Access-Control-Allow-Origin *;
+
+    location ~ ^/yanic/(?<t>(meshviewer|nodelist)+)/(?<community>({{ salt['pillar.get']('yanic:instances', {}).keys() | join('|') }})+)/(?<p>(.*))$ {
+        autoindex on;
+        try_files $p $p/ =404;
+        alias /var/lib/yanic/$t/$community/;
+    }
+
+    location /yanic/meshviewer/ {
+        autoindex on;
+        try_files $uri $uri/ =404;
+        alias /var/lib/yanic/meshviewer/ffka/;
+    }
+
+    location /yanic/nodelist/ {
+        autoindex on;
+        try_files $uri $uri/ =404;
+        alias /var/lib/yanic/nodelist/ffka/;
+    }
+
+    location /grafana/ {
+        rewrite ^/grafana(/.*)$ $1 break;
+        proxy_pass  http://195.201.222.82:3000/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_redirect off;
+    }
+    location / {
+        try_files $uri $uri/ =404;
+        root /srv/www/{{ site_name }}/htdocs/;
+    }
+}

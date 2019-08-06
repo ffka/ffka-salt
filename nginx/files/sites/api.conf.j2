@@ -14,26 +14,26 @@ server {
     }
 }
 
-server {
-    listen 80;
-    listen [::]:80;
-
-    server_name influxdb.api.karlsruhe.freifunk.net influxdb.api.frickelfunk.net;
-
-    access_log "/var/log/nginx/api/access.log";
-    error_log "/var/log/nginx/api/error.log";
-
-    location / {
-        proxy_pass http://127.0.0.1:8086/;
-        proxy_redirect default;
-        proxy_set_header   Host          $host;
-        proxy_set_header   X-Real-IP        $remote_addr;
-        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
-
-        proxy_http_version 1.1;
-        proxy_set_header Connection "";
-    }
-}
+#server {
+#    listen 80;
+#    listen [::]:80;
+#
+#    server_name influxdb.api.karlsruhe.freifunk.net influxdb.api.frickelfunk.net;
+#
+#    access_log /dev/null;
+#    error_log "/var/log/nginx/api/error.log";
+#
+#    location / {
+#        proxy_pass http://influxdb.api.frickelfunk.net:8086/;
+#        proxy_redirect default;
+#        proxy_set_header   Host          $host;
+#        proxy_set_header   X-Real-IP        $remote_addr;
+#        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+#
+#        proxy_http_version 1.1;
+#        proxy_set_header Connection "";
+#    }
+#}
 
 server {
     listen 443 ssl http2;
@@ -50,35 +50,35 @@ server {
     access_log /dev/null;
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
+    resolver [2001:678:6e3:40d::1] [2001:678:6e3:40d::2];
+
     add_header Access-Control-Allow-Origin *;
 
-    location ~ ^/yanic/(?<t>(meshviewer|nodelist)+)/(?<community>({{ salt['pillar.get']('yanic:instances', {}).keys() | join('|') }})+)/(?<p>(.*))$ {
-        autoindex on;
-        try_files $p $p/ =404;
-        alias /var/lib/yanic/$t/$community/;
-    }
-
+    set $default_community ffka;
     location /yanic/meshviewer/ {
-        autoindex on;
-        try_files $uri $uri/ =404;
-        alias /var/lib/yanic/meshviewer/ffka/;
+        rewrite ^/yanic/meshviewer/(.*) /yanic/meshviewer/ffka/$1 break;
+        proxy_pass  http://api${default_community}.frickelfunk.net;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
     }
 
     location /yanic/nodelist/ {
-        autoindex on;
-        try_files $uri $uri/ =404;
-        alias /var/lib/yanic/nodelist/ffka/;
-    }
-
-    location /grafana/ {
-        rewrite ^/grafana(/.*)$ $1 break;
-        proxy_pass  http://195.201.222.82:3000/;
-        proxy_set_header Host $host;
+        rewrite ^/yanic/nodelist/(.*) /yanic/nodelist/ffka/$1 break;
+        proxy_pass  http://api${default_community}.frickelfunk.net;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto https;
         proxy_redirect off;
     }
+
+    location ~ ^/yanic/(?<t>(meshviewer|nodelist)+)/(?<community>(ffka|ffwp)+)/(?<p>(.*))$ {
+        # no trailing slash -> url is passed 1:1
+        proxy_pass  http://api${community}.frickelfunk.net;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+    }
+
     location / {
         try_files $uri $uri/ =404;
         root /srv/www/{{ site_name }}/htdocs/;
