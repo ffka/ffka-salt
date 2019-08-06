@@ -194,3 +194,5 @@ base:
     - network.batman
     - yanic
     - nginx
+  'influxdb.api.frickelfunk.net':
+    - influxdb
