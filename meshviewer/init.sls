@@ -74,7 +74,7 @@ meshviewer_deploy:
     - delete: True
     - require:
        - cmd: meshviewer_gulp
-       - test: nginx_meshviewer_internal
+       - test: nginx_meshviewer
     - onchanges:
        - git: /home/meshviewer/meshviewer.git
 {% endif %}
