@@ -90,6 +90,7 @@ base:
     - docker
     - ferm
     - discourse
+    - meshviewer
   'unifi.frickelfunk.net':
     - unifi
   'unms.frickelfunk.net':
