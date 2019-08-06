@@ -6,28 +6,6 @@ base:
     - common.sudo
     - common.backport_repo
     - netdata
-  'albufer*':
-    - kernel.backports
-    - kernel.sysctl
-    - network
-    - network.ip_rt_tables_freifunk
-    - network.br_ffka
-    - network.gre_ffka
-    - network.gre_ffrl
-    - network.lo_alb
-    - network.tunnel
-    - routing.bird
-    - routing.albufer
-    - routing.albufer_gateway_bat
-    - batman
-    - network.batman
-    - ntp
-    - ferm
-    - ferm.gw
-    - mesh_vpn
-    - mesh_vpn.server
-    - dhcp
-    - dns
   'core*.zkm.ka*':
     - kernel.backports
     - kernel.sysctl
@@ -175,7 +153,6 @@ base:
     - network.gwbat_internal
     - ferm
     - batman
-    - network.batman
     - yanic
     - nginx
   'influxdb.api.frickelfunk.net':

@@ -1,11 +1,9 @@
 {% set sysctld = "/etc/sysctl.d" %}
 
-{% for hoodname in salt['pillar.get']('hoods') %}
-net.ipv6.conf.br_{{ hoodname }}.accept_dad:
-  sysctl.present:
-    - value: 0
-    - config: {{ sysctld }}/br_{{ hoodname }}.conf
-{% endfor %)}
+#net.ipv6.conf.br_ dom client .accept_dad:
+#  sysctl.present:
+#    - value: 0
+#    - config: {{ sysctld }}/br_ dom client .conf
 
 # conntrack
 nf_conntrack:
