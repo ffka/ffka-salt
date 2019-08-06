@@ -13,24 +13,26 @@ server {
 
     add_header Access-Control-Allow-Origin *;
 
-    location ~ ^/yanic/(?<t>(meshviewer|nodelist)+)/(?<community>(ffka|ffwp)+)/(?<p>(.*))$ {
-        # no trailing slash -> url is passed 1:1
-        proxy_pass  http://api${community}.frickelfunk.net;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_redirect off;
-    }
-
     set $default_community ffka;
     location /yanic/meshviewer/ {
-        proxy_pass  http://api${default_community}.frickelfunk.net/yanic/meshviewer/${default_community}/;
+        rewrite ^/yanic/meshviewer/(.*) /yanic/meshviewer/ffka/$1 break;
+        proxy_pass  http://api${default_community}.frickelfunk.net;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_redirect off;
     }
 
     location /yanic/nodelist/ {
-        proxy_pass  http://api${default_community}.frickelfunk.net/yanic/nodelist/${default_community}/;
+        rewrite ^/yanic/nodelist/(.*) /yanic/nodelist/ffka/$1 break;
+        proxy_pass  http://api${default_community}.frickelfunk.net;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+    }
+
+    location ~ ^/yanic/(?<t>(meshviewer|nodelist)+)/(?<community>(ffka|ffwp)+)/(?<p>(.*))$ {
+        # no trailing slash -> url is passed 1:1
+        proxy_pass  http://api${community}.frickelfunk.net;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_redirect off;
