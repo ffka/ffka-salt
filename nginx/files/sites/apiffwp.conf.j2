@@ -9,8 +9,6 @@ server {
     access_log /dev/null;
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
-    add_header Access-Control-Allow-Origin *;
-
     allow 185.65.241.0/24;
     allow 2001:678:6e0::/45;
     deny all;
