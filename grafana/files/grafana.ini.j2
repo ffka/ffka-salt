@@ -45,7 +45,7 @@ org_role = Viewer
 
 [auth.generic_oauth]
 
-{% set gitlab_oauth = salt['pillar.get']('grafana:gitlab_oauth', None) %}
+{% set gitlab_oauth = instance.get('gitlab_oauth', None) %}
 
 {% if gitlab_oauth %}
 enabled = true
