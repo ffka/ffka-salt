@@ -69,6 +69,7 @@ base:
     - ferm
     - discourse
     - meshviewer
+    - grafana.docker
   'unifi.frickelfunk.net':
     - unifi
   'unms.frickelfunk.net':
