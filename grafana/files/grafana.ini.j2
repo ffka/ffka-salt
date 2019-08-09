@@ -1,11 +1,14 @@
+instance_name = {{ instance['title'] }}
+
 [paths]
 
 [server]
 
 protocol = http
-http_addr = [0.0.0.0]
+http_addr = 
 
-#domain = monitor.frickelfunk.net
+{% set domain = salt['pillar.get']('domainsets:' ~ instance['domainset'], [])[0] -%}
+domain = {{ domain }}
 root_url = {{ instance['url'] }}
 
 [database]
