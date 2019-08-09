@@ -34,9 +34,12 @@ iface {{ ifname_bat }} inet manual
 	pre-up ip link set up dev $IFACE
 
 	post-up ip link set master {{ ifname_br }} dev $IFACE
+	{% if network.is_bat_gateway == 'false' -%}
+	{% elif  %}
 	post-up batctl -m {{ ifname_bat }} orig_interval 10000
 	post-up batctl -m {{ ifname_bat }} gw_mode server 50000/50000
-
+  {% endif -%}
+	
 	post-down ip link delete dev $IFACE
 
 {%- for fastd in domain.get('fastd', {}).get('instances', []) %}
