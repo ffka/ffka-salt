@@ -1,4 +1,4 @@
-{% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
+{% for domain_id, domain in salt['domain_networking.get_domains']().items() %}
 /etc/mesh-announce/{{ domain_id }}.env:
   file.managed:
     - source: salt://mesh-announce/files/domain.env.j2

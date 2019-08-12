@@ -1,4 +1,4 @@
-{% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
+{% for domain_id, domain in salt['domain_networking.get_domains']().items() %}
 {% for fastd in domain.get('fastd', {}).get('instances', []) %}
 
 {%- set community_id = pillar.community_id %}

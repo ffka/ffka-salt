@@ -1,6 +1,6 @@
 mod-synthrecord:
   
-{% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
+{% for domain_id, domain in salt['domain_networking.get_domains']().items() %}
 {%- set main_network = domain['ipv6'].keys()[0] %}
   - id: {{ domain_id }}_forward
     type: forward

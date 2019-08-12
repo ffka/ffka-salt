@@ -47,9 +47,18 @@ def generate_mac(type, community_id, domain, host_id, instance_id=None):
   else:
     return "INVALID"
 
-def domain_names():
+def domain_names(community=None):
   domains = {}
-  for domain in __salt__['pillar.get']('domains').values():
+  for domain in get_domains(community).values():
     for code, name in domain['domain_names'].items():
       domains[code] = name.decode('utf-8')
   return domains
+
+def get_domains_for_communities(communities):
+  community_id_map = __salt__['pillar.get']('community_ids')
+  return map(lambda c: (c, community_id_map[c], __salt__['pillar.get']('%s:domains'.format(c))), communities)
+
+def get_domains(community=None):
+  if community is None:
+    community = __salt__['pillar.get']('community')
+  return __salt__['pillar.get']('%s:domains'.format(community))

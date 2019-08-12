@@ -13,7 +13,7 @@
 domain (ip ip6) {
     table filter {
         chain FORWARD {
-        {% for domain in salt['pillar.get']('domains', {}).values() %}
+        {% for domain in salt['domain_networking.get_domains']().values() %}
         {% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
             interface {{ ifname_br }} saddr ({{ " ".join(domain.get('ipv4', {}).keys() + domain.get('ipv6', {}).keys()) }}) {
                 proto tcp dport smtp REJECT;
@@ -33,7 +33,7 @@ domain (ip){
 		 table mangle {
 	        chain FORWARD {
 					# mss = transport mtu - (batman-adv + ether) 32 - ipv4 20 - tcp 20
-					{% for domain in salt['pillar.get']('domains', {}).values() %}
+					{% for domain in salt['domain_networking.get_domains']().values() %}
           {% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
               interface {{ ifname_br }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ domain['network_mtu'] - 20 - 20 }};
 					{% endfor %}
@@ -46,7 +46,7 @@ domain ip6 {
    table mangle {
         chain FORWARD {
             # mss = transport mtu - (batman-adv + ether) 32 - ipv6 40 - tcp 20
-						{% for domain in salt['pillar.get']('domains', {}).values() %}
+						{% for domain in salt['domain_networking.get_domains']().values() %}
             {% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
             interface {{ ifname_br }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ domain['network_mtu'] - 40 - 20 }};
 						{% endfor %}
@@ -54,7 +54,7 @@ domain ip6 {
    }
    table filter {
         chain FORWARD {
-					{% for domain in salt['pillar.get']('domains', {}).values() %}
+					{% for domain in salt['domain_networking.get_domains']().values() %}
           {% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
               interface $VZFFNRMO_IF outerface {{ ifname_br }} ACCEPT;
 					{% endfor %}
@@ -67,7 +67,7 @@ domain ip table nat {
 
 
 	chain POSTROUTING {
-  {% for domain_id, domain in salt['pillar.get']('domains', {}).items() %}
+  {% for domain_id, domain in salt['domain_networking.get_domains']().items() %}
 {% for network in domain.get('ipv4', {}).values() if 'address' in network %}
 		source {{ network['address'] }}/{{ network['netmask'] }} outerface $VZFFNRMO_IF SNAT to $VZFFNRMO_NAT_IP;
 
