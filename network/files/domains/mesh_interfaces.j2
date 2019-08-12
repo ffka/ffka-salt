@@ -9,15 +9,15 @@
 auto {{ ifname_mesh }}
 
 iface {{ ifname_mesh }} inet manual
-  pre-up ip link add name {{ ifname_mesh }} type vxlan id {{ domain['vxlan']['id'] }} dev {{ gw['mesh']['iface'] }} dstport 4789 group ff02::15c udp6zerocsumrx udp6zerocsumtx
-  pre-up ip link set address {{ mesh_mac }} dev {{ ifname_mesh }}
-  pre-up ip link set master {{ ifname_bat }} dev {{ ifname_mesh }}
+    pre-up ip link add name {{ ifname_mesh }} type vxlan id {{ domain['vxlan']['id'] }} dev {{ gw['mesh']['iface'] }} dstport 4789 group ff02::15c udp6zerocsumrx udp6zerocsumtx
+    pre-up ip link set address {{ mesh_mac }} dev {{ ifname_mesh }}
+    pre-up ip link set master {{ ifname_bat }} dev {{ ifname_mesh }}
 
-  {%- for id, other_gw in salt['pillar.get']('gwbat', {}).items() if id != gwbatid and other_gw['mesh']['name'] != gw['mesh']['name'] %}
-  post-up bridge fdb append 00:00:00:00:00:00 dev {{ ifname_mesh }} dst {{ other_gw['ipv6']['address'] }} via {{ gw['ipv6']['iface'] }}
-  {% endfor %}
+    {%- for id, other_gw in salt['pillar.get']('gwbat', {}).items() if id != gwbatid and other_gw['mesh']['name'] != gw['mesh']['name'] %}
+    post-up bridge fdb append 00:00:00:00:00:00 dev {{ ifname_mesh }} dst {{ other_gw['ipv6']['address'] }} via {{ gw['ipv6']['iface'] }}
+    {% endfor %}
 
-  post-down ip link del {{ ifname_mesh }}
+    post-down ip link del {{ ifname_mesh }}
 
-  ttl 64
-  mtu {{ domain['network_mtu'] }}
+    ttl 64
+    mtu {{ domain['network_mtu'] }}
