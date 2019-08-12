@@ -56,9 +56,9 @@ def domain_names(community=None):
 
 def get_domains_for_communities(communities):
   community_id_map = __salt__['pillar.get']('community_ids')
-  return map(lambda c: (c, community_id_map[c], __salt__['pillar.get']('%s:domains'.format(c))), communities)
+  return map(lambda c: (c, community_id_map[c], __salt__['pillar.get']('{}:domains'.format(c))), communities)
 
 def get_domains(community=None):
   if community is None:
     community = __salt__['pillar.get']('community')
-  return __salt__['pillar.get']('%s:domains'.format(community))
+  return __salt__['pillar.get']('{}:domains'.format(community))
