@@ -1,3 +1,5 @@
+import itertools
+
 def generate_ifname(community_id, domain, iftype=None, suffix=None):
   if_prefix = ('dom{1:02d}' if community_id == 0 else 'dom{0:01d}{1:02d}').format(community_id, domain['domain_id'])
 
@@ -56,7 +58,11 @@ def domain_names(community=None):
 
 def get_domains_for_communities(communities):
   community_id_map = __salt__['pillar.get']('community_ids')
-  return map(lambda c: (c, community_id_map[c], __salt__['pillar.get']('{}:domains'.format(c))), communities)
+  domains_per_community = [
+    [(community_id_map[c], c, dom_id, dom) for (dom_id, dom) in __salt__['pillar.get']('{}:domains'.format(c)).items()]
+    for c in community_id_map.keys()
+  ]
+  return itertools.chain(*domains_per_community)
 
 def get_domains(community=None):
   if community is None:
