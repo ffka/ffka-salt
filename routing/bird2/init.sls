@@ -1,24 +1,34 @@
+/etc/apt/preferences.d/bird2:
+  file.managed:
+    - contents: |
+        Package: bird2
+        Pin: release n=unstable
+        Pin-Priority: 800
+
 bird:
   pkg.purged
 
-/etc/systemd/system/bird2.service:
-  file.managed:
-    - source: salt://routing/files/bird2/bird2.service
-    - user: root
-    - group: root
-    - mode: 644
+bird2:
+  pkg.installed:
+    - require:
+      - file: /etc/apt/preferences.d/bird2
+      - pkgrepo: unstable
+      - pkg: bird
 
 /etc/bird2/bird.d/:
   file.directory:
     - mode: 644
     - makedirs: True
+    - require:
+      - pkg: bird2
 
 bird2.service:
   service.running:
     - enable: True
     - reload: True
     - require:
-      - file: /etc/systemd/system/bird2.service
+      - pkg: bird2
+      - file: /etc/bird2/bird.d/
     - watch:
       - /etc/bird2/bird.conf
       - /etc/bird2/bird.d/*
@@ -56,5 +66,6 @@ bird2.service:
 {% endfor %}
 
 include:
+  - common.debian_unstable
   - routing.bird2.ibgp
   - routing.bird2.ebgp
