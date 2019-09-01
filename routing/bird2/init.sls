@@ -8,26 +8,34 @@
 bird:
   pkg.purged
 
-bird2:
-  pkg.installed:
-    - require:
-      - file: /etc/apt/preferences.d/bird2
-      - pkgrepo: unstable
-      - pkg: bird
+#bird2:
+#  pkg.installed:
+#    - require:
+#      - file: /etc/apt/preferences.d/bird2
+#      - pkgrepo: unstable
+#      - pkg: bird
+
+/etc/systemd/system/bird2.service:
+  file.managed:
+    - source: salt://routing/files/bird2/bird2.service
+    - user: root
+    - group: root
+    - mode: 644
 
 /etc/bird2/bird.d/:
   file.directory:
     - mode: 644
     - makedirs: True
-    - require:
-      - pkg: bird2
+#    - require:
+#      - pkg: bird2
 
 bird2.service:
   service.running:
     - enable: True
     - reload: True
     - require:
-      - pkg: bird2
+#      - pkg: bird2
+      - file: /etc/systemd/system/bird2.service
       - file: /etc/bird2/bird.d/
     - watch:
       - /etc/bird2/bird.conf
