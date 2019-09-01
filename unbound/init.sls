@@ -1,15 +1,17 @@
 {%- from 'unbound/instances.map' import instances with context -%}
 
 unbound:
-  pkg.installed:
-    - pkg:
-      - unbound
+  pkg.installed
+
+dns-root-data:
+  pkg.latest
 
 unbound.service:
   service.dead:
     - enable: False
     - require:
       - pkg: unbound
+      - pkg: dns-root-data
 
 /etc/systemd/system/unbound@.service:
   file.managed:
@@ -31,6 +33,8 @@ unbound.service:
     - contents: |
         server:
             pidfile: "/var/run/unbound-{{ instance }}.pid"
+            use-systemd: yes
+            do-daemonize: no
         remote-control:
             control-interface: "/var/run/unbound-{{ instance }}.ctl"
         include: "/etc/unbound/{{ instance }}.conf.d/*.conf"
@@ -59,6 +63,8 @@ unbound@{{ instance }}.service:
   service.running:
     - enable: True
     - reload: True
+    - require:
+      - service: unbound.service
     - watch:
       - file: /etc/unbound/{{ instance }}.conf.d*
       - file: /etc/systemd/system/unbound@.service
