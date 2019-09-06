@@ -33,7 +33,6 @@ unbound.service:
     - contents: |
         server:
             pidfile: "/var/run/unbound-{{ instance }}.pid"
-            use-systemd: yes
             do-daemonize: no
         remote-control:
             control-interface: "/var/run/unbound-{{ instance }}.ctl"
