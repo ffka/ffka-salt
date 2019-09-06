@@ -24,7 +24,7 @@ server {
     error_log "/var/log/nginx/api/error.log";
 
     location / {
-        proxy_pass http://[2001:678:6e3:1050:b02d:dff:fe58:b004]:8086;
+        proxy_pass http://[2001:678:6e0:1001:b02d:dff:fe58:b004]:8086;
         proxy_redirect default;
         proxy_set_header   Host          $host;
         proxy_set_header   X-Real-IP        $remote_addr;
