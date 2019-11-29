@@ -47,15 +47,33 @@ zutrittskontrolle_server:
   docker_container.running:
     - image: zutrittskontrolle:latest
     - environment:
+      - ALLOWED_HOSTS: "*"
       - DB_USER: zutrittskontrolle
       - DB_PASSWORD: ssnxkq6wmivmor5sdbmr
       - DB_NAME: zutrittskontrolle
       - DB_HOST: zutrittskontrollepg
     - network_mode: zutrittskontrolle_backend
     - port_bindings:
-      - 127.0.0.1:8000:8000
+      - "8000:8000"
     - restart_policy: always
-    - command: python3 manage.py runserver 0.0.0.0:8000
+    - command: python3 manage.py runserver [::]:8000
     - require:
       - docker_network: zutrittskontrolle_backend
+    - watch:
+      - docker_image: zutrittskontrolle
+
+zutrittskontrolle_importer:
+  docker_container.running:
+    - image: zutrittskontrolle:latest
+    - environment:
+      - DB_USER: zutrittskontrolle
+      - DB_PASSWORD: ssnxkq6wmivmor5sdbmr
+      - DB_NAME: zutrittskontrolle
+      - DB_HOST: zutrittskontrollepg
+    - network_mode: zutrittskontrolle_backend
+    - restart_policy: always
+    - command: python3 manage.py runimport ffka 'https://api.karlsruhe.freifunk.net/yanic/meshviewer/nodes.json'
+    - require:
+      - docker_network: zutrittskontrolle_backend
+    - watch:
       - docker_image: zutrittskontrolle
