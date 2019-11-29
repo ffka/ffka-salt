@@ -116,6 +116,7 @@ base:
     - network.tunnel
     - mesh-announce
     - mesh-announce.domains
+    - access-control.gwbat
   'gwffwp*.frickelfunk.net':
     - kernel.backports
     - batman
