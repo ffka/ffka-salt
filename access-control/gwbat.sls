@@ -30,12 +30,12 @@ zutrittskontrolle.git:
     - group: root
     - mode: 644
     - require:
-      - git: zutrittskontrolle
+      - git: zutrittskontrolle.git
 
 zutrittskontrolle-export.timer:
   service.running:
     - enable: True
     - require:
-      - git: zutrittskontrolle
+      - git: zutrittskontrolle.git
       - file: /etc/systemd/system/zutrittskontrolle-export.service
       - file: /etc/systemd/system/zutrittskontrolle-export.timer
