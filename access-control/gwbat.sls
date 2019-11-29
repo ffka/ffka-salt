@@ -1,4 +1,4 @@
-zutrittskontrolle:
+zutrittskontrolle.git:
   git.latest:
     - name: https://gitlab.karlsruhe.freifunk.net/software/zutrittskontrolle.git
     - target: /usr/src/zutrittskontrolle
@@ -18,7 +18,7 @@ zutrittskontrolle:
     - group: root
     - mode: 644
     - require:
-      - git: zutrittskontrolle
+      - git: zutrittskontrolle.git
 
 /etc/systemd/system/zutrittskontrolle-export.timer:
   file.managed:

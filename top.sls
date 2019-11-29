@@ -161,3 +161,4 @@ base:
     - influxdb
   'zutrittskontrolle.frickelfunk.net':
     - docker
+    - access-control
