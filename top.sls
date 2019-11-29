@@ -158,3 +158,5 @@ base:
     - nginx
   'influxdb.api.frickelfunk.net':
     - influxdb
+  'zutrittskontrolle.frickelfunk.net':
+    - docker
