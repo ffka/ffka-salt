@@ -27,7 +27,7 @@ zutrittskontrolle:
     - mode: 755
     - makedirs: True
 
-zutrittskontrolle_postgres:
+zutrittskontrollepg:
   docker_container.running:
     - image: postgres:{{ postgres_version }}
     - environment:
@@ -43,3 +43,19 @@ zutrittskontrolle_postgres:
       - docker_image: postgres:{{ postgres_version }}
       - file: /var/application-data/zutrittskontrolle
 
+zutrittskontrolle_server:
+  docker_container.running:
+    - image: zutrittskontrolle:latest
+    - environment:
+      - DB_USER: zutrittskontrolle
+      - DB_PASSWORD: ssnxkq6wmivmor5sdbmr
+      - DB_NAME: zutrittskontrolle
+      - DB_HOST: zutrittskontrollepg
+    - network_mode: zutrittskontrolle_backend
+    - port_bindings:
+      - 127.0.0.1:8000:8000
+    - restart_policy: always
+    - command: python3 manage.py runserver 0.0.0.0:8000
+    - require:
+      - docker_network: zutrittskontrolle_backend
+      - docker_image: zutrittskontrolle
