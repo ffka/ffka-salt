@@ -1,15 +1,15 @@
-/etc/apt/preferences.d/stretch-backports-kernel:
+/etc/apt/preferences.d/{{ salt['grains.get']('oscodename') }}-backports-kernel:
   file.managed:
-    - source: salt://kernel/files/stretch-backports-kernel
+    - source: salt://kernel/files/{{ salt['grains.get']('oscodename') }}-backports-kernel
     - template: jinja
 
 packages_kernel:
   pkg.latest:
-    - fromrepo: stretch-backports
+    - fromrepo: {{ salt['grains.get']('oscodename') }}-backports
     - refresh: True
     - pkgs:
       - linux-image-amd64
       - linux-headers-amd64
     - require:
       - pkgrepo: stretch_backports
-      - file: /etc/apt/preferences.d/stretch-backports-kernel
+      - file: /etc/apt/preferences.d/{{ salt['grains.get']('oscodename') }}-backports-kernel
