@@ -12,5 +12,5 @@ iproute2:
     - pkgs:
       - iproute2
     - require:
-      - pkgrepo: stretch_backports
+      - pkgrepo: debian_backports
       - file: /etc/apt/preferences.d/stretch-backports-iproute2
