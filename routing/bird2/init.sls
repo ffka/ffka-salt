@@ -19,7 +19,14 @@ bird2:
       - pkgrepo: unstable
       - pkg: bird
 
-bird2.service:
+/etc/bird/bird.d/:
+  file.directory:
+    - mode: 644
+    - makedirs: True
+    - require:
+      - pkg: bird2
+
+bird.service:
   service.running:
     - enable: True
     - reload: True
@@ -44,7 +51,7 @@ bird2.service:
  file.directory:
    - mode: 644
    - require:
-     - pkg: bird2
+     - file: /etc/bird/bird.d/
 {% endfor %}
 
 {% for file in ["05-communities", "06-constants", "10-basic-settings", "20-basic-protocols", "25-igp", "30-policy-communities", "31-policy-ebgp-in-basic", "31-policy-ebgp-out-basic", "31-policy-ibgp-in-basic", "39-policy-ebpg", "39-policy-ibgp", "39-policy-internal-downstreams", "40-bgp-base", "45-bgp-sessions"] %}
@@ -58,7 +65,7 @@ bird2.service:
     - group: root
     - mode: 644
     - require:
-      - pkg: bird2
+      - file: /etc/bird/bird.d/
 {% endfor %}
 
 include:

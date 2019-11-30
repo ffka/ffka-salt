@@ -21,4 +21,4 @@
     - group: root
     - mode: 644
     - require:
-      - pkg: bird2
+      - file: /etc/bird/bird.d/
