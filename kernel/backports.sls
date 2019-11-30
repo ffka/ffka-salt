@@ -11,5 +11,5 @@ packages_kernel:
       - linux-image-amd64
       - linux-headers-amd64
     - require:
-      - pkgrepo: stretch_backports
+      - pkgrepo: {{ salt['grains.get']('oscodename') }}_backports
       - file: /etc/apt/preferences.d/{{ salt['grains.get']('oscodename') }}-backports-kernel
