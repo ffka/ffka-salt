@@ -2,7 +2,7 @@
 {%- set gw = salt['pillar.get']('backbone', {}).get(name) -%}
 
 {%- for other_name, other_gw in salt['pillar.get']('backbone', {}).items() if other_name != name %}
-/etc/bird2/bird.d/ibgp/{{ other_name }}.conf:
+/etc/bird/bird.d/ibgp/{{ other_name }}.conf:
   file.managed:
     - source: salt://routing/files/bird2/session_templates/ibgp.conf
     - template: jinja
@@ -15,11 +15,11 @@
         other_name: {{ other_name }}
         other_gw: {{ other_gw | yaml }}
     - require:
-      - file: /etc/bird2/bird.d/ibgp/
+      - file: /etc/bird/bird.d/ibgp/
 {% endfor %}
 
 {%- for name, peer in salt['pillar.get']('routing:internal_downstream', {}).items() %}
-/etc/bird2/bird.d/internal_downstreams/{{ name }}.conf:
+/etc/bird/bird.d/internal_downstreams/{{ name }}.conf:
   file.managed:
     - source: salt://routing/files/bird2/session_templates/internal_downstream.conf
     - template: jinja
@@ -30,10 +30,10 @@
         name: {{ name }}
         peer: {{ peer }}
     - require:
-      - file: /etc/bird2/bird.d/internal_downstreams/
+      - file: /etc/bird/bird.d/internal_downstreams/
 {% endfor %}
 
-/etc/bird2/bird.d/41-basic-protocols-internal-downstreams.conf:
+/etc/bird/bird.d/41-basic-protocols-internal-downstreams.conf:
   file.managed:
     - source: salt://routing/files/bird2/bird.d/41-basic-protocols-internal-downstreams.conf
     - template: jinja
@@ -41,4 +41,4 @@
     - group: root
     - mode: 644
     - require:
-      - file: /etc/bird2/bird.d/
+      - pkg: bird2

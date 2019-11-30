@@ -8,7 +8,7 @@ julez_packages:
 
 julez_dotfiles:
   git.latest:
-    - name: https://git.home.julez.io/stuff/dotfiles
+    - name: https://julez.dev/stuff/dotfiles
     - target: {{ home }}/.dotfiles
     - branch: master
     - user: {{ username }}
