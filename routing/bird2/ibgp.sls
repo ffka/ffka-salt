@@ -6,8 +6,8 @@
   file.managed:
     - source: salt://routing/files/bird2/session_templates/ibgp.conf
     - template: jinja
-    - user: root
-    - group: root
+    - user: bird
+    - group: bird
     - mode: 644
     - context:
         name: {{ name }}
@@ -23,8 +23,8 @@
   file.managed:
     - source: salt://routing/files/bird2/session_templates/internal_downstream.conf
     - template: jinja
-    - user: root
-    - group: root
+    - user: bird
+    - group: bird
     - mode: 644
     - context:
         name: {{ name }}
@@ -37,8 +37,8 @@
   file.managed:
     - source: salt://routing/files/bird2/bird.d/41-basic-protocols-internal-downstreams.conf
     - template: jinja
-    - user: root
-    - group: root
+    - user: bird
+    - group: bird
     - mode: 644
     - require:
       - file: /etc/bird/bird.d/
