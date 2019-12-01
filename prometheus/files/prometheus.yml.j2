@@ -31,6 +31,17 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:19999']
 
+  - job_name: node
+
+    static_configs:
+      - targets:
+        - 'localhost:9100'
+{%- for salt_minion, exporters in salt['mine.get']('*', 'prometheus.exporters').items() if "node" in exporters %}
+{% set hostname = salt['mine.get'](salt_minion, 'prometheus.hostname').get(salt_minion) %}
+      # {{ salt_minion }}
+        - '{{ hostname }}:9100'
+{%- endfor %}
+
 {% for scrape_config in salt['pillar.get']('monitoring:prometheus:scrape_configs', []) %}
   - {{ scrape_config | yaml }}
 {% endfor %}
