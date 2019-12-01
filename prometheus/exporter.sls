@@ -16,3 +16,7 @@ prometheus-node-exporter.service:
     - require:
       - pkg: prometheus-node-exporter
       - file: /etc/default/prometheus-node-exporter
+
+prometheus.exporters:
+  grains.list_present:
+    - value: node
