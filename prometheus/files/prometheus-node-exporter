@@ -1,0 +1,11 @@
+ARGS="--collector.interrupts \
+      --collector.ksmd \
+      --collector.logind \
+      --collector.ntp \
+      --collector.ntp.server=::1 \
+      --collector.processes \
+      --collector.qdisc \
+      --collector.systemd \
+      --collector.tcpstat \
+      --no-collector.infiniband \
+      --no-collector.xfs

@@ -157,6 +157,7 @@ base:
     - batman
     - yanic
     - nginx
+    - prometheus.exporter
   'influxdb.api.frickelfunk.net':
     - influxdb
   'zutrittskontrolle.frickelfunk.net':
