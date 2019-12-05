@@ -8,4 +8,4 @@ ARGS="--collector.interrupts \
       --collector.systemd \
       --collector.tcpstat \
       --no-collector.infiniband \
-      --no-collector.xfs
+      --no-collector.xfs"
