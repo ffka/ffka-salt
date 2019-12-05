@@ -6,6 +6,7 @@ base:
     - common.sudo
     - common.backport_repo
     - netdata
+    - prometheus.exporter
   'core*.zkm.ka*':
     - kernel.backports
     - kernel.sysctl
@@ -157,7 +158,6 @@ base:
     - batman
     - yanic
     - nginx
-    - prometheus.exporter
   'influxdb.api.frickelfunk.net':
     - influxdb
   'zutrittskontrolle.frickelfunk.net':
