@@ -1268,7 +1268,7 @@ server {
     ##! Docs: https://docs.gitlab.com/ce/administration/monitoring/prometheus/
     ################################################################################
 
-    # prometheus['enable'] = true
+    # prometheus['enable'] = false
     # prometheus['monitor_kubernetes'] = true
     # prometheus['username'] = 'gitlab-prometheus'
     # prometheus['uid'] = nil
@@ -1341,7 +1341,7 @@ server {
     ##! Docs: https://docs.gitlab.com/ce/administration/monitoring/prometheus/redis_exporter.html
     ################################################################################
 
-    # redis_exporter['enable'] = true
+    # redis_exporter['enable'] = false
     # redis_exporter['log_directory'] = '/var/log/gitlab/redis-exporter'
     # redis_exporter['flags'] = {
     #   'redis.addr' => "unix://#{node['gitlab']['gitlab-rails']['redis_socket']}",
@@ -1355,7 +1355,7 @@ server {
     ##! Docs: https://docs.gitlab.com/ce/administration/monitoring/prometheus/postgres_exporter.html
     ################################################################################
 
-    # postgres_exporter['enable'] = true
+    # postgres_exporter['enable'] = false
     # postgres_exporter['home'] = '/var/opt/gitlab/postgres-exporter'
     # postgres_exporter['log_directory'] = '/var/log/gitlab/postgres-exporter'
     # postgres_exporter['flags'] = {}
