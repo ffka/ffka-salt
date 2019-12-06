@@ -8,7 +8,7 @@ base:
     - netdata
     - prometheus.exporter
   'core*.zkm.ka*':
-    - kernel.backports
+#    - kernel.backports
     - kernel.sysctl
     - network
     - network.lo_core
