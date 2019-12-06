@@ -13,6 +13,7 @@ julez_dotfiles:
     - branch: master
     - user: {{ username }}
     - submodules: True
+    - force_reset: True
   require:
     - pkg: julez_packages
 
