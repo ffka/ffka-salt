@@ -3,13 +3,13 @@
   file.managed:
     - contents: |
         Package: prometheus-node-exporter
-        Pin: release n=backports
+        Pin: release n=stretch-backports
         Pin-Priority: 800
     - template: jinja
 
 prometheus-node-exporter:
-  pkg.latest
-    - fromrepo: debian_backports
+  pkg.latest:
+    - fromrepo: stretch-backports
     - require:
       - file: /etc/apt/preferences.d/prometheus-node-exporter
 
