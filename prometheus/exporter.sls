@@ -12,7 +12,6 @@ prometheus-node-exporter:
     - fromrepo: stretch-backports
     - require:
       - file: /etc/apt/preferences.d/prometheus-node-exporter
-
 {% else %}
 /etc/apt/preferences.d/prometheus-node-exporter:
   file.absent
