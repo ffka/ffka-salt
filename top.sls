@@ -6,7 +6,7 @@ base:
     - common.sudo
     - common.backport_repo
     - netdata
-    - prometheus.exporter
+    - prometheus.exporters.node
   'core*.zkm.ka*':
 #    - kernel.backports
     - kernel.sysctl
@@ -16,6 +16,7 @@ base:
     - iproute2.backports
     - routing.bird2
     - ferm
+    - prometheus.exporters.bird
 #    - snmpd
 #    - netflow
 #    - tflow2.agent

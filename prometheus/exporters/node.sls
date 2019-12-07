@@ -1,4 +1,7 @@
 {% if salt['grains.get']('oscodename') == 'stretch' %}
+include:
+  - common.backport_repo
+
 /etc/apt/preferences.d/prometheus-node-exporter:
   file.managed:
     - contents: |
@@ -6,6 +9,8 @@
         Pin: release n=stretch-backports
         Pin-Priority: 800
     - template: jinja
+    - require:
+      - pkgrepo: debian_backports
 
 prometheus-node-exporter:
   pkg.latest:
