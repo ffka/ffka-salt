@@ -41,6 +41,6 @@ prometheus-bird-exporter.service:
       - pkg: prometheus-bird-exporter
       - file: /etc/default/prometheus-bird-exporter
 
-prometheus.exporters:
+bird@prometheus.exporters:
   grains.list_present:
     - value: bird

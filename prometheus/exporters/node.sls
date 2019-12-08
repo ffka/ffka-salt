@@ -43,6 +43,6 @@ prometheus-node-exporter.service:
       - pkg: prometheus-node-exporter
       - file: /etc/default/prometheus-node-exporter
 
-prometheus.exporters:
+node@prometheus.exporters:
   grains.list_present:
     - value: node
