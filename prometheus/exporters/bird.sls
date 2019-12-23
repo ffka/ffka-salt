@@ -1,21 +1,33 @@
+{%- set gopath = '/var/lib/bird_exporter/go' %}
+{%- set bird_export_version = "1.2.4" %}
+
 include:
-  - common.debian_unstable
+  - golang
 
 /etc/apt/preferences.d/prometheus-bird-exporter:
-  file.managed:
-    - contents: |
-        Package: prometheus-bird-exporter
-        Pin: release n=unstable
-        Pin-Priority: 800
-    - template: jinja
-    - require:
-      - pkgrepo: unstable
+  file.absent
 
 prometheus-bird-exporter:
-  pkg.latest:
-    - fromrepo: unstable
+  pkg.purged
+
+https://github.com/czerwonk/bird_exporter.git:
+  git.latest:
+    - target: {{ gopath }}/src/github.com/czerwonk/bird_exporter
+    - rev: {{ bird_export_version }}
+    - force_fetch: True
+
+go get czerwonk/bird_exporter:
+  cmd.run:
+    - cwd: {{ gopath }}/src/github.com/czerwonk/bird_exporter
+    - name: go install -i
+    - env:
+        GOPATH: {{ gopath }}
+        GO111MODULE: "on"
+        GOCACHE: /root/.cache/go-build
     - require:
-      - file: /etc/apt/preferences.d/prometheus-bird-exporter
+      - pkg: golang
+    - onchanges:
+      - git: https://github.com/czerwonk/bird_exporter.git
 
 /etc/default/prometheus-bird-exporter:
   file.managed:
@@ -34,12 +46,23 @@ prometheus-bird-exporter:
     - require:
        - pkg: prometheus-bird-exporter
 
+/etc/systemd/system/prometheus-bird-exporter.service:
+  file.managed:
+    - source: salt://prometheus/files/prometheus-bird-exporter.service
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        gopath: {{ gopath }}
+
 prometheus-bird-exporter.service:
   service.running:
     - enable: True
     - require:
-      - pkg: prometheus-bird-exporter
+      - cmd: go get czerwonk/bird_exporter
       - file: /etc/default/prometheus-bird-exporter
+      - file: /etc/systemd/system/prometheus-bird-exporter.service
 
 bird@prometheus.exporters:
   grains.list_present:
