@@ -45,4 +45,5 @@ prometheus-node-exporter.service:
 
 node@prometheus.exporters:
   grains.list_present:
+    - name: prometheus.exporters
     - value: node

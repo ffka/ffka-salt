@@ -66,4 +66,5 @@ prometheus-bird-exporter.service:
 
 bird@prometheus.exporters:
   grains.list_present:
+    - name: prometheus.exporters
     - value: bird
