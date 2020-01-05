@@ -26,7 +26,7 @@ saltstack-repo:
 
 salt-minion:
   pkg.installed:
-    - fromrepo: saltstack
+    - fromrepo: {{ salt['grains.get']('oscodename') }}
     - require:
       - pkgrepo: saltstack-repo
   service.running:
