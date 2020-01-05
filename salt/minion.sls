@@ -18,7 +18,7 @@ salt-minion:
 
 /etc/salt/minion_id:
   file.managed:
-    - contents: {{ pillar.fqdn }}
+    - contents: {{ salt['grains.get']('fqdn') }}
     - user: root
     - group: root
     - mode: 644
