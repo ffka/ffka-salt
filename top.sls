@@ -7,6 +7,7 @@ base:
     - common.backport_repo
     - netdata
     - prometheus.exporters.node
+    - salt.minion
   'core*.zkm.ka*':
 #    - kernel.backports
     - kernel.sysctl
