@@ -6,15 +6,8 @@ saltstack-repo:
     - clean_file: True
     - key_url: https://repo.saltstack.com/apt/debian/{{ salt['grains.get']('osmajorrelease') }}/amd64/latest/SALTSTACK-GPG-KEY.pub
 
-salt-minion:
-  pkg.installed:
-    - fromrepo: saltstack-repo
-    - require:
-      - pkgrepo: saltstack-repo
-  service.running:
-    - enable: True
-    - watch:
-      - file: /etc/salt/minion.d
+/etc/salt/minion:
+  file.absent
 
 /etc/salt/minion_id:
   file.managed:
@@ -30,3 +23,15 @@ salt-minion:
     - template: jinja
     - source: salt://salt/files/minion.d
     - clean: False # salt minion will create config files (starting with a _) which shold not be deleted
+
+salt-minion:
+  pkg.installed:
+    - fromrepo: saltstack-repo
+    - require:
+      - pkgrepo: saltstack-repo
+  service.running:
+    - enable: True
+    - watch:
+      - file: /etc/salt/minion.d
+      - file: /etc/salt/minion_id
+      - file: /etc/salt/minion
