@@ -18,7 +18,7 @@ secret "{{ salt['pillar.get']('fastd:domains:secret') }}";
 
 {% if salt['pillar.get']('access_control:enabled') %}
 # Use access-control
-on verify "/usr/src/zutrittskontrolle/verify.py --host {{ salt['pillar.get']('access_control:url') }} --community {{ salt['pillar.get']('community') }} $PEER_KEY";
+on verify "/usr/src/zutrittskontrolle/verify.py --host {{ salt['pillar.get']('access_control:url') }} --community {{ salt['pillar.get']('community') }}";
 {% else %}
 # blacklisting, everybody else will be accepted
 on verify "/etc/fastd/fastdbl/fastd-blacklist.sh $PEER_KEY";
