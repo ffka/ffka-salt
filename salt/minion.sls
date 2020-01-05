@@ -1,10 +1,15 @@
 saltstack-repo:
   pkgrepo.managed:
     - humanname: saltstack
+    {% if salt['grains.get']('oscodename') == 'stretch' %}
     - name: deb http://repo.saltstack.com/apt/debian/{{ salt['grains.get']('osmajorrelease') }}/amd64/latest {{ salt['grains.get']('oscodename') }} main
-    - file: /etc/apt/sources.list.d/saltstack.list
-    - clean_file: True
     - key_url: https://repo.saltstack.com/apt/debian/{{ salt['grains.get']('osmajorrelease') }}/amd64/latest/SALTSTACK-GPG-KEY.pub
+    {% else %}
+    - name: deb http://repo.saltstack.com/py3/debian/{{ salt['grains.get']('osmajorrelease') }}/amd64/latest {{ salt['grains.get']('oscodename') }} main
+    - key_url: https://repo.saltstack.com/py3/debian/{{ salt['grains.get']('osmajorrelease') }}/amd64/latest/SALTSTACK-GPG-KEY.pub
+    {% endif %}
+    - clean_file: True
+    - file: /etc/apt/sources.list.d/saltstack.list
 
 /etc/salt/minion:
   file.absent
