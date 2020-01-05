@@ -26,7 +26,7 @@ saltstack-repo:
 
 salt-minion:
   pkg.installed:
-    - fromrepo: saltstack-repo
+    - fromrepo: saltstack
     - require:
       - pkgrepo: saltstack-repo
   service.running:
