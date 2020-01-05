@@ -117,8 +117,6 @@ base:
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - network.tunnel
-    - mesh-announce
-    - mesh-announce.domains
     - access-control.gwbat
   'gwffwp*.frickelfunk.net':
     - kernel.backports
@@ -144,8 +142,6 @@ base:
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - network.tunnel
-    - mesh-announce
-    - mesh-announce.domains
   'domain-director.frickelfunk.net':
     - domain-director
   'speedtest.frickelfunk.net':
