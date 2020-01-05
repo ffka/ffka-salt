@@ -57,7 +57,7 @@ zutrittskontrolle_server:
     - port_bindings:
       - "8000:8000"
     - restart_policy: always
-    - command: python3 manage.py runserver [::]:8000
+    - command: python3 -u manage.py runserver [::]:8000
     - require:
       - docker_network: zutrittskontrolle_backend
     - watch:
@@ -73,7 +73,7 @@ zutrittskontrolle_importer:
       - DB_HOST: zutrittskontrollepg
     - network_mode: zutrittskontrolle_backend
     - restart_policy: always
-    - command: python3 manage.py runimport ffka 'https://api.karlsruhe.freifunk.net/yanic/meshviewer/nodes.json'
+    - command: python3 -u manage.py runimport ffka 'https://api.karlsruhe.freifunk.net/yanic/meshviewer/nodes.json'
     - require:
       - docker_network: zutrittskontrolle_backend
     - watch:
