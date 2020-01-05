@@ -17,7 +17,8 @@ zutrittskontrolle:
     - build: /usr/src/zutrittskontrolle
     - tag: latest
     - dockerfile: Dockerfile
-    - require:
+    - force: True
+    - onchanges:
       - git: zutrittskontrolle.git
 
 /var/application-data/zutrittskontrolle:
