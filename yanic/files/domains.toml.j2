@@ -122,7 +122,7 @@ graph_path = "/var/lib/yanic/meshviewer/{{ instance }}/graph.json"
 
 [nodes.output.meshviewer.filter]
 # WARNING: if it is not set, it will publish contact information of other persons
-no_owner = true
+no_owner = false
 
 
 # definition for nodelist.json
@@ -132,7 +132,7 @@ path = "/var/lib/yanic/nodelist/{{ instance }}/nodelist.json"
 
 [nodes.output.nodelist.filter]
 # WARNING: if it is not set, it will publish contact information of other persons
-no_owner = true
+no_owner = false
 
 [database]
 # this will send delete commands to the database to prune data
