@@ -1,0 +1,68 @@
+{
+  "name": "Freifunk Ortenau",
+  "url": "https://karlsruhe.freifunk.net",
+  "location": {
+    "city": "Offenburg",
+    "country": "DE",
+    "lat": 48.47,
+    "lon": 7.95
+  },
+  "contact": {
+    "email": "info@karlsruhe.freifunk.net",
+    "irc": "irc://irc.hackint.org/ffka",
+    "ml": "freifunk-ka@lists.entropia.de",
+    "twitter": "@FFKarlsruhe"
+  },
+  "metacommunity": "Freifunk Karlsruhe",
+  "state": {
+    "nodes": 480,
+    "focus": [
+      "infrastructure/backbone",
+      "Public Free Wifi",
+      "Local services and content",
+      "Free internet access"
+    ],
+    "lastchange": "2020-01-17T13:48:07.365Z"
+  },
+  "feeds": [
+    {
+      "name": "News",
+      "category": "blog",
+      "type": "rss",
+      "url": "https://karlsruhe.freifunk.net/feed.xml"
+    }
+  ],
+  "techDetails": {
+    "firmware": {
+      "name": "gluon",
+      "url": "https://firmware.karlsruhe.freifunk.net/",
+      "vpnaccess": "fwimage"
+    },
+    "networks": {
+      "ipv6": [
+        {
+          "network": "2001:678:6e0::/45"
+        }
+      ],
+      "ipv4": [
+        {
+          "network": "10.214.0.0/16"
+        },
+        {
+          "network": "185.65.241.0/24"
+        }
+      ]
+    },
+    "routing": [
+      "batman-adv"
+    ],
+    "updatemode": [
+      "manual",
+      "autoupdate"
+    ],
+    "legals": [
+      "institutions"
+    ]
+  },
+  "api": "0.4.14"
+}
