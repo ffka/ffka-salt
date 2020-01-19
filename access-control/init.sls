@@ -53,6 +53,7 @@ zutrittskontrolle_server:
       - DB_PASSWORD: ssnxkq6wmivmor5sdbmr
       - DB_NAME: zutrittskontrolle
       - DB_HOST: zutrittskontrollepg
+      - DEBUG: 0
     - network_mode: zutrittskontrolle_backend
     - port_bindings:
       - "8000:8000"

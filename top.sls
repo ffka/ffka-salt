@@ -161,3 +161,4 @@ base:
   'zutrittskontrolle.frickelfunk.net':
     - docker
     - access-control
+    - nginx
