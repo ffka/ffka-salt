@@ -5,7 +5,11 @@ instance_name = {{ instance['title'] }}
 [server]
 
 protocol = http
+{% if instance.get('bind', False) %}
+http_addr = [{{ instance['bind'] }}]
+{% else %}
 http_addr = 
+{% endif %}
 
 {% set domain = salt['pillar.get']('domainsets:' ~ instance['domainset'], [])[0] -%}
 domain = {{ domain }}
