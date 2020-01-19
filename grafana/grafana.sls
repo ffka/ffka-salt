@@ -23,6 +23,8 @@ grafana:
     - group: root
     - mode: 644
     - template: jinja
+    - context:
+      instance: {{ salt['pillar.get']('grafana:instances:default') }}
     - require:
       - pkg: grafana
 
