@@ -62,8 +62,6 @@ base:
     - nginx
     - certbot
     - network.tunnel
-    - golang
-#    - tflow2
     - routing.bird
   'websrv.frickelfunk.net':
     - nginx
