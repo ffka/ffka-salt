@@ -3,11 +3,11 @@ upstream django {
 }
 
 server {
-    listen      8000;
+    listen      [::]:8000;
     server_name zutrittskontrolle.frickelfunk.net;
     charset     utf-8;
 
-    client_max_body_size 75M;   # adjust to taste
+    client_max_body_size 75M;
 
     location / {
         uwsgi_pass  django;
