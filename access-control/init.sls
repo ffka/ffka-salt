@@ -56,9 +56,7 @@ zutrittskontrolle_server:
       - DEBUG: 0
     - network_mode: zutrittskontrolle_backend
     - port_bindings:
-      - "8000:8000"
-    - restart_policy: always
-    - command: python3 -u manage.py runserver [::]:8000
+      - "8001:8001"
     - require:
       - docker_network: zutrittskontrolle_backend
     - watch:
