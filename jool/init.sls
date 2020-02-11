@@ -28,6 +28,12 @@ jool-tools:
       - pkgrepo: unstable
       - file: /etc/apt/preferences.d/jool-unstable
 
+jool:
+  kmod.present:
+    - persist: True
+    - require:
+      - cmd: jool-dkms
+
 /etc/jool:
   file.directory:
     - mode: 644
