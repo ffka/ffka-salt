@@ -32,7 +32,7 @@ jool:
   kmod.present:
     - persist: True
     - require:
-      - cmd: jool-dkms
+      - pkg: jool-dkms
 
 /etc/jool:
   file.directory:
@@ -47,7 +47,7 @@ jool:
     - group: root
     - mode: 644
     - require:
-      - cmd: jool-dkms
+      - pkg: jool-dkms
 
 {% for name, instance in salt['pillar.get']('network:nat64:instances', {}).items() %}
 /etc/jool/{{ name }}.env:
@@ -69,7 +69,7 @@ jool@{{ name }}.service:
       - file: /etc/systemd/system/jool@.service
       - file: /etc/jool/{{ name }}.env
       - kmod: jool
-      - cmd: jool-tools
+      - pkg: jool-tools
 {% endfor %}
 
 ferm-jool:
