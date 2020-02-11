@@ -34,6 +34,38 @@ jool-tools:
     - user: root
     - group: root
 
+/etc/systemd/system/jool@.service:
+  file.managed:
+    - source: salt://jool/files/jool@.service
+    - user: root
+    - group: root
+    - mode: 644
+    - require:
+      - cmd: jool-dkms
+
+{% for name, instance in salt['pillar.get']('network:nat64:instances', {}).items() %}
+/etc/jool/{{ name }}.env:
+  file.managed:
+    - contents: |
+        ARGS= --iptables --pool6 {{ instance['prefix'] }}
+        ARGS_POOL4= {{ instance['nat_address'] }} 61001-65535 --max-iterations 1024
+    - user: root
+    - group: root
+    - mode: 644
+    - require:
+      - file: /etc/jool
+
+jool@{{ name }}.service:
+  service.running:
+    - enable: True
+    - restart: True
+    - require:
+      - file: /etc/systemd/system/jool@.service
+      - file: /etc/jool/{{ name }}.env
+      - kmod: jool
+      - cmd: jool-tools
+{% endfor %}
+
 ferm-jool:
   file.line:
     - name: /usr/sbin/ferm
