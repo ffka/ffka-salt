@@ -7,11 +7,11 @@ Before=network.target
 Type=oneshot
 RemainAfterExit=yes
 EnvironmentFile=/etc/jool/%i.env
-ExecStart=/usr/local/bin/jool instance add %i $ARGS
-ExecStart=/usr/local/bin/jool pool4 add --tcp $ARGS_POOL4
-ExecStart=/usr/local/bin/jool pool4 add --udp $ARGS_POOL4
-ExecStart=/usr/local/bin/jool pool4 add --icmp $ARGS_POOL4
-ExecStop=/usr/local/bin/jool instance remove %i
+ExecStart=/usr/bin/jool instance add %i $ARGS
+ExecStart=//usr/bin/jool pool4 add --tcp $ARGS_POOL4
+ExecStart=//usr/bin/jool pool4 add --udp $ARGS_POOL4
+ExecStart=/usr/bin/jool pool4 add --icmp $ARGS_POOL4
+ExecStop=//usr/bin/jool instance remove %i
 
 [Install]
 WantedBy=multi-user.target
