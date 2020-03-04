@@ -29,5 +29,7 @@ server {
     access_log /dev/null;
     error_log "/var/log/nginx/{{ site_name }}/error.log";
 
-    return 301 https://karlsruhe.freifunk.net/;
+    try_files $uri $uri/ =404;
+    root /srv/www/{{ site_name }}/htdocs/;
 }
+
