@@ -6,7 +6,7 @@
       - pkg: kea-dhcp4-server
 
 {%- set community_id = pillar.community_id %}
-{% for domain_id, domain in salt['domain_networking.get_domains']().items() %}
+{% for domain_id, domain in salt['domain_networking.get_domains']().items() if domain.get('ipv4') %}
 {% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
 dhcpv4 @ {{ ifname_br }}:
   file.accumulated:
