@@ -30,7 +30,7 @@ kea-common:
     - fromrepo: unstable
     - require:
       - pkgrepo: unstable
-      - group: _kea@dhcp4
+#      - group: _kea@dhcp4
       - file: /etc/apt/preferences.d/kea-common-unstable
 
 kea-dhcp4-server:
@@ -38,7 +38,7 @@ kea-dhcp4-server:
     - fromrepo: unstable
     - require:
       - pkgrepo: unstable
-      - group: _kea@dhcp4
+#      - group: _kea@dhcp4
       - file: /etc/apt/preferences.d/kea-dhcp4-server-unstable
 
 /etc/kea/kea-dhcp4.conf:
