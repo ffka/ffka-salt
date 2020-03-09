@@ -1,6 +1,13 @@
 include:
   - common.debian_unstable
 
+/etc/apt/preferences.d/kea-common-unstable:
+  file.managed:
+    - contents: |
+        Package: kea-common*
+        Pin: release n=unstable
+        Pin-Priority: 800
+
 /etc/apt/preferences.d/kea-dhcp4-server-unstable:
   file.managed:
     - contents: |
