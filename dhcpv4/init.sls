@@ -18,6 +18,14 @@ _kea@dhcp4:
   group.present:
     - name: _kea
 
+kea-common:
+  pkg.installed:
+    - fromrepo: unstable
+    - require:
+      - pkgrepo: unstable
+      - group: _kea@dhcp4
+      - file: /etc/apt/preferences.d/kea-common-unstable
+
 kea-dhcp4-server:
   pkg.installed:
     - fromrepo: unstable
