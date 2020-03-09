@@ -21,9 +21,9 @@ include:
 # This is a workaround for a bug in the installation script for kea
 # 1.5.0~1 in debian unstable. To be removed once resolved.
 # Also: change of user to root (change-user unit)
-_kea@dhcp4:
-  group.present:
-    - name: _kea
+##_kea@dhcp4:
+#  group.present:
+#    - name: _kea
 
 kea-common:
   pkg.installed:
