@@ -14,6 +14,23 @@ prometheus tarball:
 /etc/prometheus:
   file.directory
 
+/metrics:
+  file.directory:
+    - user: root
+    - group: root
+    - dir_mode: '755'
+
+/metrics/prom2:
+  file.directory:
+    - user: prometheus
+    - group: prometheus
+    - dir_mode: '755'
+    - require:
+      - user: prometheus
+      - file: /metrics
+    - watch_in:
+      - service: prometheus.service
+
 /etc/prometheus/prometheus.yml:
   file.managed:
     - source: salt://prometheus/files/prometheus.yml.j2
