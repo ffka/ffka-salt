@@ -10,8 +10,6 @@ prometheus tarball:
     - name: /opt
     - user: root
     - group: root
-    - watch_in:
-      - service: prometheus.service
 
 /etc/prometheus:
   file.directory
@@ -21,7 +19,7 @@ prometheus tarball:
     - source: salt://prometheus/files/prometheus.yml.j2
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
 
 /etc/default/prometheus:
@@ -29,22 +27,21 @@ prometheus tarball:
     - source: salt://prometheus/files/prometheus
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
+    - watch_in:
+      - service: prometheus.service
 
 /etc/systemd/system/prometheus.service:
   file.managed:
     - source: salt://prometheus/files/prometheus.service.j2
     - template: jinja
+    - watch_in:
+      - service: prometheus.service
 
 prometheus.service:
   service.running:
     - enable: True
+    - restart: True
     - watch:
-      - file: /etc/prometheus/*
-      - file: /etc/default/prometheus
-      - file: /etc/systemd/system/prometheus.service
-    - require:
       - archive: prometheus tarball
-      - file: /etc/systemd/system/prometheus.service
-      - file: /etc/prometheus/*
-      - file: /etc/default/prometheus
+      - file: /etc/prometheus*
