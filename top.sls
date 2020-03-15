@@ -63,6 +63,8 @@ base:
     - certbot
     - network.tunnel
     - routing.bird
+  'monitoring.frickelfunk.net':
+    - prometheus
   'websrv.frickelfunk.net':
     - nginx
     - certbot
