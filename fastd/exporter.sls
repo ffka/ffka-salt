@@ -36,6 +36,8 @@ go get {{ gopkg }}:
     - group: root
     - mode: '0644'
     - template: jinja
+    - context:
+        gopath: {{ gopath }}
     - require:
       - file: /etc/default/prometheus-fastd-exporter
 
