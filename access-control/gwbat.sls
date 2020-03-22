@@ -16,7 +16,7 @@ zutrittskontrolle.git:
         ExecStart=/usr/bin/python3 /usr/src/zutrittskontrolle/gwbat.py {{ pillar.community }} "http://zutrittskontrolle.frickelfunk.net:8000"
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - git: zutrittskontrolle.git
 
@@ -28,7 +28,7 @@ zutrittskontrolle.git:
         OnCalendar=*:0/5
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - git: zutrittskontrolle.git
 

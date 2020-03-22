@@ -5,7 +5,7 @@
     - template: jinja
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - context:
       interface_name: {{ interface_name }}
       interface: {{ interface }}

@@ -45,7 +45,7 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
     - source: salt://nginx/files/sites/{{ name }}.conf.j2
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - context:
       site_name: '{{ name }}'
@@ -80,7 +80,7 @@ sshkey {{ ssh_key.key }} for {{ owner }}:
     - source: salt://nginx/files/sites/{{ name }}/
     - clean: True
     - file_mode: 0644
-    - dir_mode: 0755
+    - dir_mode: '0755'
     - user: {{ owner }}
     - group: www-data
     - template: jinja

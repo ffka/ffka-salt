@@ -27,7 +27,7 @@ discourse_docker:
     - source: salt://discourse/files/app.yml.j2
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - require:
       - git: discourse_docker
@@ -51,7 +51,7 @@ discourse-rebuild:
     - source: salt://discourse/files/discourse.service.j2
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - require:
       - cmd: discourse-rebuild

@@ -45,7 +45,7 @@ go install:
   file.directory:
     - user: tflow2
     - group: root
-    - dir_mode: 0755
+    - dir_mode: '0755'
     - require:
       - user: tflow2
 
@@ -53,7 +53,7 @@ go install:
   file.directory:
     - user: tflow2
     - group: root
-    - dir_mode: 0755
+    - dir_mode: '0755'
     - makedirs: True
     - require:
       - user: tflow2
@@ -62,7 +62,7 @@ go install:
   file.directory:
     - user: tflow2
     - group: root
-    - dir_mode: 2750
+    - dir_mode: '2750'
     - require:
       - user: tflow2
 
@@ -82,7 +82,7 @@ go install:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - context:
         gopath: {{ gopath }}
 
@@ -104,7 +104,7 @@ tflow2.service:
   file.managed:
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - source: salt://tflow2/files/bird_common.conf.j2
     - require:
@@ -115,7 +115,7 @@ tflow2.service:
   file.managed:
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - source: salt://tflow2/files/{{ bird }}_client.conf.j2
     - require:

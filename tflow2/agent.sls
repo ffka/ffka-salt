@@ -4,7 +4,7 @@
   file.managed:
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - source: salt://tflow2/files/bird_agent.conf.j2
     - context:
@@ -17,7 +17,7 @@
   file.managed:
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - source: salt://tflow2/files/bird_agent.conf.j2
     - context:

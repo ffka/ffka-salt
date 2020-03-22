@@ -14,7 +14,7 @@ gluon-firmware-wizard/config.js:
     - name: /srv/www/firmware/htdocs/config.js
     - source: salt://nginx/files/sites/firmware/config.js.j2
     - template: jinja
-    - mode: 644
+    - mode: '0644'
     - user: www-data
     - group: www-data
     - require:
@@ -26,7 +26,7 @@ gluon-firmware-wizard/config.js:
   file.directory:
     - user: www-data
     - group: www-data
-    - dir_mode: 755
+    - dir_mode: '0755'
     - makedirs: True
 
 {% for dir in ["stable", "beta", "experimental"] %}
@@ -34,7 +34,7 @@ gluon-firmware-wizard/config.js:
   file.directory:
     - user: www-data
     - group: www-data
-    - dir_mode: 755
+    - dir_mode: '0755'
     - require:
       - file: /srv/firmware/images/
 {% endfor %}

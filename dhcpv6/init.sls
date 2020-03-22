@@ -32,11 +32,11 @@ kea-dhcp6-server:
     - template: jinja
     - user: root
     - group: root
-    - mode: 600
+    - mode: '0600'
 
 /etc/systemd/system/kea-dhcp6-server.service.d/:
   file.directory:
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
     - require:
       - pkg: kea-dhcp6-server
@@ -48,7 +48,7 @@ kea-dhcp6-server:
     - template: jinja
     - user: root
     - group: root
-    - mode: 600
+    - mode: '0600'
     - require:
       - file: /etc/systemd/system/kea-dhcp6-server.service.d/
 {% endfor %}

@@ -6,7 +6,7 @@
 
 /etc/fastd/{{ domain_id }}/{{ fastd['name'] }}:
   file.directory:
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
     - require:
       - pkg: fastd
@@ -17,7 +17,7 @@
     - template: jinja
     - user: root
     - group: root
-    - mode: 600
+    - mode: '0600'
     - context:
         domain: {{ domain }}
         fastd: {{ fastd }}

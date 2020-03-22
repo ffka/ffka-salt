@@ -9,7 +9,7 @@ certbot:
     - source: salt://certbot/files/cli.ini.j2
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - makedirs: True
     - template: jinja
     - require:
@@ -20,7 +20,7 @@ certbot_webroot:
     - name: {{ pillar['certbot']['webroot_path'] }}
     - user: root
     - group: root
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
 
 # Perform initial setup for applicable domains
@@ -60,7 +60,7 @@ hook_after_renew:
     - source: salt://certbot/files/certbot.service
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - pkg: certbot
 
@@ -69,7 +69,7 @@ hook_after_renew:
     - source: salt://certbot/files/certbot.timer
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - pkg: certbot
 
@@ -77,7 +77,7 @@ hook_after_renew:
   file.directory:
     - user: root
     - group: root
-    - dir_mode: 755
+    - dir_mode: '0755'
 
 certbot.timer:
   service.running:
@@ -94,6 +94,6 @@ certbot.timer:
     - source: salt://certbot/files/nginx.conf
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - file: /etc/systemd/system/certbot.service.d

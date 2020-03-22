@@ -16,7 +16,7 @@ docker-ce:
   file.managed:
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - contents: |
         {
           "ipv6": true,
@@ -29,7 +29,7 @@ docker-ce:
   file.managed:
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - contents: |
         @def $DOCKER_INTERNAL_NETS = (fd00::/64 fd00:1::/64 fd00:2::/64);
         domain ip6 table nat chain POSTROUTING {

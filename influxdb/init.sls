@@ -18,7 +18,7 @@ influxdb:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - pkg: influxdb
 

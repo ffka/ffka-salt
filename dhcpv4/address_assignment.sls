@@ -1,6 +1,6 @@
 /etc/kea/dhcp4-interfaces:
   file.directory:
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
     - require:
       - pkg: kea-dhcp4-server
@@ -20,7 +20,7 @@ dhcpv4 @ {{ interface_name }}:
     - template: jinja
     - user: root
     - group: root
-    - mode: 600
+    - mode: '0600'
     - context:
       interface: {{ interface }}
     - require:

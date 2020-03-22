@@ -5,7 +5,7 @@
     - template: jinja
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - context:
       domain_id: {{ domain_id }}
       domain: {{ domain }}

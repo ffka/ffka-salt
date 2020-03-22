@@ -42,7 +42,7 @@ go get czerwonk/bird_exporter:
               -proto.static"
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
        - pkg: prometheus-bird-exporter
 
@@ -51,7 +51,7 @@ go get czerwonk/bird_exporter:
     - source: salt://routing/files/bird2/prometheus-bird-exporter.service
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - context:
         gopath: {{ gopath }}

@@ -29,7 +29,7 @@ nginx.service:
   file.directory:
     - user: root
     - group: root
-    - mode: 755
+    - mode: '0755'
     - require:
       - pkg: nginx
 
@@ -37,7 +37,7 @@ nginx.service:
   file.directory:
     - user: root
     - group: root
-    - mode: 755
+    - mode: '0755'
     - require:
       - pkg: nginx
 
@@ -46,7 +46,7 @@ nginx.service:
     - source: salt://nginx/files/snippets
     - clean: True
     - file_mode: 0644
-    - dir_mode: 0755
+    - dir_mode: '0755'
     - template: jinja
     - require:
       - pkg: nginx
@@ -65,7 +65,7 @@ nginx.service:
     - source: salt://nginx/files/default.conf.j2
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     {% if default_certificate_name is defined %}
     - context:
@@ -85,7 +85,7 @@ nginx.service:
     - source: salt://nginx/files/stub_status.conf.j2
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - require:
       - pkg: nginx

@@ -28,7 +28,7 @@ go get {{ gopkg }}:
     - source: salt://fastd/files/prometheus-fastd-exporter
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
 
 /etc/systemd/system/prometheus-fastd-exporter.service:

@@ -12,7 +12,7 @@ grafana:
     - source: salt://grafana/files/grafana-server-default
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - pkg: grafana
 
@@ -21,7 +21,7 @@ grafana:
     - source: salt://grafana/files/grafana.ini.j2
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - context:
       instance: {{ salt['pillar.get']('grafana:instances:default') }}

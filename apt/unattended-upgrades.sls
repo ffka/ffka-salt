@@ -8,7 +8,7 @@ unattended-upgrades:
   file.directory:
     - user: root
     - group: root
-    - dir_mode: 755
+    - dir_mode: '0755'
 
 /etc/systemd/system/apt-daily-upgrade.timer.d/upgrade-time.conf:
   file.managed:
@@ -19,7 +19,7 @@ unattended-upgrades:
         RandomizedDelaySec=5min
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - file: /etc/systemd/system/apt-daily-upgrade.timer.d
 
@@ -30,7 +30,7 @@ unattended-upgrades:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
 {% endfor %}
 
 daemon-reload @ apt-daily-upgrade.timer:

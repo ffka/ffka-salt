@@ -19,14 +19,14 @@ unbound.service:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
 
 {% for instance, settings in salt['pillar.get']('unbound:instances').items() %}
 /etc/unbound/{{ instance }}.conf.d:
   file.directory:
     - user: root
     - group: root
-    - mode: 755
+    - mode: '0755'
 
 /etc/unbound/{{ instance }}.conf:
   file.managed:
@@ -39,7 +39,7 @@ unbound.service:
         include: "/etc/unbound/{{ instance }}.conf.d/*.conf"
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - file: /etc/unbound/{{ instance }}.conf.d
 
@@ -51,7 +51,7 @@ unbound.service:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - context:
       settings: {{ settings | yaml }}
     - require:

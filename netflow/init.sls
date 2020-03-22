@@ -43,7 +43,7 @@ netflow-ipt-dkms-make:
   file.managed:
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - contents: |
         options ipt_NETFLOW destination={{ pillar.monitoring.netflow.destination | default('127.0.0.1') }} protocol=10
     - require:
@@ -61,7 +61,7 @@ ipt_NETFLOW:
   file.managed:
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - contents: |
         domain ip6 chain FORWARD {
             jump NETFLOW;

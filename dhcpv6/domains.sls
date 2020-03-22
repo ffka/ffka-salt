@@ -1,6 +1,6 @@
 /etc/kea/dhcp6-domains:
   file.directory:
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
     - require:
       - pkg: kea-dhcp6-server
@@ -22,7 +22,7 @@ dhcpv6 @ {{ ifname_br }}:
     - template: jinja
     - user: root
     - group: root
-    - mode: 600
+    - mode: '0600'
     - context:
       domain: {{ domain }}
     - require:

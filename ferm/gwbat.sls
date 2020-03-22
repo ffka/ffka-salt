@@ -2,7 +2,7 @@
   file.managed:
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - source: salt://ferm/files/gwbat.conf.j2
     - template: jinja
     - context:

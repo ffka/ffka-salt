@@ -7,7 +7,7 @@ bird:
   file.directory:
     - user: bird
     - group: bird
-    - dir_mode: 755
+    - dir_mode: '0755'
     - require:
       - pkg: bird
       - user: bird
@@ -16,7 +16,7 @@ bird:
   file.managed:
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - require:
       - pkg: bird
       - user: bird
@@ -27,7 +27,7 @@ bird:
   file.managed:
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - source: salt://routing/files/common.conf
     - context:
@@ -41,7 +41,7 @@ bird:
   file.managed:
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - source: salt://routing/files/common/05-communities.conf
     - context:

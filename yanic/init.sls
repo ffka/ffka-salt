@@ -33,7 +33,7 @@ yanic:
   file.directory:
     - user: yanic
     - group: adm
-    - dir_mode: 2750
+    - dir_mode: '2750'
     - require:
       - user: yanic
 
@@ -41,7 +41,7 @@ yanic:
   file.directory:
     - user: root
     - group: yanic
-    - dir_mode: 0755
+    - dir_mode: '0755'
     - require:
       - user: yanic
 
@@ -49,7 +49,7 @@ yanic:
   file.directory:
     - user: yanic
     - group: yanic
-    - dir_mode: 0755
+    - dir_mode: '0755'
     - require:
       - user: yanic
 
@@ -67,7 +67,7 @@ yanic:
   file.directory:
     - user: yanic
     - group: yanic
-    - dir_mode: 0755
+    - dir_mode: '0755'
     - makedirs: True
     - require:
       - user: yanic
@@ -78,7 +78,7 @@ yanic:
   file.directory:
     - user: yanic
     - group: yanic
-    - dir_mode: 0755
+    - dir_mode: '0755'
     - makedirs: True
     - require:
       - user: yanic

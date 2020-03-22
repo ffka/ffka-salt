@@ -32,7 +32,7 @@ prometheus-node-exporter:
     - source: salt://prometheus/files/prometheus-node-exporter
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
        - pkg: prometheus-node-exporter
 

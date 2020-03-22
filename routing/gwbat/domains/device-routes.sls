@@ -3,7 +3,7 @@
   file.managed:
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - source: salt://routing/files/{{ bird }}.d/gwbat/domains-device-routes.conf
     - watch_in:

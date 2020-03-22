@@ -21,7 +21,7 @@ bird2:
 
 /etc/bird/bird.d/:
   file.directory:
-    - mode: 755
+    - mode: '0755'
     - user: bird
     - group: bird
     - makedirs: True
@@ -44,14 +44,14 @@ bird.service:
         include "bird.d/*.conf";
     - user: bird
     - group: bird
-    - mode: 664
+    - mode: '0664'
     - require:
       - pkg: bird2
 
 {% for dir in ["transits", "ixps", "peerings", "customers", "ibgp", "internal_downstreams"] %}
 /etc/bird/bird.d/{{ dir }}/:
   file.directory:
-    - mode: 755
+    - mode: '0755'
     - user: bird
     - group: bird
     - require:
@@ -67,7 +67,7 @@ bird.service:
     - template: jinja
     - user: bird
     - group: bird
-    - mode: 755
+    - mode: '0755'
     - require:
       - file: /etc/bird/bird.d/
 {% endfor %}

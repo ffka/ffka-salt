@@ -13,7 +13,7 @@ knot:
     - source: salt://knot/files/{{ config_file }}.conf.j2
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - require:
       - pkg: knot
@@ -24,7 +24,7 @@ knot:
 /etc/knot/id_deploy:
   file.managed:
     - user: root
-    - mode: 600
+    - mode: '0600'
     - contents_pillar: dns:deployment_key
     - require:
       - pkg: knot

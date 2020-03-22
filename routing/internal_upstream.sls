@@ -6,7 +6,7 @@
     - source: salt://routing/files/{{ bird }}.d/internal-upstream.conf
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - context:
         name: {{ name }}
@@ -25,7 +25,7 @@
     - source: salt://routing/files/{{ bird }}.d/internal-upstream-filters.conf
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - watch_in:
       - service: {{ bird }}

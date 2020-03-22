@@ -4,6 +4,6 @@ lo_ffka network interface:
     - makedirs: true
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - source: salt://network/files/lo_core.j2
     - template: jinja

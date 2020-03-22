@@ -2,7 +2,7 @@
   file.managed:
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - contents: |
         {% for interface_name, interface in salt['pillar.get']('address_assignment', {}).items() %}
         {%- for ipv4_net, config in interface.get('ipv4', {}).items() if config.get('nat', False) %}

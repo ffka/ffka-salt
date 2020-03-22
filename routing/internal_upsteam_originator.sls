@@ -6,7 +6,7 @@
         };
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - require:
       - pkg: bird
       - user: bird
@@ -23,7 +23,7 @@
     - template: jinja
     - user: bird
     - group: bird
-    - mode: 644
+    - mode: '0644'
     - context:
       af: {{ af }}
     - require:

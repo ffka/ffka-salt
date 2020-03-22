@@ -3,7 +3,7 @@
   file.managed:
     - source: salt://network/files/domains/mesh_interfaces.j2
     - template: jinja
-    - mode: 644
+    - mode: '0644'
     - user: root
     - group: root
     - context:

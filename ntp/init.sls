@@ -16,4 +16,4 @@ place /etc/ntp.conf:
     - source: salt://ntp/files/ntp.conf
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'

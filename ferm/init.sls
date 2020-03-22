@@ -22,7 +22,7 @@ ferm:
     - makedirs: true
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - source: salt://ferm/files/ferm.conf.j2
     - template: jinja
     - require:
@@ -33,7 +33,7 @@ ferm:
     - source: salt://ferm/files/ferm.service
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
 
 ferm.service:
   service.running:

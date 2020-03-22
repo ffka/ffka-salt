@@ -47,11 +47,11 @@ kea-dhcp4-server:
     - template: jinja
     - user: root
     - group: root
-    - mode: 600
+    - mode: '0600'
 
 /etc/systemd/system/kea-dhcp4-server.service.d/:
   file.directory:
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
     - require:
       - pkg: kea-dhcp4-server
@@ -63,7 +63,7 @@ kea-dhcp4-server:
     - template: jinja
     - user: root
     - group: root
-    - mode: 600
+    - mode: '0600'
     - require:
       - file: /etc/systemd/system/kea-dhcp4-server.service.d/
 {% endfor %}

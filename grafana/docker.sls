@@ -10,7 +10,7 @@ grafana:
 /var/lib/grafana:
   file.directory:
     - user: grafana
-    - dir_mode: 755
+    - dir_mode: '0755'
     - require:
       - user: grafana
 
@@ -18,7 +18,7 @@ grafana:
 /var/lib/grafana/{{ name }}:
   file.directory:
     - user: grafana
-    - dir_mode: 755
+    - dir_mode: '0755'
     - require:
       - user: grafana
       - file: /var/lib/grafana
@@ -26,7 +26,7 @@ grafana:
 /var/lib/grafana/{{ name }}/data:
   file.directory:
     - user: grafana
-    - dir_mode: 755
+    - dir_mode: '0755'
     - require:
       - user: grafana
       - file: /var/lib/grafana/{{ name }}
@@ -35,7 +35,7 @@ grafana:
   file.managed:
     - source: salt://grafana/files/grafana.ini.j2
     - user: grafana
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - context:
       instance: {{ instance | yaml }}

@@ -36,7 +36,7 @@ jool:
 
 /etc/jool:
   file.directory:
-    - mode: 644
+    - mode: '0644'
     - user: root
     - group: root
 
@@ -45,7 +45,7 @@ jool:
     - source: salt://jool/files/jool@.service
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - pkg: jool-dkms
 
@@ -57,7 +57,7 @@ jool:
         ARGS_POOL4= {{ instance['nat_address'] }} 61001-65535 --max-iterations 1024
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - require:
       - file: /etc/jool
 
@@ -85,7 +85,7 @@ ferm-jool:
   file.managed:
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - template: jinja
     - source: salt://jool/files/ferm.conf
     - require:
