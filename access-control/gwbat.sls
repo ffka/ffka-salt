@@ -37,5 +37,6 @@ zutrittskontrolle-export.timer:
     - enable: True
     - require:
       - git: zutrittskontrolle.git
+    - onchanges:
       - file: /etc/systemd/system/zutrittskontrolle-export.service
       - file: /etc/systemd/system/zutrittskontrolle-export.timer
