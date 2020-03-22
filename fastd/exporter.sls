@@ -49,7 +49,7 @@ prometheus-fastd-exporter.service:
       - file: /etc/systemd/system/prometheus-fastd-exporter.service
       - cmd: go get {{ gopkg }}
 
-bird@prometheus.exporters:
+fastd@prometheus.exporters:
   grains.list_present:
     - name: prometheus.exporters
     - value: fastd
