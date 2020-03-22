@@ -7,6 +7,8 @@ include:
 https://{{ gopkg }}:
   git.latest:
     - target: {{ gopath }}/src/{{ gopkg }}
+    - require:
+      - pkg: golang
 
 go get {{ gopkg }}:
   cmd.run:
