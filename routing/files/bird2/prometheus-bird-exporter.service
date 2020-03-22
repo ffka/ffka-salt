@@ -1,0 +1,12 @@
+[Unit]
+Description=Prometheus Bird Exporter
+After=network.target
+
+[Service]
+Type=simple
+User=bird
+EnvironmentFile=/etc/default/prometheus-bird-exporter
+ExecStart={{ gopath }}/bin/bird_exporter $ARGS
+
+[Install]
+WantedBy=multi-user.target

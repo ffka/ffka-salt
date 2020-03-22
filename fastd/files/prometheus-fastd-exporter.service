@@ -1,11 +1,17 @@
 [Unit]
-Description=Prometheus Bird Exporter
+Description=Prometheus fastd Exporter
 After=network.target
 
 [Service]
 User=bird
 EnvironmentFile=/etc/default/prometheus-bird-exporter
 ExecStart={{ gopath }}/bin/bird_exporter $ARGS
+
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/prometheus-fastd-exporter
+ExecStart=/usr/local/go/bin/fastd-exporter $ARGS
 
 [Install]
 WantedBy=multi-user.target

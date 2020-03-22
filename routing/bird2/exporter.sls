@@ -48,7 +48,7 @@ go get czerwonk/bird_exporter:
 
 /etc/systemd/system/prometheus-bird-exporter.service:
   file.managed:
-    - source: salt://prometheus/files/prometheus-bird-exporter.service
+    - source: salt://routing/files/bird2/prometheus-bird-exporter.service
     - user: root
     - group: root
     - mode: 644
