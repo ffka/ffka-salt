@@ -107,6 +107,7 @@ base:
     - network.gwbat_internal
     - fastd
     - fastd.domains
+    - fastd.exporter
     - dhcpv4
     - dhcpv4.domains
     - dhcpv6
@@ -132,6 +133,7 @@ base:
     - network.gwbat_internal
     - fastd
     - fastd.domains
+    - fastd.exporter
     - dhcpv4
     - dhcpv4.domains
     - dhcpv6
