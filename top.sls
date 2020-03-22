@@ -8,6 +8,7 @@ base:
     - netdata
     - prometheus.node_exporter
     - salt.minion
+    - hostname
   'core*.zkm.ka*':
 #    - kernel.backports
     - kernel.sysctl
