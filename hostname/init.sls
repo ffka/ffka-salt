@@ -44,4 +44,4 @@ oob_hostname:
     - value: {{ salt['pillar.get']('hostname') }}
     {% endif %}
     - require:
-      - test: hostname-pillar
+      - test: fqdn-pillar
