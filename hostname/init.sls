@@ -35,3 +35,13 @@ ipv6 @ /etc/hosts:
     - contents: {{ salt['pillar.get']('fqdn') }}
     - require:
       - test: fqdn-pillar
+
+oob_hostname:
+  grains.present:
+    {% if salt['pillar.get']('oob_hostname') %}
+    - value: {{ salt['pillar.get']('oob_hostname') }}
+    {% else %}
+    - value: {{ salt['pillar.get']('hostname') }}
+    {% endif %}
+    - require:
+      - test: hostname-pillar
