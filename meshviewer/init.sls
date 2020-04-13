@@ -17,7 +17,7 @@ meshviewer:
 
 meshviewer-config:
   file.managed:
-    - name: {{ deploy_dir }}/config.json
+    - name: {{ deploy_dir }}config.json
     - source: salt://meshviewer/files/config.json.j2
     - user: www-data
     - group: www-data
