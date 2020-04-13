@@ -1,84 +1,29 @@
 {%- set deploy_dir = salt['pillar.get']('meshviewer:webroot', None) -%}
 
+{% if deploy_dir %}
 meshviewer:
-  user.present
-
-yarn:
-  pkgrepo.managed:
-    - humanname: yarn
-    - name: deb https://dl.yarnpkg.com/debian/ stable main
-    - key_url: https://dl.yarnpkg.com/debian/pubkey.gpg
-    - file: /etc/apt/sources.list.d/yarn.list
-    - require_in:
-      - pkg: yarn
-  pkg.latest:
-    - pkgs:
-      - yarn
-
-
-/home/meshviewer/meshviewer.git:
-  git.latest:
-    - name: https://github.com/freifunk-ffm/meshviewer.git
-    - target: /home/meshviewer/meshviewer.git
-    - user: meshviewer
-    - force_fetch: True
-    - force_reset: True
-    - require:
-      - pkg: nodejs
-      - user: meshviewer
-
-meshviewer_yarn_install:
-  cmd.run:
-    - onchanges:
-      - git: /home/meshviewer/meshviewer.git
-    - require:
-      - pkg: yarn
-      - git: /home/meshviewer/meshviewer.git
-    - cwd: /home/meshviewer/meshviewer.git
-    - runas: meshviewer
-    - name: yarn && yarn add gulp-cli
-
-config.js:
-  file.managed:
-    - name: /home/meshviewer/meshviewer.git/config.js
+  archive.extracted:
+    - name: {{ deploy_dir }}
+    - source: https://github.com/freifunk-ffm/meshviewer/releases/download/v12.0.1/meshviewer-build.zip
     - user: www-data
     - group: www-data
-    - source: salt://meshviewer/files/config.js.j2
+    - source_hash: sha256=4e38bd9b6401cb2f5bf772352d60e66a390175b5bfb7c4291fec1d46ac3646b7
+    - source_hash_update: true
+    - keep_source: false
+    - clean: true
+    - enforce_toplevel: false
+    - require_in:
+      - file: meshviewer-config
+
+meshviewer-config:
+  file.managed:
+    - name: {{ deploy_dir }}/config.json
+    - source: salt://meshviewer/files/config.json.j2
+    - user: www-data
+    - group: www-data
+    - mode: '0644'
     - template: jinja
-    - require:
-      - git: /home/meshviewer/meshviewer.git
-    - watch:
-      - git: /home/meshviewer/meshviewer.git
     - context:
       api_endpoint: {{ salt['pillar.get']('meshviewer:api_endpoint') }}
-
-meshviewer_gulp:
-  cmd.run:
-    - onchanges:
-      - cmd: meshviewer_yarn_install
-      - file: config.js
-    - require:
-       - cmd: meshviewer_yarn_install
-       - git: /home/meshviewer/meshviewer.git
-    - cwd: /home/meshviewer/meshviewer.git
-    - runas: meshviewer
-    - name: ./node_modules/.bin/gulp
-
-
-{% if deploy_dir %}
-meshviewer_deploy:
-  rsync.synchronized:
-    - name: {{ deploy_dir }}
-    - source: /home/meshviewer/meshviewer.git/build/
-    - force: True
-    - delete: True
-    - require:
-       - cmd: meshviewer_gulp
-       - test: nginx_meshviewer
-    - onchanges:
-       - git: /home/meshviewer/meshviewer.git
 {% endif %}
 
-
-include:
-  - nodejs
