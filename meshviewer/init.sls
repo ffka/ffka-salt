@@ -18,7 +18,7 @@ yarn:
 
 /home/meshviewer/meshviewer.git:
   git.latest:
-    - name: https://github.com/ffrgb/meshviewer.git
+    - name: https://github.com/freifunk-ffm/meshviewer.git
     - target: /home/meshviewer/meshviewer.git
     - user: meshviewer
     - force_fetch: True
