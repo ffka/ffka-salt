@@ -1,8 +1,13 @@
 {% set prometheus = salt['grains.filter_by']({
     'default': {
-      'release': '2.4.2',
-      'release_hash': 'cd32b6862eab4b5b6c5ed81a2aa951ebeba8b35506418c21d1f5f18fa346fcd0',
-      'alertmanager_release': '0.15.2',
-      'alertmanager_release_hash': '79ee23ab2f0444f592051995728ba9e0a7547cc3b9162301e3152dbeaf568d2e'
+      'release': '2.16.0',
+      'release_hash': 'c04e631d18e186b66a51cac3062157298e037ffae784f35ccaaf29e496d65d3f'
     }
-}, grain='os_family', merge=salt['pillar.get']('monitoring:prometheus')) %}
+}, grain='os_family', merge=salt['pillar.get']('prometheus')) %}
+
+{% set alertmanager = salt['grains.filter_by']({
+    'default': {
+      'release': '0.20.0',
+      'release_hash': '3a826321ee90a5071abf7ba199ac86f77887b7a4daa8761400310b4191ab2819'
+    }
+}, grain='os_family', merge=salt['pillar.get']('prometheus')) %}
