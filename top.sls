@@ -110,6 +110,7 @@ base:
     - fastd.exporter
     - dhcpv4
     - dhcpv4.domains
+    - dhcpv4.exporter
     - dhcpv6
     - dhcpv6.domains
     - routing.bird

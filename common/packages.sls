@@ -27,3 +27,4 @@ packages_base:
       - python-apt
       - net-tools
       - ethtool
+      - python3-pip
