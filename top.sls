@@ -65,7 +65,8 @@ base:
     - network.tunnel
     - routing.bird
   'monitoring.frickelfunk.net':
-    - prometheus
+    - prometheus.server
+    - prometheus.alertmanager
     - nginx
     - certbot
   'websrv.frickelfunk.net':

@@ -1,0 +1,16 @@
+[Unit]
+Description=Alertmanager for prometheus
+Documentation=https://prometheus.io/docs/alerting/alertmanager/
+
+[Service]
+Restart=always
+User=prometheus
+WorkingDirectory=/var/lib/prometheus/alertmanager
+EnvironmentFile=/etc/default/prometheus-alertmanager
+ExecStart=/opt/alertmanager-{{ alertmanager['release'] }}.linux-amd64/alertmanager $ARGS
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=20s
+SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target

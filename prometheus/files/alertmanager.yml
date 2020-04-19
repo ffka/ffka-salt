@@ -1,0 +1,36 @@
+global:
+
+templates:
+  - '/etc/prometheus/alertmanager/templates/*.tmpl'
+
+route:
+  # The labels by which incoming alerts are grouped together
+  group_by: ['alertname', 'alertstate', 'cluster', 'service']
+
+  # When a new group of alerts is created by an incoming alert, wait at
+  # least 'group_wait' to send the initial notification.
+  group_wait: 30s
+
+  # When the first notification was sent, wait 'group_interval' to send a batch
+  # of new alerts that started firing for that group.
+  group_interval: 15s
+
+  # If an alert has successfully been sent, wait 'repeat_interval' to
+  # resend them.
+  repeat_interval: 3h
+
+  routes:
+    - match:
+        priority: P2
+      receiver: pushover_default
+      continue: true
+    - match:
+        priority: P1
+      receiver: pushover_high
+      continue: true
+  
+  receiver: pushover_default
+
+inhibit_rules: []
+
+receivers: {{ salt['pillar.get']('prometheus:alerting:receivers', []) | yaml }}
