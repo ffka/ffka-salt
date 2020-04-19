@@ -59,7 +59,6 @@ base:
     - jool
   'monitor.frickelfunk.net':
     - grafana
-    - prometheus
     - nginx
     - certbot
     - network.tunnel
