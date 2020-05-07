@@ -1,7 +1,5 @@
 fastd:
-  pkg.latest:
-    - fromrepo: stretch-backports
-    - refresh: True
+  pkg.latest
 
 /etc/fastd/fastdbl:
   git.latest:
