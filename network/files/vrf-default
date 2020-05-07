@@ -1,0 +1,18 @@
+{% if settings.get('lo', False) %}
+{%- set addresses_v4 = settings['lo']['ipv4'] | sequence %}
+{%- set addresses_v6 = settings['lo']['ipv6'] | sequence %}
+auto lo-{{ name }}
+iface lo-{{ name }} inet static
+    pre-up ip link add $IFACE type dummy
+    address {{ addresses_v4 | first }}/32
+    {%- for address in addresses_v4[1:] %}
+    up ip addr add {{ address }}/32 dev ${IFACE}
+    {%- endfor %}
+    post-down ip link del $IFACE
+
+iface lo-{{ name }} inet6 static
+    address {{ addresses_v6 | first }}/128
+    {%- for address in addresses_v6[1:]%}
+    up ip addr add {{ address }}/128 dev ${IFACE}
+    {% endfor -%}
+{% endif %}

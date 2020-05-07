@@ -97,7 +97,6 @@ base:
     - nginx
     - certbot
   'gwbat*.frickelfunk.net':
-    - kernel.backports
     - batman
     - ferm
     - ferm.gwbat
@@ -132,6 +131,8 @@ base:
     - network.domains
     - network.domains.mesh
     - network.gwbat_internal
+    - network.interfaces
+    - network.vrf
     - fastd
     - fastd.domains
     - fastd.exporter
