@@ -15,7 +15,7 @@ domain (ip ip6) {
         chain FORWARD {
         {% for domain in salt['domain_networking.get_domains']().values() %}
         {% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
-            interface {{ ifname_br }} saddr ({{ " ".join(domain.get('ipv4', {}).keys() + domain.get('ipv6', {}).keys()) }}) {
+            interface {{ ifname_br }} saddr ({{ " ".join(list(domain.get('ipv4', {}).keys()) + list(domain.get('ipv6', {}).keys())) }}) {
                 proto tcp dport smtp REJECT;
                 ACCEPT;
             }

@@ -104,6 +104,8 @@ base:
     - network.domains
     - network.domains.mesh
     - network.gwbat_internal
+    - network.interfaces
+    - network.vrf
     - fastd
     - fastd.domains
     - fastd.exporter
@@ -131,8 +133,6 @@ base:
     - network.domains
     - network.domains.mesh
     - network.gwbat_internal
-    - network.interfaces
-    - network.vrf
     - fastd
     - fastd.domains
     - fastd.exporter
