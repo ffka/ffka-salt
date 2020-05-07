@@ -13,6 +13,12 @@
         ]
     },
 
+    "lease-database": {
+        "type": "memfile",
+        "lfc-interval": 3600,
+        "name": "/var/lib/kea/kea-leases6.csv"
+    },
+
     "subnet6": [
         {%- for file in accumulator.get('dhcpv6-subnets', []) %}
         <?include "{{ file }}"?> {% if not loop.last %},{% endif %}
