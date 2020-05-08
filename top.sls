@@ -120,10 +120,10 @@ base:
     - dhcpv6.domains
     - routing.bird2
     - routing.bird2.exporter
+    - routing.gwbat
     - routing.gwbat.domains
     - routing.gwbat.domains.radv
     - routing.gwbat.domains.device-routes
-    - routing.gwbat.internal_upstream
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - network.tunnel

@@ -22,7 +22,7 @@
     - template: jinja
     - user: bird
     - group: bird
-    - mode: '0755'
+    - mode: '0644'
     - require:
       - file: /etc/bird/bird.d/
 {% endfor %}
