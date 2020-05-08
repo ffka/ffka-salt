@@ -13,12 +13,16 @@
       - file: /etc/bird/bird.d/{{ peer['type'] }}s/
 {% endfor %}
 
-/etc/bird/bird.d/41-basic-protocols-originated-prefixes.conf:
+{% for file in ["31-policy-ebgp-in-basic", "31-policy-ebgp-out-basic", "39-policy-ebpg", "40-ebgp-base", "41-basic-protocols-originated-prefixes"] %}
+/etc/bird/bird.d/{{ file }}.conf:
   file.managed:
-    - source: salt://routing/files/bird2/bird.d/41-basic-protocols-originated-prefixes.conf
+    - source:
+      - salt://routing/files/bird2/bird.d/{{ file }}.conf
+      - salt://routing/files/common/{{ file }}.conf
     - template: jinja
     - user: bird
     - group: bird
-    - mode: '0644'
+    - mode: '0755'
     - require:
       - file: /etc/bird/bird.d/
+{% endfor %}

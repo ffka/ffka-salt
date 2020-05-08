@@ -17,6 +17,8 @@ base:
     - network.tunnel
     - iproute2.backports
     - routing.bird2
+    - routing.bird2.ibgp
+    - routing.bird2.ebgp
     - routing.bird2.exporter
     - ferm
 #    - snmpd
@@ -41,6 +43,8 @@ base:
     - network.tunnel
     - network.lo_core
     - routing.bird2
+    - routing.bird2.ibgp
+    - routing.bird2.ebgp
   'dns*':
     - unbound
     - kernel.sysctl
@@ -114,7 +118,8 @@ base:
     - dhcpv4.exporter
     - dhcpv6
     - dhcpv6.domains
-    - routing.bird
+    - routing.bird2
+    - routing.bird2.exporter
     - routing.gwbat.kernel_as202329
     - routing.gwbat.domains
     - routing.gwbat.domains.radv
