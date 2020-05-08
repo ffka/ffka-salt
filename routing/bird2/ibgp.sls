@@ -46,3 +46,13 @@
     - require:
       - file: /etc/bird/bird.d/
 {% endfor %}
+
+{% for dir in ["ibgp", "internal_downstreams"] %}
+/etc/bird/bird.d/{{ dir }}/:
+  file.directory:
+    - mode: '0755'
+    - user: bird
+    - group: bird
+    - require:
+      - file: /etc/bird/bird.d/
+{% endfor %}

@@ -48,16 +48,6 @@ bird.service:
     - require:
       - pkg: bird2
 
-{% for dir in ["transits", "ixps", "peerings", "customers", "ibgp", "internal_downstreams"] %}
-/etc/bird/bird.d/{{ dir }}/:
-  file.directory:
-    - mode: '0755'
-    - user: bird
-    - group: bird
-    - require:
-      - file: /etc/bird/bird.d/
-{% endfor %}
-
 {% for file in ["05-communities", "06-constants", "10-basic-settings", "20-basic-protocols", "30-policy-communities", "39-policy-internal-downstreams", "45-bgp-sessions"] %}
 /etc/bird/bird.d/{{ file }}.conf:
   file.managed:

@@ -120,7 +120,6 @@ base:
     - dhcpv6.domains
     - routing.bird2
     - routing.bird2.exporter
-    - routing.gwbat.kernel_as202329
     - routing.gwbat.domains
     - routing.gwbat.domains.radv
     - routing.gwbat.domains.device-routes

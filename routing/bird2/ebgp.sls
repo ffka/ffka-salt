@@ -26,3 +26,13 @@
     - require:
       - file: /etc/bird/bird.d/
 {% endfor %}
+
+{% for dir in ["transits", "ixps", "peerings", "customers"] %}
+/etc/bird/bird.d/{{ dir }}/:
+  file.directory:
+    - mode: '0755'
+    - user: bird
+    - group: bird
+    - require:
+      - file: /etc/bird/bird.d/
+{% endfor %}
