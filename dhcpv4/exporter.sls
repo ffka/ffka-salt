@@ -7,7 +7,7 @@ kea-exporter:
 /etc/default/prometheus-kea-exporter:
   file.managed:
     - contents: |
-        ARGS="--port 9547 --interval 7.5 --address \"[::]\" /tmp/kea-dhcp4-ctrl.sock /tmp/kea-dhcp6-ctrl.sock"
+        ARGS="--port 9547 --interval 7 --address \"[::]\" /tmp/kea-dhcp4-ctrl.sock /tmp/kea-dhcp6-ctrl.sock"
     - user: root
     - group: root
     - mode: '0644'
