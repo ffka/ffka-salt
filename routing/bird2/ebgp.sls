@@ -13,7 +13,7 @@
       - file: /etc/bird/bird.d/{{ peer['type'] }}s/
 {% endfor %}
 
-{% for file in ["31-policy-ebgp-in-basic", "31-policy-ebgp-out-basic", "39-policy-ebpg", "40-ebgp-base", "41-basic-protocols-originated-prefixes"] %}
+{% for file in ["31-policy-ebgp-in-basic", "31-policy-ebgp-out-basic", "39-policy-ebpg", "40-ebgp-base", "41-basic-protocols-originated-prefixes", "45-ebgp-sessions"] %}
 /etc/bird/bird.d/{{ file }}.conf:
   file.managed:
     - source:

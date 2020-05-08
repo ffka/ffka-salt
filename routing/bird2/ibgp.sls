@@ -33,7 +33,7 @@
       - file: /etc/bird/bird.d/internal_downstreams/
 {% endfor %}
 
-{% for file in ["25-igp", "31-policy-ibgp-in-basic", "39-policy-ibgp", "40-ibgp-base", "40-internal-downstream-base", "41-basic-protocols-internal-downstreams"] %}
+{% for file in ["25-igp", "31-policy-ibgp-in-basic", "39-policy-ibgp", "40-ibgp-base", "40-internal-downstream-base", "41-basic-protocols-internal-downstreams", "45-ibgp-sessions"] %}
 /etc/bird/bird.d/{{ file }}.conf:
   file.managed:
     - source:
