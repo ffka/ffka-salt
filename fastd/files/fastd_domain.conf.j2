@@ -1,7 +1,8 @@
+{%- set vrf = salt['pillar.get']('network:vrf:' ~ salt['pillar.get']('fastd:domains:bind_vrf'), False) %}
 interface "{{ fastd_ifname }}";
 
-bind {{ salt['grains.get']('fqdn_ip4')[0] }}:{{ fastd['port'] }};
-bind [{{ salt['grains.get']('fqdn_ip6')[0] }}]:{{ fastd['port'] }};
+bind {{ vrf['lo']['ipv4'] }}:{{ fastd['port'] }};
+bind [{{ vrf['lo']['ipv6'] }}]:{{ fastd['port'] }};
 
 mtu {{ domain['fastd']['mtu'] }};
 
