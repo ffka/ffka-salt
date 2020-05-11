@@ -129,7 +129,6 @@ base:
     - network.tunnel
     - access-control.gwbat
   'gwffwp*.frickelfunk.net':
-    - kernel.backports
     - batman
     - ferm
     - ferm.gwbat
@@ -137,19 +136,22 @@ base:
     - network.domains
     - network.domains.mesh
     - network.gwbat_internal
+    - network.interfaces
+    - network.vrf
     - fastd
     - fastd.domains
     - fastd.exporter
     - dhcpv4
     - dhcpv4.domains
+    - dhcpv4.exporter
     - dhcpv6
     - dhcpv6.domains
-    - routing.bird
-    - routing.gwbat.kernel_as202329
+    - routing.bird2
+    - routing.bird2.exporter
+    - routing.gwbat
     - routing.gwbat.domains
     - routing.gwbat.domains.radv
     - routing.gwbat.domains.device-routes
-    - routing.gwbat.internal_upstream
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - network.tunnel
