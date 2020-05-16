@@ -26,7 +26,7 @@ base:
     - routing.bird2.exporter
     - routing.bird2.internal_upstream
     - routing.bird2.internal_upstream.originator
-    #- routing.radv
+    - routing.bird2.radv
     - network.lo
     - network.nat
     - keepalived
