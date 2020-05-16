@@ -7,7 +7,9 @@ kea-exporter:
 /etc/default/prometheus-kea-exporter:
   file.managed:
     - contents: |
-        ARGS="--port 9547 --interval 7 --address \"[::]\" /tmp/kea-dhcp4-ctrl.sock /tmp/kea-dhcp6-ctrl.sock"
+        ARGS="--port 9547 --interval 7 /tmp/kea-dhcp4-ctrl.sock"
+        # --address \"[::]\" curretly doesn't work for IPv6 due to a python bug(?)
+        # add /tmp/kea-dhcp6-ctrl.sock for kea dhcpv6 monitoring
     - user: root
     - group: root
     - mode: '0644'
