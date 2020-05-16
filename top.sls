@@ -10,7 +10,6 @@ base:
     - salt.minion
     - hostname
   'core*.zkm.ka*':
-#    - kernel.backports
     - kernel.sysctl
     - network
     - network.lo_core
@@ -21,17 +20,17 @@ base:
     - routing.bird2.ebgp
     - routing.bird2.exporter
     - ferm
-#    - snmpd
-#    - netflow
-#    - tflow2.agent
-  'cloud-router.zkm.ka.frickelfunk.net':
+  'gw*.cloud.zkm.kae.frickelfunk.net':
     - kernel.sysctl
-    - routing.bird
-    - routing.internal_upsteam_originator
+    - routing.bird2
+    - routing.bird2.internal_upstream
+    - routing.bird2.internal_upstream.originator
     - routing.radv
     - network.lo
     - network.nat
+    - network.keepalived
     - network.internal_upstream
+    - network.interfaces
     - dhcpv4
     - dhcpv4.address_assignment
     - ferm
