@@ -23,6 +23,7 @@ base:
   'gw*.cloud.zkm.kae.frickelfunk.net':
     - kernel.sysctl
     - routing.bird2
+    - routing.bird2.exporter
     - routing.bird2.internal_upstream
     - routing.bird2.internal_upstream.originator
     - routing.radv
