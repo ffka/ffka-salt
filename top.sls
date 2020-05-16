@@ -29,7 +29,7 @@ base:
     - routing.radv
     - network.lo
     - network.nat
-    - network.keepalived
+    - keepalived
     - network.internal_upstream
     - network.interfaces
     - dhcpv4
