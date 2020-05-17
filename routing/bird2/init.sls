@@ -41,6 +41,9 @@ bird.service:
 /etc/bird/bird.conf:
   file.managed:
     - contents: |
+        protocol device {
+          scan time 10;
+        }
         include "bird.d/*.conf";
     - user: bird
     - group: bird
