@@ -36,3 +36,6 @@
     - require:
       - file: /etc/bird/bird.d/
 {% endfor %}
+
+include:
+  - routing.bird2.shared

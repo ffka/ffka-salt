@@ -48,7 +48,7 @@ bird.service:
     - require:
       - pkg: bird2
 
-{% for file in ["05-communities", "06-constants", "10-basic-settings", "20-basic-protocols", "30-policy-communities", "39-policy-internal-downstreams"] %}
+{% for file in ["05-communities", "06-constants", "10-basic-settings", "30-policy-communities", "39-policy-internal-downstreams"] %}
 /etc/bird/bird.d/{{ file }}.conf:
   file.managed:
     - source:

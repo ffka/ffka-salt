@@ -1,9 +1,7 @@
-# replaces internal_upstream.sls (which was based on bird 1)
-
 {% for name, peer in salt['pillar.get']('routing:internal_upstream', {}).items() %}
 /etc/bird/bird.d/51-internal-upstream-{{ name }}.conf:
   file.managed:
-    - source: salt://routing/files/bird2/bird.d/51-internal-upstream.conf
+    - source: salt://routing/files/bird2/internal_upstream/session.conf
     - user: bird
     - group: bird
     - mode: '0644'
@@ -18,12 +16,11 @@
       - file: /etc/bird/bird.d/
 {% endfor %}
 
-{% for file in ["50-internal-upstreams-basic", "50-internal-upstream-filters"] %}
-/etc/bird/bird.d/{{ file }}.conf:
+{% for number, name in [[51, "basic"], [50, "filters"]] %}
+/etc/bird/bird.d/{{ number }}-internal-upstream-{{ name }}.conf:
   file.managed:
     - source:
-      - salt://routing/files/bird2/bird.d/{{ file }}.conf
-      - salt://routing/files/common/{{ file }}.conf
+      - salt://routing/files/bird2/internal_upstream/{{ name }}.conf
     - template: jinja
     - user: bird
     - group: bird

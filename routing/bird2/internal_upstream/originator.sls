@@ -1,8 +1,8 @@
-{% for file in ["10-basic-settings-upstream-originator", "20-basic-protocols-upstream-originator", "21-static-routes-upstream-originator"] %}
-/etc/bird/bird.d/{{ file }}.conf:
+{% for number, name in [[10, "basic-settings"], [20, "basic-protocols"], [21, "static-routes"]] %}
+/etc/bird/bird.d/{{ number }}-{{ name }}-upstream-originator.conf:
   file.managed:
     - source:
-      - salt://routing/files/bird2/bird.d/{{ file }}.conf
+      - salt://routing/files/bird2/internal_upstream/{{ name }}.conf
     - template: jinja
     - user: bird
     - group: bird
