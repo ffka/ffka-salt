@@ -1,4 +1,4 @@
-{% for file in ["20-basic-protocols-upstream-originator", "10-basic-settings-upstream-originator"] %}
+{% for file in ["10-basic-settings-upstream-originator", "20-basic-protocols-upstream-originator", "21-static-routes-upstream-originator"] %}
 /etc/bird/bird.d/{{ file }}.conf:
   file.managed:
     - source:
