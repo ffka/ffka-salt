@@ -124,6 +124,14 @@ graph_path = "/var/lib/yanic/meshviewer/{{ instance }}/graph.json"
 # WARNING: if it is not set, it will publish contact information of other persons
 no_owner = false
 
+# definition for raw.json
+[[nodes.output.raw]]
+enable   = true
+path = "/var/lib/yanic/meshviewer/{{ instance }}/raw.json"
+
+[nodes.output.raw.filter]
+# WARNING: if it is not set, it will publish contact information of other persons
+no_owner = false
 
 # definition for nodelist.json
 [[nodes.output.nodelist]]
