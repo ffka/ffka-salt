@@ -8,7 +8,8 @@ yanic:
     []
   user.present:
     - home: /var/lib/yanic
-    - gid_from_name: True
+    - gid: yanic
+    - usergroup: True
   git.latest:
     - name: https://github.com/FreifunkBremen/yanic
     - target: {{ gopath }}/src/github.com/FreifunkBremen/yanic
