@@ -9,7 +9,7 @@ base:
     - prometheus.node_exporter
     - salt.minion
     - hostname
-  'core*.zkm.ka*':
+  'core*.zkm.ka* or core*.scc.kae*':
     - kernel.sysctl
     - network
     - network.lo_core
