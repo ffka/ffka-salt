@@ -35,16 +35,6 @@ base:
     - dhcpv4
     - dhcpv4.address_assignment
     - ferm
-  'edge.ntsltr.fra*':
-    - kernel.backports
-    - kernel.sysctl
-    - iproute2.backports
-    - network
-    - network.tunnel
-    - network.lo_core
-    - routing.bird2
-    - routing.bird2.ibgp
-    - routing.bird2.ebgp
   'dns*':
     - unbound
     - kernel.sysctl

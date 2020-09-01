@@ -15,6 +15,7 @@ netdatarequisites:
       - libuv1-dev
       - netcat-traditional
       - pkg-config
+      - libelf-dev
 
 https://github.com/firehol/netdata.git:
   git.latest:
