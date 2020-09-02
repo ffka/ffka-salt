@@ -1,11 +1,31 @@
-{% for if in salt['pillar.get']('network:interfaces', []) if not if['name'].startswith('tun') and not if['name'].startswith('pppoe') %} {# ToDo #}
+{%- macro address_line_v4(ifname, addr) %}
+iface {{ ifname }} inet static
+{%- if addr is mapping and addr.get('peer', None) %}
+    address {{ addr['address'] }}
+    pointopoint {{ addr['peer'] }}
+    netmask 32
+{%- else %}
+    address {{ addr }}
+{%- endif %}
+{%- endmacro %}
+{%- macro address_line_v6(ifname, addr) %}
+{%- if addr is mapping and addr.get('peer', None) %}
+iface {{ ifname }} inet6 manual
+    post-up ip -6 addr add {{ addr['address'] }} peer {{ addr['peer'] }} dev $IFACE
+{%- else %}
+iface {{ ifname }} inet6 static
+    address {{ addr }}
+{%- endif %}
+{%- endmacro %}
+
+{% for if in salt['pillar.get']('network:interfaces', []) if not if['name'].startswith('tun') and not if['name'].startswith('pppoe') and not if['name'].startswith('wg') %} {# ToDo #}
 {%- set name = if['name'] %}
 {%- set ipv4 = if.get('ipv4', {}) %}
 {%- set ipv6 = if.get('ipv6', {}) %}
 {# ToDo: Bug: VRF names are referenced with vrf- prefix, but defined without the prefix -> not found #}
 {%- set vrf = salt['pillar.get']('network:vrf:' ~ if.get('vrf', '$INVALID$'), False) %}
 
-{%- if if.get('type', 'physical') == 'physical' %}
+{%- if if.get('type', 'physical') in ['physical', 'bond'] %}
 auto {{ name }}
 {% else %}
 allow-hotplug {{ name }}
@@ -21,8 +41,7 @@ iface {{ name }} inet manual
 {% else %}
 {%- set address = addresses_v4[0] %}
 {%- set additional_addresses_v4 = addresses_v4[1:] %}
-iface {{ name }} inet static
-    address {{ address }}
+{{ address_line_v4(name, address) }}
 {%- endif %}
 {%- if 'default_gateway' in ipv4 %}
     {%- if address and not salt['nw.ip_in_subnet'](ipv4['default_gateway'], address) %}
@@ -36,6 +55,11 @@ iface {{ name }} inet static
 {%- endif %}
 {%- if if.get('vrf') %}
     pre-up ip link set master vrf-{{ if['vrf'] }} dev ${IFACE} || true
+{%- endif %}
+{%- if if.get('type') == 'bond' %}
+    bond-slaves {{ if.get('bond', {}).get('slaves', []) | join(' ') }}
+    bond-miimon 100
+    bond-mode 802.3ad
 {%- endif %}
 
 {%- set addresses_v6 = ipv6.get('addresses', []) %}
@@ -51,8 +75,7 @@ iface {{ name }} inet manual
 {% else %}
 {%- set address = addresses_v6[0] %}
 {%- set additional_addresses_v6 = addresses_v6[1:] %}
-iface {{ name }} inet6 static
-    address {{ address }}
+{{ address_line_v6(name, address) }}
 {%- endif %}
 {%- if 'default_gateway' in ipv6 %}
     {%- if address and not salt['nw.ip_in_subnet'](ipv6['default_gateway'], address) %}
@@ -74,15 +97,11 @@ auto {{ name }}:{{ i }}
 {%- endfor %}
 
 {%- for address in additional_addresses_v4 %}
-iface {{ name }}:{{ loop.index0 }} inet static
-    address {{ address }}
-
+{{ address_line_v4(name ~ ":" ~ loop.index0, address) }}
 {%- endfor %}
 
 {%- for address in additional_addresses_v6 %}
-iface {{ name }}:{{ loop.index0 }} inet6 static
-    address {{ address }}
-
+{{ address_line_v6(name ~ ":" ~ loop.index0, address) }}
 {%- endfor %}
 
 {%- endfor %}
