@@ -71,7 +71,7 @@ iface {{ name }} inet6 dhcp
 iface {{ name }} inet6 auto
 {% elif ipv6.get('addresses', []) | count == 0 %}
 {%- set additional_addresses_v6 = [] %}
-iface {{ name }} inet manual
+iface {{ name }} inet6 manual
 {% else %}
 {%- set address = addresses_v6[0] %}
 {%- set additional_addresses_v6 = addresses_v6[1:] %}
