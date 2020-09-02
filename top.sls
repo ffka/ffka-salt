@@ -9,10 +9,11 @@ base:
     - prometheus.node_exporter
     - salt.minion
     - hostname
+  'core*.zkm.ka*':
+    - network.lo_core
   'core*.zkm.ka* or core*.scc.kae*':
     - kernel.sysctl
     - network
-    - network.lo_core
     - network.tunnel
     - iproute2.backports
     - routing.bird2
@@ -22,6 +23,7 @@ base:
     - ferm
   'core*.scc.kae*':
     - network.interfaces
+    - network.vrf
   'gw*.cloud.zkm.kae.frickelfunk.net':
     - kernel.sysctl
     - routing.bird2
