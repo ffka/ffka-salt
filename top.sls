@@ -20,6 +20,8 @@ base:
     - routing.bird2.ebgp
     - routing.bird2.exporter
     - ferm
+  'core*.scc.kae*':
+    - network.interfaces
   'gw*.cloud.zkm.kae.frickelfunk.net':
     - kernel.sysctl
     - routing.bird2
