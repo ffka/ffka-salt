@@ -36,8 +36,7 @@ server {
 
         resolver 1.1.1.1 ipv6=off;
         if ($provider = "giscience") {
-#            proxy_pass "http://api.openrouteservice.org/mapsurfer/$tile_z/$tile_x/$tile_y.png?api_key=5b3ce3597851110001cf624807d1d7567ae24baeb813266414a48c82";
-            proxy_pass "https://maps.heigit.org/openmapsurfer/tiles/roads/webmercator/$tile_z/$tile_x/$tile_y.png";
+#            proxy_pass "http://api.openrouteservice.org/mapsurfer/$tile_z/$tile_x/$tile_y.png?api_key=5b3ce3597851110001cf6248749ac5c9756b4576ad4342cba44e85a1";
         }
 
         proxy_http_version              1.1;
