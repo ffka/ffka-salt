@@ -13,14 +13,15 @@
       - file: /etc/bird/bird.d/{{ peer['type'] }}s/
 {% endfor %}
 
-{% for no, file in [[5, "communities"], [6, "constants"], [10, "basic-settings"], [20, "basic-protocols"], [30, "policy-communities"], [31, "olicy-ebgp-in-basic"], [31, "policy-ebgp-out-basic"], [39, "policy-ebpg"], [40, "ebgp-base"], [41, "basic-protocols-originated-prefixes"], [45, "ebgp-sessions"]] %}
-/etc/bird/bird.d/{{ no }}-{{ file }}.conf:
+{% for no, file in [[5, "communities"], [6, "constants"], [10, "basic-settings"], [20, "basic-protocols"], [30, "policy-communities"], [31, "policy-ebgp-in-basic"], [31, "policy-ebgp-out-basic"], [39, "policy-ebpg"], [40, "ebgp-base"], [41, "basic-protocols-originated-prefixes"], [45, "ebgp-sessions"]] %}
+/etc/bird/bird.d/{{ '%02d' % (no) }}-{{ file }}.conf:
   file.managed:
     - source:
-      - salt://routing/files/entropia/bird.d/{{ no }}-{{ file }}.conf
+      - salt://routing/files/entropia/bird.d/{{ '%02d' % (no) }}-{{ file }}.conf
       - salt://routing/files/entropia/bird.d/{{ file }}.conf
-      - salt://routing/files/bird2/bird.d/{{ no }}-{{ file }}.conf
+      - salt://routing/files/bird2/bird.d/{{ '%02d' % (no) }}-{{ file }}.conf
       - salt://routing/files/bird2/bird.d/{{ file }}.conf
+      - salt://routing/files/common/{{ '%02d' % (no) }}-{{ file }}.conf
       - salt://routing/files/common/{{ file }}.conf
     - template: jinja
     - user: bird
