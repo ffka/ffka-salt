@@ -17,6 +17,7 @@ base:
     - network.tunnel
     - iproute2.backports
     - routing.bird2
+    - routing.bird2.base
     - routing.bird2.ibgp
     - routing.bird2.ebgp
     - routing.bird2.exporter
@@ -27,6 +28,7 @@ base:
   'gw*.cloud.zkm.kae.frickelfunk.net':
     - kernel.sysctl
     - routing.bird2
+    - routing.bird2.base
     - routing.bird2.exporter
     - routing.bird2.internal_upstream
     - routing.bird2.internal_upstream.originator
@@ -113,6 +115,7 @@ base:
     - dhcpv6
     - dhcpv6.domains
     - routing.bird2
+    - routing.bird2.base
     - routing.bird2.exporter
     - routing.gwbat
     - routing.gwbat.domains
@@ -141,6 +144,7 @@ base:
     - dhcpv6
     - dhcpv6.domains
     - routing.bird2
+    - routing.bird2.base
     - routing.bird2.exporter
     - routing.gwbat
     - routing.gwbat.domains
@@ -169,3 +173,15 @@ base:
     - docker
     - access-control
     - nginx
+
+  'core0.net.entropia.de':
+    - kernel.sysctl
+    - network
+    - network.interfaces
+    - network.vrf
+    - iproute2.backports
+    - routing.bird2
+    - routing.bird2.exporter
+    - routing.entropia
+    - ferm
+
