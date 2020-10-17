@@ -24,7 +24,7 @@ base:
   'core*.scc.kae*':
     - network.interfaces
     - network.vrf
-  'gw*.cloud.zkm.kae.frickelfunk.net':
+  'gw*.cloud.zkm.kae.frickelfunk.net or gw*.scc.kae.frickelfunk.net':
     - kernel.sysctl
     - routing.bird2
     - routing.bird2.exporter
