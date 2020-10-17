@@ -46,9 +46,16 @@ base:
     - kernel.sysctl
     - network.lo
     - network.internal_upstream
+    - ferm
+  'dns1* or dns2*':
     - routing.bird
     - routing.internal_upsteam_originator
-    - ferm
+  'dns3* or dns4*':
+    - routing.bird2
+    - routing.bird2.base
+    - routing.bird2.exporter
+    - routing.bird2.internal_upstream
+    - routing.bird2.internal_upstream.originator
   'nat64*.frickelfunk.net':
     - kernel.sysctl
     - network.lo
