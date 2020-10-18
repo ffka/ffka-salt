@@ -26,7 +26,7 @@ iface {{ ifname }} inet6 static
 {# ToDo: Bug: VRF names are referenced with vrf- prefix, but defined without the prefix -> not found #}
 {%- set vrf = salt['pillar.get']('network:vrf:' ~ if.get('vrf', '$INVALID$'), False) %}
 
-{%- if if.get('type', 'physical') in ['physical', 'bond'] %}
+{%- if if.get('type', 'physical') in ['physical', 'bond', 'dummy'] %}
 auto {{ name }}
 {% else %}
 allow-hotplug {{ name }}
