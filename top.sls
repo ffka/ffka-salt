@@ -51,6 +51,8 @@ base:
     - routing.bird
     - routing.internal_upsteam_originator
   'dns3* or dns4*':
+    - network.vrf
+    - network.interfaces
     - routing.bird2
     - routing.bird2.base
     - routing.bird2.exporter
