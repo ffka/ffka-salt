@@ -56,6 +56,7 @@ base:
     - routing.bird2.exporter
     - routing.bird2.internal_upstream
     - routing.bird2.internal_upstream.originator
+    - routing.bird2.internal_upstream.anycast_originator
   'nat64*.frickelfunk.net':
     - kernel.sysctl
     - network.lo
