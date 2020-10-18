@@ -1,6 +1,6 @@
 {% set instances = {
   'default': {
-    'files': ['no-cloudflare', 'bind', 'dnssec', 'domains', 'unbound']
+    'files': ['no-cloudflare', 'bind', 'dnssec', 'unbound']
   },
   'nat64': {
     'files': ['no-cloudflare', 'bind', 'dnssec', 'unbound', 'nat64']
