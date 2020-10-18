@@ -44,10 +44,10 @@ base:
   'dns*':
     - unbound
     - kernel.sysctl
-    - network.lo
     - network.internal_upstream
     - ferm
   'dns1* or dns2*':
+    - network.lo
     - routing.bird
     - routing.internal_upsteam_originator
   'dns3* or dns4*':
