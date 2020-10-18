@@ -8,6 +8,7 @@ iface {{ ifname }} inet static
     address {{ addr }}
 {%- endif %}
 {%- endmacro %}
+
 {%- macro address_line_v6(ifname, addr) %}
 {%- if addr is mapping and addr.get('peer', None) %}
 iface {{ ifname }} inet6 manual
@@ -43,6 +44,10 @@ iface {{ name }} inet manual
 {%- set additional_addresses_v4 = addresses_v4[1:] %}
 {{ address_line_v4(name, address) }}
 {%- endif %}
+{%- if if.get('type') == 'dummy' %}
+    pre-up ip link add $IFACE type dummy
+{%- endif %}
+
 {%- if 'default_gateway' in ipv4 %}
     {%- if address and not salt['nw.ip_in_subnet'](ipv4['default_gateway'], address) %}
     up ip route add {{ ipv4['default_gateway'] }} dev ${IFACE}{% if vrf %} table {{ vrf['table'] }}{% endif %} || true
