@@ -45,9 +45,9 @@ iface {{ name }} inet manual
 {{ address_line_v4(name, address) }}
 {%- endif %}
 {%- if if.get('type') == 'dummy' %}
-    pre-up ip link add $IFACE type dummy
+    pre-up ip link add $IFACE type dummy || true
+    post-down ip link del $IFACE || true
 {%- endif %}
-
 {%- if 'default_gateway' in ipv4 %}
     {%- if address and not salt['nw.ip_in_subnet'](ipv4['default_gateway'], address) %}
     up ip route add {{ ipv4['default_gateway'] }} dev ${IFACE}{% if vrf %} table {{ vrf['table'] }}{% endif %} || true
