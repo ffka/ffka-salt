@@ -43,6 +43,8 @@ netdataupdate:
     - cwd: /root/netdatagit
     - name: /bin/bash /usr/libexec/netdata/netdata-updater.sh
     - onlyif: test -f /usr/libexec/netdata/netdata-updater.sh
+    - env:
+      - NETDATA_NOT_RUNNING_FROM_CRON: '1'
     - onchanges:
       - git: https://github.com/firehol/netdata.git
 
