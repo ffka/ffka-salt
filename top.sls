@@ -178,7 +178,6 @@ base:
     - docker
     - access-control
     - nginx
-
   'core0.net.entropia.de':
     - kernel.sysctl
     - network
@@ -187,8 +186,7 @@ base:
     - iproute2.backports
     - routing.bird2
     - routing.bird2.exporter
-    - routing.bird2.internal_upstream
-    - routing.bird2.internal_upstream.originator
     - routing.entropia
+    - routing.bird2.static
     - ferm
 
