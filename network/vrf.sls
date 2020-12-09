@@ -11,26 +11,6 @@
     - context:
         name: {{ name }}
         settings: {{ settings | yaml }}
-
-/etc/ferm/conf.d/urpf-vrf-{{ name }}.conf:
-{%- if settings.get('routes', {}) | count > 0 %}
-  file.managed:
-    - user: root
-    - group: root
-    - mode: 644
-    - source: salt://network/files/ferm.urpf-vrf.conf
-    - template: jinja
-    - require:
-      - file: /etc/ferm/conf.d
-    - watch_in:
-      - service: ferm.service
-    - context:
-        name: {{ name }}
-        settings: {{ settings | yaml }}
-{%- else %}
-  file.absent
-{%- endif %}
-
 {% endfor %}
 
 /etc/network/interfaces.d/00-vrf-setup:
