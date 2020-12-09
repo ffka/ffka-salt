@@ -187,6 +187,8 @@ base:
     - iproute2.backports
     - routing.bird2
     - routing.bird2.exporter
+    - routing.bird2.internal_upstream
+    - routing.bird2.internal_upstream.originator
     - routing.entropia
     - ferm
 
