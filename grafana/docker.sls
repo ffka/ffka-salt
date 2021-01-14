@@ -66,7 +66,7 @@ grafana_{{ name }}_renderer:
   docker_container.running:
     - image: grafana/grafana-image-renderer:latest
     - environment:
-      -ENABLE_METRICS: 'true'
+      - ENABLE_METRICS: 'true'
     - port_bindings:
       - 127.0.0.1:8081:8081
     - binds:
