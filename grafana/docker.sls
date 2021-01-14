@@ -48,7 +48,7 @@ grafana_{{ name }}:
     - environment:
       - GF_PATHS_CONFIG: /var/lib/grafana/grafana.ini
       - GF_PATHS_DATA: /var/lib/grafana/data
-      - GF_RENDERING_SERVER_URL: http://127.0.0.1:8081/render
+      - GF_RENDERING_SERVER_URL: http://grafana_{{ name }}_renderer:8081/render
       {% if 'plugins' in instance %}
       - GF_INSTALL_PLUGINS: {{ instance.get('plugins', []) | join(',') }}
       {% endif %}
