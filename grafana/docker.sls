@@ -48,7 +48,7 @@ grafana_{{ name }}:
     - environment:
       - GF_PATHS_CONFIG: /var/lib/grafana/grafana.ini
       - GF_PATHS_DATA: /var/lib/grafana/data
-      - GF_INSTALL_IMAGE_RENDERER_PLUGIN: true
+      - GF_RENDERING_SERVER_URL: http://127.0.0.1:8081/render
       {% if 'plugins' in instance %}
       - GF_INSTALL_PLUGINS: {{ instance.get('plugins', []) | join(',') }}
       {% endif %}
@@ -62,4 +62,13 @@ grafana_{{ name }}:
       - file: /var/lib/grafana/{{ name }}/grafana.ini
       - docker_image: grafana/grafana:{{ grafana_vesion }}
       - user: grafana
+grafana_{{ name }}_renderer:
+  docker_container.running:
+    - image: grafana/grafana-image-renderer:latest
+    - environment:
+      -ENABLE_METRICS: 'true'
+    - port_bindings:
+      - 127.0.0.1:8081:8081
+    - binds:
+      - /opt/grafana-image-renderer/default.json:/usr/src/app/config.json
 {% endfor %}
