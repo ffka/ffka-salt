@@ -38,7 +38,7 @@ hackmdpostgres:
 
 hackmdapp:
   docker_container.running:
-    - image: quay.io/hedgedoc/hedgedoc{{ hackmd_version }}
+    - image: quay.io/hedgedoc/hedgedoc:{{ hackmd_version }}
     - environment:
       - CMD_DB_URL=postgres://hackmd:hackmdpass@hackmdpostgres:5432/hackmd
       - CMD_DOMAIN={{ domainset[0] }}
