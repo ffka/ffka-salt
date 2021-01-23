@@ -1,6 +1,6 @@
 {% macro custom_states(name, vhost, domainset) -%}
 
-{%- set hackmd_version = "1.4.0" -%}
+{%- set hackmd_version = "1.7.2" -%}
 {%- set hackmd_postgres_version = "9.6-alpine" -%}
 
 /srv/www/pads/database:
@@ -38,7 +38,7 @@ hackmdpostgres:
 
 hackmdapp:
   docker_container.running:
-    - image: quay.io/codimd/server:{{ hackmd_version }}
+    - image: quay.io/hedgedoc/hedgedoc{{ hackmd_version }}
     - environment:
       - CMD_DB_URL=postgres://hackmd:hackmdpass@hackmdpostgres:5432/hackmd
       - CMD_DOMAIN={{ domainset[0] }}
