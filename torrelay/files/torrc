@@ -1,10 +1,14 @@
-Nickname VZFFNRMO
-ORPort 443
-ExitRelay 0
 SocksPort 0
-ControlSocket 0
 RunAsDaemon 1
-RelayBandwidthRate 100 MB  # Throttle traffic to 100KB/s (800Kbps)
-RelayBandwidthBurst 200 MB # But allow bursts up to 200KB/s (1600Kbps)
-# Change the email address below and be aware that it will be published
-ContactInfo TOR AT VZFFNRMO <tor AT vzffnrmo dt de>
+ORPort 9001
+ORPort [2001:678:6e1:1001:888a:51ff:fe8d:3326]:9001
+Nickname VZFFNRMO
+ContactInfo TOR AT VZFFNRMO <tor AT vzffnrmo dt de> [tor-relay.co]
+Log notice file /var/log/tor/notices.log
+DirPort 9030
+ExitPolicy reject6 *:*, reject *:*
+RelayBandwidthRate 200 MBits
+RelayBandwidthBurst 300 MBits
+DisableDebuggerAttachment 0
+ControlPort 9051
+CookieAuthentication 1
