@@ -189,4 +189,6 @@ base:
     - routing.entropia
     - routing.bird2.static
     - ferm
+  'torrealy.frickelfunk.net':
+    - torrelay
 
