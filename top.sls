@@ -191,4 +191,7 @@ base:
     - ferm
   'torrelay.frickelfunk.net':
     - torrelay
-
+  'web2.frickelfunk.net':
+    - nginx
+    - certbot
+    - ferm
