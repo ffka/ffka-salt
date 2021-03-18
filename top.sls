@@ -195,3 +195,4 @@ base:
     - nginx
     - certbot
     - ferm
+    - network.interfaces
