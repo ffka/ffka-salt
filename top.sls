@@ -5,7 +5,6 @@ base:
     - common.ffkaadmin
     - common.sudo
     - common.backport_repo
-#    - netdata
     - prometheus.node_exporter
     - salt.minion
     - hostname
@@ -93,7 +92,6 @@ base:
   'gitlab.frickelfunk.net':
     - gitlab.gitlab
     - apt.unattended-upgrades
-    - netdata
     - certbot
   'ns1.frickelfunk.net':
     - knot
