@@ -24,3 +24,15 @@ netdata-uninstall:
     - require:
       - cmd: netdata-uninstall
 
+
+{% for file in ["netdata-updater.service", "netdata-updater.timer", "netdata.service"] %}
+/lib/systemd/system/:
+  file.absent:
+    - require:
+      - cmd: netdata-uninstall
+{% endfor %}
+
+/etc/cron.daily/netdata-updater:
+  file.absent:
+    - require:
+      - cmd: netdata-uninstall
