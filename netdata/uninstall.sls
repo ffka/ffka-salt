@@ -26,7 +26,7 @@ netdata-uninstall:
 
 
 {% for file in ["netdata-updater.service", "netdata-updater.timer", "netdata.service"] %}
-/lib/systemd/system/:
+/lib/systemd/system/{{ file }}:
   file.absent:
     - require:
       - cmd: netdata-uninstall
@@ -36,3 +36,15 @@ netdata-uninstall:
   file.absent:
     - require:
       - cmd: netdata-uninstall
+
+/usr/lib/netdata:
+  file.absent:
+    - require:
+      - cmd: netdata-uninstall
+
+{% for file in ["netdata-claim.sh", "netdata", "netdatacli"] %}
+/usr/sbin/{{ file }}:
+  file.absent:
+    - require:
+      - cmd: netdata-uninstall
+{% endfor %}
