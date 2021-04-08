@@ -10,7 +10,7 @@ netdata-uninstall:
     - onlyif:
       - test -f /usr/libexec/netdata/netdata-uninstaller.sh
     - cwd: /root/netdatagit
-    - name: /usr/libexec/netdata/netdata-uninstaller.sh
+    - name: /usr/libexec/netdata/netdata-uninstaller.sh --yes
     - require:
       - service: netdata.service
 
