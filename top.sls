@@ -5,7 +5,7 @@ base:
     - common.ffkaadmin
     - common.sudo
     - common.backport_repo
-    - netdata
+#    - netdata
     - prometheus.node_exporter
     - salt.minion
     - hostname
