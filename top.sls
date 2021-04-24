@@ -199,3 +199,6 @@ base:
     - network.vrf
     - network.tunnel
     - network.tunnel.wireguard
+  'mgmt.scc.kae.frickelfunk.net':
+    - network.tunnel
+    - network.tunnel.wireguard
