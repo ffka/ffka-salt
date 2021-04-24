@@ -194,3 +194,8 @@ base:
     - certbot
     - ferm
     - network.interfaces
+  'mgmt-gw.frickelfunk.net':
+    - network.interfaces
+    - network.vrf
+    - network.tunnel
+    - network.tunnel.wireguard
