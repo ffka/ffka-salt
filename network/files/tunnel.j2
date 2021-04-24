@@ -1,31 +1,49 @@
 {% for name, tunnel in tunnels.items() %}
 
-#################### tun-{{ name }} ####################
-auto tun-{{ name }}
-
 {% if tunnel.type == 'gre6' -%}
-iface tun-{{ name }} inet static
-  pre-up ip -6 tunnel add tun-{{ name }} mode ip6gre remote {{ tunnel.gre.endpoint }} local {{ tunnel.gre.local | default(grains.fqdn_ip6[0]) }}{% if 'dev' in tunnel %} dev {{ tunnel.dev }}{% endif %} || true
+{%- set ifname = "tun-" ~ name %}
+auto {{ ifname }}
+iface {{ ifname }} inet static
+  pre-up ip -6 tunnel add tun-{{ name }} mode ip6gre remote {{ tunnel.gre.endpoint }} local {{ tunnel.gre.local | default(grains.fqdn_ip6[0]) }}{% if 'dev' in tunnel %} dev {{ tunnel.dev }}{% endif %}
+  {% if tunnel.get('route', False) -%}
+  pre-up ip route add {{ tunnel.gre.endpoint }} via {{ tunnel.route.nexthop }} dev {{ tunnel.route.dev }} || true
+  {% endif -%}
   post-down ip link del tun-{{ name }} || true
 {% elif tunnel.type == 'gre' %}
-iface tun-{{ name }} inet tunnel
+{%- set ifname = "tun-" ~ name %}
+auto {{ ifname }}
+iface {{ ifname }} inet tunnel
   mode gre
   local {{ tunnel.gre.local | default(grains.fqdn_ip4[0]) }}
   endpoint {{ tunnel.gre.endpoint }}
+  {%- if tunnel.get('route', False) %}
+  pre-up ip route add {{ tunnel.gre.endpoint }} via {{ tunnel.route.nexthop }} dev {{ tunnel.route.dev }} || true
+  {% endif -%}
 {% elif tunnel.type == 'vxlan' %}
-iface tun-{{ name }} inet static
+{%- set ifname = "tun-" ~ name %}
+auto {{ ifname }}
+iface {{ ifname }} inet static
   pre-up ip link add name tun-{{ name }} type vxlan id {{ tunnel.vxlan.id }} dev {{ tunnel.dev }} remote {{ tunnel.vxlan.remote }} local {{ tunnel.vxlan.local }} dstport {{ tunnel.vxlan.dstport }} || true
   post-down ip link del tun-{{ name }} || true
 {% elif tunnel.type == 'sixinfour' %}
-iface tun-{{ name }} inet6 v4tunnel
+{%- set ifname = "tun-" ~ name %}
+auto {{ ifname }}
+iface {{ ifname }} inet6 v4tunnel
   local {{ tunnel.sixinfour.local | default(grains.fqdn_ip4[0]) }}
   endpoint {{ tunnel.sixinfour.endpoint }}
 
   address {{ tunnel.ipv6.address }}/{{ tunnel.ipv6.prefixlength }}
+{% elif tunnel.type == 'wireguard' %}
+{%- set ifname = "wg-" ~ name %}
+auto {{ ifname }}
+iface {{ ifname }} inet static
+  pre-up ip link add ${IFACE} type wireguard
+  up wg setconf ${IFACE} /etc/wireguard/${IFACE}.conf
+  post-down ip link del ${IFACE} || true
 {% endif -%}
 
   {%- if tunnel.get('vrf', False) %}
-  post-up ip link set master {{ tunnel.vrf }} dev tun-{{ name }} || true
+  post-up ip link set master {{ tunnel.vrf }} dev ${IFACE} || true
   {% endif %}
 
   {% if tunnel.ttl is defined -%} ttl {{ tunnel.ttl }} {% endif %}
@@ -34,10 +52,18 @@ iface tun-{{ name }} inet6 v4tunnel
 {% if tunnel.type != 'sixinfour' %}
   netmask {{ tunnel.ipv4.netmask | default('255.255.255.255') }}
   address {{ tunnel.ipv4.local_address }}
+  {%- if tunnel.ipv4.remote_address is defined %}
   dstaddr {{ tunnel.ipv4.remote_address }}
+  {%- endif %}
 
-iface tun-{{ name }} inet6 static
+iface {{ ifname }} inet6 static
   address {{ tunnel.ipv6.address }}/{{ tunnel.ipv6.prefixlength }}
 {% endif %}
+
+{%- if tunnel.type == 'wireguard' %}
+auto {{ ifname }}:1
+iface {{ ifname }}:1 inet6 static
+  address fe80::{{ tunnel.ipv4.local_address }}/64
+{%- endif %}
 
 {% endfor %}
