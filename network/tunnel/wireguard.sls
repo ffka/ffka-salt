@@ -15,7 +15,7 @@ wireguard:
   pkg.installed:
     - require:
       - file: /etc/apt/preferences.d/wireguard
-      - pkgrepo: unstable-repo
+      - pkgrepo: unstable
 
 /etc/wireguard:
   file.directory:
