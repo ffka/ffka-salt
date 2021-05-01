@@ -2,8 +2,8 @@
 /etc/bird/bird.d/{{ '%02d' % (no) }}-{{ file }}.conf:
   file.managed:
     - source:
-      - salt://routing/files/mgmt/bird.d/{{ '%02d' % (no) }}-{{ file }}.conf
-      - salt://routing/files/mgmt/bird.d/{{ file }}.conf
+      - salt://routing/files/mgmt/{{ '%02d' % (no) }}-{{ file }}.conf
+      - salt://routing/files/mgmt/{{ file }}.conf
 
     - template: jinja
     - user: bird
