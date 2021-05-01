@@ -199,6 +199,12 @@ base:
     - network.vrf
     - network.tunnel
     - network.tunnel.wireguard
+    - routing.bird2
+    - routing.bird2.exporter
+    - routing.bird2.mgmt
   'mgmt.scc.kae.frickelfunk.net':
     - network.tunnel
     - network.tunnel.wireguard
+    - routing.bird2
+    - routing.bird2.exporter
+    - routing.bird2.mgmt
