@@ -187,7 +187,7 @@ base:
     - routing.entropia
     - routing.bird2.static
     - ferm
-  'torrelay.frickelfunk.net':
+  'torrelay*.frickelfunk.net':
     - torrelay
   'web2.frickelfunk.net':
     - nginx
