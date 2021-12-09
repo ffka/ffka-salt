@@ -5,10 +5,10 @@ key:
 
 acl:
   - id: entropia_slave_allow_transfer    # Allow entropia slave to retrieve zone from freifunk master
-    address: [2a01:4f8:221:2f83:2120::2]
+    address: [2a01:4f8:221:2f83:2120::2, 2a01:4f8:c0c:c5e5::1]
     key: dns.entropia.de-ffka
     action: transfer
   - id: entropia_master_allow_notify     # Allow freifunk slave to retrieve notifications from entropia master
-    address: [2a01:4f8:221:2f83:2120::2]
+    address: [2a01:4f8:221:2f83:2120::2, 2a01:4f8:c0c:c5e5::1]
     key: dns.entropia.de-ffka
     action: notify
