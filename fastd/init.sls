@@ -11,6 +11,3 @@ fastd:
     - force_reset: True
     - require:
       - pkg: fastd
-
-include:
-  - netdata.fastd
