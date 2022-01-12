@@ -1,45 +1,44 @@
-include:
-  - common.debian_unstable
+kea-repo:
+  pkgrepo.managed:
+    - humanname: kea-repo
+    - name: https://dl.cloudsmith.io/public/isc/kea-2-0/deb/debian bullseye main
+    - file: /etc/apt/sources.list.d/kea.list
+    - gpgcheck: 1
+    - key_url: https://dl.cloudsmith.io/public/isc/kea-2-0/gpg.8029D4AFA58CBB5E.key
 
-/etc/apt/preferences.d/kea-common-unstable:
+/etc/apt/preferences.d/kea-common-kea-repo:
   file.managed:
     - contents: |
         Package: kea-common*
-        Pin: release n=unstable
+        Pin: release o=cloudsmith/isc/kea-2-0
         Pin-Priority: 800
 
-/etc/apt/preferences.d/kea-dhcp4-server-unstable:
+/etc/apt/preferences.d/kea-dhcp4-server-kea-repo:
   file.managed:
     - contents: |
         Package: kea-dhcp4-*
-        Pin: release n=unstable
+        Pin: release o=cloudsmith/isc/kea-2-0
         Pin-Priority: 800
 
 /etc/apt/preferences.d/kea-dhcp4-server-testing:
   file.absent
 
-# This is a workaround for a bug in the installation script for kea
-# 1.5.0~1 in debian unstable. To be removed once resolved.
-# Also: change of user to root (change-user unit)
-##_kea@dhcp4:
-#  group.present:
-#    - name: _kea
 
 kea-common:
   pkg.installed:
-    - fromrepo: unstable
+    - fromrepo: kea-repo
     - require:
-      - pkgrepo: unstable
+      - pkgrepo: kea-repo
 #      - group: _kea@dhcp4
-      - file: /etc/apt/preferences.d/kea-common-unstable
+      - file: /etc/apt/preferences.d/kea-common-kea-repo
 
 kea-dhcp4-server:
   pkg.installed:
-    - fromrepo: unstable
+    - fromrepo: kea-repo
     - require:
-      - pkgrepo: unstable
+      - pkgrepo: kea-repo
 #      - group: _kea@dhcp4
-      - file: /etc/apt/preferences.d/kea-dhcp4-server-unstable
+      - file: /etc/apt/preferences.d/kea-dhcp4-server-kea-repo
 
 /etc/kea/kea-dhcp4.conf:
   file.managed:

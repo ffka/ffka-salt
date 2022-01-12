@@ -1,11 +1,11 @@
 include:
-  - common.debian_unstable
+  - kea.kea-repo
 
-/etc/apt/preferences.d/kea-dhcp6-server-unstable:
+/etc/apt/preferences.d/kea-dhcp6-server-kea-repo:
   file.managed:
     - contents: |
         Package: kea-dhcp6-*
-        Pin: release n=unstable
+        Pin: release o=cloudsmith/isc/kea-2-0
         Pin-Priority: 800
 
 /etc/apt/preferences.d/kea-dhcp6-server-testing:
@@ -20,11 +20,11 @@ _kea@dhcp6:
 
 kea-dhcp6-server:
   pkg.installed:
-    - fromrepo: unstable
+    - fromrepo: kea-repo
     - require:
-      - pkgrepo: unstable
+      - pkgrepo: kea-repo
       - group: _kea@dhcp6
-      - file: /etc/apt/preferences.d/kea-dhcp6-server-unstable
+      - file: /etc/apt/preferences.d/kea-dhcp6-server-kea-repo
 
 /etc/kea/kea-dhcp6.conf:
   file.managed:
