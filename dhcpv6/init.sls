@@ -1,5 +1,5 @@
 include:
-  - kea.kea-repo
+  - dhcpv4.repo
 
 /etc/apt/preferences.d/kea-dhcp6-server-kea-repo:
   file.managed:
@@ -20,7 +20,6 @@ _kea@dhcp6:
 
 kea-dhcp6-server:
   pkg.installed:
-    - fromrepo: kea-repo
     - require:
       - pkgrepo: kea-repo
       - group: _kea@dhcp6
