@@ -24,26 +24,5 @@
         <?include "{{ file }}"?> {% if not loop.last %},{% endif %}
         {%- endfor %}
     ]
-},
-"Logging":
-{
-  "loggers": [
-    {
-        "name": "kea-dhcp6",
-        "output_options": [
-            {
-                "output": "stdout"
-            }
-        ],
-        // This specifies the severity of log messages to keep. Supported values
-        // are: FATAL, ERROR, WARN, INFO, DEBUG
-        "severity": "INFO",
-
-        // If DEBUG level is specified, this value is used. 0 is least verbose,
-        // 99 is most verbose. Be cautious, Kea can generate lots and lots
-        // of logs if told to do so.
-        "debuglevel": 0
-    }
-  ]
 }
 }
