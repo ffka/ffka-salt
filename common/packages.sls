@@ -24,6 +24,7 @@ packages_base:
       - mtr-tiny
       - git
       - apt-transport-https
+      - python3-apt
       - python-apt
       - net-tools
       - ethtool
