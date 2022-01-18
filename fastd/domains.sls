@@ -33,13 +33,13 @@ fastd@{{ domain_id }}-{{ fastd['name'] }}.service:
     - watch:
       - file: /etc/fastd/{{ domain_id }}/{{ fastd['name'] }}/fastd.conf
 
-fastd@{{ domain_id }}-{{ fastd['name'] }} in fastd exporter:
-  file.accumulated:
-    - name: instances
-    - filename: /etc/default/prometheus-fastd-exporter
-    - text: {{ domain_id }}/{{ fastd['name'] }}
-    - require_in:
-        - file: /etc/default/prometheus-fastd-exporter
+#fastd@{{ domain_id }}-{{ fastd['name'] }} in fastd exporter:
+#  file.accumulated:
+#    - name: instances
+#    - filename: /etc/default/prometheus-fastd-exporter
+#    - text: {{ domain_id }}/{{ fastd['name'] }}
+#    - require_in:
+#        - file: /etc/default/prometheus-fastd-exporter
 
 {% endfor %}
 {% endfor %}

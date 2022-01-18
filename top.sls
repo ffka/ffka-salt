@@ -111,15 +111,15 @@ base:
     - network.vrf
     - fastd
     - fastd.domains
-    - fastd.exporter
+    #- fastd.exporter
     - dhcpv4
     - dhcpv4.domains
-    - dhcpv4.exporter
+    #- dhcpv4.exporter
     - dhcpv6
     - dhcpv6.domains
     - routing.bird2
     - routing.bird2.base
-    - routing.bird2.exporter
+    #- routing.bird2.exporter
     - routing.gwbat
     - routing.gwbat.domains
     - routing.gwbat.domains.radv
