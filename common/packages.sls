@@ -25,7 +25,6 @@ packages_base:
       - git
       - apt-transport-https
       - python3-apt
-      - python-apt
       - net-tools
       - ethtool
       - python3-pip
