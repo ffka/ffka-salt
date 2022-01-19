@@ -111,15 +111,12 @@ base:
     - network.vrf
     - fastd
     - fastd.domains
-    #- fastd.exporter
     - dhcpv4
     - dhcpv4.domains
-    #- dhcpv4.exporter
     - dhcpv6
     - dhcpv6.domains
     - routing.bird2
     - routing.bird2.base
-    #- routing.bird2.exporter
     - routing.gwbat
     - routing.gwbat.domains
     - routing.gwbat.domains.radv
@@ -128,6 +125,9 @@ base:
     - network.ip_rt_tables_freifunk
     - network.tunnel
     - access-control.gwbat
+    #- fastd.exporter
+    #- dhcpv4.exporter
+    #- routing.bird2.exporter
   'gwffwp*.frickelfunk.net':
     - batman
     - ferm
@@ -140,15 +140,12 @@ base:
     - network.vrf
     - fastd
     - fastd.domains
-    - fastd.exporter
     - dhcpv4
     - dhcpv4.domains
-    - dhcpv4.exporter
     - dhcpv6
     - dhcpv6.domains
     - routing.bird2
     - routing.bird2.base
-    - routing.bird2.exporter
     - routing.gwbat
     - routing.gwbat.domains
     - routing.gwbat.domains.radv
@@ -156,6 +153,9 @@ base:
     - kernel.sysctl
     - network.ip_rt_tables_freifunk
     - network.tunnel
+    #- fastd.exporter
+    #- dhcpv4.exporter
+    #- routing.bird2.exporter
   'domain-director.frickelfunk.net':
     - domain-director
   'speedtest.frickelfunk.net':
