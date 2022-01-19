@@ -1,7 +1,7 @@
 mod-synthrecord:
   
 {% for domain_id, domain in salt['domain_networking.get_domains']().items() %}
-{%- set main_network = domain['ipv6'].keys()[0] %}
+{%- set main_network = domain['ipv6'].keys() | list | first %}
   - id: {{ domain_id }}_forward
     type: forward
     prefix: dynamic-
