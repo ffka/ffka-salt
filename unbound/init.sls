@@ -21,6 +21,23 @@ unbound.service:
     - group: root
     - mode: '0644'
 
+/etc/apparmor.d/local/usr.sbin.unbound:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: '0644'
+    - contents: |
+        {% for instance in salt['pillar.get']('unbound:instances') %}
+        /{,var/}run/unbound-{{ instance }}.pid rw,
+        /{,var/}run/unbound-{{ instance }}.ctl rw,
+        {% endfor %}
+
+apparmor.service:
+  service.running:
+    - reload: True
+    - watch:
+      - file: /etc/apparmor.d/local/usr.sbin.unbound
+
 {% for instance, settings in salt['pillar.get']('unbound:instances').items() %}
 /etc/unbound/{{ instance }}.conf.d:
   file.directory:
