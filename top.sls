@@ -49,10 +49,10 @@ base:
     - network.interfaces
     - routing.bird2
     - routing.bird2.base
-    - routing.bird2.exporter
     - routing.bird2.internal_upstream
     - routing.bird2.internal_upstream.originator
     - routing.bird2.internal_upstream.anycast_originator
+#    - routing.bird2.exporter
   'nat64*.frickelfunk.net':
     - kernel.sysctl
     - network.lo
