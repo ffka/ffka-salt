@@ -5,7 +5,9 @@
         // interface name (e.g. "eth0" or specific IPv4 address on that
         // interface name (e.g. "eth0/192.0.2.1").
         "interfaces": [
+            {% if accumulator is defined %}
             {%- for if in accumulator.get('dhcpv4-interfaces', []) %} "{{ if }}"{% if not loop.last %},{% endif %} {% endfor -%}
+            {% endif %}
         ],
         "dhcp-socket-type": "raw"
     },
@@ -97,9 +99,11 @@
     // - host (most specific, overwrites any other scopes)
 
     "subnet4": [
+        {% if accumulator is defined %}
         {%- for file in accumulator.get('dhcpv4-subnets', []) %}
         <?include "{{ file }}"?> {% if not loop.last %},{% endif %}
         {%- endfor %}
+        {% endif %}
     ]
 }
 }
