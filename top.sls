@@ -24,7 +24,7 @@ base:
   'core*.scc.kae*':
     - network.interfaces
     - network.vrf
-  'gw*.cloud.zkm.kae.frickelfunk.net or gw*.scc.kae.frickelfunk.net':
+  'gw*.cloud.zkm.kae.frickelfunk.net':
     - kernel.sysctl
     - routing.bird2
     - routing.bird2.base
@@ -40,6 +40,22 @@ base:
     - dhcpv4
     - dhcpv4.address_assignment
     - ferm
+  'gw*.scc.kae.frickelfunk.net':
+    - kernel.sysctl
+    - routing.bird2
+    - routing.bird2.base
+    - routing.bird2.internal_upstream
+    - routing.bird2.internal_upstream.originator
+    - routing.bird2.radv
+    - network.lo
+    - network.nat
+    - keepalived
+    - network.internal_upstream
+    - network.interfaces
+    - dhcpv4
+    - dhcpv4.address_assignment
+    - ferm
+    #- routing.bird2.exporter
   'dns*':
     - unbound
     - kernel.sysctl
