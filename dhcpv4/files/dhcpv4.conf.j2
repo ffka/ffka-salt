@@ -40,44 +40,6 @@
 
     "authoritative": true,
 
-    {% if salt['pillar.get']('dhcpv4:unifi_address') %}
-    "option-def": [
-        {
-            "name": "unifi-address",
-            "code": 1,
-            "type": "ipv4-address",
-            "space": "ubnt"
-        }
-    ],
-    "client-classes": [
-        {
-            "name": "ubnt",
-            "test": "substring(option[vendor-class-identifier].text, 0, 4) == 'ubnt'",
-            "option-def": [
-                {
-                    "name": "vendor-encapsulated-options",
-                    "code": 43,
-                    "type": "empty",
-                    "encapsulate": "ubnt"
-                }
-            ],
-            "option-data": [
-                {
-                    "name": "vendor-class-identifier",
-                    "data": "ubnt"
-                },
-                {
-                    "name": "unifi-address",
-                    "space": "ubnt",
-                    "data": "{{ salt['pillar.get']('dhcpv4:unifi_address') }}"
-                },
-                {
-                    "name": "vendor-encapsulated-options"
-                }
-            ]
-        }
-    ],
-    {% endif %}
 
     // Many additional parameters can be specified here:
     // - option definitions (if you want to define vendor options, your own
