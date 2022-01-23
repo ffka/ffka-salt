@@ -3,7 +3,7 @@
     - mode: '0755'
     - makedirs: True
     - require:
-      - pkg: kea-dhcp4-server
+      - pkg: isc-kea-dhcp4-server
 
 {% for interface_name, interface in salt['pillar.get']('address_assignment', {}).items() %}
 dhcpv4 @ {{ interface_name }}:
@@ -24,10 +24,10 @@ dhcpv4 @ {{ interface_name }}:
     - context:
       interface: {{ interface }}
     - require:
-      - pkg: kea-dhcp4-server
+      - pkg: isc-kea-dhcp4-server
       - file: /etc/kea/dhcp4-interfaces
     - watch_in:
-      - service: kea-dhcp4-server.service
+      - service: isc-kea-dhcp4-server.service
 
 dhcpv4 include config file /etc/kea/dhcp4-domains/{{ interface_name }}.conf:
   file.accumulated:
