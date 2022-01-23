@@ -1,6 +1,8 @@
 /etc/kea/dhcp4-interfaces:
   file.directory:
     - mode: '0755'
+    - user: _kea
+    - group: _kea
     - makedirs: True
     - require:
       - pkg: isc-kea-dhcp4-server
@@ -18,8 +20,8 @@ dhcpv4 @ {{ interface_name }}:
   file.managed:
     - source: salt://dhcpv4/files/address_assignment.conf.j2
     - template: jinja
-    - user: root
-    - group: root
+    - user: _kea
+    - group: _kea
     - mode: '0600'
     - context:
       interface: {{ interface }}
