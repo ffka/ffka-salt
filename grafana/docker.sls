@@ -1,4 +1,4 @@
-{% set grafana_vesion = '7.2.2-ubuntu' %}
+{% set grafana_vesion = '8.4.4-ubuntu' %}
 
 grafana/grafana:{{ grafana_vesion }}:
   docker_image.present
