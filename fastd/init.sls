@@ -1,5 +1,13 @@
 fastd:
-  pkg.latest
+  pkg.installed:
+    - fromrepo: {{ grains['oscodename'] }}-backports
+
+/etc/apt/preferences.d/backports-fastd:
+  file.managed:
+    - contents: |
+        Package: fastd
+        Pin: release n={{ grains['oscodename'] }}-backports
+        Pin-Priority: 800
 
 /etc/fastd/fastdbl:
   git.latest:
