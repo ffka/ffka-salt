@@ -19,3 +19,19 @@ fastd:
     - force_reset: True
     - require:
       - pkg: fastd
+
+/etc/fastd/hooks:
+  file.directory:
+    - makedirs: True
+
+fastd_hook_scripts:
+  file.managed:
+    - names:
+{% for script in ["up", "down"] %}
+      - /etc/fastd/hooks/{{ script }}:
+        - source: salt://fastd/files/hooks/{{ script }}
+{% endfor %}
+    - user: root
+    - group: root
+    - mode: "0755"
+
