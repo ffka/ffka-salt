@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "$0")" || exit 1
+
+HOOK="up"
+BRIDGE=$1
+
+log "Waiting for interface"
+wait_file "/sys/class/net/$INTERFACE/ifindex" 10 || {
+	echo "Timed out while waiting for '$INTERFACE' to appear in establish hook"
+	exit 1
+}
+
+# don't accept router advertisements
+log "Disabling accept_ra"
+sysctl net.ipv6.conf.${INTERFACE}.accept_ra=0 >/dev/null
+
+# set mtu
+log "Setting MTU to $INTERFACE_MTU"
+ip link set mtu $INTERFACE_MTU dev $INTERFACE
+
+# connect bridge port
+log "Waiting for bridge"
+wait_file "/sys/class/net/$BRIDGE/ifindex" 10 || {
+	echo "Timed out while waiting for '$BRIDGE' to appear in establish hook"
+	exit 1
+}
+
+log "Connecting to bridge"
+ip link set master $BRIDGE dev $INTERFACE
+
+# isolate bridge port
+log "Isolating bridge port"
+bridge link set dev $INTERFACE isolated on
+
+# pull link up
+log "Pulling link up"
+ip link set up dev $INTERFACE

@@ -6,14 +6,19 @@ bind [{{ vrf['lo']['ipv6'] }}]:{{ fastd['port'] }};
 
 mtu {{ domain['fastd']['mtu'] }};
 
-method "null+salsa2012+umac";
-method "null+salsa2012+gmac";
 method "salsa2012+umac";
-method "salsa2012+gmac";
+method "null@l2tp";
+persist interface no;
+mode multitap;
+offload l2tp yes;
+
 
 secure handshakes yes;
 
 status socket "/run/fastd.{{ fastd_ifname }}.sock";
+
+on up async "/etc/fastd/hooks/up {{ fastd_ifname }}-peers";
+on down async "/etc/fastd/hooks/down";
 
 secret "{{ salt['pillar.get']('fastd:domains:secret') }}";
 

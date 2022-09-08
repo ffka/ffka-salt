@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "$0")" || exit 1
+
+
+HOOK="down"
+
+# test if interface exists
+test -e /sys/class/net/$INTERFACE/ifindex || exit 0
+
+# set link down
+log "Setting link down"
+ip link set down dev $INTERFACE
+
+# remove link from bridge
+log "Removing link from bridge"
+ip link set nomaster dev $INTERFACE
