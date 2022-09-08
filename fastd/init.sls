@@ -27,7 +27,7 @@ fastd:
 fastd_hook_scripts:
   file.managed:
     - names:
-{% for script in ["up", "down"] %}
+{% for script in ["up", "down", "common"] %}
       - /etc/fastd/hooks/{{ script }}:
         - source: salt://fastd/files/hooks/{{ script }}
 {% endfor %}
