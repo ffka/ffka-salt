@@ -6,8 +6,8 @@ bind [{{ vrf['lo']['ipv6'] }}]:{{ fastd['port'] }};
 
 mtu {{ domain['fastd']['mtu'] }};
 
-method "salsa2012+umac";
 method "null@l2tp";
+method "salsa2012+umac";
 persist interface no;
 mode multitap;
 offload l2tp yes;
