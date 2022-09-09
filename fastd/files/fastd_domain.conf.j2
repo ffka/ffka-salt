@@ -17,7 +17,7 @@ secure handshakes yes;
 
 status socket "/run/fastd.{{ fastd_ifname }}.sock";
 
-on up async "/etc/fastd/hooks/up {{ fastd_ifname }}-peers";
+on up async "/etc/fastd/hooks/up {{ fastd_ifname }}-p";
 on down async "/etc/fastd/hooks/down";
 
 secret "{{ salt['pillar.get']('fastd:domains:secret') }}";
