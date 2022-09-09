@@ -1,5 +1,5 @@
 {%- set vrf = salt['pillar.get']('network:vrf:' ~ salt['pillar.get']('fastd:domains:bind_vrf'), False) %}
-interface "{{ fastd_ifname }}";
+interface "peer-%k";
 
 bind {{ vrf['lo']['ipv4'] }}:{{ fastd['port'] }};
 bind [{{ vrf['lo']['ipv6'] }}]:{{ fastd['port'] }};
