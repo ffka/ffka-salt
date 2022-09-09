@@ -76,3 +76,15 @@ domain ip table nat {
 
 	}
 }
+
+
+domain eb {
+  table filter {
+    chain FORWARD {
+      policy ACCEPT;
+
+      # prevent bridge port forwarding between peers
+      logical-in dom+ interface peer-+ outerface peer-+ DROP;
+    }
+  }
+}
