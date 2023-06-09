@@ -23,7 +23,7 @@
             "name": "domain-search",
             "data": "{% for sd in domain['dns']['search'] %}{{ sd }}{% if not loop.last %}, {% endif %}{% endfor %}"
         },
-{% if v6-only-preferred is defined %}     
+{% if domain['v6-only-preferred'] is defined %}     
         {
             "name": "v6-only-preferred",
             "data": "{{ domain['v6-only-preferred']['domain'] }}""
