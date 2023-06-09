@@ -23,6 +23,12 @@
             "name": "domain-search",
             "data": "{% for sd in domain['dns']['search'] %}{{ sd }}{% if not loop.last %}, {% endif %}{% endfor %}"
         },
+{% if v6-only-preferred is defined %}     
+        {
+            "name": "v6-only-preferred",
+            "data": "{{ domain['v6-only-preferred']['domain'] }}""
+        },
+{% endif %}
         {
             "name": "interface-mtu",
             "data": "{{ domain['network_mtu'] }}"
