@@ -145,6 +145,17 @@ net.ipv4.udp_wmem_min:
     - value: 16384
     - config: {{ sysctld }}/wmem.conf
 
+net.core.somaxconn:
+  sysctl.present:
+    - value: 16384
+    - config: {{ sysctld }}/core.conf
+
+net.core.netdev_max_backlog:
+  sysctl.present:
+    - value: 16384
+    - config: {{ sysctld }}/core.conf
+
+
 
 # Accept Redirects; default = 0
 net.ipv6.conf.default.accept_redirects:
@@ -172,6 +183,18 @@ net.ipv4.ipfrag_low_thresh:
   sysctl.present:
     - value: 446464
     - config: {{ sysctld }}/ipv4.conf
+
+net.ipv4.ipfrag_high_thresh:
+  sysctl.present:
+    - value: 846464
+    - config: {{ sysctld }}/ipv4.conf
+
+
+net.ipv6.ip6frag_low_thresh:
+  sysctl.present:
+    - value: 446464
+    - config: {{ sysctld }}/ipv6.conf
+
 
 # Accept ICMP redirect messages; default = 0
 net.ipv4.conf.default.accept_redirects:
