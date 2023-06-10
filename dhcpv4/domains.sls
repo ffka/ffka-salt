@@ -7,12 +7,12 @@
 
 {%- set community_id = pillar.community_id %}
 {% for domain_id, domain in salt['domain_networking.get_domains']().items() if domain.get('ipv4') %}
-{% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
-dhcpv4 @ {{ ifname_br }}:
+{% set ifname_bat = salt['domain_networking.generate_ifname'](community_id, domain, 'bat') -%}
+dhcpv4 @ {{ ifname_bat }}:
   file.accumulated:
     - name: dhcpv4-interfaces
     - filename: /etc/kea/kea-dhcp4.conf
-    - text: {{ ifname_br }}
+    - text: {{ ifname_bat }}
     - require_in:
         - file: /etc/kea/kea-dhcp4.conf
 

@@ -14,8 +14,8 @@ domain (ip ip6) {
     table filter {
         chain FORWARD {
         {% for domain in salt['domain_networking.get_domains']().values() %}
-        {% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
-            interface {{ ifname_br }} saddr ({{ " ".join(domain.get('ipv4', {}).keys()) }} {{ " ".join(domain.get('ipv6', {}).keys()) }}) {
+        {% set ifname_bat = salt['domain_networking.generate_ifname'](community_id, domain, 'bat') -%}
+            interface {{ ifname_bat }} saddr ({{ " ".join(domain.get('ipv4', {}).keys()) }} {{ " ".join(domain.get('ipv6', {}).keys()) }}) {
                 proto tcp dport smtp REJECT;
                 ACCEPT;
             }
@@ -34,8 +34,8 @@ domain (ip){
 	        chain FORWARD {
 					# mss = transport mtu - (batman-adv + ether) 32 - ipv4 20 - tcp 20
 					{% for domain in salt['domain_networking.get_domains']().values() %}
-          {% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
-              interface {{ ifname_br }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ domain['network_mtu'] - 20 - 20 }};
+          {% set ifname_bat = salt['domain_networking.generate_ifname'](community_id, domain, 'bat') -%}
+              interface {{ ifname_bat }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ domain['network_mtu'] - 20 - 20 }};
 					{% endfor %}
 	        }
 	   }
@@ -47,16 +47,16 @@ domain ip6 {
         chain FORWARD {
             # mss = transport mtu - (batman-adv + ether) 32 - ipv6 40 - tcp 20
 						{% for domain in salt['domain_networking.get_domains']().values() %}
-            {% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
-            interface {{ ifname_br }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ domain['network_mtu'] - 40 - 20 }};
+            {% set ifname_bat = salt['domain_networking.generate_ifname'](community_id, domain, 'bat') -%}
+            interface {{ ifname_bat }} outerface $VZFFNRMO_IF proto tcp tcp-flags (SYN RST) SYN TCPMSS set-mss {{ domain['network_mtu'] - 40 - 20 }};
 						{% endfor %}
         }
    }
    table filter {
         chain FORWARD {
 					{% for domain in salt['domain_networking.get_domains']().values() %}
-          {% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
-              interface $VZFFNRMO_IF outerface {{ ifname_br }} ACCEPT;
+          {% set ifname_bat = salt['domain_networking.generate_ifname'](community_id, domain, 'bat') -%}
+              interface $VZFFNRMO_IF outerface {{ ifname_bat }} ACCEPT;
 					{% endfor %}
         }
    }

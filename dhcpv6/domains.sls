@@ -7,12 +7,12 @@
 
 {%- set community_id = pillar.community_id %}
 {% for domain_id, domain in salt['domain_networking.get_domains']().items() %}
-{% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
-dhcpv6 @ {{ ifname_br }}:
+{% set ifname_bat = salt['domain_networking.generate_ifname'](community_id, domain, 'bat') -%}
+dhcpv6 @ {{ ifname_bat }}:
   file.accumulated:
     - name: dhcpv6-interfaces
     - filename: /etc/kea/kea-dhcp6.conf
-    - text: {{ ifname_br }}
+    - text: {{ ifname_bat }}
     - require_in:
         - file: /etc/kea/kea-dhcp6.conf
 

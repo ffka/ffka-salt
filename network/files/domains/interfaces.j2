@@ -11,19 +11,7 @@ iface {{ ifname_br }} inet manual
 
     post-down ip link delete dev $IFACE
 
-{% for network in domain.get('ipv4', {}).values() if 'address' in network %}
-iface {{ ifname_br }} inet static
-    address {{ network['address'] }}
-    netmask {{ network['netmask'] }}
-{%- endfor %}
 
-{%- for network in domain.get('ipv6', {}).values() if 'address' in network %}
-iface {{ ifname_br }} inet6 static
-    accept_ra 0
-    address {{ network['address'] }}
-    netmask {{ network['prefixlen'] }}
-    dad-attempts 0
-{%- endfor %}
 
 {% set ifname_bat = salt['domain_networking.generate_ifname'](community_id, domain, 'bat') %}
 # {{ ifname_bat }}
@@ -33,13 +21,26 @@ iface {{ ifname_bat }} inet manual
     pre-up ip link set address {{ salt['domain_networking.generate_mac']('bat', community_id, domain, salt['pillar.get']('gwbatid')) }} dev $IFACE
     pre-up ip link set up dev $IFACE
 
-    post-up ip link set master {{ ifname_br }} dev $IFACE
     {% if domain.get('batman', {}).get('is_gateway', False) -%}
     post-up batctl -m $IFACE orig_interval 10000
     post-up batctl -m $IFACE gw_mode server 50000/50000
     {% endif -%}
     
     post-down ip link delete dev $IFACE
+
+{% for network in domain.get('ipv4', {}).values() if 'address' in network %}
+iface {{ ifname_bat }} inet static
+    address {{ network['address'] }}
+    netmask {{ network['netmask'] }}
+{%- endfor %}
+
+{%- for network in domain.get('ipv6', {}).values() if 'address' in network %}
+iface {{ ifname_bat }} inet6 static
+    accept_ra 0
+    address {{ network['address'] }}
+    netmask {{ network['prefixlen'] }}
+    dad-attempts 0
+{%- endfor %}
 
 {%- for fastd in domain.get('fastd', {}).get('instances', []) %}
 {% set fastd_ifname = salt['domain_networking.generate_ifname'](community_id, domain, 'fd', fastd['name']) %}
