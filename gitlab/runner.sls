@@ -67,7 +67,8 @@ gitlab-runner-output-limit:
 /usr/bin/docker volume prune --force:
   cron.present:
     - user: root
-    - special: '@daily'
+    - minute: 0
+    - hour: 4
     - identifier: docker_volume_cleanup
     - require:
       - cmd: gitlab-runner-registration
@@ -75,8 +76,9 @@ gitlab-runner-output-limit:
 /usr/bin/docker system prune --force:
   cron.present:
     - user: root
-    - special: '@daily'
-    - identifier: docker_volume_cleanup
+    - minute: 0
+    - hour: 3
+    - identifier: docker_system_cleanup
     - require:
       - cmd: gitlab-runner-registration
 
