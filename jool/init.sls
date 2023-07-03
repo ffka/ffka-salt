@@ -67,9 +67,14 @@ jool@{{ name }}.service:
     - restart: True
     - require:
       - file: /etc/systemd/system/jool@.service
-      - file: /etc/jool/{{ name }}.env
       - kmod: jool
       - pkg: jool-tools
+
+/etc/jool/jool.conf:
+  service.running:
+    - source: salt://jool/files/jool.conf
+    - enable: True
+    - restart: True
 {% endfor %}
 
 ferm-jool:
