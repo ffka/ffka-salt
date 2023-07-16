@@ -19,13 +19,8 @@ prometheus-bird-exporter:
     - require:
        - pkg: prometheus-bird-exporter
 
-#/etc/systemd/system/prometheus-bird-exporter.service:
-#  file.managed:
-#    - source: salt://routing/files/bird2/prometheus-bird-exporter.service
-#    - user: root
-#    - group: root
-#    - mode: '0644'
-#    - template: jinja
+/etc/systemd/system/prometheus-bird-exporter.service:
+  file.exists:
 
 prometheus-bird-exporter.service:
   service.running:
