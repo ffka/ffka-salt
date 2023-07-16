@@ -12,7 +12,6 @@ packages_base:
       - ack
       - zsh
       - bash-completion
-      - sudo
       - pv
       - kpartx
       - htop
