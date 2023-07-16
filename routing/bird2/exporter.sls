@@ -19,15 +19,12 @@ prometheus-bird-exporter:
     - require:
        - pkg: prometheus-bird-exporter
 
-/etc/systemd/system/prometheus-bird-exporter.service:
-  file.exists
-
 prometheus-bird-exporter.service:
   service.running:
     - enable: True
     - require:
       - file: /etc/default/prometheus-bird-exporter
-      - file: /etc/systemd/system/prometheus-bird-exporter.service
+    
 
 bird@prometheus.exporters:
   grains.list_present:
