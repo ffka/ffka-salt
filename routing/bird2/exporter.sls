@@ -20,7 +20,7 @@ prometheus-bird-exporter:
        - pkg: prometheus-bird-exporter
 
 /etc/systemd/system/prometheus-bird-exporter.service:
-  file.exists:
+  file.exists
 
 prometheus-bird-exporter.service:
   service.running:
