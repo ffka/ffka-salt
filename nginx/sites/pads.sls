@@ -1,6 +1,6 @@
 {% macro custom_states(name, vhost, domainset) -%}
 
-{%- set hackmd_version = "1.7.2-debian" -%}
+{%- set hackmd_version = "1.9.8-debian" -%}
 {%- set hackmd_postgres_version = "9.6-alpine" -%}
 
 /srv/www/pads/database:
