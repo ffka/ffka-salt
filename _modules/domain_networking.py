@@ -53,7 +53,7 @@ def domain_names(community=None):
   domains = {}
   for domain in get_domains(community).values():
     for code, name in domain['domain_names'].items():
-      domains[code] = name.decode('utf-8')
+      domains[code] = name
   return domains
 
 def get_domains_for_communities(communities):
