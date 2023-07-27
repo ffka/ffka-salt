@@ -49,7 +49,6 @@ docker.service:
 python-docker:
   pkg.installed:
     - names:
-      - python-docker
       - python3-docker
     - require:
       - pkg: docker-ce
