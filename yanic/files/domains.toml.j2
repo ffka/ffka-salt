@@ -19,10 +19,10 @@ domains = [
 
 {%- set community_id = pillar.community_id %}
 {% for domain in salt['domain_networking.get_domains']().values() %}
-{% set ifname_br = salt['domain_networking.generate_ifname'](community_id, domain, 'br') -%}
+{% set ifname_bat = salt['domain_networking.generate_ifname'](community_id, domain, 'bat') -%}
 [[respondd.interfaces]]
 # name of interface on which this collector is running
-ifname = "{{ ifname_br }}"
+ifname = "{{ ifname_bat }}"
 # ip address which is used for sending
 # (optional - without definition used a address of ifname)
 #ip_address = "fd2f:5119:f2d::5"
