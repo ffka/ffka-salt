@@ -4,30 +4,34 @@
   "location": {
     "city": "Karlsruhe",
     "country": "DE",
-    "lat": 49.00921,
-    "lon": 8.403951,
     "address": {
-      "Name": "Entropia",
-      "Street": "Steinstrasse 23",
-      "Zipcode": "76133"
+      "name": "Entropia",
+      "street": "Steinstrasse 23",
+      "zipcode": "76133"
+    },
+    "geoCode": {
+      "lat": 49.00921,
+      "lon": 8.403951
     }
   },
   "contact": {
     "email": "info@karlsruhe.freifunk.net",
     "irc": "irc://irc.hackint.org/ffka",
     "ml": "freifunk-ka@lists.entropia.de",
-    "twitter": "@FFKarlsruhe"
+    "twitter": "@FFKarlsruhe",
+    "mastodon": "https://chaos.social/@ffka",
+    "matrix": "https://matrix.to/#/!ffka:entropia.de"
   },
   "metacommunity": "Freifunk Karlsruhe",
   "state": {
-    "nodes": 440,
+    "nodes": 400,
     "focus": [
       "infrastructure/backbone",
       "Public Free Wifi",
       "Local services and content",
       "Free internet access"
     ],
-    "lastchange": "2018-02-27T13:48:07.365Z"
+    "lastchange": "2023-09-22T11:58:00+02:00"
   },
   "timeline": [
     {
@@ -66,7 +70,8 @@
     "firmware": {
       "name": "gluon",
       "url": "https://firmware.karlsruhe.freifunk.net/",
-      "vpnaccess": "fwimage"
+      "vpnaccess": "mail",
+      "docs": "https://docs.karlsruhe.freifunk.net/"
     },
     "networks": {
       "ipv6": [
@@ -94,5 +99,27 @@
       "institutions"
     ]
   },
-  "api": "0.4.14"
+  "api": "0.5.2",
+  "support": {
+    "club": {
+      "name": "Verein zur Förderung freier Netze Region mittlerer Oberrhein e.V.",
+      "street": "Steinstr. 23",
+      "zip": "76133",
+      "city": "Karlsruhe",
+      "email": "vorstand@vzffnrmo.de",
+      "board": [
+        "Simon Terzenbach",
+        "Benedikt Neuffer",
+        "Adrian Nöthlich"
+      ]
+    },
+    "donations": {
+      "bankaccount": {
+        "IBAN": "DE36 6619 0000 0010 5155 21",
+        "BIC": "GENODE61KA1",
+        "usage": "Spende"
+      }
+    }
+  },
+  "services": []
 }
