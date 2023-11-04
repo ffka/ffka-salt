@@ -213,11 +213,11 @@ net.ipv6.conf.all.keep_addr_on_down:
     - value: 1
     - config: {{ sysctld }}/vrf.conf
 
-net.ipv4.conf.tcp_l3mdev_accept:
+net.ipv4.tcp_l3mdev_accept:
   sysctl.present:
     - value: 1
     - config: {{ sysctld }}/vrf.conf
-net.ipv4.conf.udp_l3mdev_accept:
+net.ipv4.udp_l3mdev_accept:
   sysctl.present:
     - value: 1
     - config: {{ sysctld }}/vrf.conf
