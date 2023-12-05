@@ -224,3 +224,8 @@ base:
     - routing.bird2
     - routing.bird2.exporter
     - routing.bird2.mgmt
+  'loomio.vzffnrmo.de':
+    - docker
+    - nginx
+    - certbot
+    - ferm
