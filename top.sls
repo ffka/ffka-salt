@@ -229,4 +229,4 @@ base:
     - nginx
     - certbot
     - ferm
-    - loomio
+    - loomio.docker
