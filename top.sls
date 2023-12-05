@@ -229,3 +229,4 @@ base:
     - nginx
     - certbot
     - ferm
+    - loomio
