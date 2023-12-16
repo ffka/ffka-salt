@@ -47,8 +47,9 @@ docker.service:
       - file: /etc/docker/*
 
 python-docker:
-  pkg.installed:
-    - names:
-      - python3-docker
+  pip.installed:
+    - name: docker
+    - upgrade: True
     - require:
       - pkg: docker-ce
+
