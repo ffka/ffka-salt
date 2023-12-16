@@ -10,6 +10,7 @@ loomio:
   user.present:
     - home: /srv/loomio
     - shell: /usr/sbin/nologin
+    - system: True
 
 /srv/loomio:
   file.directory:
@@ -21,6 +22,7 @@ loomio:
 loomio_server:
   docker_container.running:
     - image: loomio/loomio:{{ loomio_version }}
+    - user: loomio
     - environment:
       - VIRTUAL_HOST: loomio.vzffnrmo.de
     - binds:
