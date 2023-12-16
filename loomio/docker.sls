@@ -36,10 +36,13 @@ loomio_server:
     - require:
       - docker_image: loomio/loomio:{{ loomio_version }}
       - file: /srv/loomio
+      - user: loomio
 
 loomio_channel_server:
   docker_container.running:
     - image: loomio/loomio_channel_server:latest
+    - user: loomio
     - restart_policy: always
     - require:
       - docker_image: loomio/loomio_channel_server:latest
+      - user: loomio
