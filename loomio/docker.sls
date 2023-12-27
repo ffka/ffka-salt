@@ -1,5 +1,20 @@
 {% set loomio_version = 'v2.21.3' %}
 
+{% set loomio_env = {
+  'VIRTUAL_HOST': 'loomio.vzffnrmo.de',
+  'CHANNELS_URI': 'wss://channels.loomio.vzffnrmo.de',
+  'RAILS_ENV': 'production',
+  'POSTGRES_DB': 'loomio_db',
+  'REDIS_URL': 'redis://loomio_redis:6379/0'
+}
+%}
+
+{% set loomio_env_list = [] %}
+
+{% for key, value in loomio_env.items() %}
+  {% loomio_env_list.append(f"{key}: {value}" %}
+{% endfor %}
+
 loomio/loomio:{{ loomio_version }}:
   docker_image.present
 
@@ -30,8 +45,7 @@ loomio_server:
   docker_container.running:
     - image: loomio/loomio:{{ loomio_version }}
     - user: 4001
-    - environment:
-      - VIRTUAL_HOST: loomio.vzffnrmo.de
+    - environment: {{ loomio_env_list | yaml }}
     - binds:
       - /srv/loomio/uploads:/loomio/public/system
       - /srv/loomio/storage:/loomio/storage
@@ -51,6 +65,7 @@ loomio_channel_server:
   docker_container.running:
     - image: loomio/loomio_channel_server:latest
     - user: 4001
+    - environment: {{ loomio_env_list | yaml }}
     - restart_policy: always
     - network_mode: loomio_network
     - require:
@@ -62,6 +77,7 @@ loomio_redis:
   docker_container.running:
     - image: redis:7
     - user: 4001
+    - environment: {{ loomio_env_list | yaml }}
     - restart_policy: always
     - network_mode: loomio_network
     - require:
