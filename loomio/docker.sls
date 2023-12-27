@@ -6,6 +6,12 @@ loomio/loomio:{{ loomio_version }}:
 loomio/loomio_channel_server:latest:
   docker_image.present
 
+redis:7:
+  docker_image.present
+
+loomio_network:
+  docker_network.present
+
 loomio:
   user.present:
     - home: /srv/loomio
@@ -34,8 +40,10 @@ loomio_server:
       - /srv/loomio/import:/import
       - /srv/loomio/tmp:/loomio/tmp
     - restart_policy: always
+    - network_mode: loomio_network
     - require:
       - docker_image: loomio/loomio:{{ loomio_version }}
+      - docker_network: loomio_network
       - file: /srv/loomio
       - user: loomio
 
@@ -44,6 +52,19 @@ loomio_channel_server:
     - image: loomio/loomio_channel_server:latest
     - user: 4001
     - restart_policy: always
+    - network_mode: loomio_network
     - require:
       - docker_image: loomio/loomio_channel_server:latest
+      - docker_network: loomio_network
+      - user: loomio
+
+loomio_redis:
+  docker_container.running:
+    - image: redis:7
+    - user: 4001
+    - restart_policy: always
+    - network_mode: loomio_network
+    - require:
+      - docker_image: redis:7
+      - docker_network: loomio_network
       - user: loomio
