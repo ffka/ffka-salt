@@ -12,7 +12,7 @@
 {% set loomio_env_list = [] %}
 
 {% for key, value in loomio_env.items() %}
-  {% loomio_env_list.append(f"{key}: {value}" %}
+  {% do loomio_env_list.append(key + ": " + value) %}
 {% endfor %}
 
 loomio/loomio:{{ loomio_version }}:
