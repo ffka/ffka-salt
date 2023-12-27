@@ -65,7 +65,8 @@ loomio_server:
       - /srv/loomio/import:/import
       - /srv/loomio/tmp:/loomio/tmp
     - restart_policy: always
-    - network_mode: loomio_network
+    - networks:
+      - loomio_network
     - require:
       - docker_image: loomio/loomio:{{ loomio_version }}
       - docker_network: loomio_network
@@ -78,7 +79,8 @@ loomio_channel_server:
     - user: 4001
     - environment: {{ loomio_env_list | yaml }}
     - restart_policy: always
-    - network_mode: loomio_network
+    - networks:
+      - loomio_network
     - require:
       - docker_image: loomio/loomio_channel_server:latest
       - docker_network: loomio_network
@@ -90,7 +92,8 @@ loomio_redis:
     - user: 4001
     - environment: {{ loomio_env_list | yaml }}
     - restart_policy: always
-    - network_mode: loomio_network
+    - networks:
+      - loomio_network
     - require:
       - docker_image: redis:7
       - docker_network: loomio_network
@@ -101,7 +104,8 @@ loomio_postgres:
     - image: postgres:16
     - environment: {{ loomio_env_list | yaml }}
     - restart_policy: always
-    - network_mode: loomio_network
+    - networks:
+      - loomio_network
     - require:
       - docker_image: postgres:16
       - docker_network: loomio_network
