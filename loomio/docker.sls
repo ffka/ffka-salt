@@ -5,7 +5,15 @@
   'CHANNELS_URI': 'wss://channels.loomio.vzffnrmo.de',
   'RAILS_ENV': 'production',
   'POSTGRES_DB': 'loomio_db',
-  'REDIS_URL': 'redis://loomio_redis:6379/0'
+  'REDIS_URL': 'redis://loomio_redis:6379/0',
+  'FORCE_SSL': '1',
+  'USE_RACK_ATTACK': '1',
+  'RACK_ATTACK_RATE_MULTPLIER': '1',
+  'RACK_ATTACK_TIME_MULTPLIER': '1',
+  'POSTGRES_USER': 'loomio',
+  'POSTGRES_PASSWORD': 'password',
+  'POSTGRES_DB': 'loomio',
+  'DATABASE_URL': 'postgresql://loomio:password@loomio_postgres/loomio',
 }
 %}
 
@@ -22,6 +30,9 @@ loomio/loomio_channel_server:latest:
   docker_image.present
 
 redis:7:
+  docker_image.present
+
+postgres:16:
   docker_image.present
 
 loomio_network:
@@ -84,3 +95,13 @@ loomio_redis:
       - docker_image: redis:7
       - docker_network: loomio_network
       - user: loomio
+
+loomio_postgres:
+  docker_container.running:
+    - image: postgres:16
+    - environment: {{ loomio_env_list | yaml }}
+    - restart_policy: always
+    - network_mode: loomio_network
+    - require:
+      - docker_image: postgres:16
+      - docker_network: loomio_network
