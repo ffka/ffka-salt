@@ -11,6 +11,7 @@ loomio:
     - home: /srv/loomio
     - shell: /usr/sbin/nologin
     - system: True
+    - uid: 4001
 
 /srv/loomio:
   file.directory:
@@ -22,7 +23,7 @@ loomio:
 loomio_server:
   docker_container.running:
     - image: loomio/loomio:{{ loomio_version }}
-    - user: loomio
+    - user: 4001
     - environment:
       - VIRTUAL_HOST: loomio.vzffnrmo.de
     - binds:
@@ -41,7 +42,7 @@ loomio_server:
 loomio_channel_server:
   docker_container.running:
     - image: loomio/loomio_channel_server:latest
-    - user: loomio
+    - user: 4001
     - restart_policy: always
     - require:
       - docker_image: loomio/loomio_channel_server:latest
