@@ -52,9 +52,11 @@ loomio:
 /srv/loomio:
   file.directory:
     - user: loomio
+    - group: loomio
     - dir_mode: '0755'
     - require:
       - user: loomio
+      - group: loomio
 
 loomio_server:
   docker_container.running:
@@ -110,6 +112,8 @@ loomio_postgres:
   docker_container.running:
     - image: postgres:16
     - environment: {{ loomio_env_list | yaml }}
+    - binds:
+      - /srv/loomio/pgdata:/pgdata
     - restart_policy: always
     - networks:
       - loomio_network
