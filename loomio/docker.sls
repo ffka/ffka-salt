@@ -113,7 +113,7 @@ loomio_postgres:
     - image: postgres:16
     - environment: {{ loomio_env_list | yaml }}
     - binds:
-      - /srv/loomio/pgdata:/pgdata
+      - /srv/loomio/pgdata:/var/lib/postgresql/data
     - restart_policy: always
     - networks:
       - loomio_network
