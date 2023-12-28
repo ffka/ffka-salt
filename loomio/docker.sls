@@ -8,6 +8,9 @@ loomio/loomio:{{ loomio_version }}:
 loomio/loomio_channel_server:latest:
   docker_image.present
 
+loomio/mailin-docker:latest:
+  docker_image.present
+
 redis:7:
   docker_image.present
 
@@ -100,4 +103,18 @@ loomio-postgres:
       - loomio_network
     - require:
       - docker_image: postgres:16
+      - docker_network: loomio_network
+
+loomio-mailin:
+  docker_container.running:
+    - image: loomio/mailin-docker:latest
+    - environment:
+      - WEBHOOK_URL: http://loomio-server:3000/email_processor/
+    - restart_policy: always
+    - networks:
+      - loomio_network
+    - port_bindings:
+      - 25:25
+    - require:
+      - docker_image: loomio/mailin-docker:latest
       - docker_network: loomio_network
