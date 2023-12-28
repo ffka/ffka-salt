@@ -84,6 +84,8 @@ loomio-redis:
     - user: 4001
     - group: 4001
     - environment: {{ loomio_env | yaml }}
+    - binds:
+      - /srv/loomio/redis:/data
     - restart_policy: always
     - networks:
       - loomio_network
