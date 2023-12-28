@@ -102,6 +102,7 @@ loomio_redis:
 loomio_postgres:
   docker_container.running:
     - image: postgres:16
+    - hostname: loomio_postgres
     - environment: {{ loomio_env_list | yaml }}
     - restart_policy: always
     - networks:
