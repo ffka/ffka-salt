@@ -71,6 +71,8 @@ loomio-channel-server:
     - group: 4001
     - environment: {{ loomio_env | yaml }}
     - restart_policy: always
+    - port_bindings:
+      - 127.0.0.1:3001:3001
     - networks:
       - loomio_network
     - require:
