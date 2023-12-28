@@ -72,7 +72,7 @@ loomio-channel-server:
     - environment: {{ loomio_env | yaml }}
     - restart_policy: always
     - port_bindings:
-      - 127.0.0.1:3001:3001
+      - 127.0.0.1:3001:5000
     - networks:
       - loomio_network
     - require:
