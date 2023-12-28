@@ -59,14 +59,6 @@ loomio-server:
       - file: /srv/loomio
       - user: loomio
 
-loomio-server-migration:
-  docker_container.running:
-    - use:
-      - docker_container: loomio-server
-    - command: sleep 500000
-    - watch:
-      - docker_container: loomio-server
-
 loomio-channel-server:
   docker_container.running:
     - image: loomio/loomio_channel_server:latest
