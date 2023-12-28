@@ -61,21 +61,9 @@ loomio-server:
 
 loomio-server-migration:
   docker_container.running:
-    - image: loomio/loomio:{{ loomio_version }}
-    - user: 4001
-    - group: 4001
-    - environment: {{ loomio_env | yaml }}
-    - binds:
-      - /srv/loomio/uploads:/loomio/public/system
-      - /srv/loomio/storage:/loomio/storage
-      - /srv/loomio/files:/loomio/public/files
-      - /srv/loomio/plugins:/loomio/plugins/docker
-      - /srv/loomio/import:/import
-      - /srv/loomio/tmp:/loomio/tmp
-    - restart_policy: always
+    - use:
+      - docker_container: loomio-server
     - command: rake db:migrate
-    - networks:
-      - loomio_network
     - watch:
       - docker_container: loomio-server
 
