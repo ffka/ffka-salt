@@ -51,6 +51,8 @@ loomio-server:
       - /srv/loomio/import:/import
       - /srv/loomio/tmp:/loomio/tmp
     - restart_policy: always
+    - port_bindings:
+      - 127.0.0.1:3000:3000
     - networks:
       - loomio_network
     - require:
