@@ -44,6 +44,7 @@ loomio:
     - shell: /usr/sbin/nologin
     - system: True
     - uid: 4001
+    - gid: 4001
 
 /srv/loomio:
   file.directory:
@@ -56,6 +57,7 @@ loomio_server:
   docker_container.running:
     - image: loomio/loomio:{{ loomio_version }}
     - user: 4001
+    - group: 4001
     - environment: {{ loomio_env_list | yaml }}
     - binds:
       - /srv/loomio/uploads:/loomio/public/system
@@ -77,6 +79,7 @@ loomio_channel_server:
   docker_container.running:
     - image: loomio/loomio_channel_server:latest
     - user: 4001
+    - group: 4001
     - environment: {{ loomio_env_list | yaml }}
     - restart_policy: always
     - networks:
@@ -90,6 +93,7 @@ loomio_redis:
   docker_container.running:
     - image: redis:7
     - user: 4001
+    - group: 4001
     - environment: {{ loomio_env_list | yaml }}
     - restart_policy: always
     - networks:
@@ -102,7 +106,6 @@ loomio_redis:
 loomio_postgres:
   docker_container.running:
     - image: postgres:16
-    - hostname: loomio_postgres
     - environment: {{ loomio_env_list | yaml }}
     - restart_policy: always
     - networks:
