@@ -37,7 +37,7 @@ loomio:
       - user: loomio
       - group: loomio
 
-loomio_server:
+loomio-server:
   docker_container.running:
     - image: loomio/loomio:{{ loomio_version }}
     - user: 4001
@@ -59,7 +59,7 @@ loomio_server:
       - file: /srv/loomio
       - user: loomio
 
-loomio_channel_server:
+loomio-channel-server:
   docker_container.running:
     - image: loomio/loomio_channel_server:latest
     - user: 4001
@@ -73,7 +73,7 @@ loomio_channel_server:
       - docker_network: loomio_network
       - user: loomio
 
-loomio_redis:
+loomio-redis:
   docker_container.running:
     - image: redis:7
     - user: 4001
@@ -87,7 +87,7 @@ loomio_redis:
       - docker_network: loomio_network
       - user: loomio
 
-loomio_postgres:
+loomio-postgres:
   docker_container.running:
     - image: postgres:16
     - environment: {{ loomio_env | yaml }}
