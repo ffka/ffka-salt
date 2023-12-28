@@ -1,4 +1,4 @@
-{% set loomio_version = 'v2.21.3' %}
+{% set loomio_version = 'v2.21.4' %}
 
 {% set loomio_env = salt['pillar.get']('loomio:env', []) %}
 
