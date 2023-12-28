@@ -42,8 +42,6 @@ loomio:
   group.present:
     - gid: 4001
     - system: True
-
-loomio:
   user.present:
     - home: /srv/loomio
     - shell: /usr/sbin/nologin
