@@ -63,7 +63,7 @@ loomio-server-migration:
   docker_container.running:
     - use:
       - docker_container: loomio-server
-    - command: sleepg 500000
+    - command: sleep 500000
     - watch:
       - docker_container: loomio-server
 
