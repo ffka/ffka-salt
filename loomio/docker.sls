@@ -118,7 +118,7 @@ loomio-mailin:
     - networks:
       - loomio_network
     - port_bindings:
-      - 25:25
+      - 0.0.0.0:25:25
     - require:
       - docker_image: loomio/mailin-docker:latest
       - docker_network: loomio_network
