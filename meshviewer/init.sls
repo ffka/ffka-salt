@@ -4,10 +4,10 @@
 meshviewer:
   archive.extracted:
     - name: {{ deploy_dir }}
-    - source: https://github.com/freifunk/meshviewer/releases/download/v12.3.0/meshviewer-build.zip
+    - source: https://github.com/freifunk/meshviewer/releases/download/v12.4.0/meshviewer-build.zip
     - user: www-data
     - group: www-data
-    - source_hash: sha256=534c0ad7665139b42931c0f43d806d9e459fd231317a277292cd5261cacffa4c
+    - source_hash: sha256=619b6c7244e543af34f8fe10654aba88f5d2a8c87701a60915e01874f2dea478
     - source_hash_update: true
     - keep_source: false
     - clean: true
