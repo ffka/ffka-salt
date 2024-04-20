@@ -17,5 +17,11 @@ template:
   - id: slave_entropia_master           # we are slave, entropia is master -> allow notify
     storage: /var/lib/knot/zones/
     semantic-checks: off
-    master: entropia_slave
+    master: entropia_master
     acl: [entropia_master_allow_notify]
+
+  - id: slave_gpn_noc_master
+    storage /var/lib/knot/zones/
+    semantic-checks: off
+    master: gpn_noc_master
+    acl: [gpn_noc_allow_notify]
