@@ -1,0 +1,33 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name {{ hostnames }};
+    
+    include "snippets/acme-challenge.conf";
+
+    access_log /dev/null;
+    error_log "/var/log/nginx/{{ site_name }}/error.log";
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name {{ hostnames }};
+
+    ssl_certificate "/etc/letsencrypt/live/{{ certificate_filename }}/fullchain.pem";
+    ssl_certificate_key "/etc/letsencrypt/live/{{ certificate_filename }}/privkey.pem";
+
+    include "snippets/acme-challenge.conf";
+    include "snippets/tls.conf";
+
+    access_log /dev/null;
+    error_log "/var/log/nginx/{{ site_name }}/error.log";
+
+    return 301 https://karlsruhe.freifunk.net/;
+}
